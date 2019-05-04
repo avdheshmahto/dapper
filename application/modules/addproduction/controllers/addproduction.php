@@ -351,7 +351,8 @@ public function insertPurchaseOrder(){
 					'freight' => $this->input->post('freight'),
 					'Place_of_Supply' => $this->input->post('Place_of_Supply'),
 					'gr_no' => $this->input->post('gr_no'),
-					'status' => 'Draft',
+					//'status' => 'Draft',
+					'edd'	=> $this->input->post('edd'),
 				);
 
 		
@@ -387,9 +388,7 @@ public function insertPurchaseOrder(){
 				$this->Model_admin_login->insert_user($table_name_dtl,$data_dtl);		
 		}
 	}
-				//$this->paymentAmount($grand_total,$vendor_id,$lastHdrId,$id);	
-			    //$this->paymentAmountInsert($grand_total,$vendor_id,$lastHdrId,$id);	
-			   // $this->updateTermAndCondition($lastHdrId,$vendor_id,$grand_total,$date);
+
 				//$this->software_log_insert($lastHdrId,$vendor_id,$grand_total,'Purchase Order added');
 				$rediectInvoice="addproduction/manage_purchase_order";
 		
@@ -479,7 +478,8 @@ $this->db->query("update tbl_sales_order_hdr set termandcondition='".addslashes(
 					'freight'        => $this->input->post('freight'),
 					'Place_of_Supply'=> $this->input->post('Place_of_Supply'),
 					'gr_no'          => $this->input->post('gr_no'),
-					'status'         => 'Draft',
+					//'status'         => 'Draft',
+					'edd'			=> $this->input->post('edd'),
 				);
 		
 			$data_merge = array_merge($data,$sess);		
@@ -519,13 +519,7 @@ $this->db->query("update tbl_sales_order_hdr set termandcondition='".addslashes(
 							}
 					}
 
-						// echo "<pre>";
-		    //              print_r($data);
-		    //            echo "</pre>";die;
-
-
-					$this->paymentAmount($grand_total,$vendor_id,$lastHdrId,$id);
-					$this->software_log_insert($id,$vendor_id,$grand_total,'Invoice Updated');
+				//$this->software_log_insert($id,$vendor_id,$grand_total,'Invoice Updated');
 	                echo "<script type='text/javascript'>";
 					echo "window.close();";
 					echo "window.opener.location.reload();";
@@ -561,75 +555,6 @@ $this->db->query("update tbl_sales_order_hdr set termandcondition='".addslashes(
 		
 		return;	
 	}	
-//================================
-
-public function paymentAmountInsert($grand_total,$vendor_id,$lastHdrId,$id){
-	
-	$table_name='tbl_invoice_payment';
-	$pri_col='invoiceid';
-	if($id!=''){
-	$lastHdrId=$id;
-	}
-	else
-	{
-		$lastHdrId;
-	}
-	$data_pay = array(
-	
-					'contact_id' => $vendor_id,
-					'receive_billing_mount' => $grand_total,
-					'invoiceid' => $lastHdrId,					
-					'date' =>date('Y-m-d H:i:s'),
-					'maker_id' => $this->session->userdata('user_id'),
-					'maker_date' => date('y-m-d'),
-					'comp_id' => $this->session->userdata('comp_id'),
-					'status' => 'invoice'					
-					
-		);
-	$this->load->model('Model_admin_login');
-	
-	$this->Model_admin_login->insert_user($table_name,$data_pay);
-		
-	return paymentAmountInsert; 
-}
-
-//===============================	
-
-public function paymentAmount($grand_total,$vendor_id,$lastHdrId,$id){
-	
-	$table_name='tbl_invoice_payment';
-	$pri_col='invoiceid';
-	if($id!=''){
-	$lastHdrId=$id;
-	}
-	else
-	{
-		$lastHdrId;
-	}
-	$data_pay = array(
-	
-					'contact_id' => $vendor_id,
-					'receive_billing_mount' => $grand_total,
-					'invoiceid' => $lastHdrId,					
-					'date' =>date('Y-m-d H:i:s'),
-					'maker_id' => $this->session->userdata('user_id'),
-					'maker_date' => date('y-m-d'),
-					'comp_id' => $this->session->userdata('comp_id'),
-					'status' => 'invoice'					
-					
-		);
-	$this->load->model('Model_admin_login');
-	if($id!=''){
-
-//		$this->Model_admin_login->update_user($pri_col,$table_name,$id,$data_pay);
-
-$datee=date('Y-m-d H:i:s');
-$mkrdate=date('y-m-d');
-$this->db->query("update tbl_invoice_payment set contact_id='".$vendor_id."',receive_billing_mount='".$grand_total."',invoiceid='". $lastHdrId."',date='$datee',maker_id='".$this->session->userdata('user_id')."',maker_date='$mkrdate',comp_id='".$this->session->userdata('comp_id')."',status='invoice' where status='invoice' and invoiceid='$id'");	
-	
-	}
-	return paymentAmount; 
-}
 
 public function getproduct(){
 	if($this->session->userdata('is_logged_in')){
