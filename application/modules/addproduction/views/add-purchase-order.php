@@ -1,6 +1,6 @@
 <?php
 $this->load->view("header.php");
-$tableName='tbl_contact_m';
+/*$tableName='tbl_contact_m';
 $location='manage_contact';
 		
 		$userQuery = $this -> db
@@ -10,7 +10,7 @@ $location='manage_contact';
            -> get('tbl_contact_m');
 		  $branchFetch = $userQuery->row();
 $quryinv=$this->db->query("select *from tbl_sales_order_hdr");
-$getInv=$quryinv->row();
+$getInv=$quryinv->row();*/
 
 ?>
 <form id="f1" name="f1" method="POST" action="insertPurchaseOrder" onSubmit="return checkKeyPressed(a)">
@@ -47,7 +47,7 @@ $getInv=$quryinv->row();
 				<th>Customer Name</th>
 				<th>
 				<div class="field" style="width:200px;"> 
-					<select name="vendor_id" style="width:80%" required id="contact_id_copy" class="form-control" onChange="document.getElementsByName('contactid')[0].value=this.value;"   <?php if(@$_GET['view']!=''){ ?> disabled="disabled" <?php }?>>
+					<select name="vendor_id" style="width:119%" required id="contact_id_copy" class="form-control" onChange="document.getElementsByName('contactid')[0].value=this.value;"   <?php if(@$_GET['view']!=''){ ?> disabled="disabled" <?php }?>>
 						<option value="" selected disabled>Select</option>
 						<?php
 						$contQuery=$this->db->query("select * from tbl_contact_m where status='A' and group_name='4'");
@@ -76,9 +76,10 @@ $getInv=$quryinv->row();
 					</select>
 				</div>
 
-				</th>
+				</th>				
+				</tr>
 
-
+				<tr>
 				<th style="display:none1">Date</th>
 				<th>
 				<input type="date"  class="form-control" style="width:170px;" required name="date" value="<?php echo $detail->invoice_date;?>" />
@@ -96,6 +97,10 @@ $getInv=$quryinv->row();
 				<?php }?>
 				</select>
 				
+				</th>					
+				<th>Expected Date of Delivery</th>
+				<th>
+				<input type="date"  class="form-control"  name="edd" value="<?php echo $detail->wff_date;?>" />
 				</th>
 				</tr>
 				<tr style="display:none">
@@ -182,8 +187,8 @@ $getInv=$quryinv->row();
 				<th >
 				<input type="number" id="qn" min="1" style="width:70px;"   class="form-control">
 				</th>
-				<th ><input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:70px;"></th>
-<th >
+				<th ><input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:70px;" readonly=""></th>
+				<th >
 				<input type="text" readonly="" id="usunit" style="width:70px;" class="form-control"> 
 				</th>
 				<th style="display: none;"><input type="number" step="any" name="saleamnt" id="discount" class="form-control" style="width:70px;"/ ></th>
@@ -307,13 +312,13 @@ document.getElementById("prdsrch").innerHTML=" ";
 }
 }
 
-document.getElementById("qn").onkeyup = function (e) {
+/*document.getElementById("qn").onkeyup = function (e) {
 var entr =(e.keyCode);
 if(entr==13){
 
 document.getElementById("lph").focus();
 }
-}
+}*/
 
 
 
@@ -379,10 +384,11 @@ document.getElementById("lph").focus();
 
 
 
-document.getElementById("lph").onkeyup = function (e) {
+document.getElementById("qn").onkeyup = function (e) {
 var entr  = (e.keyCode);
 
 var rate  = document.getElementById("lph").value;
+//alert(rate)
 var qnt   = document.getElementById("qn").value;
 var total = Number(rate)*Number(qnt)/100;
 var tott=Number(total)+Number(qnt);

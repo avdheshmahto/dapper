@@ -72,7 +72,9 @@ if($_GET['id']!='' or $_GET['view']!=''){
 </div>
 
 </th>
+</tr>
 
+<tr>
 <th>Date</th>
 <th>
 <input type="date"  class="form-control" required name="date" value="<?php echo $fetchq->invoice_date;?>"  />
@@ -93,8 +95,12 @@ if($_GET['id']!='' or $_GET['view']!=''){
 				</select>
 
 </th>
+<th>Expected Date of Delivery</th>
+<th>
+<input type="date" class="form-control" name="edd" value="<?php echo $fetchq->edd;?>" />
+</th>
+</tr>	
 
-</tr>
 <tr style="display:none">
 <td>WFF Date</td>
 <th>
@@ -180,7 +186,7 @@ $this->load->view('getproduct');
 <th ><input type="number" id="qn" min="1" style="width:70px;"   class="form-control"></th>
 <th>
 <b style="display:none" id="lpr"></b>
-<input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:70px;"></th>
+<input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:70px;" readonly=""></th>
 
 <th>
 <input type="text" readonly="" id="usunit" style="width:70px;" class="form-control"> 
@@ -456,14 +462,15 @@ document.getElementById("prdsrch").innerHTML=" ";
 }
 }
 
-document.getElementById("qn").onkeyup = function (e) {
+/*document.getElementById("qn").onkeyup = function (e) {
 var entr =(e.keyCode);
 if(entr==13){
 
 document.getElementById("lph").focus();
 }
-}
-document.getElementById("lph").onkeyup = function (e) {
+}*/
+
+document.getElementById("qn").onkeyup = function (e) {
 var entr =(e.keyCode);
 var rate  = document.getElementById("lph").value;
 var qnt   = document.getElementById("qn").value;
