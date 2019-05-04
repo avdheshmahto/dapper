@@ -264,8 +264,19 @@ $entries = "";
 <div class="col-sm-4" > 
 <input type="number" min="0" name="opening_stock" id="opening_stock" value="" class="form-control" />
 </div> 
-
 </div>
+
+<div class="form-group"> 
+<label class="col-sm-2 control-label">Net Weight:</label> 
+<div class="col-sm-4" id="regid"> 
+<input type="number" name="net_weight" value="" id="net_weight" class="form-control" >
+</div> 
+<label class="col-sm-2 control-label">Cast Weight</label> 
+<div class="col-sm-4" > 
+<input type="number" name="cast_weight" id="cast_weight" class="form-control" />
+</div> 
+</div>
+
 </div>
 
 

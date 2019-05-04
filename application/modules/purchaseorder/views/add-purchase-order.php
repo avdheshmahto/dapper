@@ -1,6 +1,6 @@
 <?php
 $this->load->view("header.php");
-$tableName='tbl_contact_m';
+/*$tableName='tbl_contact_m';
 $location='manage_contact';
 		
 		$userQuery = $this -> db
@@ -10,7 +10,7 @@ $location='manage_contact';
            -> get('tbl_contact_m');
 		  $branchFetch = $userQuery->row();
 $quryinv=$this->db->query("select *from tbl_sales_order_hdr");
-$getInv=$quryinv->row();
+$getInv=$quryinv->row();*/
 
 ?>
 <form id="f1" name="f1" method="POST" action="insertPurchaseOrder" onSubmit="return checkKeyPressed(a)">
@@ -137,8 +137,8 @@ $getInv=$quryinv->row();
 <th>Rate</th>
 
 
-<th>Discount%</th>
-<th>Discount Amount</th>
+<th style="display:none;">Discount%</th>
+<th style="display:none;">Discount Amount</th>
 <th style="display:none;">CGST</th>
 <th style="display:none;">SGST</th>
 <th style="display:none;">IGST</th>
@@ -187,8 +187,8 @@ $this->load->view('getproduct');
 <input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:70px;"></th>
 
 
-<th><input type="number" step="any" name="saleamnt" id="discount" class="form-control" style="width:70px;"/ ></th>
-<th><input type="number" step="any" name="saleamnt" id="disAmt" class="form-control"  style="width:70px;"/ ></th>
+<th style="display:none;"><input type="number" step="any" name="saleamnt" id="discount" class="form-control" style="width:70px;"/ ></th>
+<th style="display:none;"><input type="number" step="any" name="saleamnt" id="disAmt" class="form-control"  style="width:70px;"/ ></th>
 <th style="display:none;"><input type="number" min="1" step="any" name="saleamnt" id="cgst" class="form-control"  style="width:70px;"/ ></th>
 <th style="display:none;"><input type="number" min="1" step="any" name="saleamnt" id="sgst" class="form-control"   style="width:70px;"/ ></th>
 
