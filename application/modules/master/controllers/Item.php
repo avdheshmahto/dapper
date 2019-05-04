@@ -133,11 +133,11 @@ public function insert_item()
 					 'thickness'          => $this->input->post('thickness'),
 					 'grade_code' 		  => $this->input->post('grade_code'),					
 					 'unitprice_sale' 	  => $this->input->post('unitprice_sale'),
-					 'circle_weight' =>  $this->input->post('circle_weight'),					 
+					 'circle_weight'      => $this->input->post('circle_weight'),					 
 					 'unitprice_purchase' => $this->input->post('unitprice_purchase'),					 
 					 'hsn_code' 		  => $this->input->post('hsn_code'),					 
 					 'gst_tax'			  => $this->input->post('gst_tax'),
-					 'weight'           => $this->input->post('weight'),					 					 
+					 'weight'             => $this->input->post('weight'),					 					 
 					 'ctn_lenght' 		  => $this->input->post('ctn_lenght'),
 					 'ctn_width' 		  => $this->input->post('ctn_width'),
 					 'ctn_height' 		  => $this->input->post('ctn_height'),
@@ -145,7 +145,9 @@ public function insert_item()
 					 'cbm' 			  	  => $this->input->post('cbm'),
 					 'lead_time' 		  => $this->input->post('lead_time'),
 					 'opening_stock'      => $this->input->post('opening_stock'),
-					 'quantity'           => $this->input->post('opening_stock')
+					 'quantity'           => $this->input->post('opening_stock'),
+					 'net_weight'		  => $this->input->post('net_weight'),
+					 'cast_weight'		  => $this->input->post('cast_weight'),
 					
 				);
 				
