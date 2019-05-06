@@ -16,14 +16,7 @@ if($this->input->get('entries')!="")
 <div id="modal-0" class="modal fade" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-lg">
 	  <div class="modal-content" id ="inboundData">
-		<!-- <div class="modal-header">
-		<button  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		<h4 class="modal-title">View Purchase Order</h4>
-		<div id="resultarea" class="text-center " style="font-size: 15px;color: red;"></div> 
-		</div>
-		 <div class="panel-body" >
-		  
-	 </div> -->
+
     </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->
 </div>
