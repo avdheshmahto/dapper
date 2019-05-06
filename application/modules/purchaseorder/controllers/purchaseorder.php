@@ -29,28 +29,296 @@ public function view_rm_planning()
 }
 
 
-public function case_memo(){
-	if($this->session->userdata('is_logged_in')){
+public function insertInboundOrderGrn()
+{
+		
+		extract($_POST);
+		$table_name ='tbl_inbound_hdr';
+		$table_name_dtl ='tbl_inbound_dtl';
+		$pri_col ='inboundid';
+		$pri_col_dtl ='inbound_dtl_id';
+		$pri_col_hdr_log='tbl_inbound_log';
+		
+		$sess = array(
+					
+					'maker_id' => $this->session->userdata('user_id'),
+					'maker_date' => date('y-m-d'),
+					'status' => 'A',
+					'comp_id' => $this->session->userdata('comp_id'),
+					'zone_id' => $this->session->userdata('zone_id'),
+					'brnh_id' => $this->session->userdata('brnh_id'),
+					'divn_id' => $this->session->userdata('divn_id')
+		);
+	
+	
+	
+		$data = array(
+	            'storage_location'  => $this->input->post('storage_location'),  
+				'po_no'    			=> $this->input->post('po_no'),
+				
+				'grn_no'    	  	=> $this->input->post('grn_no'),
+				'grn_date' 		  	=> $grn_date,
+		
+				);
+			
+			$data_merge = array_merge($data,$sess);					
+		    $this->load->model('Model_admin_login');	
+		    $this->Model_admin_login->insert_user($table_name,$data_merge);
+			$lastHdrId=$this->db->insert_id();	
+			$this->load->model('Model_admin_login');
+
+			$rows=count($productid);
+
+		    for($i=0; $i<$rows; $i++)
+		    {
+			
+			if($receive_qty[$i]!='')
+			{
+                 $data_dtl=array(
+				 'inboundrhdr'		=> $lastHdrId,
+				 'productid'		=> $productid[$i],				 
+				 'receive_qty'		=> $receive_qty[$i],
+				 'qn_pc' => $qn_pc[$i],
+				 'remaining_qty'	=> $remaining_qty[$i],
+				 'maker_id'			=> $this->session->userdata('user_id'),
+				 'maker_date'		=> date('y-m-d'),
+				 'comp_id'			=> $this->session->userdata('comp_id'),
+				 'zone_id'			=> $this->session->userdata('zone_id'),
+				 'brnh_id'			=> $this->session->userdata('brnh_id')
+				);
+				
+				
+				$data_dtl_log=array(
+				 'inboundrhdr'		=> $lastHdrId,
+				 'po_no'		=> $po_no,
+				 'productid'		=> $productid[$i],				 
+				 'receive_qty'		=> $receive_qty[$i],
+				 'qn_pc' => $qn_pc[$i],
+				 'remaining_qty'	=> $remaining_qty[$i],
+				 'grn_no'       => $this->input->post('grn_no'),
+				 'grn_date'			=> $this->input->post('grn_date'),
+				 'maker_id'			=> $this->session->userdata('user_id'),
+				 'maker_date'		=> date('y-m-d'),
+				 'comp_id'			=> $this->session->userdata('comp_id'),
+				 'zone_id'			=> $this->session->userdata('zone_id'),
+				 'brnh_id'			=> $this->session->userdata('brnh_id')
+				);
+				
+			
+			  	$this->Model_admin_login->insert_user($table_name_dtl,$data_dtl);
+			  	$this->Model_admin_login->insert_user($pri_col_hdr_log,$data_dtl_log);		
+	  			$this->po_stock_in($receive_qty[$i],$productid[$i],$qn_pc[$i]);	
+		    
+		    }
+		 				 
+			}
+			
+			if($qrd_qtyT==$totToCom)
+			{
+				 $this->db->query("update tbl_purchase_order_hdr set force_close_status='2' where purchaseid='$po_no'"); 
+			}
+			else
+			{
+				 $this->db->query("update tbl_purchase_order_hdr set force_close_status='3' where purchaseid='$po_no'"); 
+			}
+		
+		$rediectInvoice="purchaseorder/manage_purchase_order";
+	
+	redirect($rediectInvoice);	
+
+}
+
+
+public function po_stock_in($receive_qty,$productid,$qn_pc)
+{
+	
+	
+		$selectQuery = "select * from tbl_product_serial where product_id='$productid' and location_id='1'";
+		$selectQuery1=$this->db->query($selectQuery);
+		$num= $selectQuery1->num_rows();
+		if($num>0){
+		$this->db->query("update tbl_product_serial set quantity=quantity+'$receive_qty',qn_pc=qn_pc+'$qn_pc',location_id='1' where product_id='$productid' and location_id='1' ");
+					}else{
+							$comp_id = $this->session->userdata('comp_id');
+							$divn_id = $this->session->userdata('divn_id');
+							$zone_id = $this->session->userdata('zone_id');
+							$brnh_id = $this->session->userdata('brnh_id');
+							$maker_date= date('y-m-d');
+							$author_date= date('y-m-d');
+		
+							$this->db->query("insert into tbl_product_serial set quantity='$receive_qty',qn_pc='$qn_pc',location_id='1',product_id='$productid',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id',brnh_id='$brnh_id',maker_date='$maker_date',author_date='$author_date'");
+							
+							
+							$this->db->query("insert into tbl_product_serial_log set quantity='$receive_qty',qn_pc='$qn_pc[$i]',location_id='1',product_id='$productid',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id',brnh_id='$brnh_id',maker_date='$maker_date',author_date='$author_date'");
+							
+		}
+
+	$this->db->query("update tbl_product_stock set quantity=quantity+'$receive_qty' where Product_id='$productid'");
+
+}
+
+
+public function grn_return()
+{
+
+	if($this->session->userdata('is_logged_in'))
+	{
+		$data['id']=$_POST['id'];
+		$this->load->view('grn-return',$data);
+	}
+	else
+	{
+		redirect('index');
+	}
+}
+
+
+public function insert_retun_grn()
+{
+
+
+		extract($_POST);
+		$table_name 	='tbl_grn_return_hdr';
+		$table_name_dtl ='tbl_grn_return_dtl';
+		$pri_col 		='grnhdr';
+	
+		$sess = array(
+					
+					'maker_id' 	 => $this->session->userdata('user_id'),
+					'maker_date' => date('y-m-d'),
+					'status' 	 => 'A',
+					'comp_id'    => $this->session->userdata('comp_id'),
+					'zone_id' 	 => $this->session->userdata('zone_id'),
+					'brnh_id' 	 => $this->session->userdata('brnh_id'),
+					'divn_id' 	 => $this->session->userdata('divn_id')
+				);
+	
+	
+	
+		$data = array(
+
+				'po_no'    			=> $this->input->post('po_no'),				
+				//'grn_no'    	  	=> $this->input->post('grn_no'),
+				//'grn_date' 		=> $this->input->post('grn_date'),
+		
+				);
+			
+			$data_merge = array_merge($data,$sess);					
+		    $this->load->model('Model_admin_login');	
+		    $this->Model_admin_login->insert_user($table_name,$data_merge);
+			$lastHdrId=$this->db->insert_id();	
+			//$this->load->model('Model_admin_login');
+
+			$rows=count($productid);
+
+		    for($i=0; $i<$rows; $i++)
+		    {
+			
+				if($return_qty[$i]!='')
+				{
+	                
+	                $data_dtl=array(
+					 
+					 'grnhdr'		  	=> $lastHdrId,
+					 'po_no'    		=> $po_no,				
+					 'productid'		=> $productid[$i],				 
+					 'return_qty'		=> $return_qty[$i],
+					 'return_weight'	=> $retrn_weight[$i],
+					 'receive_qty' 		=> $rec_qty[$i],
+					 'receive_weight'	=> $recevd_wght[$i],
+					 'maker_id'			=> $this->session->userdata('user_id'),
+					 'maker_date'		=> date('y-m-d'),
+					 'comp_id'			=> $this->session->userdata('comp_id'),
+					 'zone_id'			=> $this->session->userdata('zone_id'),
+					 'brnh_id'			=> $this->session->userdata('brnh_id')
+					
+					);
+					
+					//print_r($data_dtl);die;
+				
+				  	$this->Model_admin_login->insert_user($table_name_dtl,$data_dtl);
+		  	//$this->po_stock_return($return_qty[$i],$productid[$i],$return_weight[$i]);	
+			    
+			    }
+		 				 
+			}
+
+			echo 1;			
+
+}
+
+public function po_stock_return($return_qty,$productid,$return_weight)
+{
+	
+	
+	$selectQuery = "select * from tbl_product_serial where product_id='$productid' and location_id='1'";
+	$selectQuery1=$this->db->query($selectQuery);
+	$num= $selectQuery1->num_rows();
+	if($num>0)
+	{
+		
+		$this->db->query("update tbl_product_serial set quantity=quantity-'$return_qty',qn_pc=qn_pc+'$return_weight',location_id='1' where product_id='$productid' and location_id='1' ");
+	}
+	else
+	{
+		$comp_id = $this->session->userdata('comp_id');
+		$divn_id = $this->session->userdata('divn_id');
+		$zone_id = $this->session->userdata('zone_id');
+		$brnh_id = $this->session->userdata('brnh_id');
+		$maker_date= date('y-m-d');
+		$author_date= date('y-m-d');
+
+		$this->db->query("insert into tbl_product_serial set quantity='$return_qty',qn_pc='$return_weight',location_id='1',product_id='$productid',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id',brnh_id='$brnh_id',maker_date='$maker_date',author_date='$author_date'");
+		
+		
+		$this->db->query("insert into tbl_product_serial_log set quantity='$return_qty',qn_pc='$return_weight[$i]',location_id='1',product_id='$productid',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id',brnh_id='$brnh_id',maker_date='$maker_date',author_date='$author_date'");
+			
+	}
+
+	$this->db->query("update tbl_product_stock set quantity=quantity+'$return_qty' where Product_id='$productid'");
+
+
+}
+
+public function ajax_post_grn()
+{
+
+	$data['pid']=$_POST['id'];
+	$this->load->view('ajax-grn-return',$data);
+
+}
+
+
+public function case_memo()
+{
+
+	if($this->session->userdata('is_logged_in'))
+	{
 		$this->load->view('case-memo');
 	}
 	else
 	{
-	redirect('index');
+		redirect('index');
 	}		
 }
 
-public function view_grn_details(){
-	if($this->session->userdata('is_logged_in')){
-$data=array(
-'id' =>$_POST['id']
-);
+public function view_grn_details()
+{
+	
+	if($this->session->userdata('is_logged_in'))
+	{
+	
+		$data=array(
+		'id' =>$_POST['id']
+		);
 
 		$this->load->view('view-grn-details',$data);
 	}
 	else
 	{
-	redirect('index');
+		redirect('index');
 	}		
+
 }
 
 

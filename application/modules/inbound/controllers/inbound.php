@@ -98,7 +98,8 @@ public function Manage_Inbound_Data()
 
 
 
-public function insertInboundOrder(){
+public function insertInboundOrder()
+{
 		
 		extract($_POST);
 		$table_name ='tbl_inbound_hdr';
@@ -121,11 +122,11 @@ public function insertInboundOrder(){
 	
 	
 		$data = array(
-	            'storage_location'    => $this->input->post('storage_location'),  
-				'po_no'    => $this->input->post('po_no'),
+	            'storage_location'  => $this->input->post('storage_location'),  
+				'po_no'    			=> $this->input->post('po_no'),
 				
-				'grn_no'    	  => $this->input->post('grn_no'),
-				'grn_date' 		  => $grn_date,
+				'grn_no'    	  	=> $this->input->post('grn_no'),
+				'grn_date' 		  	=> $grn_date,
 		
 				);
 			
@@ -134,10 +135,14 @@ public function insertInboundOrder(){
 		    $this->Model_admin_login->insert_user($table_name,$data_merge);
 			$lastHdrId=$this->db->insert_id();	
 			$this->load->model('Model_admin_login');
-		$rows=count($productid);
+
+			$rows=count($productid);
+
 		    for($i=0; $i<$rows; $i++)
 		    {
-			  if($receive_qty[$i]!=''){
+			
+			if($receive_qty[$i]!='')
+			{
                  $data_dtl=array(
 				 'inboundrhdr'		=> $lastHdrId,
 				 'productid'		=> $productid[$i],				 
@@ -169,24 +174,25 @@ public function insertInboundOrder(){
 				);
 				
 			
-			  $this->Model_admin_login->insert_user($table_name_dtl,$data_dtl);
-			  $this->Model_admin_login->insert_user($pri_col_hdr_log,$data_dtl_log);		
+			  	$this->Model_admin_login->insert_user($table_name_dtl,$data_dtl);
+			  	$this->Model_admin_login->insert_user($pri_col_hdr_log,$data_dtl_log);		
 	  			$this->po_stock_in($receive_qty[$i],$productid[$i],$qn_pc[$i]);	
-		 }
+		    
+		    }
 		 
-		/* $rm_q=$receive_qty[$i]+$rm_qty[$i];
-		 if($ord_qty[$i]==$rm_q)
-		 {
-			 $this->db->query("update tbl_purchase_order_hdr set force_close_status='2' where purchaseid='$po_no'"); 
-			 
-		 }
-		 else
-		 {
-			  $this->db->query("update tbl_purchase_order_hdr set force_close_status='3' where purchaseid='$po_no'"); 
-		 }
-		 */
-		 
-	 }
+				/* $rm_q=$receive_qty[$i]+$rm_qty[$i];
+				 if($ord_qty[$i]==$rm_q)
+				 {
+					 $this->db->query("update tbl_purchase_order_hdr set force_close_status='2' where purchaseid='$po_no'"); 
+					 
+				 }
+				 else
+				 {
+					  $this->db->query("update tbl_purchase_order_hdr set force_close_status='3' where purchaseid='$po_no'"); 
+				 }
+				 */
+				 
+			}
 			
 			if($qrd_qtyT==$totToCom)
 			{
@@ -196,7 +202,9 @@ public function insertInboundOrder(){
 			{
 				 $this->db->query("update tbl_purchase_order_hdr set force_close_status='3' where purchaseid='$po_no'"); 
 			}
+		
 		$rediectInvoice="inbound/manage_inbound";
+	
 	redirect($rediectInvoice);	
 
 }
