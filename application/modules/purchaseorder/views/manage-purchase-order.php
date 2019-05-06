@@ -138,7 +138,7 @@ foreach($result as $sales)
 
 <tr class="gradeC record">
 <th style="display:none;"><input type="checkbox" /></th>
-<th><?=$sales->purchase_no;?></th>
+<th><a href="<?=base_url();?>purchaseorder/view_rm_planning?vid=<?=$sales->vendor_id?>&pid=<?=$sales->purchaseid;?>" ><?=$sales->purchase_no;?></a></th>
 <th style="display:none"><?php echo $sales->invoice_status;?></th>
 <th><?=$sales->invoice_date;?></th>
 <th><?php 
