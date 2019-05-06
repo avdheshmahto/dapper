@@ -594,6 +594,8 @@ function editItem(ths) {
 	  $('#mst').val(editVal.mst);
 	  $('#cbm').val(editVal.cbm);
 	  $('#lead_time').val(editVal.lead_time);
+    $('#net_weight').val(editVal.net_weight);
+    $('#cast_weight').val(editVal.cast_weight);
 	 
 	   getEntityRow(editVal.Product_id);
  

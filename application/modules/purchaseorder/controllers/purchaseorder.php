@@ -17,6 +17,16 @@ public function add_purchase_order(){
 	}		
 }
 
+public function view_rm_planning()
+{
+	if($this->session->userdata('is_logged_in')){
+		$this->load->view('view-rm-planning');
+	}
+	else
+	{
+		redirect('index');
+	}
+}
 
 
 public function case_memo(){
