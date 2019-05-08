@@ -198,8 +198,8 @@ public function insert_retun_grn()
 		$data = array(
 
 				'po_no'    			=> $this->input->post('po_no'),				
-				//'grn_no'    	  	=> $this->input->post('grn_no'),
-				//'grn_date' 		=> $this->input->post('grn_date'),
+				'return_no'    	  	=> $this->input->post('return_no'),
+				'return_date' 		=> $this->input->post('return_date'),
 		
 				);
 			

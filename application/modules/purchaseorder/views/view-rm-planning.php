@@ -333,6 +333,22 @@ foreach($poquery->result() as $getPo)
 <div id="grnresultarea" class="text-center " style="font-size: 15px;color: red;"></div> 
 <div class="modal-body">
 <form class="form-horizontal" role="form" enctype="multipart/form-data" id ="grn_return_form" action="#" onsubmit="return submitGrnReturn();"method="POST">
+	<div class="form-group">
+
+	
+	
+
+	<div class="col-sm-6" id="invoiceId">
+		<label for="po_order">Return No.:</label>
+		<input type="text" name="return_no" class="form-control" required="">
+	</div>
+
+	<div class="col-sm-6" id="grnId">
+		<label for="po_order">Return Date.:</label>
+		<input type="date" name="return_date" class="form-control" required="">
+	</div>
+
+</div>
 <div class="row" id="returnDetails">
 
 
