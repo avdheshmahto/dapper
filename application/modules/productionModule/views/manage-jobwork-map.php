@@ -196,10 +196,15 @@ function addpricemap(){
 	var shapeid =  $('#shape').val();
 	var shapeVal     =  $("#shape option:selected").text();   
 	var part=$('#part').val();
+	var weight=$('#weight').val();
+	var rate=$('#rate').val();
 	var PartId     = [];
 	var qtyy	= []; 
 	var part_c	=[];
-	j=0;i=0;k=0;
+	var weight_c	=[];
+	var rate_c	=[];
+
+	j=0;i=0;k=0;m=0;n=0;
 	
 	$('input[name="part[]"]').each(function(){
 	PartId[i++]  = $(this).val();
@@ -212,19 +217,29 @@ function addpricemap(){
 	$('input[name="part_code[]"]').each(function(){
 	part_c[k++]  = $(this).val();
 	});
+
+	$('input[name="weight[]"]').each(function(){
+	weight_c[m++]  = $(this).val();
+	});
+
+	$('input[name="rate[]"]').each(function(){
+	rate_c[n++]  = $(this).val();
+	});
       
 	var myObject  = new Object();
     // myObject.productId = $('#quotationPro').val();
 	var pa=myObject.part = PartId;
 	var qt=qtyy;
 	var pa_co=part_c;
+	var weight_co=weight_c;
+	var rate_co=rate_c
 	var myString = JSON.stringify(myObject);    
 	
 	 // $('#quotationProductmapValue').empty().append("<input type ='text' id ='proQuotation' name='quotationMapedValue[]' value='"+myString+"'>");
       //$('#QuotationMap').val(myString);
 	  
 	  
-	   $('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
+	   $('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><input type ="hidden" name="weight_qty[]" value="'+weight_co+'">'+weight_co+'</td><td><input type ="hidden" name="rate_rs[]" value="'+rate_co+'">'+rate_co+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
     
 	$("#shape").val("");
 	$("#getPartView").text("");
@@ -1001,8 +1016,7 @@ $getProduct=$queryProduct->row();
 </div>
 <label class="col-sm-6 control-label">
 <div class="table-responsive" id="getPartView">
-  
-</div>
+  </div>
 
 
 </label> 
@@ -1018,6 +1032,8 @@ $getProduct=$queryProduct->row();
 				
 				<th>Part</th>
 				<th>Qty</th>
+				<th>Weight</th>
+				<th>Rate</th>
 				<th>Action</th>
 			</tr>
        	  </tbody>
@@ -2072,6 +2088,9 @@ var asx= myarra[1];
 var entQty=document.getElementById("entQty"+asx).value;	
 var orderQty=document.getElementById("orderQty"+asx).value;	
 var remQty=document.getElementById("remQty"+asx).value;	
+var weightQty=document.getElementById("weight"+asx).value;
+var totWeight=Number(entQty)*Number(weightQty);
+document.getElementById("total_weight"+asx).value=totWeight;
 	
 if(Number(remQty)<Number(entQty))	
 {
@@ -2087,6 +2106,45 @@ document.getElementById("add").disabled = false;
 	
 }
 }
+
+
+
+function RateCal(d)
+{
+
+var zz=document.getElementById(d).id;
+var myarra = zz.split("rate");
+var asx= myarra[1];
+//alert(asx);
+var total_weight=document.getElementById("total_weight"+asx).value;	
+var rate=document.getElementById("rate"+asx).value;	
+
+totalRMRate=Number(total_weight)*Number(rate);
+document.getElementById("total_rm_rate"+asx).value=totalRMRate;
+
+}
+
+function labourRateCal(d)
+{
+
+var zz=document.getElementById(d).id;
+var myarra = zz.split("labour_rate");
+var asx= myarra[1];
+//alert(asx);
+var total_weight=document.getElementById("total_weight"+asx).value;	
+var labour_rate=document.getElementById("labour_rate"+asx).value;	
+
+totalRMRate=Number(total_weight)*Number(labour_rate);
+document.getElementById("total_labour_rate"+asx).value=totalRMRate;
+
+}
+
+
+
+
+
+
+
 
 
 function addpricemap1(){

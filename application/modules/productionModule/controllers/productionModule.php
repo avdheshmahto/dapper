@@ -659,6 +659,8 @@ $data=array(
 'shape_id' => $shapeId[$i],
 'part_id' => $part_c[$i],
 'qty' => $qtyy[$i],
+'weight' => $weight_qty[$i],
+'rate' => $rate_rs[$i],
 'production_id' => $production_id,
 'type' => $type,
 'shape_qty' => $shape_qty
@@ -676,11 +678,14 @@ $dataall = array_merge($data,$sesio);
 $this->Model_admin_login->insert_user($table_name,$dataall);
 $dataP=explode(",",$part_c[$i]);
 $dataQ=explode(",",$qtyy[$i]);
+
+$dataW=explode(",",$weight_qty[$i]);
+$dataR=explode(",",$rate_rs[$i]);
+
 $cntP=count($dataP);
 
 for($j=0;$j<$cntP;$j++)
 {
-
 $data=array(
 'vendor_id' => $vendor_id,	
 'date' => $date,
@@ -690,11 +695,12 @@ $data=array(
 'shape_id' => $shapeId[$i],
 'part_id' => $dataP[$j],
 'qty' => $dataQ[$j],
+'weight' => $dataW[$j],
+'rate' => $dataR[$j],
 'production_id' => $production_id,
 'type' => $type,
 'shape_qty' => $shape_qty
 );
-
 $sesio = array(
 					'comp_id' => $this->session->userdata('comp_id'),
 					'zone_id' => $this->session->userdata('zone_id'),
@@ -706,7 +712,6 @@ $sesio = array(
 
 $dataall = array_merge($data,$sesio);
 $this->Model_admin_login->insert_user(tbl_job_work_log,$dataall);
-
 
 }
 }
