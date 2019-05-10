@@ -660,7 +660,12 @@ $data=array(
 'part_id' => $part_c[$i],
 'qty' => $qtyy[$i],
 'weight' => $weight_qty[$i],
+'total_weight' => $total_weight[$i],
 'rate' => $rate_rs[$i],
+'total_rm_rate_rs' => $total_rm_rate_rs[$i],
+'labour_rate_co' => $labour_rate_rs[$i],
+'total_labour_rate' => $total_labour_rate[$i],
+'total_cost' => $total_cost[$i],
 'production_id' => $production_id,
 'type' => $type,
 'shape_qty' => $shape_qty
@@ -678,9 +683,13 @@ $dataall = array_merge($data,$sesio);
 $this->Model_admin_login->insert_user($table_name,$dataall);
 $dataP=explode(",",$part_c[$i]);
 $dataQ=explode(",",$qtyy[$i]);
-
 $dataW=explode(",",$weight_qty[$i]);
 $dataR=explode(",",$rate_rs[$i]);
+$total_weightR=explode(",",$total_weight[$i]);
+$total_rm_rate_rsR=explode(",",$total_rm_rate_rs[$i]);
+$labour_rate_coR=explode(",",$labour_rate_rs[$i]);
+$total_labour_rateR=explode(",",$total_labour_rate[$i]);
+$total_costR=explode(",",$total_cost[$i]);
 
 $cntP=count($dataP);
 
@@ -697,6 +706,11 @@ $data=array(
 'qty' => $dataQ[$j],
 'weight' => $dataW[$j],
 'rate' => $dataR[$j],
+'total_weight' => $total_weightR[$j],
+'total_rm_rate_rs' => $total_rm_rate_rsR[$j],
+'labour_rate_co' => $labour_rate_coR[$j],
+'total_labour_rate' => $total_labour_rateR[$j],
+'total_cost' => $total_costR[$j],
 'production_id' => $production_id,
 'type' => $type,
 'shape_qty' => $shape_qty
