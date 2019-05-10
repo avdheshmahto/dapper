@@ -6,9 +6,10 @@
         <th>Net Weight</th>
         <th>Total Weight</th>
          <th>RM Rate per Kg</th> 
+         <th>Total Rm Amount</th>
          <th>Labour Rate per kg</th>
-         <th>Total Rm rate</th>
-         <th>Total Labour rate</th>
+         <th>Total Labour Amount</th>
+         <th>Total Cost</th>
         <th>Placed Qty</th>
         <th>Remaining Qty</th>
       </tr>
@@ -43,13 +44,16 @@ $getProduct=$queryProduct->row();
 
         <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_weight[]" id="total_weight<?=$i;?>"  /></td>
         <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="rate[]" id="rate<?=$i;?>" onchange="RateCal(this.id)"  /></td>
+        <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_rm_rate[]" id="total_rm_rate<?=$i;?>"  /></td>
         <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="labour_rate[]" id="labour_rate<?=$i;?>" onchange="labourRateCal(this.id)"  /></td>
 
-        <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_rm_rate[]" id="total_rm_rate<?=$i;?>"  /></td>
+        
 
         <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_labour_rate[]" id="total_labour_rate<?=$i;?>"  /></td>
 
+        <td>  <input class="form-control" style="margin-bottom:10px; width:55px;" value="<?=$getJob->total_cost;?>" id="total_cost<?=$i;?>" name="total_cost[]"  /></td>
         <td>  <input class="form-control" style="margin-bottom:10px; width:55px;" value="<?=$getJob->partQty;?>" id="orderQty<?=$i;?>" name="qtyy[]" readonly="readonly" /></td>
+        
         <td><?php
 $remQty=$getProduction->sub_total-$getJob->partQty;
 ?>
