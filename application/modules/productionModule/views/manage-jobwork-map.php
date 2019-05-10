@@ -197,14 +197,26 @@ function addpricemap(){
 	var shapeVal     =  $("#shape option:selected").text();   
 	var part=$('#part').val();
 	var weight=$('#weight').val();
+	var total_weight=$('#total_weight').val();
 	var rate=$('#rate').val();
+	var total_rm_rate=$('#total_rm_rate').val();
+	var labour_rate=$('#labour_rate').val();
+	var total_labour_rate=$('#total_labour_rate').val();
+	var total_cost=$('#total_cost').val();
 	var PartId     = [];
 	var qtyy	= []; 
 	var part_c	=[];
-	var weight_c	=[];
 	var rate_c	=[];
+	var weight_c	=[];
+	var total_weight_c	=[];
+	var total_rm_rate_c	=[];
+	var labour_rate_c	=[];
+	var total_labour_rate_c	=[];
+	var total_cost_c	=[];
+	
+	
 
-	j=0;i=0;k=0;m=0;n=0;
+	j=0;i=0;k=0;m=0;n=0,o=0,p=0,q=0,r=0,a=0;
 	
 	$('input[name="part[]"]').each(function(){
 	PartId[i++]  = $(this).val();
@@ -221,10 +233,30 @@ function addpricemap(){
 	$('input[name="weight[]"]').each(function(){
 	weight_c[m++]  = $(this).val();
 	});
+	$('input[name="total_weight[]"]').each(function(){
+	total_weight_c[a++]  = $(this).val();
+	});
 
 	$('input[name="rate[]"]').each(function(){
 	rate_c[n++]  = $(this).val();
 	});
+	
+	$('input[name="total_rm_rate[]"]').each(function(){
+	total_rm_rate_c[o++]  = $(this).val();
+	});
+	
+	$('input[name="labour_rate[]"]').each(function(){
+	labour_rate_c[p++]  = $(this).val();
+	});
+	
+	$('input[name="total_labour_rate[]"]').each(function(){
+	total_labour_rate_c[q++]  = $(this).val();
+	});
+	
+	$('input[name="total_cost[]"]').each(function(){
+	total_cost_c[r++]  = $(this).val();
+	});
+	
       
 	var myObject  = new Object();
     // myObject.productId = $('#quotationPro').val();
@@ -232,14 +264,20 @@ function addpricemap(){
 	var qt=qtyy;
 	var pa_co=part_c;
 	var weight_co=weight_c;
-	var rate_co=rate_c
+	var rate_co=rate_c;
+	var total_rm_rate_co=total_rm_rate_c;
+	var labour_rate_co=labour_rate_c;
+	var total_labour_rate_co=total_labour_rate_c;
+	var total_cost_co=total_cost_c;
+	
+	
 	var myString = JSON.stringify(myObject);    
 	
 	 // $('#quotationProductmapValue').empty().append("<input type ='text' id ='proQuotation' name='quotationMapedValue[]' value='"+myString+"'>");
       //$('#QuotationMap').val(myString);
 	  
 	  
-	   $('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><input type ="hidden" name="weight_qty[]" value="'+weight_co+'">'+weight_co+'</td><td><input type ="hidden" name="rate_rs[]" value="'+rate_co+'">'+rate_co+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
+	   $('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy" value="'+qt+'">'+qt+'</td><td><input type ="hidden" name="weight_qty[]" value="'+weight_co+'">'+weight_co+'</td><td><input type ="hidden" name="total_weight_co[]" value="'+total_weight_c+'">'+total_weight_c+'</td><td><input type ="hidden" name="rate_rs[]" value="'+rate_co+'">'+rate_co+'</td><td><input type ="hidden" name="total_rm_rate_rs[]" value="'+total_rm_rate_co+'">'+total_rm_rate_co+'</td><td><input type ="hidden" name="labour_rate_rs[]" value="'+labour_rate_co+'">'+labour_rate_co+'</td><td><input type ="hidden" name="total_labour_rate[]" value="'+total_labour_rate_co+'">'+total_labour_rate_co+'</td><td><input type ="hidden" name="total_cost[]" value="'+total_cost_co+'">'+total_cost_co+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
     
 	$("#shape").val("");
 	$("#getPartView").text("");
@@ -1034,8 +1072,13 @@ $getProduct=$queryProduct->row();
 				
 				<th>Part</th>
 				<th>Qty</th>
-				<th>Weight</th>
-				<th>Rate</th>
+				<th>Net Weight</th>
+                <th>Total Weight</th>
+				<th>RM Rate Per Kg</th>
+                <th>Total RM Amount</th>
+                <th>Labour Rate Per Kg</th>
+                <th>Total Labour Amount</th>
+                <th>Total Cost</th>
 				<th>Action</th>
 			</tr>
        	  </tbody>
