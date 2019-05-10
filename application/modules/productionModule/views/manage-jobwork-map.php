@@ -993,14 +993,8 @@ foreach($queryProductShape->result() as $getProductShape){
         <option value="ShapePart">Shape in Parts</option>
       </select> 
 </div>
-<label class="col-sm-2 control-label">Qty:</label> 
-<div class="col-sm-4"> 
-<input name="shape_qty" type="text" value="" id="fillQty" onchange="qtyFill(this.value);" class="form-control" > 
-</div>
-</div>
-<div class="form-group">
 <label class="col-sm-2 control-label">Shape:</label> 
-<div class="col-sm-4">
+<div class="col-sm-4"> 
 <select class="form-control" name="shape" id="shape" onchange="getPart(this.value);">
         <option value="">--Select--</option>
         <?php
@@ -1013,6 +1007,14 @@ $getProduct=$queryProduct->row();
         <option value="<?=$getProduct->Product_id;?>"><?=$getProduct->sku_no;?></option>
         <?php }?>
       </select> 
+
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Qty:</label> 
+<div class="col-sm-4">
+
+<input name="shape_qty" type="text" value="" id="fillQty" onchange="qtyFill(this.value);" class="form-control" > 
 </div>
 <label class="col-sm-6 control-label">
 <div class="table-responsive" id="getPartView">
@@ -2121,6 +2123,8 @@ var rate=document.getElementById("rate"+asx).value;
 
 totalRMRate=Number(total_weight)*Number(rate);
 document.getElementById("total_rm_rate"+asx).value=totalRMRate;
+document.getElementById("total_cost"+asx).value=totalRMRate;
+
 
 }
 
@@ -2136,6 +2140,10 @@ var labour_rate=document.getElementById("labour_rate"+asx).value;
 
 totalRMRate=Number(total_weight)*Number(labour_rate);
 document.getElementById("total_labour_rate"+asx).value=totalRMRate;
+
+var total_cost=document.getElementById("total_cost"+asx).value;
+
+document.getElementById("total_cost"+asx).value=Number(totalRMRate)+Number(total_cost);
 
 }
 
