@@ -1306,6 +1306,8 @@ $(document).delegate("#formreset","click",function(){
     //var url = "<?=base_url()?>"+'assets/images/no_image.png';
 	var formid =  $('#formreset').attr('formid');
 	$(formid)[0].reset();
+	$("#getPartView").empty();
+	
 	$(".hiddenField").val('');
 	
 	

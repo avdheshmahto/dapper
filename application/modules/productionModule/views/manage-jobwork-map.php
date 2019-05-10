@@ -551,7 +551,7 @@ $queryData=$this->db->query("select *from tbl_job_work where production_id='".$_
 
  
  
-<button type="button" class="btn btn-default modalMapSpare" data-toggle="modal" data-target="#modal-2"><img src="<?=base_url();?>assets/images/plus.png" /></button> 
+<button type="button" formid="#myform" id="formreset" class="btn btn-default modalMapSpare" data-toggle="modal" data-target="#modal-2"><img src="<?=base_url();?>assets/images/plus.png" /></button> 
  
  
 </td>
@@ -2578,5 +2578,7 @@ window.onbeforeunload = function (e) {
     return "Please click 'Stay on this Page' and we will give you candy";
 };
 */
+
+
 </script>
 
