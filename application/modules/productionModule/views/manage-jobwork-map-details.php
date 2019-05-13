@@ -2436,6 +2436,57 @@ var po_id=res[1];
 	});
 }
 
+function totalWeightCal(v)
+{
+	
+var weightVal=document.getElementById(v).id;
+var weightData = weightVal.split("weight");
+var asx= weightData[1];
+
+var qty=document.getElementById("qty"+asx).value;
+var weight=document.getElementById("weight"+asx).value;
+var totalWeight=Number(qty)*Number(weight);
+document.getElementById("total_weight"+asx).value=totalWeight;
+	
+	
+}
+
+function RateCal(d)
+{
+
+var zz=document.getElementById(d).id;
+var myarra = zz.split("rate");
+var asx= myarra[1];
+//alert(asx);
+var total_weight=document.getElementById("total_weight"+asx).value;	
+var rate=document.getElementById("rate"+asx).value;	
+
+totalRMRate=Number(total_weight)*Number(rate);
+document.getElementById("total_rm_rate"+asx).value=totalRMRate;
+document.getElementById("total_cost"+asx).value=totalRMRate;
+
+
+}
+
+function labourRateCal(d)
+{
+
+var zz=document.getElementById(d).id;
+var myarra = zz.split("labour_rate");
+var asx= myarra[1];
+//alert(asx);
+var total_weight=document.getElementById("total_weight"+asx).value;	
+var labour_rate=document.getElementById("labour_rate"+asx).value;	
+
+totalRMRate=Number(total_weight)*Number(labour_rate);
+document.getElementById("total_labour_rate"+asx).value=totalRMRate;
+
+var total_cost=document.getElementById("total_cost"+asx).value;
+
+document.getElementById("total_cost"+asx).value=Number(totalRMRate)+Number(total_cost);
+
+}
+
 
 /*
 window.onbeforeunload = function (e) {
