@@ -108,7 +108,7 @@ foreach($queryfetch11->result() as $fetchqrow11){
   ?>
 
 <tr class="gradeC record">
-<th><?=$sales->lot_no;?></th>
+<th><a href="<?=base_url();?>productionModule/manage_jobwork_map?id=<?=$sales->purchaseid;?>"><?=$sales->lot_no;?></a></th>
 <th><?=$sales->maker_date;?></th>
 <th>
 
@@ -130,7 +130,7 @@ echo $sales->sub_total;
 </th>
 <th>Pending</th>
 <th>
-<a href="<?=base_url();?>productionModule/manage_jobwork_map?id=<?=$sales->purchaseid;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
+
 
  <button class="btn btn-xs btn-black" data-toggle="modal" data-target="#modal-0" onclick="getspharemap(<?=$sales->purchaseid;?>);"  type="button"><i class="icon-eye"></i></button>
  <button class="btn btn-xs btn-black" data-toggle="modal" data-target="#modal-RM" onclick="viewRMFun(<?=$sales->purchaseid;?>);"  type="button"><i class="icon-eye"></i></button>
