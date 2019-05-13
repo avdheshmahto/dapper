@@ -2446,11 +2446,31 @@ var asx= weightData[1];
 var qty=document.getElementById("qty"+asx).value;
 var weight=document.getElementById("weight"+asx).value;
 var totalWeight=Number(qty)*Number(weight);
+
+var netweightCal=document.getElementById("net_weight_cal"+asx).value;
+var fivePercentageCal=Number(netweightCal)*5/100;
+//alert(fivePercentageCal);
+var totalFivePluspercentageVal=Number(netweightCal)+Number(fivePercentageCal);
+var totalFiveMinuspercentageVal=Number(netweightCal)-Number(fivePercentageCal);
+//alert(totalFivePluspercentageVal);
+
+
+if(Number(totalFivePluspercentageVal)<Number(totalWeight))
+{
+alert("Enter Weight is greater then Net Weight");	
+document.getElementById("weight"+asx).focus();
+}
+else if(Number(totalFiveMinuspercentageVal)>Number(totalWeight))
+{
+alert("Enter Weight is less then Net Weight");
+document.getElementById("weight"+asx).focus();	
+}
+else
+{
 document.getElementById("total_weight"+asx).value=totalWeight;
-	
-	
 }
 
+}
 function RateCal(d)
 {
 
