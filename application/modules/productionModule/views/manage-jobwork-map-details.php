@@ -2025,7 +2025,9 @@ var cell2 = row.insertCell(1);
 			  ?>
               </td>
               <td><?=$getUOM->keyvalue;?></td>
-              <td><input type="hidden" name="order_qty[]" value="<?php echo $ordQ;?>" /><?=$ordQ;?>
+              <td><input type="hidden" name="order_qty[]" value="<?php echo $ordQ;?>" />
+			  
+			  <?=$ordQ;?>
 			 </td>
               <td><?php echo round($dt->RMSUM,3);?></td>
               <input type="hidden" name="mproPrice[]" value="<?php echo round($dt->RMSUM*$ordQ,3);?>" />
@@ -2438,39 +2440,45 @@ var po_id=res[1];
 
 function totalWeightCal(v)
 {
-	
 var weightVal=document.getElementById(v).id;
 var weightData = weightVal.split("weight");
 var asx= weightData[1];
 
 var qty=document.getElementById("qty"+asx).value;
 var weight=document.getElementById("weight"+asx).value;
-var totalWeight=Number(qty)*Number(weight);
+var total_weight=document.getElementById("total_weight"+asx).value;
 
+var totalWeight=parseFloat(total_weight)/parseFloat(qty);
+var tolerance_percentage=document.getElementById("tolerance_percentage"+asx).value;
+document.getElementById("weight"+asx).value=totalWeight;
 var netweightCal=document.getElementById("net_weight_cal"+asx).value;
-var fivePercentageCal=Number(netweightCal)*5/100;
+var fivePercentageCal=parseFloat(netweightCal)*parseFloat(tolerance_percentage)/100;
 //alert(fivePercentageCal);
-var totalFivePluspercentageVal=Number(netweightCal)+Number(fivePercentageCal);
-var totalFiveMinuspercentageVal=Number(netweightCal)-Number(fivePercentageCal);
-//alert(totalFivePluspercentageVal);
+var totalFivePluspercentageVal=parseFloat(netweightCal)+parseFloat(fivePercentageCal);
+var totalFiveMinuspercentageVal=parseFloat(netweightCal)-parseFloat(fivePercentageCal);
+alert(totalFivePluspercentageVal);
 
 
-if(Number(totalFivePluspercentageVal)<Number(totalWeight))
+if(parseFloat(totalFivePluspercentageVal)<parseFloat(totalWeight))
 {
 alert("Enter Weight is greater then Net Weight");	
-document.getElementById("weight"+asx).focus();
+document.getElementById("total_weight"+asx).focus();
+document.getElementById("add_req").disabled = true;	
 }
-else if(Number(totalFiveMinuspercentageVal)>Number(totalWeight))
+else if(parseFloat(totalFiveMinuspercentageVal)>parseFloat(totalWeight))
 {
 alert("Enter Weight is less then Net Weight");
-document.getElementById("weight"+asx).focus();	
+document.getElementById("total_weight"+asx).focus();
+document.getElementById("add_req").disabled = true;	
+
 }
 else
 {
-document.getElementById("total_weight"+asx).value=totalWeight;
+document.getElementById("weight"+asx).value=totalWeight;
+document.getElementById("add_req").disabled = false;	
+}
 }
 
-}
 function RateCal(d)
 {
 

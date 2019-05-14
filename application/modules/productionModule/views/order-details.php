@@ -100,8 +100,9 @@ $getOrder=$orderQuery->row();
 			        <th class="tdcenter">Remaining Qty</th>
                     <th class="tdcenter" style="display:none">Qty In Stock</th>
                      <th class="tdcenter">Receive Qty</th>
-                     <th class="tdcenter">Net Weight</th>
                      <th class="tdcenter">Total Weight</th>
+                     <th class="tdcenter">Ideal Net Weight</th>
+                     <th class="tdcenter">Net Weight</th>
                      <th class="tdcenter">RM rate per kg</th>
                      <th class="tdcenter">Total Rm Amount</th>
                      <th class="tdcenter">Labour rate per kg</th>
@@ -118,6 +119,14 @@ $getOrder=$orderQuery->row();
 		$productStockQuery=$this->db->query("select * from tbl_product_stock where Product_id='$getProduct->part_id'");
 		$getProductStock=$productStockQuery->row();
 		####### ends ########
+		
+		###### get Part #####
+		
+		$productPartQuery=$this->db->query("select * from tbl_part_price_mapping where part_id='$getProductStock->Product_id'");
+		$getProductPart=$productPartQuery->row();
+		
+		
+		##### ends #####
 		
 		####### get UOM #######
 		$productUOMQuery=$this->db->query("select *from tbl_master_data where serial_number='$getProductStock->usageunit'");
@@ -168,14 +177,20 @@ $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_pro
             <td><?php echo $reci_qty=$getProduct->qty-$getInboundGRNLog->rec_qty;?></td>
              <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
   
-            <td><input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> />
+            <td>
+            
+            <input name="tolerance_percentage[]" id="tolerance_percentage<?=$i;?>"  type="hidden" class="form-control" value="<?=$getProductStock->tolerance_percentage;?>"/>
+            <input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> />
             
             <input type="text" style="display:none" name="process_ends[]" value="1" />
             
             </td>
-   <td> <input class="form-control" onchange="totalWeightCal(this.id)"  style="margin-bottom:10px;width:55px;" value="" name="weight[]" id="weight<?=$i;?>"  /></td>
+            
+            <td> <input class="form-control" onchange="totalWeightCal(this.id)"  style="margin-bottom:10px;width:55px;" value="" name="total_weight[]" id="total_weight<?=$i;?>"  /></td>
+            <td> <input class="form-control"   style="margin-bottom:10px;width:105px;" value="<?=$getProductPart->qty;?>" readonly="readonly" name="total_weight[]" id="total_weight<?=$i;?>"  /></td>
+   <td> <input class="form-control"   style="margin-bottom:10px;width:95px;" readonly="readonly" value="" name="weight[]" id="weight<?=$i;?>"  /></td>
 <input type="hidden" id="net_weight_cal<?=$i;?>" value="<?=$getProductStock->net_weight;?>" />
-        <td> <input class="form-control" readonly="readonly" style="margin-bottom:10px;width:55px;" value="" name="total_weight[]" id="total_weight<?=$i;?>"  /></td>
+        
         <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="rate[]" id="rate<?=$i;?>" onchange="RateCal(this.id)"  /></td>
         <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_rm_rate[]" id="total_rm_rate<?=$i;?>"  /></td>
         <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="labour_rate[]" id="labour_rate<?=$i;?>" onchange="labourRateCal(this.id)"  /></td>
