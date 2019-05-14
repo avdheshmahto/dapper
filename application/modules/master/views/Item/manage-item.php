@@ -277,6 +277,18 @@ $entries = "";
 </div> 
 </div>
 
+
+<div class="form-group"> 
+<label class="col-sm-2 control-label">Tolerance Percentage:</label> 
+<div class="col-sm-4" id="regid"> 
+<input type="number" name="tolerance_percentage" value="" id="tolerance_percentage" class="form-control" >
+</div> 
+<label class="col-sm-2 control-label">&nbsp;</label> 
+<div class="col-sm-4" > 
+&nbsp;
+</div> 
+</div>
+
 </div>
 
 

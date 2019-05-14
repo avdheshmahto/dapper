@@ -148,6 +148,7 @@ public function insert_item()
 					 'quantity'           => $this->input->post('opening_stock'),
 					 'net_weight'		  => $this->input->post('net_weight'),
 					 'cast_weight'		  => $this->input->post('cast_weight'),
+					 'tolerance_percentage' => $this->input->post('tolerance_percentage')
 					
 				);
 				
