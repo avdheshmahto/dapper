@@ -187,7 +187,7 @@ $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_pro
             </td>
             
             <td> <input class="form-control" onchange="totalWeightCal(this.id)"  style="margin-bottom:10px;width:55px;" value="" name="total_weight[]" id="total_weight<?=$i;?>"  /></td>
-            <td> <input class="form-control"   style="margin-bottom:10px;width:105px;" value="<?=$getProductPart->qty;?>" readonly="readonly" name="total_weight[]" id="total_weight<?=$i;?>"  /></td>
+            <td> <input class="form-control"   style="margin-bottom:10px;width:105px;" value="<?=$getProductPart->qty;?>" readonly="readonly" name="ideal_total_weight[]" id="ideal_total_weight<?=$i;?>"  /></td>
    <td> <input class="form-control"   style="margin-bottom:10px;width:95px;" readonly="readonly" value="" name="weight[]" id="weight<?=$i;?>"  /></td>
 <input type="hidden" id="net_weight_cal<?=$i;?>" value="<?=$getProductStock->net_weight;?>" />
         

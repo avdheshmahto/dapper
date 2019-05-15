@@ -2447,26 +2447,33 @@ var asx= weightData[1];
 var qty=document.getElementById("qty"+asx).value;
 var weight=document.getElementById("weight"+asx).value;
 var total_weight=document.getElementById("total_weight"+asx).value;
+var ideal_total_weight=document.getElementById("ideal_total_weight"+asx).value;
 
-var totalWeight=parseFloat(total_weight)/parseFloat(qty);
+
+var totalWeight=Number(total_weight)/Number(qty);
 var tolerance_percentage=document.getElementById("tolerance_percentage"+asx).value;
 document.getElementById("weight"+asx).value=totalWeight;
 var netweightCal=document.getElementById("net_weight_cal"+asx).value;
-var fivePercentageCal=parseFloat(netweightCal)*parseFloat(tolerance_percentage)/100;
-//alert(fivePercentageCal);
-var totalFivePluspercentageVal=parseFloat(netweightCal)+parseFloat(fivePercentageCal);
-var totalFiveMinuspercentageVal=parseFloat(netweightCal)-parseFloat(fivePercentageCal);
-alert(totalFivePluspercentageVal);
+var netWeightToatl=Number(ideal_total_weight)*Number(qty);
+
+var fivePercentageCal=Number(netWeightToatl)*Number(tolerance_percentage)/100;
+
+var totalFivePluspercentageVal=Number(netWeightToatl)+Number(fivePercentageCal);
+
+var totalFiveMinuspercentageVal=Number(netWeightToatl)-Number(fivePercentageCal);
 
 
-if(parseFloat(totalFivePluspercentageVal)<parseFloat(totalWeight))
+
+if(Number(totalFivePluspercentageVal)<Number(total_weight))
 {
+
 alert("Enter Weight is greater then Net Weight");	
 document.getElementById("total_weight"+asx).focus();
 document.getElementById("add_req").disabled = true;	
 }
-else if(parseFloat(totalFiveMinuspercentageVal)>parseFloat(totalWeight))
+else if(Number(totalFiveMinuspercentageVal)>Number(total_weight))
 {
+
 alert("Enter Weight is less then Net Weight");
 document.getElementById("total_weight"+asx).focus();
 document.getElementById("add_req").disabled = true;	
