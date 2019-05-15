@@ -1750,5 +1750,10 @@ echo "dfsd";die;
 }
 
 
+public function search_job_order()
+{
+$this->load->view("search-job-order");
+}
+
 
 }
