@@ -283,9 +283,9 @@ $entries = "";
 <div class="col-sm-4" id="regid"> 
 <input type="number" name="tolerance_percentage" value="" id="tolerance_percentage" class="form-control" >
 </div> 
-<label class="col-sm-2 control-label">&nbsp;</label> 
+<label class="col-sm-2 control-label">Packing Qty</label> 
 <div class="col-sm-4" > 
-&nbsp;
+<input type="number" name="packing" value="" id="packing" class="form-control" >
 </div> 
 </div>
 

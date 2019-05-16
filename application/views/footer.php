@@ -597,6 +597,8 @@ function editItem(ths) {
     $('#net_weight').val(editVal.net_weight);
     $('#cast_weight').val(editVal.cast_weight);
 	$('#tolerance_percentage').val(editVal.tolerance_percentage);
+	$('#packing').val(editVal.packing);
+	
 	
 	 
 	   getEntityRow(editVal.Product_id);
