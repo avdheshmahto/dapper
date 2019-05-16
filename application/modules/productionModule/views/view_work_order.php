@@ -55,7 +55,13 @@ foreach($queryProductShape->result() as $getProductShape){
 				<th>Part Name & code</th>
 				<?php }?>
                 <th>Order Qty</th>
-				
+                <th>Net Weight</th>
+                <th>Total Weight</th>
+                <th>RM Rate Per Kg</th>
+                 <th>Total RM Amount</th>
+                 <th>Labour Rate Per Kg</th>
+				<th>Total Labour Amount</th>
+               <th>Total Cost</th>
 			</tr>
        	  </tbody>
        	  <tbody id="quotationTable">
@@ -100,7 +106,64 @@ foreach($queryProductShape->result() as $getProductShape){
 					echo $imp[$i]."<br>";
 				}
 				?>
-				<?php //$dt->qty;?></td>
+				</td>
+                <td><?php
+                $wt=explode(",",$dt->weight);
+				for($i=0;$i<count($wt);$i++)
+				{
+					echo $wt[$i]."<br>";
+				}
+				
+				?></td>
+                 <td><?php
+                $totalWt=explode(",",$dt->total_weight);
+				for($i=0;$i<count($totalWt);$i++)
+				{
+					echo $totalWt[$i]."<br>";
+				}
+				
+				?></td>
+                <td><?php
+                $rmRatePerKg=explode(",",$dt->rate);
+				for($i=0;$i<count($rmRatePerKg);$i++)
+				{
+					echo $rmRatePerKg[$i]."<br>";
+				}
+				
+				?></td>
+                
+                 <td><?php
+                $totalRmAmount=explode(",",$dt->total_rm_rate_rs);
+				for($i=0;$i<count($totalRmAmount);$i++)
+				{
+					echo $totalRmAmount[$i]."<br>";
+				}
+				
+				?></td>
+                 <td><?php
+                $labourRatePerKg=explode(",",$dt->labour_rate_co);
+				for($i=0;$i<count($labourRatePerKg);$i++)
+				{
+					echo $labourRatePerKg[$i]."<br>";
+				}
+				
+				?></td>
+                 <td><?php
+                $totalLabourRate=explode(",",$dt->total_labour_rate);
+				for($i=0;$i<count($totalLabourRate);$i++)
+				{
+					echo $totalLabourRate[$i]."<br>";
+				}
+				
+				?></td>
+                <td><?php
+                $totalCost=explode(",",$dt->total_cost);
+				for($i=0;$i<count($totalCost);$i++)
+				{
+					echo $totalCost[$i]."<br>";
+				}
+				
+				?></td>
               	</tr>
               	
             <?php 
