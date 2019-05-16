@@ -3,12 +3,12 @@ $this->load->view("header.php");
 $id=$_GET['id'];
 
 if($_GET['id']!='' or $_GET['view']!=''){
-	$query=$this->db->query("select * from tbl_sales_order_hdr where salesid='$id' or salesid='".$_GET['view']."'");	
+	$query=$this->db->query("select * from tbl_proforma_invoice_hdr where invoiceid='$id' or invoiceid='".$_GET['view']."'");	
 	$fetchq=$query->row();
 }
 
 ?>
-<form id="f1" name="f1" method="POST" action="insertInvoice" onSubmit="return checkKeyPressed(a)">
+<form id="f1" name="f1" method="POST" action="updateInvoice" onSubmit="return checkKeyPressed(a)">
 <!-- Main content -->
 	<div class="main-content">
 		
@@ -22,17 +22,40 @@ if($_GET['id']!='' or $_GET['view']!=''){
 		<?php }?>
 			<div class="row">
 				<div class="col-lg-12">
-					<div class="heading">
+					<div class="panel panel-default">
+						<div class="panel-heading clearfix">
 							<h4 class="panel-title"><strong>Update Invoice</strong></h4>
-							
+							<ul class="panel-tool-options"> 
+								<li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
+							</ul>
+						</div>
 <div class="panel-body">
 <div class="table-responsive">
 <table class="table table-striped table-bordered table-hover" <?php if($_GET['view']!=''){?> oncontextmenu='return false;' onkeydown='return false;' onmousedown='return false;' <?php }?> >
 <thead>
 <tr>
+<th>State</th>
+<th>
+<div class="field">
+<select class="form-control" name="state_id" id="state" onchange="getCustomer();">
+<option value="">--Select--</option>
+
+
+<option value="07" <?php if($fetchq->state_id=='07'){ ?> selected="selected" <?php }?>>Delhi</option>
+<option value="06" <?php if($fetchq->state_id=='06'){ ?> selected="selected" <?php }?>>Haryana</option>
+<option value="08" <?php if($fetchq->state_id=='08'){ ?> selected="selected" <?php }?>>Rajasthan</option>
+<option value="24" <?php if($fetchq->state_id=='24'){ ?> selected="selected" <?php }?>>Gujrat</option>
+<option value="29" <?php if($fetchq->state_id=='29'){ ?> selected="selected" <?php }?>>Karnataka</option>
+<option value="09" <?php if($fetchq->state_id=='09'){ ?> selected="selected" <?php }?>>Uttar Pradesh</option>
+</select>
+</div>
+</th>
 <th>Customer Name</th>
 <th>
 <div class="field">
+
+
+
 <select name="vendor_id" required id="contact_id_copy" class="form-control ui fluid search dropdown email" onChange="document.getElementsByName('contactid')[0].value=this.value;">
 					<option value="">---select---</option>
 					 <?php
@@ -42,50 +65,142 @@ if($_GET['id']!='' or $_GET['view']!=''){
 					{
 					  ?>
 						<option value="<?php echo $contRow->contact_id; ?>" <?php if($contRow->contact_id==$fetchq->vendor_id){?> selected="selected" <?php }?>>
-						<?php echo $contRow->first_name.' '.$contRow->middle_name.' '.$contRow->last_name; ?></option>
+						<?php echo $contRow->first_name.' '.$contRow->last_name."(".$contRow->printname.")"; ?></option>
 						<?php } ?>
 </select>
-</div>
-</th>
-<th>Sales Type</th>
-<th>
-<div class="field">
-	<select name="invoice_type" class="form-control"  required id="invoice_type"   <?php if(@$_GET['view']!=''){ ?> disabled="disabled" <?php }?>>
-		<option value="">Select</option>
+
+
+
+
+
+	<select style="display:none;" name="invoice_type" class="form-control"  required id="invoice_type"   <?php if(@$_GET['view']!=''){ ?> disabled="disabled" <?php }?>>
 		
-			<option value="No-Tax" <?php if($fetchq->invoice_type=='No-Tax'){?> selected="selected" <?php }?>>
+		
+			<option value="No-Tax" >
 			No-Tax
 			</option>
-            <option value="GST" <?php if($fetchq->invoice_type=='GST'){?> selected="selected" <?php }?>>
+            <option value="GST" selected="selected" >
 			GST
 			</option>
 		
 	</select>
 </div>
-
 </th>
-
 <th>Date</th>
 <th>
 <input type="date"  class="form-control" required name="date" value="<?php echo $fetchq->invoice_date;?>" />
-<input type="hidden"  class="form-control" required name="iddd" value="<?php echo $fetchq->salesid;?>" />
+<input type="hidden"  class="form-control" required name="id" value="<?php echo $fetchq->invoiceid;?>" />
+</th>
+<th>Payment Term</th>
+<th>
+<input type="number"  class="form-control" min="0" required name="due_date" value="<?php echo $fetchq->due_date;?>" />
+</th>
+</tr>
+<tr>
+<td>Dispatch Through</td>
+<th>
+<input type="text"  class="form-control"  name="Transportation" value="<?php echo $detail->Transportation;?>" />
+</th>
+<td>Vehicle Number</td>
+<th>
+<input type="text"  class="form-control"  name="Vehicle_Number" value="<?php echo $detail->Vehicle_Number;?>" />
+</th>
+<td>Date of Supply</td>
+<th>
+<input type="date"  class="form-control"  name="Date_of_Supply" value="<?php echo $detail->Date_of_Supply;?>" />
+</th>
+<td>Place of Supply</td>
+<th>
+<input type="text"  class="form-control"  name="Place_of_Supply" value="<?php echo $detail->Place_of_Supply;?>" />
+</th>
+</tr>
+<tr>
+<td>Store No.</td>
+<th>
+<input type="text"  class="form-control" required name="storeno" value="<?php echo $fetchq->storeno;?>" />
+</th>
+<td>PO No.</td>
+<th>
+<input type="text"  class="form-control" required name="pono" value="<?php echo $fetchq->pono;?>" />
+</th>
+<td>PO Date</td>
+<th>
+<input type="date"  class="form-control" required name="podate" value="<?php echo $fetchq->podate;?>" />
+</th>
+
+<td>Schedule</td>
+<th>
+<input type="text"  class="form-control"  name="schedule" value="<?php echo $fetchq->schedule;?>" />
+</th>
+</tr>
+
+<tr>
+<td>Eway Bill No.</td>
+<th>
+<input type="text"  class="form-control"  name="ewaybillno" value="<?php echo $fetchq->ewaybillno;?>" />
+</th>
+
+<td>Eway Bill Date</td>
+<th>
+<input type="date"  class="form-control"  name="ewaybilldate" value="<?php echo $fetchq->ewaybilldate;?>" />
+</th>
+
+<td>No. Of Bags</td>
+<th>
+<input type="text"  class="form-control"  name="no_of_begs" value="<?php echo $fetchq->no_of_begs;?>" />
+</th>
+
+
+<td>Weight</td>
+<th>
+<input type="text"  class="form-control"  name="weight" value="<?php echo $fetchq->weight;?>" />
+</th>
+
+</tr>
+<tr>
+
+<td>Dispatch Document No.</td>
+<th>
+<input type="text"  class="form-control"  name="dispatch_document_no" value="<?php echo $fetchq->dispatch_document_no;?>" />
+</th>
+
+
+
+<td>Dispatch Document Date</td>
+<th>
+<input type="date"  class="form-control"  name="dispatch_document_date" value="<?php echo $fetchq->dispatch_document_date;?>" />
+</th>
+
+
+
+<td>Remarks</td>
+<th>
+<textarea name="remarks" class="form-control"><?php echo $fetchq->remarks;?></textarea>
+</th>
+
+</tr>
+
+<tr>
+<td>Attachment</td>
+<th>
+<input type="file"  class="form-control"  name="image[]" multiple  />
+</th>
+<td>&nbsp;</td>
+<th>&nbsp;
 
 </th>
-<th>Term</th>
-<th>
-<input type="number"  class="form-control" min="0" name="due_date" value="<?php echo $fetchq->due_date;?>" />
+<td>&nbsp;</td>
+<th>&nbsp;
+
+</th>
+<td>&nbsp;</td>
+<th>&nbsp;
+
 </th>
 </tr>
-<tr class="tr-bg">
-<th>Transportation</th>
-<th><input type="text"  class="form-control"  name="Transportation" value="<?php echo $fetchq->Transportation;?>" /></th>
-<th>Vehicle Number</th>
-<th><input type="text"  class="form-control"  name="Vehicle_Number" value="<?php echo $fetchq->Vehicle_Number;?>" /></th>
-<th>Date of Supply</th>
-<th><input type="date"  class="form-control"  name="Date_of_Supply" value="<?php echo $fetchq->Date_of_Supply;?>" /></th>
-<th>Place of Supply</th>
-<th><input type="text"  class="form-control"  name="Place_of_Supply" value="<?php echo $fetchq->Place_of_Supply;?>" /></th>
-</tr>
+
+
+
 
 </thead>
 
@@ -115,13 +230,13 @@ if($_GET['id']!='' or $_GET['view']!=''){
 <th style="width:280px;">
 <div class="input-group"> 
 <div style="width:100%; height:28px;" >
-<input type="text" name="prd"  onkeyup="getdata()" onClick="getdata()" id="prd" style=" width:230px;"  placeholder=" Search Items..." tabindex="5" >
+<input type="text" name="prd"  onkeyup="getdata()" onClick="getdata()" id="prd" style=" width:280px; font-size:11px;"  placeholder=" Search Items..." tabindex="5" class="form-control" >
  <input type="hidden"  name="pri_id" id='pri_id'  value="" style="width:80px;"  />
  <input type="hidden"  name="dtl_idd" id='dtl_idd'  value="" style="width:80px;"  />
-<img   src="<?php echo base_url();?>/assets/images/search11.png"  onclick="showall()" onMouseOver="showall1()" /></div>
+<img   src="<?php echo base_url();?>/assets/images/search11.png"  onclick="showall()" onMouseOver="showall1()" style="display:none;" /></div>
 
 </div>
-<div id="prdsrch" style="color:black;padding-left:0px; width:30%; height:110px; max-height:110px;overflow-x:auto;overflow-y:auto;padding-bottom:5px;padding-top:0px; position:absolute;">
+<div id="prdsrch" style="color:black;padding-left:0px; width:280px; height:110px; max-height:110px;overflow-x:auto;overflow-y:auto;padding-bottom:5px;padding-top:0px; position:absolute;">
 <?php
 //include("getproduct.php");
 $this->load->view('getproduct');
@@ -131,30 +246,30 @@ $this->load->view('getproduct');
 </th>
 
 <th>
+<input type="hidden" id="reorder" />
 <input type="text" readonly="" id="qty_stock" style="width:70px;" class="form-control"> 
 </th>
-
 <th>
 <input type="text" readonly="" id="usunit" style="width:70px;" class="form-control"> 
 </th>
 <th>
 <b id="lpr"></b>
-<input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:70px;"></th>
+<input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:112px;"></th>
 <th><input type="number" id="qn" min="1" style="width:70px;"   class="form-control"></th>
 
-<th><input type="number" step="any" name="saleamnt" id="discount"  style="width:70px;"/ ></th>
-<th><input type="number" step="any" name="saleamnt" id="disAmt"   style="width:70px;"/ ></th>
+<th><input type="number" step="any" name="saleamnt" id="discount" class="form-control"  style="width:70px;"/ ></th>
+<th><input type="number" step="any" name="saleamnt" id="disAmt" class="form-control"   style="width:70px;"/ ></th>
  <td> 
-						 <input type="text" id="cgst"  onfocus="this.select()" style="width:62px;" readonly></td>	
+						 <input type="text" id="cgst" class="form-control"  onfocus="this.select()" style="width:62px;" readonly></td>	
                          
                          <td> 
-						 <input type="text"  id="sgst"  onfocus="this.select()" style="width:62px;" readonly></td>	
+						 <input type="text"  id="sgst" class="form-control" onfocus="this.select()" style="width:62px;" readonly></td>	
                          
                          <td> 
-						 <input type="text" id="igst"  onfocus="this.select()" style="width:62px;" readonly></td>
-                          <td><input type="text" id="gstTotal"  onfocus="this.select()" style="width:62px;" readonly></td>	
-<th><input type="text" name="saleamnt" readonly="" id="tot"  style="width:70px;"/ ></th>
-<th><input type="text" name="saleamnt" readonly="" id="nettot"  style="width:70px;"/ ></th>
+						 <input type="text" id="igst" class="form-control"  onfocus="this.select()" style="width:62px;" readonly></td>
+                          <td><input type="text" class="form-control" id="gstTotal"  onfocus="this.select()" style="width:62px;" readonly></td>	
+<th><input type="text" name="saleamnt" readonly=""  class="form-control" id="tot"  style="width:70px;"/ ></th>
+<th><input type="text" name="saleamnt" readonly="" class="form-control" id="nettot"  style="width:70px;"/ ></th>
 </tr>
 </tbody>
 </table>
@@ -188,26 +303,26 @@ $this->load->view('getproduct');
 <tr></tr>
 <?php
 $z=1;
-$query_dtl=$this->db->query("select * from tbl_sales_order_dtl where salesid='".$_GET['id']."' or salesid='".$_GET['view']."' ");
+$query_dtl=$this->db->query("select * from tbl_proforma_invoice_dtl where invoiceid='".$_GET['id']."' or invoiceid='".$_GET['view']."' ");
 foreach($query_dtl->result() as $invoiceFetch)
 {
 
-$productQuery=$this->db->query("select *from tbl_product_stock where Product_id='$invoiceFetch->product_id'");
+$productQuery=$this->db->query("select *from tbl_product_stock where Product_id='$invoiceFetch->productid'");
 $getProductName=$productQuery->row();
 
 ?>
 <tr>
 <td align="center" style="width: 0.2%;"><?php echo $z;?></td>
 
-<td align="center" style="width: 11%;"><input type="text" name="pd[]" id="pd<?php echo $z;?>" value="<?php echo $getProductName->productname;?>^<?php echo $invoiceFetch->product_id;?>" readonly="" style="text-align: center; width: 100%; border:hidden;">
-<input type="hidden" name="main_id[]" id="main_id<?php echo $z;?>" value="<?php echo $invoiceFetch->product_id;?>" readonly="" style="text-align: center; width: 100%; border:hidden;"><input type="hidden" value="Box" name="unit[]" id="unit<?php echo $z;?>" readonly="" style="text-align: center; width: 100%; border: hidden;">
+<td align="center" style="width: 11%;"><input type="text" name="pd[]" id="pd<?php echo $z;?>" value="<?php echo $getProductName->productname;?>^<?php echo $invoiceFetch->productid;?>" readonly="" style="text-align: center; width: 100%; border:hidden;">
+<input type="hidden" name="main_id[]" id="main_id<?php echo $z;?>" value="<?php echo $invoiceFetch->productid;?>" readonly="" style="text-align: center; width: 100%; border:hidden;"><input type="hidden" value="Box" name="unit[]" id="unit<?php echo $z;?>" readonly="" style="text-align: center; width: 100%; border: hidden;">
 </td>
 
 <td align="center" style="width: 3%;">
 <input type="text" name="list_price[]" id="lph<?php echo $z;?>" value="<?php echo $invoiceFetch->list_price;?>" readonly="" style="text-align: center; width: 100%; border: hidden;">
 
 
-<td align="center" style="width: 3%;"><input type="text" name="qty[]" id="qnty<?php echo $z;?>" value="<?php echo $invoiceFetch->quantity;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
+<td align="center" style="width: 3%;"><input type="text" name="qty[]" id="qnty<?php echo $z;?>" value="<?php echo $invoiceFetch->qty;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
 
 
 <td align="center" style="width: 3%;"><input type="text" name="discount[]" id="dis<?php echo $z;?>" value="<?php echo $invoiceFetch->discount;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
@@ -236,7 +351,7 @@ $getProductName=$productQuery->row();
 </td>
 
 <td align="center" style="width: 3%;">
-<input type="text" name="tot[]" id="tot<?php echo $z;?>" value="<?php echo $invoiceFetch->total;?>" readonly="" style="text-align: center; width: 100%; border: hidden;">
+<input type="text" name="tot[]" id="tot<?php echo $z;?>" value="<?php echo $invoiceFetch->total_price;?>" readonly="" style="text-align: center; width: 100%; border: hidden;">
 
 </td>
 
@@ -245,7 +360,12 @@ $getProductName=$productQuery->row();
 <input type="text" name="nettot[]" id="nettot<?php echo $z;?>" value="<?php echo $invoiceFetch->net_price;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
 </td>
 
-<td align="center" style="width: 3%;"><img src="<?php echo base_url();?>assets/images/delete.png" border="0" name="dlt" id="dlt<?php echo $z;?>" onclick="deleteselectrow(this.id,this);"  readonly style="width: 30%; height: 20%; border: hidden;"><img src="<?php echo base_url();?>assets/images/edit.png" border="0" name="ed" id="ed<?php echo $z;?>" onclick="editselectrow(this.id,this);" style="width: 30%; height: 20%; border: hidden;"></td>
+<td align="center" style="width: 3%;">
+
+
+
+
+<img src="<?php echo base_url();?>assets/images/delete.png" border="0" name="dlt" id="dlt<?php echo $z;?>" onclick="deleteselectrow(this.id,this);"  readonly style="width:auto; height:auto; border: hidden;"><img src="<?php echo base_url();?>assets/images/edit.png" border="0" name="ed" id="ed<?php echo $z;?>" onclick="editselectrow(this.id,this);" style="width:auto; height:auto; border: hidden;"></td>
 </tr>
 <?php $row=$z; $z++;  } ?>
 
@@ -302,20 +422,20 @@ $getProductName=$productQuery->row();
 
 
 <tr  class="gradeA">
-<th>CGST TAX</th>
-<th><input type="number" name="total_cgst"  id="total_cgst" step="any" min="0" value="<?=$fetchq->total_cgst;?>" placeholder="%" class="form-control"></th>
+<th >CGST TAX</th>
+<th><input style="display:none;" type="number" name="total_cgst"  id="total_cgst" step="any" min="0" value="<?=$fetchq->total_cgst;?>" placeholder="%" class="form-control"></th>
 <th><input type="number" readonly="" name="total_tax_cgst_amt" id="total_tax_cgst_amt"  value="<?=$fetchq->total_tax_cgst_amt;?>" step="any" placeholder="Placeholder" class="form-control"></th>
 </tr>
 
 <tr  class="gradeA">
 <th>SGST TAX</th>
-<th><input type="number" name="total_sgst"  id="total_sgst" step="any" min="0" placeholder="%" value="<?=$fetchq->total_sgst;?>" class="form-control"></th>
+<th><input style="display:none;" type="number" name="total_sgst"  id="total_sgst" step="any" min="0" placeholder="%" value="<?=$fetchq->total_sgst;?>" class="form-control"></th>
 <th><input type="number" readonly="" name="total_tax_sgst_amt" id="total_tax_sgst_amt" step="any" value="<?=$fetchq->total_tax_sgst_amt;?>" placeholder="Placeholder" class="form-control"></th>
 </tr>
 
 <tr  class="gradeA">
 <th>IGST TAX</th>
-<th><input type="number" value="<?=$fetchq->total_igst;?>" name="total_igst"  id="total_igst" step="any" min="0" placeholder="%" class="form-control"></th>
+<th><input style="display:none;" type="number" value="<?=$fetchq->total_igst;?>" name="total_igst"  id="total_igst" step="any" min="0" placeholder="%" class="form-control"></th>
 <th><input type="number" readonly="" value="<?=$fetchq->total_tax_igst_amt;?>" name="total_tax_igst_amt" id="total_tax_igst_amt" step="any" placeholder="Placeholder" class="form-control"></th>
 </tr>
 <tr  class="gradeA">
@@ -329,7 +449,7 @@ $getProductName=$productQuery->row();
 
 <tr  class="gradeA">
 <th>Total Discount</th>
-<th><input type="number" name="total_dis" value="<?=$fetchq->total_dis;?>"  id="total_dis" step="any" min="0" placeholder="%" class="form-control"></th>
+<th><input style="display:none;" type="number" name="total_dis" value="<?=$fetchq->total_dis;?>"  id="total_dis" step="any" min="0" placeholder="%" class="form-control"></th>
 <th><input type="number" readonly="" name="total_dis_amt" id="total_dis_amt" step="any" value="<?=$fetchq->total_dis_amt;?>"  placeholder="Placeholder" class="form-control"></th>
 </tr>
 
@@ -759,7 +879,15 @@ function getdata()
 		 var product1=document.getElementById("prd").value;	 
 		 var product=product1;
 		  var conatctId=document.getElementById("contact_id_copy").value;
-		 	if(conatctId=='')
+		   var state=document.getElementById("state").value;
+		 	var invoice_type=document.getElementById("invoice_type").value;
+			if(state=='')
+		{
+		alert('Plase Select State');
+		document.getElementById("state").focus();
+		}	
+			
+			if(conatctId=='')
 		{
 		alert('Plase Select Contact First');
 		document.getElementById("contact_id_copy").focus();
@@ -774,7 +902,7 @@ function getdata()
 			 {
 			 var obj=document.getElementById("prdsrch");
 			
-			 xobj.open("GET","getproduct?con="+product+"&con_id="+conatctId+"&invoice_type="+invoice_type,true);
+			 xobj.open("GET","getproduct?con="+product+"&con_id="+conatctId+"&invoice_type="+invoice_type+"&state_id="+state,true);
 			 xobj.onreadystatechange=function()
 			  {
 			  if(xobj.readyState==4 && xobj.status==200)
@@ -926,7 +1054,10 @@ function getdata()
 							cell.appendChild(salepr);
 					
 
-
+	
+	
+	
+	
 	
 		//==============================close 2nd cell =========================================
 		
@@ -1388,7 +1519,17 @@ document.getElementById("grand_total").value=totalGrossCal.toFixed(2);
 }
 // ##### ends ###########
 
-      
+  function getCustomer()
+{
+var state=document.getElementById("state").value;
+var xhttp = new XMLHttpRequest();
+xhttp.open("GET", "getContact?state="+state, false);
+xhttp.send();
+document.getElementById("contact_id_copy").innerHTML = xhttp.responseText;
+	
+	
+}
+    
 </script>
 </form>
 <?php
