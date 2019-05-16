@@ -405,15 +405,7 @@ function ajex_JobWorkListData(production_id){
 <div class="row">
 <div class="col-xs-6 col-sm-6 col-md-6">
 <div class="form-group">
-<h4>Lot No.</h4>
-
-<input type="text" name="lot_number" value=""  class="form-control" >
-</div>
-</div>
-<div class="col-xs-6 col-sm-6 col-md-6">
 <h4>Vendor Name</h4>
-<div class="form-group">
-
 <select name="vendor_id" class="form-control">
 <option value="">--Select--</option>
 <?php
@@ -427,9 +419,49 @@ foreach($vendor_query->result() as $getVendor){
 
 </div>
 </div>
+<div class="col-xs-6 col-sm-6 col-md-6">
+<h4>Shape</h4>
+<div class="form-group">
+
+<select name="shape_id" class="form-control">
+<option value="">--Select--</option>
+<?php
+$product_query=$this->db->query("select *from tbl_product_stock where type='33'");
+foreach($product_query->result() as $getProduct){
+?>
+<option value="<?=$getProduct->Product_id;?>"><?=$getProduct->productname;?></option>
+<?php }?>
+</select>
+
+</div>
+</div>
 </div>
 
+<div class="row">
+<div class="col-xs-6 col-sm-6 col-md-6">
+<div class="form-group">
+<h4>Part Name</h4>
+<select name="part_id" class="form-control">
+<option value="">--Select--</option>
+<?php
+$part_query=$this->db->query("select *from tbl_product_stock where type='32'");
+foreach($part_query->result() as $getPart){
+?>
+<option value="<?=$getPart->Product_id;?>"><?=$getPart->productname;?></option>
+<?php }?>
+</select>
 
+
+</div>
+</div>
+<div class="col-xs-6 col-sm-6 col-md-6">
+<h4>&nbsp;</h4>
+<div class="form-group">
+
+&nbsp;
+</div>
+</div>
+</div>
 <div class="row">
 <div class="col-xs-6 col-sm-6 col-md-6">
 <div class="form-group">
@@ -484,15 +516,26 @@ foreach($vendor_query->result() as $getVendor){
 if($Search!='')
 {
 
-					$qry = "select *from tbl_job_work where order_type='Job Order' or order_type='Purchase Order'";
+
+
+					$qry = "select *from tbl_job_work where order_type='Job Order' ";
+	//$qry = "select *from tbl_job_work where order_type='Purchase Order'";				
 					
-					   if($lot_no!= "")
+					
+					   if($shape_id!= "")
 						
-						 echo $qry .= " AND lot_no = '$lot_no'";
+						  $qry .= " AND shape_id = '$shape_id'";
 					  
 					   if($vendor_id != "")
 					
-					     $qry .= " AND vendor_id LIKE '%".$vendor_id."%'";
+					     $qry .= " AND vendor_id = '$vendor_id'";
+						
+						 if($part_id != "")
+					
+					     $qry .= " AND part_id LIKE '%".$part_id."%'";
+						 
+						 
+						 
 						 
 						$queryData=$this->db->query($qry); 
 						 
