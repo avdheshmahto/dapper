@@ -82,7 +82,7 @@ Entries</label>
 <thead>
 <tr>
 	   <th><div style="width:100px;">Invoice No.</div></th>
-	   <th><div style="width:100px;">Invoice Type</div></th>
+	   
 	   <th><div style="width:100px;">Date</div></th>
        <th><div style="width:130px;">Customer Name</div></th>
 	   <th><div style="width:100px;">Due Date</div></th>
@@ -96,7 +96,7 @@ Entries</label>
 <tr>
 	
 	<td><input name="invoiceid"  type="text"  class="search_box form-control input-sm" style="width:100px;"  value="" /></td>
-	<td><input name="invoice_status"  type="text"  class="search_box form-control input-sm"  value="" /></td>
+	
 	<td><input name="invoice_date"  type="date"  class="search_box form-control input-sm"  value="" /></td>
 	<td><input name="cust_name"  type="text"  class="search_box form-control input-sm"  value="" /></td>
 	<td>&nbsp;</td>
@@ -114,10 +114,10 @@ $i=1;
 
 <tr class="gradeC record">
 <th><?=$sales->invoiceid;?></th>
-<th><?=$sales->invoice_status;?></th>
-<th><?=$sales->invoice_date;?></th>
+
+<th><?=$sales->buyer_date;?></th>
 <th><?php 
-		$sqlgroup=$this->db->query("select * from tbl_contact_m where group_name='4' and contact_id='$sales->vendor_id'");
+		$sqlgroup=$this->db->query("select * from tbl_contact_m where group_name='4' and contact_id='$sales->contactid'");
 		$res1 = $sqlgroup->row();
 		echo $res1->first_name;?></th>
 <th>
@@ -177,21 +177,9 @@ echo abs($minutesLeft)." days over due";
 <button class="btn btn-default" onClick="openpopup('<?=base_url();?>proformaInvoice/edit_invoice_order_1',1400,600,'id',<?=$sales->invoiceid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-pencil"></i></button>
 
 	<button class="btn btn-default delbutton" id="<?=$sales->invoiceid."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button>
-	 <?php }?>
-     <?php
-     if($sales->invoice_coverted_status=='Converted')
-	 {
-	 ?>
-<a onclick="return confirm('This invoice already coverted into invoice');" href="#" class="btn btn-sm">Converted into Invoice</a>
+	
 
-<?php
-	 }
-	 else
-	 {
-	 ?>
-     
 
-<a onclick="return confirm('Are you sure you want to convert sales order in invoice?');" href="<?=base_url();?>invoice/invoice/edit_invoice_order?id=<?=$sales->invoiceid;?>" class="btn btn-sm">Convert To Invoice</a>
 
 <?php
 	 }
@@ -208,7 +196,7 @@ $table_name='tbl_invoice_hdr';
 	
 	?>
     
-<a href="<?=base_url();?>proformaInvoice/view_attachment?id=<?=$sales->invoiceid;?>" class="btn btn-default" target="blank">View Attachment</a>
+
 
 </th>
 </tr>

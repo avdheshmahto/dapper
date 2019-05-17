@@ -342,12 +342,19 @@ public function insertInvoice(){
 		);
 	
 		$data = array(
-	
-					'sales_id' => $this->input->post('iddd'),
-					'vendor_id' => $this->input->post('vendor_id'),
-					'invoice_status' => $this->input->post('invoice_type'),
-					'invoice_date' => $this->input->post('date'),
-					'due_date' => $this->input->post('due_date'),
+					'invoiceid' => $this->input->post('id'),
+					'contactid' => $this->input->post('contactid'),
+					'proforma_no' => $this->input->post('proforma_no'),
+					'proforma_date' => $this->input->post('proforma_date'),
+					'buyer_order' => $this->input->post('buyer_order'),
+					'buyer_date' => $this->input->post('buyer_date'),
+					'ship_date' => $this->input->post('ship_date'),
+					'payment_term' => $this->input->post('payment_term'),
+					'dilivery_term' => $this->input->post('dilivery_term'),
+					'port_loading' => $this->input->post('port_loading'),
+					'port_of_discharge' => $this->input->post('port_of_discharge'),
+					'partshipment' => $this->input->post('partshipment'),
+					'forwarder' => $this->input->post('forwarder'),
 					'sub_total' => $this->input->post('sub_total'),
 					'total_cgst' => $this->input->post('total_cgst'),	
 					'total_tax_cgst_amt' => $this->input->post('total_tax_cgst_amt'),
@@ -359,16 +366,7 @@ public function insertInvoice(){
 					'total_dis' => $this->input->post('total_dis'),
 					'total_dis_amt' => $this->input->post('total_dis_amt'),
 					'grand_total' => $this->input->post('grand_total'),
-					'expected_delivery_date' => $this->input->post('expected_delivery_date'),
-					'transit_insurance' => $this->input->post('transit_insurance'),
-					'Date_of_Supply' => $this->input->post('Date_of_Supply'),
 					
-					'Transportation' => $this->input->post('Transportation'),
-					'Vehicle_Number' => $this->input->post('Vehicle_Number'),
-					'weight' => $this->input->post('weight'),
-					'dispatch_document_no' => $this->input->post('dispatch_document_no'),
-					'dispatch_document_date' => $this->input->post('dispatch_document_date'),
-					'remarks' => $this->input->post('remarks'),
 					'status' => 'Draft'
 					
 					
@@ -383,20 +381,6 @@ public function insertInvoice(){
 		
 		
 		
-		// multiple image insert
-
-for($i=0;$i<count($_FILES['image']['name']);$i++)
-
-{
-	
-	
-$target = "assets/performa_attchment/"; 
-		$target1 =$target . @date(U)."_".( $_FILES['image']['name'][$i]);
-		$image_name=@date(U)."_".( $_FILES['image']['name'][$i]);
-		move_uploaded_file($_FILES['image']['tmp_name'][$i], $target1);	
-		
-		$this->db->query("insert into tbl_performa_attchment set image='$image_name',qut_ref_id='$lastHdrId'");
-}
 		
 		
 		
@@ -425,6 +409,8 @@ $data_dtl=array(
 				 'gstTotal' => $gstTotal[$i],
 				 'total_price' => $tot[$i],
 				 'net_price' => $nettot[$i],
+				 'per_crt_qn' => $per_crt_qn[$i],
+				 'total_qty' => $total_qty[$i],
 				 'maker_id' => $this->session->userdata('user_id'),
 				 'maker_date' => date('y-m-d'),
 				 'comp_id' => $this->session->userdata('comp_id'),
@@ -442,11 +428,7 @@ $data_dtl=array(
 				$this->Model_admin_login->insert_user($table_name_dtl,$data_dtl);		
 							}
 					}
-				//$this->paymentAmount($grand_total,$vendor_id,$lastHdrId,$id);	
-			//$this->paymentAmountInsert($grand_total,$vendor_id,$lastHdrId,$id);	
-			//$this->updateTermAndCondition($lastHdrId,$vendor_id,$grand_total,$date);
-				$this->software_log_insert($lastHdrId,$vendor_id,$grand_total,'Proforma Invoice added');
-	
+		
 				
 			 $rediectInvoice="proformaInvoice/manage_invoice";
 		redirect($rediectInvoice);	
@@ -510,10 +492,18 @@ $this->db->query("update tbl_sales_order_hdr set termandcondition='".addslashes(
 	
 		$data = array(
 					'invoiceid' => $this->input->post('id'),
-					'vendor_id' => $this->input->post('vendor_id'),
-					'invoice_status' => $this->input->post('invoice_type'),
-					'invoice_date' => $this->input->post('date'),
-					'due_date' => $this->input->post('due_date'),
+					'contactid' => $this->input->post('contactid'),
+					'proforma_no' => $this->input->post('proforma_no'),
+					'proforma_date' => $this->input->post('proforma_date'),
+					'buyer_order' => $this->input->post('buyer_order'),
+					'buyer_date' => $this->input->post('buyer_date'),
+					'ship_date' => $this->input->post('ship_date'),
+					'payment_term' => $this->input->post('payment_term'),
+					'dilivery_term' => $this->input->post('dilivery_term'),
+					'port_loading' => $this->input->post('port_loading'),
+					'port_of_discharge' => $this->input->post('port_of_discharge'),
+					'partshipment' => $this->input->post('partshipment'),
+					'forwarder' => $this->input->post('forwarder'),
 					'sub_total' => $this->input->post('sub_total'),
 					'total_cgst' => $this->input->post('total_cgst'),	
 					'total_tax_cgst_amt' => $this->input->post('total_tax_cgst_amt'),
@@ -525,23 +515,8 @@ $this->db->query("update tbl_sales_order_hdr set termandcondition='".addslashes(
 					'total_dis' => $this->input->post('total_dis'),
 					'total_dis_amt' => $this->input->post('total_dis_amt'),
 					'grand_total' => $this->input->post('grand_total'),
-								
-					'Transportation' => $this->input->post('Transportation'),
-					'Vehicle_Number' => $this->input->post('Vehicle_Number'),
-					'Date_of_Supply' => $this->input->post('Date_of_Supply'),
-					
-					'Transportation' => $this->input->post('Transportation'),
-					'Vehicle_Number' => $this->input->post('Vehicle_Number'),
-					
-					
-					'weight' => $this->input->post('weight'),
-					'dispatch_document_no' => $this->input->post('dispatch_document_no'),
-					'dispatch_document_date' => $this->input->post('dispatch_document_date'),
-					'remarks' => $this->input->post('remarks'),
-					
-					'gr_no' => $this->input->post('gr_no'),
 					'status' => 'Draft',
-					'state_id' => $state_id,
+					
 					
 					);
 			

@@ -232,7 +232,7 @@ var xobj;
 						document.getElementById("sgst").value=cgst;
 						}
 						}
-					document.getElementById("pri_id").value=pids;
+					document.getElementById("pri_id").value=pt;
 				   document.getElementById("prd").value=pt;
 					
 					document.getElementById("qn").value=1;

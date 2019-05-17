@@ -103,11 +103,11 @@ $getOrder=$orderQuery->row();
                      <th class="tdcenter">Total Weight</th>
                      <th class="tdcenter">Ideal Net Weight</th>
                      <th class="tdcenter">Net Weight</th>
-                     <th class="tdcenter">RM rate per kg</th>
-                     <th class="tdcenter">Total Rm Amount</th>
-                     <th class="tdcenter">Labour rate per kg</th>
-                     <th class="tdcenter">Total labour amount</th>
-                     <th class="tdcenter">Total cost</th>
+                     <th style="display:none" class="tdcenter">RM rate per kg</th>
+                     <th style="display:none" class="tdcenter">Total Rm Amount</th>
+                     <th style="display:none" class="tdcenter">Labour rate per kg</th>
+                     <th style="display:none" class="tdcenter">Total labour amount</th>
+                     <th style="display:none" class="tdcenter">Total cost</th>
 				</tr>
 			</thead>
         
@@ -191,15 +191,15 @@ $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_pro
    <td> <input class="form-control"   style="margin-bottom:10px;width:95px;" readonly="readonly" value="" name="weight[]" id="weight<?=$i;?>"  /></td>
 <input type="hidden" id="net_weight_cal<?=$i;?>" value="<?=$getProductStock->net_weight;?>" />
         
-        <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="rate[]" id="rate<?=$i;?>" onchange="RateCal(this.id)"  /></td>
-        <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_rm_rate[]" id="total_rm_rate<?=$i;?>"  /></td>
-        <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="labour_rate[]" id="labour_rate<?=$i;?>" onchange="labourRateCal(this.id)"  /></td>
+        <td style="display:none"> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="rate[]" id="rate<?=$i;?>" onchange="RateCal(this.id)"  /></td>
+        <td style="display:none"> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_rm_rate[]" id="total_rm_rate<?=$i;?>"  /></td>
+        <td style="display:none"> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="labour_rate[]" id="labour_rate<?=$i;?>" onchange="labourRateCal(this.id)"  /></td>
 
         
 
-        <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_labour_rate[]" id="total_labour_rate<?=$i;?>"  /></td>
+        <td style="display:none"> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_labour_rate[]" id="total_labour_rate<?=$i;?>"  /></td>
 
-        <td>  <input class="form-control" style="margin-bottom:10px; width:55px;" value="<?=$getJob->total_cost;?>" id="total_cost<?=$i;?>" name="total_cost[]"  /></td>
+        <td style="display:none">  <input class="form-control" style="margin-bottom:10px; width:55px;" value="<?=$getJob->total_cost;?>" id="total_cost<?=$i;?>" name="total_cost[]"  /></td>
                                            
 		</tr>
 	        <?php 
