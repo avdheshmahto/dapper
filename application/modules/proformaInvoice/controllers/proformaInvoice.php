@@ -398,7 +398,7 @@ public function insertInvoice(){
 
 $data_dtl=array(
 				 'invoiceid' => $lastHdrId,
-				 'productid' => $main_id[$i],				 
+				 'productid' => $pri_id[$i],				 
 				 'list_price' => $list_price[$i],
 				 'qty' => $qty[$i],
 				 'discount' => $discount[$i],
@@ -537,7 +537,7 @@ $this->db->query("update tbl_sales_order_hdr set termandcondition='".addslashes(
 				$data_dtl=array(	
 
 				 'invoiceid' => $id,
-				 'productid' => $main_id[$i],				 
+				 'productid' => $pri_id[$i],				 
 				 'list_price' => $list_price[$i],
 				 'qty' => $qty[$i],
 				 'discount' => $discount[$i],

@@ -179,7 +179,7 @@ var xobj;
 			}*/
 
 
-		  function abc(pt,pr,tid,q,u,igst,quantity,packing){
+		  function abc(pt,pr,tid,q,u,igst,quantity,packing,pro_id){
 			
 			
 		  	var qnTT=Number(quantity);
@@ -232,7 +232,7 @@ var xobj;
 						document.getElementById("sgst").value=cgst;
 						}
 						}
-					document.getElementById("pri_id").value=pt;
+					document.getElementById("pri_id").value=pro_id;
 				   document.getElementById("prd").value=pt;
 					
 					document.getElementById("qn").value=1;
@@ -299,8 +299,8 @@ $fetchsize=$sqlunit->row();
 ?>
 
 <input type="text" id="ty<?php echo $id;?>"  class="prds form-control" value="<?php echo $arr->sku_no; ?>" name="<?php echo $id;?>"
- onFocus="abc(this.value,'<?php echo $salePrice; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>','<?php echo $igst; ?>','<?php echo $arr->quantity; ?>','<?php echo $arr->packing; ?>')"
- onClick="abc(this.value,'<?php echo $salePrice; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>','<?php echo $igst; ?>','<?php echo $arr->quantity; ?>','<?php echo $arr->packing; ?>')" style="width:270px; font-size:11px;" tabindex="-1"  readonly >
+ onFocus="abc(this.value,'<?php echo $salePrice; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>','<?php echo $igst; ?>','<?php echo $arr->quantity; ?>','<?php echo $arr->packing; ?>','<?php echo $arr->Product_id; ?>')"
+ onClick="abc(this.value,'<?php echo $salePrice; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>','<?php echo $igst; ?>','<?php echo $arr->quantity; ?>','<?php echo $arr->packing; ?>','<?php echo $arr->Product_id; ?>')" style="width:270px; font-size:11px;" tabindex="-1"  readonly >
 
 
 <?php

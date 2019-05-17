@@ -107,7 +107,19 @@ $location='manage_contact';
 
 <td>Port Of loading</td>
 <th>
-<input name="port_loading" class="form-control">
+
+<select name="port_loading" class="form-control">
+<option value="">--Select--</option>
+<?php
+$portOfLoading=$this->db->query("select *from tbl_master_data where param_id='21'");
+foreach($portOfLoading->result() as $getPortOfLoading){
+?>
+<option value="<?=$getPortOfLoading->serial_number;?>"><?=$getPortOfLoading->keyvalue;?></option>
+<?php
+}
+?>
+</select>
+
 </th>
 
 </tr>
@@ -116,7 +128,18 @@ $location='manage_contact';
 <tr>
 <td>Port Of Discharge</td>
 <th>
-<input type="text"  class="form-control"  name="port_of_discharge"  />
+<select name="port_of_discharge" class="form-control">
+<option value="">--Select--</option>
+<?php
+$portOfDischarge=$this->db->query("select *from tbl_master_data where param_id='22'");
+foreach($portOfDischarge->result() as $getportOfDischarge){
+?>
+<option value="<?=$getportOfDischarge->serial_number;?>"><?=$getportOfDischarge->keyvalue;?></option>
+<?php
+}
+?>
+</select>
+
 </th>
 <td>Partshipment</td>
 <th><input type="text"  class="form-control"  name="partshipment"  /></th>
