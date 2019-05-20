@@ -326,10 +326,22 @@ public function insertPurchaseOrder(){
 		);
 	
 		$data = array(
+					'contactid' => $this->input->post('contactid'),
 	                'purchase_no'    => $this->input->post('purchase_no'),
 	                'lot_no'		=> $this->input->post('lot_no'),
+	                'proforma_no' => $this->input->post('proforma_no'),
+					'proforma_date' => $this->input->post('proforma_date'),
+					'buyer_order' => $this->input->post('buyer_order'),
+					'buyer_date' => $this->input->post('buyer_date'),
+					'ship_date' => $this->input->post('ship_date'),
+					'payment_term' => $this->input->post('payment_term'),
+					'dilivery_term' => $this->input->post('dilivery_term'),
+					'port_loading' => $this->input->post('port_loading'),
+					'port_of_discharge' => $this->input->post('port_of_discharge'),
+					'partshipment' => $this->input->post('partshipment'),
+					'forwarder' => $this->input->post('forwarder'),
 	                'sales_id'       => $this->input->post('iddd'),
-					'vendor_id'      => $this->input->post('vendor_id'),
+					
 					'invoice_status' => $this->input->post('invoice_type'),
 					'invoice_date'   => $this->input->post('date'),
 					'qty_total'      => $this->input->post('qty_total'),
@@ -370,6 +382,8 @@ public function insertPurchaseOrder(){
 					 'productid' => $main_id[$i],				 
 					 'list_price' => $list_price[$i],
 					 'qty' => $qty[$i],
+					 'ord_qty' => $ord_qty[$i],
+					 'per_crt_qn' => $per_crt_qn[$i],
 					 'discount' => $discount[$i],
 					 'discount_amount' => $disAmount[$i],
 					 'cgst' => $cgst[$i],
@@ -378,6 +392,7 @@ public function insertPurchaseOrder(){
 					 'gstTotal' => $gstTotal[$i],
 					 'total_price' => $tot[$i],
 					 'net_price' => $nettot[$i],
+					 'price' => $price[$i],
 					 'maker_id' => $this->session->userdata('user_id'),
 					 'maker_date' => date('y-m-d'),
 					 'comp_id' => $this->session->userdata('comp_id'),
@@ -455,9 +470,21 @@ $this->db->query("update tbl_sales_order_hdr set termandcondition='".addslashes(
 		);
 	
 		$data = array(
+					'contactid' => $this->input->post('contactid'),
 					'purchase_no'    => $this->input->post('purchase_no'),
 					'lot_no'    => $this->input->post('lot_no'),
-					'vendor_id'      => $this->input->post('vendor_id'),
+					'proforma_no' => $this->input->post('proforma_no'),
+					'proforma_date' => $this->input->post('proforma_date'),
+					'buyer_order' => $this->input->post('buyer_order'),
+					'buyer_date' => $this->input->post('buyer_date'),
+					'ship_date' => $this->input->post('ship_date'),
+					'payment_term' => $this->input->post('payment_term'),
+					'dilivery_term' => $this->input->post('dilivery_term'),
+					'port_loading' => $this->input->post('port_loading'),
+					'port_of_discharge' => $this->input->post('port_of_discharge'),
+					'partshipment' => $this->input->post('partshipment'),
+					'forwarder' => $this->input->post('forwarder'),
+					
 					'invoice_status' => $this->input->post('invoice_type'),
 					'invoice_date'   => $this->input->post('date'),
 					'due_date'       => $this->input->post('due_date'),
