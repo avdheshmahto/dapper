@@ -42,7 +42,10 @@ public function print_sales(){
 
 public function print_invoice(){
 	if($this->session->userdata('is_logged_in')){
-		$this->load->view('print-invoice');
+		$data=array(
+'id' =>$_GET['id']
+		);
+		$this->load->view('print-invoice',$data);
 	}
 	else
 	{

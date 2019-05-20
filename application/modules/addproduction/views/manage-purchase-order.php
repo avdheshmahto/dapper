@@ -133,7 +133,7 @@ foreach($result as $sales)
 <th style="display:none"><?php echo $sales->invoice_status;?></th>
 <th><?=$sales->invoice_date;?></th>
 <th><?php 
-	$sqlgroup=$this->db->query("select * from tbl_contact_m where contact_id='$sales->vendor_id'");
+	$sqlgroup=$this->db->query("select * from tbl_contact_m where contact_id='$sales->contactid'");
 	$res1 = $sqlgroup->row();
 	echo $res1->first_name;?></th>
 <!-- <th>
@@ -214,7 +214,7 @@ else
   $table_name = 'tbl_quotation_purchase_order_hdr';
   ?>
 <button class="btn btn-default delbuttonPurchase" id="<?=$sales->purchaseid."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button>
-  <a style="display:none" href="<?=base_url();?>addproduction/print_invoice?id=<?=$sales->purchaseid;?>" class="btn btn-default" target="blank"><i class="glyphicon glyphicon-print"></i></a>
+  <a  href="<?=base_url();?>addproduction/print_invoice?id=<?=$sales->purchaseid;?>" class="btn btn-default" target="blank"><i class="glyphicon glyphicon-print"></i></a>
    <button style="display:none" class="btn btn-xs btn-black" data-toggle="modal" data-target="#modal-0" onclick="getspharemap(<?=$sales->purchaseid;?>);" type="button"><i class="icon-eye"></i></button>
 <?php }?>
 
