@@ -114,7 +114,7 @@ foreach($queryfetch11->result() as $fetchqrow11){
 
 <?php
 
-$queryVendor=$this->db->query("select * from tbl_contact_m where status='A' and contact_id='$sales->vendor_id'");	
+$queryVendor=$this->db->query("select * from tbl_contact_m where status='A' and contact_id='$sales->contactid'");	
 $getVendor=$queryVendor->row();
 
 echo $getVendor->first_name;

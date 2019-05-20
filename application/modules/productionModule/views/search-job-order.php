@@ -420,6 +420,21 @@ foreach($vendor_query->result() as $getVendor){
 </div>
 </div>
 <div class="col-xs-6 col-sm-6 col-md-6">
+<h4>Select</h4>
+<div class="form-group">
+
+<select class="form-control" name="type" id="select_id" required="">
+        <option value="">--Select--</option>
+        <option value="Shape">Shape Complete</option>
+        <option value="ShapePart">Shape in Parts</option>
+      </select>
+
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-xs-6 col-sm-6 col-md-6">
 <h4>Shape</h4>
 <div class="form-group">
 
@@ -435,9 +450,6 @@ foreach($product_query->result() as $getProduct){
 
 </div>
 </div>
-</div>
-
-<div class="row">
 <div class="col-xs-6 col-sm-6 col-md-6">
 <div class="form-group">
 <h4>Part Name</h4>
@@ -501,6 +513,7 @@ foreach($part_query->result() as $getPart){
 <thead>
 	<tr>
     <th>Order Type</th>
+    <th>Shape/Part</th>
 		<th>Order no.</th>
 		<th>Vendor Name</th>
 		<th>Date</th>
@@ -556,6 +569,7 @@ if($Search!='')
     <a href="<?=base_url();?>productionModule/manage_jobwork_map_details?id=<?=$fetch_list->id;?>&&p_id=<?=$fetch_list->production_id;?>"><?=$fetch_list->order_type;?></a>
    
     <button style="display:none" type="button" class="btn btn-default modalMapSpare" onclick="Order('<?=$fetch_list->job_order_no;?>');" data-toggle="modal" data-target="#modal-order"><?=$fetch_list->order_type;?></button></td>
+    <td><?=$fetch_list->type;?></td>
 	 <td>
      
      

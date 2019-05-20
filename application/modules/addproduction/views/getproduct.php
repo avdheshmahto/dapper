@@ -183,7 +183,7 @@ var xobj;
 			}*/
 
 
-		  function abc(pt,pr,tid,q,u,igst,quantity,reorder,per,p){
+		  function abc(pt,pr,tid,q,u,igst,quantity,reorder,per,p,packing){
 			 
 			 
 			 var qnTT=Number(quantity);
@@ -234,7 +234,7 @@ var xobj;
 						}
 					document.getElementById("pri_id").value=p;
 				   document.getElementById("prd").value=pt;
-					
+					document.getElementById("per_crt_qn").value=packing;
 					document.getElementById("qn").value=1;
 					;
 					document.getElementById("prd").value=pt;
@@ -252,8 +252,8 @@ var xobj;
 						{
 					document.getElementById("nettot").value=finalTot;
 						}
-				    document.getElementById("quantity").value=q;					
-					document.getElementById("abqt").value=q;
+				   // document.getElementById("quantity").value=q;					
+					//document.getElementById("abqt").value=q;
 					
 		  }
 
@@ -322,8 +322,8 @@ $fetchsize=$sqlunit->row();
 ?>
 
 <input type="text" id="ty<?php echo $id;?>"  class="prds form-control" value="<?php echo $arr->sku_no.'' ?>" name="<?php echo $id;?>"
- onFocus="abc(this.value,'<?php echo $arr->unitprice_purchase; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>','<?php echo $igst; ?>','<?php echo $arr->quantity; ?>','<?php echo $arr->min_re_level; ?>','<?php echo $arr->percentage;?>','<?php echo $arr->Product_id; ?>')"
- onClick="abc(this.value,'<?php echo $arr->unitprice_purchase; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>','<?php echo $igst; ?>','<?php echo $arr->quantity; ?>','<?php echo $arr->min_re_level; ?>','<?php echo $arr->percentage;?>','<?php echo $arr->Product_id; ?>')" style="width:240px;border:1px solid;" tabindex="-1"  readonly >
+ onFocus="abc(this.value,'<?php echo $arr->unitprice_purchase; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>','<?php echo $igst; ?>','<?php echo $arr->quantity; ?>','<?php echo $arr->min_re_level; ?>','<?php echo $arr->percentage;?>','<?php echo $arr->Product_id; ?>','<?php echo $arr->packing; ?>')"
+ onClick="abc(this.value,'<?php echo $arr->unitprice_purchase; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>','<?php echo $igst; ?>','<?php echo $arr->quantity; ?>','<?php echo $arr->min_re_level; ?>','<?php echo $arr->percentage;?>','<?php echo $arr->Product_id; ?>','<?php echo $arr->packing; ?>')" style="width:240px;border:1px solid;" tabindex="-1"  readonly >
 
 
 <?php
