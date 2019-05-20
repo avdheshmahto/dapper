@@ -1,5 +1,7 @@
 <?php
 $this->load->view("header.php");
+$obj=new my_controller();
+$CI =& get_instance();
 $scheQuery=$this->db->query("select *from tbl_quotation_purchase_order_hdr where purchaseid='".$_GET['id']."' and status = 'A'");
 $getsched=$scheQuery->row();
 
@@ -447,6 +449,28 @@ $queryIssueMat=$this->db->query("select SUM(qty) as qty from tbl_quotation_purch
 $getIssueMat=$queryIssueMat->row();
 ?>
 <input type="text" name="" value="Pending" class="form-control" readonly>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+<div class="row">
+<div class="col-xs-6 col-sm-6 col-md-6">
+<div class="form-group">
+<h4>EDD</h4>
+
+<input type="text" name="" class="form-control" value="<?php echo $obj->explode_date($getsched->edd);?>" readonly >
+</div>
+</div>
+
+<div class="col-xs-6 col-sm-6 col-md-6">
+<div class="form-group">
+<h4>&nbsp;</h4>
+&nbsp;
 </div>
 </div>
 </div>
