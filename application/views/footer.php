@@ -598,6 +598,8 @@ function editItem(ths) {
     $('#cast_weight').val(editVal.cast_weight);
 	$('#tolerance_percentage').val(editVal.tolerance_percentage);
 	$('#packing').val(editVal.packing);
+	$('#qty_box').val(editVal.qty_box);
+	
 	
 	
 	 

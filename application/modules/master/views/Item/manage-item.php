@@ -160,9 +160,9 @@ $entries = "";
 					<?php } ?>
 	</select>
 </div>
-<label class="col-sm-2 control-label">Circle Weight</label> 
+<label class="col-sm-2 control-label">Qty/Box</label> 
 <div class="col-sm-4"> 
-   <input type="text" name="circle_weight" id="circle_weight" class="form-control" />
+   <input type="text" name="qty_box" id="qty_box" class="form-control" />
 </div> 
 </div>
 
@@ -210,8 +210,8 @@ $entries = "";
 <input type="text" step="any" name="weight" value="" id="weight" class="form-control" >
 
 </div> 
-<label class="col-sm-2 control-label">&nbsp;</label> 
-<div class="col-sm-4" id="regid"> &nbsp;
+<label class="col-sm-2 control-label">Circle Weight</label> 
+<div class="col-sm-4" id="regid">  <input type="text" name="circle_weight" id="circle_weight" class="form-control" />
 </div> 
 
 </div>
