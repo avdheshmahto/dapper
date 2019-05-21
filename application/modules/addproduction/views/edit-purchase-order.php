@@ -247,17 +247,23 @@ foreach($portOfDischarge->result() as $getportOfDischarge){
 <tr class="gradeA">
 <th>Item Code</th>
 <th style="display:none">Quantity In Stock</th>
-<th>Order Qty</th>
-<th>Additional % Qty</th>
 <th>Usage Unit</th>
+<th>Qty</th>
+                 <th >Per Crt Qty.</th>
+               
+                <th >Total Ord Qty.</th>
+				<th >Additional % Qty </th>
 <th style="display:none">Discount%</th>
 <th style="display:none">Discount Amt</th>
  <th style="display:none"><div align="center"><b>CGST</b></div></th>
                     <th style="display:none"><div align="center"><b>SGST</b></div></th>
                     <th style="display:none"><div align="center"><b>IGST</b></div></th>
                     <th style="display:none"><div align="center"><b>GST Total</b></div></th>
-<th style="display:none1">Total Qty</th>
-<th style="display:none">Net Price</th>
+<th >Production Qty</th>
+               
+                <th >Price US $</th>
+                	
+				<th >Total</th>
 <?php if($_GET['view']!=''){?>
 
 <?php } else {?>
@@ -288,14 +294,21 @@ $this->load->view('getproduct');
 </th>
 
 
-<th ><input type="number" id="qn" min="1" style="width:70px;"   class="form-control"></th>
-<th>
-<b style="display:none" id="lpr"></b>
-<input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:70px;" readonly=""></th>
 
 <th>
 <input type="text" readonly="" id="usunit" style="width:70px;" class="form-control"> 
 </th>
+
+				<b id="lpr" style="display:none"></b>
+				<th >
+				 <input type="number" id="ord_qty" min="1" style="width:70px;"    class="form-control">
+				</th>
+                <th><input type="number" id="per_crt_qn" min="1" style="width:70px;" readonly="readonly"   class="form-control"></th>
+                <th>
+                <input type="number" id="qn" min="1" style="width:70px;"   class="form-control">
+               </th>
+				<th ><input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:70px;" readonly="readonly" ></th>
+                
 <th style="display:none"><input type="number" step="any" name="saleamnt" id="discount" class="form-control"  style="width:70px;"/ ></th>
 <th style="display:none"><input type="number" step="any" name="saleamnt" id="disAmt" class="form-control"   style="width:70px;"/ ></th>
  <td style="display:none"> 
@@ -306,8 +319,16 @@ $this->load->view('getproduct');
                          <td style="display:none"> 
 						 <input type="text" id="igst" class="form-control"  onfocus="this.select()" style="width:62px;" readonly></td>
                           <td style="display:none"><input type="text" id="gstTotal" class="form-control"  onfocus="this.select()" style="width:62px;" readonly></td>	
-<th style="display:none1"><input type="text" name="saleamnt" readonly="" id="tot" class="form-control"  style="width:70px;"/ ></th>
-<th style="display:none"><input type="text" name="saleamnt" readonly="" id="nettot" class="form-control" style="width:70px;"/ ></th>
+<th ><input type="number" step="any" name="saleamnt" id="tot" class="form-control"   style="width:70px;" readonly="readonly"/ ></th>
+
+<th style="display:none"><input type="number" step="any" name="saleamnt" id="gstTotal" class="form-control"   style="width:70px;"/ ></th>
+
+<th ><input type="number" step="any" name="saleamnt" id="priceT" class="form-control"   style="width:70px;"/ ></th>
+
+				
+				<th ><input type="text" name="saleamnt" readonly="" id="nettot" class="form-control"  style="width:70px;"/ ></th>
+
+
 <?php if($_GET['view']!=''){?>
 
 <?php } else {?>
@@ -324,9 +345,12 @@ $this->load->view('getproduct');
 <tr>
 <td style="width:1%;"><div align="center"><u>Sl No</u>.</div></td>
 <td style="width:11%;"><div align="center"><u>Item Code</u></div></td>
-
-<td style="width:3%;"><div align="center"><u>Order Qty</u></div></td>
-<td style="width:3%;"> <div align="center"><u>Additional % Qty</u></div></td>
+<td style="width:3%;"><div align="center"><u>Qty</u></div></td>
+                <td style="width:3%;"><div align="center"><u>Per Crt Qty</u></div></td>
+                	
+                <td style="width:3%;"><div align="center"><u>Order Qty</u></div></td>
+				<td style="width:3%;"> <div align="center"><u>Additional % Qty</u></div></td>
+                
 <td style="width:3%;display:none;"> <div align="center"><u>Dis.%</u></div></td>
 <td style="width:3%;display:none;"> <div align="center"><u>Discount Amt</u></div></td>
 <td style="width:3%;display:none;"> <div align="center"><u>CGST</u></div></td>
@@ -335,8 +359,9 @@ $this->load->view('getproduct');
 <td style="width:3%;display:none;"> <div align="center"><u>GST TOTAL</u></div></td>
 
 
-<td style="width:3%;display:none1;"> <div align="center"><u>Total Qty</u></div></td>
-<td style="width:3%;display:none;"> <div align="center"><u>Net Price</u></div></td>
+<td style="width:3%;"> <div align="center"><u>Production Qty</u></div></td>
+                <td style="width:3%;display: none1;"> <div align="center"><u> Price</u></div></td>
+				<td style="width:3%;display: none1;"> <div align="center"><u>Total Price</u></div></td>
 <td style="width:3%;"> <div align="center"><u>Action</u></div></td>
 </tr>
 </table>
@@ -364,11 +389,16 @@ $getProductName=$productQuery->row();
 </td>
 
 
+<td align="center" style="width: 3%;"><input type="text" name="ord_qty[]" id="ord_qty<?php echo $z;?>" value="<?php echo $invoiceFetch->ord_qty;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
+<td align="center" style="width: 3%;"><input type="text" name="per_crt_qn[]" id="per_crt_qn<?php echo $z;?>" value="<?php echo $invoiceFetch->per_crt_qn;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
 
 
 <td align="center" style="width: 3%;"><input type="text" name="qty[]" id="qnty<?php echo $z;?>" value="<?php echo $invoiceFetch->qty;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
 <td align="center" style="width: 3%;">
-<input type="text" name="list_price[]" id="lph<?php echo $z;?>" value="<?php echo $invoiceFetch->list_price;?>" readonly="" style="text-align: center; width: 100%; border: hidden;">
+<input type="text" name="list_price[]" id="lph<?php echo $z;?>" value="<?php echo $invoiceFetch->list_price;?>" readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
+<td align="center" style="width: 3%;"><input type="text" name="tot[]" id="tot<?php echo $z;?>" value="<?php echo $invoiceFetch->total_price;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
+
+
 
 <td align="center" style="width: 3%;display:none;"><input type="text" name="discount[]" id="dis<?php echo $z;?>" value="<?php echo $invoiceFetch->discount;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
 </td>
@@ -396,11 +426,11 @@ $getProductName=$productQuery->row();
 </td>
 
 <td align="center" style="width: 3%;display:none1;">
-<input type="text" name="tot[]" id="tot<?php echo $z;?>" value="<?php echo $invoiceFetch->total_price;?>" readonly="" style="text-align: center; width: 100%; border: hidden;">
+<input type="text" name="price[]" id="priceT<?php echo $z;?>" value="<?php echo $invoiceFetch->price;?>" readonly="" style="text-align: center; width: 100%; border: hidden;">
 
 </td>
 
-<td align="center" style="width: 3%;display:none;">
+<td align="center" style="width: 3%;display:none1;">
 
 <input type="text" name="nettot[]" id="nettot<?php echo $z;?>" value="<?php echo $invoiceFetch->net_price;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
 </td>
@@ -560,7 +590,7 @@ for(n=1;n<=countids;n++)
 document.getElementById("tyd"+n).onkeyup  = function (e) {
 var entr =(e.keyCode);
 if(entr==13){
-document.getElementById("qn").focus();
+document.getElementById("ord_qty").focus();
 document.getElementById("prdsrch").innerHTML=" ";
 
 }
@@ -575,17 +605,42 @@ document.getElementById("lph").focus();
 }
 }*/
 
-document.getElementById("qn").onkeyup = function (e) {
-var entr =(e.keyCode);
+
+document.getElementById("ord_qty").onchange = function (e) {
+var entr  = (e.keyCode);
+
 var rate  = document.getElementById("lph").value;
+var per_crt_qn  = document.getElementById("per_crt_qn").value;
+var ord_qty  = document.getElementById("ord_qty").value;
+//alert(rate)
 var qnt   = document.getElementById("qn").value;
-var total = Number(rate)*Number(qnt)/100;
-var tott=Number(total)+Number(qnt);
+
+var totalQty=Number(ord_qty)*Number(per_crt_qn);
+
+document.getElementById("qn").value=totalQty;
+
+
+
+var total = Number(totalQty)*Number(rate)/100;
+var tott=Number(total)+Number(totalQty);
 
 document.getElementById("tot").value = Math.round(tott);
+document.getElementById("priceT").focus();
+}
 
 
-if(document.getElementById("qn").value=="" && entr==08){
+
+document.getElementById("priceT").onchange = function (e) {
+var entr  = (e.keyCode);
+
+var total_qty=document.getElementById("qn").value;
+var priceT=document.getElementById("priceT").value;
+
+var total=Number(total_qty)*Number(priceT);
+document.getElementById("nettot").value=total;
+document.getElementById("nettot").focus();
+
+if(document.getElementById("priceT").value=="" && entr==08){
 
 }
    if (e.keyCode == "13")
@@ -652,7 +707,9 @@ function editselectrow(d,r)
 		}
         // ####### starts ##############//
         var pd=document.getElementById("pd"+id).value;
-
+		var ord_qty=document.getElementById("ord_qty"+id).value;
+		var per_crt_qn=document.getElementById("per_crt_qn"+id).value;
+		var priceT=document.getElementById("priceT"+id).value;
 		var unit=document.getElementById("unit"+id).value;
 		var qn=document.getElementById("qnty"+id).value;
 		var lph=document.getElementById("lph"+id).value;
@@ -671,10 +728,13 @@ function editselectrow(d,r)
 
 		// ####### starts ##############//
 		document.getElementById("pri_id").value=pri_id;
-		document.getElementById("qn").focus();
+		document.getElementById("ord_qty").focus();
 		document.getElementById("prd").value=pd;
 		document.getElementById("usunit").value=unit;
 		document.getElementById("qn").value=qn;
+		document.getElementById("ord_qty").value=ord_qty;
+		document.getElementById("per_crt_qn").value=per_crt_qn;
+		document.getElementById("priceT").value=priceT;
 		document.getElementById("lpr").innerHTML=lph;
 		document.getElementById("lph").value=lph;
 		document.getElementById("discount").value=discount;
@@ -753,23 +813,13 @@ function getdata()
 		 document.getElementById("pri_id").value = "";
 		 var product1=document.getElementById("prd").value;	 
 		 var product=product1;
-		  var conatctId=document.getElementById("contact_id_copy").value;
-		 	if(conatctId=='')
-		{
-		alert('Plase Select Contact First');
-		document.getElementById("contact_id_copy").focus();
-		}	
-		if(invoice_type=='')
-		{
-		alert('Plase Select Invoice Type');
-		document.getElementById("invoice_type").focus();
-		}
+		
 		    
 		    if(xobj)
 			 {
 			 var obj=document.getElementById("prdsrch");
 			
-			 xobj.open("GET","getproduct?con="+product+"&con_id="+conatctId+"&invoice_type="+invoice_type,true);
+			 xobj.open("GET","getproduct?con="+product,true);
 			 xobj.onreadystatechange=function()
 			  {
 			  if(xobj.readyState==4 && xobj.status==200)
@@ -808,6 +858,10 @@ function getdata()
 				var qn=document.getElementById("qn").value;
 				var unit=document.getElementById("usunit").value;
 				var lph=document.getElementById("lph").value;
+				var ord_qty=document.getElementById("ord_qty").value;
+				var per_crt_qn=document.getElementById("per_crt_qn").value;
+				var priceT=document.getElementById("priceT").value;
+				
 				var dis=document.getElementById("discount").value;	
 				var disAmount=document.getElementById("disAmt").value;		
 		        var tot=document.getElementById("tot").value;
@@ -898,7 +952,59 @@ function getdata()
 						// ends here
 	
 	
-		//==============================close 2nd cell =========================================
+	//==============================close 2nd cell =========================================
+		
+		//#################cell 3rd starts here####################//					
+	indexcell=Number(indexcell+1);		
+	var cell=cell+indexcell;		
+	    cell = row.insertCell(indexcell);
+				cell.style.width="3%";
+				cell.align="center"
+		//========================================start qnty===================================	
+				var ord_qtyY = document.createElement("input");
+							ord_qtyY.type="text";
+							ord_qtyY.border ="0";
+							ord_qtyY.value=ord_qty;	    
+							ord_qtyY.name ='ord_qty[]';
+							ord_qtyY.id='ord_qty'+rid;
+							ord_qtyY.readOnly = true;
+							ord_qtyY.style="text-align:center";
+							ord_qtyY.style.width="100%";
+							ord_qtyY.style.border="hidden"; 
+							cell.appendChild(ord_qtyY);
+								
+		//======================================close 3rd cell========================================
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//#################cell 3rd starts here####################//					
+	indexcell=Number(indexcell+1);		
+	var cell=cell+indexcell;		
+	    cell = row.insertCell(indexcell);
+				cell.style.width="3%";
+				cell.align="center"
+		//========================================start qnty===================================	
+				var per_crt_qnY = document.createElement("input");
+							per_crt_qnY.type="text";
+							per_crt_qnY.border ="0";
+							per_crt_qnY.value=per_crt_qn;	    
+							per_crt_qnY.name ='per_crt_qn[]';
+							per_crt_qnY.id='per_crt_qn'+rid;
+							per_crt_qnY.readOnly = true;
+							per_crt_qnY.style="text-align:center";
+							per_crt_qnY.style.width="100%";
+							per_crt_qnY.style.border="hidden"; 
+							cell.appendChild(per_crt_qnY);
+								
+		//======================================close 3rd cell========================================
+		
+			//==============================close 2nd cell =========================================
 		
 		//#################cell 3rd starts here####################//					
 	indexcell=Number(indexcell+1);		
@@ -921,14 +1027,14 @@ function getdata()
 								
 		//======================================close 3rd cell========================================
 		
-	
-	//#################cell 2nd starts here####################//
+		
 	
 	
 	indexcell=Number(indexcell+1);		
 	var cell=cell+indexcell;
         cell = row.insertCell(indexcell);
 				cell.style.width="3%";
+				//cell.style.display="none";
 				cell.align="center"
 				var salepr = document.createElement("input");
 							salepr.type="text";
@@ -943,8 +1049,6 @@ function getdata()
 							cell.appendChild(salepr);
 					
 
-	
-	
 	
 	
 	
@@ -1128,6 +1232,31 @@ function getdata()
 							cell.appendChild(vatamt);
 		//===============================close 5th cell=================================
 					
+	//===================================start 6th cell================================
+		indexcell=Number(indexcell+1);		
+		var cell=cell+indexcell;		
+	    cell = row.insertCell(indexcell);
+				cell.style.width="3%";
+				cell.align="center"	
+				
+												
+				var priceTT = document.createElement("input");
+							priceTT.type="text";
+							priceTT.border ="0";
+							priceTT.value=priceT;	
+							priceTT.name ='price[]';
+							priceTT.id='priceT'+rid;
+							priceTT.readOnly = true;
+							priceTT.style="text-align:center";
+							priceTT.style.width="100%";
+							priceTT.style.border="hidden";
+							//cell.style.display = "none";
+							cell.appendChild(priceTT);
+		//===============================close 5th cell=================================
+						
+		
+
+
 									
 		//============================================start 7th cell================================	
 	indexcell=Number(indexcell+1);		
@@ -1146,7 +1275,7 @@ function getdata()
 							netprice.style="text-align:center";
 							netprice.style.width="100%";
 							netprice.style.align="center";
-							cell.style.display="none";
+							//cell.style.display="none";
 							netprice.style.border="hidden"; 
 							cell.appendChild(netprice);							
 											
@@ -1211,6 +1340,11 @@ function clear()
 		document.getElementById("prd").value='';
 		document.getElementById("usunit").value='';
 		document.getElementById("lph").value='';
+		document.getElementById("ord_qty").value='';
+		document.getElementById("per_crt_qn").value='';
+		document.getElementById("priceT").value='';
+		
+		
 		document.getElementById("lpr").innerHTML ='';
 		document.getElementById("discount").value='';
 		document.getElementById("disAmt").value='';
