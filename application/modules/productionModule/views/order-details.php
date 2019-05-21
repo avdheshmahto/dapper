@@ -191,7 +191,7 @@ $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_pro
    <td> <input class="form-control"   style="margin-bottom:10px;width:95px;" readonly="readonly" value="" name="weight[]" id="weight<?=$i;?>"  /></td>
 <input type="hidden" id="net_weight_cal<?=$i;?>" value="<?=$getProductStock->net_weight;?>" />
         
-        <td style="display:none"> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="rate[]" id="rate<?=$i;?>" onchange="RateCal(this.id)"  /></td>
+        <td style="display:none1"> <input class="form-control" style="margin-bottom:10px;width:55px;" value="<?=$getProduct->rate?>" name="rate[]" id="rate<?=$i;?>" onchange="RateCal(this.id)"  /></td>
         <td style="display:none"> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_rm_rate[]" id="total_rm_rate<?=$i;?>"  /></td>
         <td style="display:none"> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="labour_rate[]" id="labour_rate<?=$i;?>" onchange="labourRateCal(this.id)"  /></td>
 

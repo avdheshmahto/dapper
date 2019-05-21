@@ -432,7 +432,7 @@ $getType=$queryType->row();
 
 
 
-$queryVendor=$this->db->query("select *from tbl_contact_m where contact_id='$getsched->vendor_id'");
+$queryVendor=$this->db->query("select *from tbl_contact_m where contact_id='$getsched->contactid'");
 $getVendor=$queryVendor->row();
 ?>
 <input type="text" name="" class="form-control" value="<?=$getVendor->first_name;?>" readonly >

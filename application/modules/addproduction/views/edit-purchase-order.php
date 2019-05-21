@@ -38,22 +38,10 @@ if($_GET['id']!='' or $_GET['view']!=''){
 <th><input type="text" name="lot_no" class="form-control"  required  value="<?php echo $fetchq->lot_no;?>"></th>
 <th>Purchase Order No.</th>
 <th><input type="text" name="purchase_no" class="form-control"  required  value="<?php echo $fetchq->purchase_no;?>"></th>
-<th>Customer Name</th>
+<th>&nbsp;</th>
 <th>
 <div class="field">
-<select name="vendor_id" required id="contact_id_copy" class="form-control ui fluid search dropdown email" onChange="document.getElementsByName('contactid')[0].value=this.value;">
-					<option value="">---select---</option>
-					 <?php
-					 
-					 $contQuery=$this->db->query("select * from tbl_contact_m where status='A' and group_name='4' order by first_name");
-					 foreach($contQuery->result() as $contRow)
-					{
-					  ?>
-						<option value="<?php echo $contRow->contact_id; ?>" <?php if($contRow->contact_id==$fetchq->vendor_id){?> selected="selected" <?php }?>>
-						<?php echo $contRow->first_name.' '.$contRow->middle_name.' '.$contRow->last_name; ?></option>
-						<?php } ?>
-</select>
-</div>
+&nbsp;</div>
 </th>
 <th style="display:none;">Sales Type</th>
 <th style="display:none;">
@@ -130,6 +118,123 @@ if($_GET['id']!='' or $_GET['view']!=''){
 <th>&nbsp;</th>
 <th>&nbsp;</th>
 <th>&nbsp;</th>
+</tr>
+ <tr>
+
+<th>Customer Name</th>
+<th>
+<div class="field">
+
+<select name="contactid" id="vendor_id" required  class="form-control" style="
+    width: 100%;" onChange="document.getElementsByName('contactid')[0].value=this.value;"   <?php if(@$_GET['view']!=''){ ?> disabled="disabled" <?php }?>>
+		<option value="" selected disabled>Select</option>
+		<?php
+		$contQuery=$this->db->query("select * from tbl_contact_m where status='A' and group_name='4'");
+		foreach($contQuery->result() as $contRow)
+		{
+		?>
+			<option value="<?php echo $contRow->contact_id; ?>" <?php if($fetchq->contactid==$contRow->contact_id){?> selected="selected"<?php }?>>
+			<?php echo $contRow->first_name; ?>
+			</option>
+			<?php } ?>
+	</select>
+	<select style="display:none" name="invoice_type" class="form-control"  required id="invoice_type"   <?php if(@$_GET['view']!=''){ ?> disabled="disabled" <?php }?>>
+				
+			<option value="No-Tax">	No-Tax	</option>
+            <option value="GST" selected="selected">GST	</option>
+		
+	</select>
+</div>
+
+</th>
+
+
+<th>Proforma No.</th>
+<th>
+<input type="text"  class="form-control" required name="proforma_no" value="<?php echo $fetchq->proforma_no;?>" />
+</th>
+<th>Proforma Date</th>
+<th>
+<input type="date"  class="form-control" min="0" name="proforma_date" value="<?php echo $fetchq->proforma_date;?>" />
+</th>
+</tr>
+<tr>
+<td>Buyer Order</td>
+<th>
+<input type="text"  class="form-control"  name="buyer_order" value="<?php echo $fetchq->buyer_order;?>" />
+</th>
+<td>Date</td>
+<th>
+<input type="date"  class="form-control"  name="buyer_date" value="<?php echo $fetchq->buyer_date;?>" />
+</th>
+<td>Ship Date</td>
+<th>
+<input type="date"  class="form-control"  name="ship_date" value="<?php echo $fetchq->ship_date;?>" />
+</th>
+
+</tr>
+
+
+
+<tr>
+
+<td>Payment Term</td>
+<th>
+<input type="text"  class="form-control"  name="payment_term" value="<?php echo $fetchq->payment_term;?>" />
+</th>
+
+
+
+<td>Delivery Term</td>
+<th>
+<input type="text"  class="form-control"  name="dilivery_term" value="<?php echo $fetchq->dilivery_term;?>" />
+</th>
+
+
+
+<td>Port Of loading</td>
+<th>
+
+<select name="port_loading" class="form-control">
+<option value="">--Select--</option>
+<?php
+
+$portOfLoading=$this->db->query("select *from tbl_master_data where param_id='21'");
+foreach($portOfLoading->result() as $getPortOfLoading){
+?>
+<option value="<?=$getPortOfLoading->serial_number;?>" <?php if($getPortOfLoading->serial_number==$fetchq->port_loading){?> selected="selected"<?php }?>><?=$getPortOfLoading->keyvalue;?></option>
+<?php
+}
+?>
+</select>
+
+</th>
+
+</tr>
+
+
+<tr>
+<td>Port Of Discharge</td>
+<th>
+<select name="port_of_discharge" class="form-control">
+<option value="">--Select--</option>
+<?php
+$portOfDischarge=$this->db->query("select *from tbl_master_data where param_id='22'");
+foreach($portOfDischarge->result() as $getportOfDischarge){
+?>
+<option value="<?=$getportOfDischarge->serial_number;?>" <?php if($getportOfDischarge->serial_number==$fetchq->port_of_discharge){?> selected="selected"<?php }?>><?=$getportOfDischarge->keyvalue;?></option>
+<?php
+}
+?>
+</select>
+
+</th>
+<td>Partshipment</td>
+<th><input type="text"  class="form-control"  name="partshipment" value="<?php echo $fetchq->partshipment;?>"  /></th>
+<td>Forwarder</td>
+<th><input type="text"  class="form-control"  name="forwarder" value="<?php echo $fetchq->forwarder;?>"  /></th>
+
+</th>
 </tr>
 </thead>
 
