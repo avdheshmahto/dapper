@@ -1,5 +1,4 @@
 <?php
-
 $printQuery=$this->db->query("select *from tbl_quotation_purchase_order_hdr where purchaseid='$id'");
 $getPrint=$printQuery->row();
 
@@ -12,7 +11,7 @@ $getContact=$contactQuery->row();
 <!DOCTYPE html>
 <html>
 <head>
-	<title>TB PI</title>
+	<title>PROFORMA INVOICE</title>
 	<link rel="stylesheet" href="<?=base_url();?>assets/pi_css/css/style.css">
 </head>
 <body>
@@ -35,26 +34,26 @@ $getContact=$contactQuery->row();
 		</tr>
 		<tr>
 			<th>Proforma#</th>
-			<td colspan="2">TB570 &nbsp;&nbsp;&nbsp;&nbsp;<span><strong>Date</strong>03/04/2019</span></td>
+			<td colspan="2"><?=$getPrint->proforma_no;?> &nbsp;&nbsp;&nbsp;&nbsp;<span><strong>Date</strong><?=$getPrint->proforma_date;?></span></td>
 		</tr>
 		<tr>
 			<th>BuyOrder#</th>
-			<td>0001511 <span><strong>Date</strong> 02/04/2019</span></td>
+			<td><?=$getPrint->buyer_order;?> <span><strong>Date</strong> <?=$getPrint->buyer_date;?></span></td>
 		</tr>
 		<tr>
 			<th>Ship Date</th>
-			<td>30/06/2019 &nbsp; Ex-Factory</td>
+			<td><?=$getPrint->ship_date;?> &nbsp; </td>
 		</tr>
 		<tr>
 			<th>Payment terms</th>
-			<td>DP</td>
+			<td><?=$getPrint->payment_term;?></td>
 		</tr>
 		<!-- buyer -->
 		<tr>
 			<td rowspan="6">
 				<h5>Buyer</h5>
 				<p>
-				M/S. TERRYBEAR INC.,<br>
+				<?=$getContact->first_name;?>,<br>
 				946 W. PIERCE BUTLER ROUTE,SUITE 101,<br> 
 				DOCKS 1-3, ST.PAUL, MN 55104, [USA]<br>
 				TEL : 651-641-9579 FAX :  651-917-3560<br>
@@ -64,23 +63,34 @@ $getContact=$contactQuery->row();
 		</tr>
 		<tr>
 			<th>Delivery Terms</th>
-			<td>FOB MUMBAI</td>
+			<td><?=$getPrint->dilivery_term;?></td>
 		</tr>
 		<tr>
+        
+        <?php
+		$portOfLoading=$this->db->query("select *from tbl_master_data where serial_number='$getPrint->port_loading'");
+		$getPortOfLoading=$portOfLoading->row();
+		
+		?>
 			<th>Port of Loading</th>
-			<td>NHAVA SHEVA MUMBAI</td>
+			<td><?=$getPortOfLoading->keyvalue;?></td>
 		</tr>
 		<tr>
+         <?php
+		$portOfDischarge=$this->db->query("select *from tbl_master_data where serial_number='$getPrint->port_loading'");
+		$getPortOfDischarge=$portOfDischarge->row();
+		
+		?>
 			<th>Port of Discharge</th>
-			<td>NEWYORK</td>
+			<td><?=$getPortOfDischarge->keyvalue;?></td>
 		</tr>
 		<tr>
 			<th>Partshipment</th>
-			<td>Allowed</td>
+			<td><?=$getPrint->partshipment;?></td>
 		</tr>
 		<tr>
 			<th>Forwarder</th>
-			<td>M/S. C.H. ROBINSONS FREIGHT </td>
+			<td><?=$getPrint->forwarder;?> </td>
 		</tr>
 		<!-- Cosignee -->
 		<tr>
@@ -116,117 +126,30 @@ $getContact=$contactQuery->row();
 				<th>Price US $</th>
 				<th>Amount</th>
 			</tr>
-			<tr>
-				<td>QB506K</td>
-				<td></td>
-				<td><p>MILANO FLORAL KEEPSAKE<br>
-					<strong>Packing:</strong>&nbsp;1/48 <span><strong>T.CBM:</strong>0.144</span>
-					</p>
-				</td>
-				<td class="right">96 PC</td>
-				<td class="right">4.43</td>
-				<td class="right">425.28</td>
-			</tr>
+<?php
+$dtlQuery=$this->db->query("select *from tbl_quotation_purchase_order_dtl where purchaseid='$getPrint->purchaseid'");
+foreach($dtlQuery->result() as $getDtl){
+	
+	$productQuery=$this->db->query("select *from tbl_product_stock where Product_id='$getDtl->productid'");
+	$getProduct=$productQuery->row();
 
+
+	$usagesQuery=$this->db->query("select *from tbl_master_data where serial_number='$getProduct->usageunit'");
+	$getUnit=$usagesQuery->row();
+
+?>
 			<tr>
-				<td>QB506L</td>
+				<td><?=$getProduct->sku_no;?></td>
 				<td></td>
-				<td><p>MILANO FLORAL<br>
-					<strong>Packing:</strong>&nbsp;1/6&nbsp;&nbsp; <span><strong>T.CBM:</strong>0.860</span>
+				<td><p><?=$getProduct->productname;?><br>
+					<strong>Packing:</strong>&nbsp;<?=$getProduct->packing;?>/<?=$getDtl->ord_qty;?> <span><strong>T.CBM:</strong><?=$getProduct->cbm;?></span>
 					</p>
 				</td>
-				<td class="right">48 PC</td>
-				<td class="right">30.37</td>
-				<td class="right">1457.76</td>
+				<td class="right"><?=$getDtl->qty;?> <?=$getUnit->keyvalue;?></td>
+				<td class="right"><?=$getDtl->price;?></td>
+				<td class="right"><?php echo $getDtl->price*$getDtl->qty;?></td>
 			</tr>
-			<tr>
-				<td>QB507K</td>
-				<td></td>
-				<td><p>MILANO PINK KEEPSAKE<br>
-					<strong>Packing:</strong>&nbsp;1/48 <span><strong>T.CBM:</strong>0.072</span>
-					</p>
-				</td>
-				<td class="right">48 PC</td>
-				<td class="right">4.65</td>
-				<td class="right">223.20</td>
-			</tr>
-			<tr>
-				<td>QB507L</td>
-				<td></td>
-				<td><p>MILANO PINK<br>
-					<strong>Packing:</strong>&nbsp;1/6&nbsp;&nbsp; <span><strong>T.CBM:</strong>0.861</span>
-					</p>
-				</td>
-				<td class="right">48 PC</td>
-				<td class="right">31.78</td>
-				<td class="right">1525.44</td>
-			</tr>
-			<tr>
-				<td>QB604K</td>
-				<td></td>
-				<td><p>TUSCANY BLUE KEEPSAKE<br>
-					<strong>Packing:</strong>&nbsp;1/48 <span><strong>T.CBM:</strong>0.072</span>
-					</p>
-				</td>
-				<td class="right">48 PC</td>
-				<td class="right">4.54</td>
-				<td class="right">217.92</td>
-			</tr>
-			<tr>
-				<td>QB604L</td>
-				<td></td>
-				<td><p>TUSCANY BLUE<br>
-					<strong>Packing:</strong>&nbsp;1/6&nbsp;&nbsp;<span><strong>T.CBM:</strong>0.966</span>
-					</p>
-				</td>
-				<td class="right">48 PC</td>
-				<td class="right">32.35</td>
-				<td class="right">1552.80</td>
-			</tr>
-			<tr>
-				<td>QB607K</td>
-				<td></td>
-				<td><p>TUSCANY SLATE KEEPSAKE<br>
-					<strong>Packing:</strong>&nbsp;1/48<span><strong>T.CBM:</strong>0.072</span>
-					</p>
-				</td>
-				<td class="right">48 PC</td>
-				<td class="right">5.11</td>
-				<td class="right">245.28</td>
-			</tr>
-			<tr>
-				<td>QB607L</td>
-				<td></td>
-				<td><p>TUSCANY SLATE<br>
-					<strong>Packing:</strong>&nbsp;1/6&nbsp;&nbsp;<span><strong>T.CBM:</strong>1.205</span>
-					</p>
-				</td>
-				<td class="right">60 PC</td>
-				<td class="right">35.19</td>
-				<td class="right">2111.40</td>
-			</tr>
-			<tr>
-				<td>QB7040K</td>
-				<td></td>
-				<td><p>VENICE KEEPSAKE<br>
-					<strong>Packing:</strong>&nbsp;1/48<span><strong>T.CBM:</strong>0.216</span>
-					</p>
-				</td>
-				<td class="right">144 PC</td>
-				<td class="right">4.54</td>
-				<td class="right">653.76</td>
-			</tr>
-			<tr>
-				<td>QB7040L</td>
-				<td></td>
-				<td><p>VENICE<br>
-					<strong>Packing:</strong>&nbsp;1/6&nbsp;&nbsp;<span><strong>T.CBM:</strong>3.007</span>
-					</p>
-				</td>
-				<td class="right">144 PC</td>
-				<td class="right">35.19</td>
-				<td class="right">5067.36</td>
-			</tr>
+<?php }?>
 			<tr>
 				<td rowspan="3" class="space"></td>
 				<td rowspan="3" class="space"></td>
