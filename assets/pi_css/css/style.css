@@ -1,0 +1,217 @@
+/* open sans font family */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
+body{
+	font-family: 'Open sans', sans-serif;
+}
+h2{
+	text-align: center;
+}
+table{
+	text-align: left;
+	border-collapse: collapse;
+	border: 2px solid #000;
+	border-spacing: 0px;
+}
+th, td{
+	border: 2px solid #000;
+	margin: 0px;
+	font-size: 14px;
+}
+/**** PAGE 01 ****/
+/**** table 1 ****/
+.table1{
+	width: 100%;
+}
+.table1 td{
+	padding: 6px;
+}
+.table1 h3, h5, h4, p{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.table1 td span{
+	margin-left: 10px;	
+}
+.table1 td span strong{
+	margin-left: 40px;
+	margin-right: 20px;
+}
+/* table 2*/
+.table2{
+	width: 100%;
+}
+.table2 th{
+	padding: 5px;
+	text-align: center;
+	font-size: 12px;
+}
+.right{
+	text-align: right;
+}
+.table2 td span{
+	line-height: 1.5;
+	float: right;
+}
+.table2 td span strong{
+	padding-left: 25px;
+	padding-right: 40px;
+}
+.table2 .space{
+	padding-bottom: 120px;
+}
+/* tabel 3 */
+.table3{
+	width: 100%;
+}
+.table3 ul{
+	position: relative;
+	margin-top: -15px;
+	margin-left: 58%;
+}
+.table3 ul li{
+	list-style-type: none;
+	display: inline-block;
+	font-weight: bold;
+}
+.table3 ul li:first-child{
+	padding-right: 130px;
+}
+.table3 ul li:last-child{
+	padding-left: 160px;
+}
+.table3 td .dollar{
+	text-align: left;
+	margin-top: 10px;
+}
+.table3 td .total{
+	list-style-type: none;
+	margin-left: -30px;
+}
+.table3 td h5{
+	margin-top: 0px;
+}
+.table3 td h4{
+	margin-top: -10px;
+	text-align: right;
+	margin-right: 4px;
+}
+.table3 td span{
+	position: relative;
+	bottom: -75px;
+	left: 5px;
+	font-size: 12px;
+}
+.table3 .signature1{
+	border-top: 2px solid #000;
+	border-left: 2px solid #000;
+	width: 40%;
+	float: right;
+}
+.table3 .signature{
+	border-top: 2px solid #000;
+	border-left: 2px solid #000;
+	width: 40%;
+	float: right;
+	margin-top: 100px;
+}
+.table3 .signature p{
+	font-size: 12px;
+}
+.table3 .signature1 ol{
+	margin-bottom: 0px;
+}
+.table3 .signature1 ol li{
+	list-style-type: none;
+	font-weight: bold;
+	text-align: right;
+}
+.table3 .signature ol{
+	margin-bottom: 0px;
+}
+.table3 .signature ol li{
+	list-style-type: none;
+	font-weight: bold;
+	text-align: right;
+}
+.table3 .signature1 ol li:first-child{
+	margin-bottom: 30px;
+}
+
+.table3 .signature ol li:first-child{
+	margin-bottom: 30px;
+}
+
+/**** PAGE 02 ****/
+.page02{
+	margin-top: 10%;
+}
+.page02 .page-no{
+	text-align: right;
+	margin: -35px 22% 5px 0px;
+	font-size: 12px;
+	font-weight: bold;
+}
+/* table 4 */
+.table4{
+	width: 100%;
+}
+.table4 td{
+	padding: 6px;
+}
+.table4 h3, h5, h4, p{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.table4 td span{
+	margin-left: 10px;	
+}
+.table4 td span strong{
+	margin-left: 40px;
+	margin-right: 20px;
+}
+/**** PAGE 03 ****/
+.page03{
+	margin-top: 30%;
+}
+.page03 .page-no{
+	text-align: right;
+	margin: -35px 22% 5px 0px;
+	font-size: 12px;
+	font-weight: bold;
+}
+/* table 6 */
+.table6{
+	width: 100%;
+}
+.table6 td{
+	padding: 6px;
+}
+.table6 h3, h5, h4, p{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.table6 td span{
+	margin-left: 10px;	
+}
+.table6 td span strong{
+	margin-left: 40px;
+	margin-right: 20px;
+}
+@media (max-width: 595px){
+	.table3 ul{
+		position: relative;
+		margin-top: -15px;
+		margin-left: 52%;
+	}
+	.table3 ul li{
+		list-style-type: none;
+		display: inline-block;
+		font-weight: bold;
+	}
+	.table3 ul li:first-child{
+		padding-right: 54px;
+	}
+	.table3 ul li:last-child{
+		padding-left: 58px;
+	}
+}
