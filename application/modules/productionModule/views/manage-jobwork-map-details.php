@@ -28,6 +28,63 @@ $sumRmShape=$getsched->shape_qty;
 
 
 
+//starts purchase return  query
+
+function SubmitmyProduction_purchase_return() {
+        
+  var form_data = new FormData(document.getElementById("productionOrderPurchaseReturn"));
+  form_data.append("label", "WEBUPLOAD");
+
+  $.ajax({
+      url: "productionModule/productionPurchaseReturn",
+      type: "POST",
+      data: form_data,
+      processData: false,  // tell jQuery not to process the data
+      contentType: false   // tell jQuery not to set contentType
+  }).done(function( data ) {
+	alert(data);
+	
+	
+	  if(data == 1 || data == 2){
+		
+                      if(data == 1)
+					    
+                        var msg = "Data Successfully Add !";
+                      else
+                        var msg = "Data Successfully Updated !";
+						$("#OrderPurchaseReturnResult").text(msg);
+						setTimeout(function() {   //calls click event after a certain time
+                       $("#modal-purchase-return .close").click();
+                       $("#OrderPurchaseReturnResult").text(" "); 
+                       $('#myProduction_order_repair')[0].reset(); 
+					   //$("#quotationTable").text(" "); 
+					   
+                       //$("#id").val("");
+     
+                    }, 1000);
+                  }else{
+                    $("#OrderRepairresultarea").text(data);
+					
+                 }
+				// ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
+ 
+	 
+    console.log(data);
+    //Perform ANy action after successfuly post data
+       
+  });
+  return false;     
+}
+// ends
+
+
+
+
+
+
+
+
+
 //starts order repair  query
 
 function submitProductionOrderRepaire() {
@@ -77,10 +134,20 @@ function submitProductionOrderRepaire() {
 }
 // ends
 
+
+
+
+
+
+
+
+
+
+
 //starts order check  query
 
 function submitProductionOrderCheck() {
-           
+         
   var form_data = new FormData(document.getElementById("myProduction_order_check"));
   form_data.append("label", "WEBUPLOAD");
 
@@ -200,6 +267,33 @@ var lot_no=document.getElementById("lot_no").innerHTML;
 	});
 
  }
+
+
+
+
+
+function purchase_return(viewId){
+
+var order_type=document.getElementById("order_type").innerHTML;
+var lot_no=document.getElementById("lot_no").innerHTML;
+
+ 	$.ajax({   
+		    type: "POST",  
+			url: "purchase_order_return",  
+			cache:false,  
+			data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},  
+			success: function(data)  
+			{  
+			  
+			 $("#purchaseReturnDiv").empty().append(data).fadeIn();
+			 //alert(data);
+			//referesh table
+			}   
+	});
+
+ }
+
+
 
 
 
@@ -688,8 +782,10 @@ if($getsched->status=='3')
 <div class="tabs-container">
 <ul class="nav nav-tabs">
 <?php
-if($getsched->module_name=='Job Order')
+
+if($getsched->order_type=='Job Order')
 {
+	
 ?>
 <li style="display:none1;"  class="active"><a href="#receiveJobWork" data-toggle="tab">RM Request</a></li>
 <?php } ?>
@@ -698,6 +794,7 @@ if($getsched->module_name=='Job Order')
 <li style="display:none1;"><a href="#returnOrder" data-toggle="tab">Order Repair</a></li>
 
 <li style="display:none1;"><a href="#scrap" data-toggle="tab">Scrap</a></li>
+<li style="display:none1;"><a href="#purchaseReturn" data-toggle="tab">Purchase Return</a></li>
 
 
 
@@ -708,7 +805,7 @@ if($getsched->module_name=='Job Order')
 </ul>
 <div class="tab-content">
 <?php
-if($getsched->module_name=='Job Order')
+if($getsched->order_type=='Job Order')
 {
 ?>
 <div class="tab-pane active" id="receiveJobWork">
@@ -834,7 +931,7 @@ $getIssuValeCnt=$issueHdrValQuery->num_rows();
 </div>
 <?php }?>
 <div <?php
-if($getsched->module_name!='Job Order')
+if($getsched->order_type!='Job Order')
 {
 ?> class="tab-pane active" <?php } else {?> class="tab-pane" <?php } ?> id="home">
 <div class="panel-body">
@@ -1017,6 +1114,117 @@ else
 
 </div>
 </div>
+
+
+
+
+
+
+
+<div class="tab-pane" id="purchaseReturn">
+<div class="panel-body">
+<div class="table-responsive">
+<table class="table table-striped table-bordered table-hover dataTables-example1"  id="listingCheckingGrnData">
+<thead>
+	<tr>
+
+		<th style="width:150px;">Return No.</th>
+	   
+		  <th>Date</th>
+     
+	<th style="display:none">Status</th>
+        <th>Action</th>
+</tr>
+</thead>
+<tbody>
+<?php
+$poquery=$this->db->query("select *  from tbl_job_purchase_order_return where status='A' and job_order_id='".$_GET['id']."' group by order_no");
+foreach($poquery->result() as $getPo){
+?>
+<tr class="gradeC record">
+
+<th><?=$getPo->return_no;?></th>
+<th><?=$getPo->return_date;?></th>
+
+
+<?php
+
+$poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$getPo->inboundid'");
+$getQty=$poquery->row();
+
+// tbl_receive_matrial_grn_log query
+
+
+//echo "select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->inboundid'";
+
+$poquerygrnLog=$this->db->query("select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->po_no'");
+$getQtygrnLog=$poquerygrnLog->row();
+
+
+?>
+
+
+<th style="display:none">
+<?php
+if($getQty->qty==$getQtygrnLog->qty)
+{
+	echo "Completed";
+}
+elseif($getQty->qty<$getQtygrnLog->qty)
+{
+	echo "Partial Completed";
+}
+else
+{
+	echo "Pending";
+}
+
+?>
+</th>
+<th>
+
+
+ <?php /*?><button class="btn btn-default" onclick="viewPurchaseOrder(<?=$getPo->purchaseid;?>);" data-toggle="modal" data-target="#modal-6" type="button" ><i class="fa fa-eye"></i></button><?php */?>
+ <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
+
+<button class="btn btn-default" onclick="viewChecking('<?=$getPo->check_no;?>');" data-toggle="modal" data-target="#modal-checking" type="button" ><i class="fa fa-eye"></i></button>
+<a style="display:none" href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
+
+ 
+  <a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
+</th>
+</tr>
+<?php }?>
+
+<tr class="gradeU">
+<td>
+
+ 
+ 
+ <button style="display:none1" type="button" class="btn btn-default modalMapSpare" onclick="purchase_return('<?=$getsched->job_order_no;?>');" data-toggle="modal" data-target="#modal-purchase-return"><img src="<?=base_url();?>assets/images/plus.png" /></button>
+ 
+ 
+</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+
+</tr>
+
+</tbody>
+<tfoot>
+<!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
+</tfoot>
+</table>
+</div>
+
+</div>
+</div>
+
+
+
+
 
 <div class="tab-pane" id="scrap">
 <div class="panel-body">
@@ -1590,6 +1798,51 @@ var cell2 = row.insertCell(1);
 
 
 
+
+
+
+<!-- Purchase Return -->
+
+
+
+<div id="modal-purchase-return" class="modal fade" tabindex="-1" role="dialog">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<h4 class="modal-title">Purchase Return(Lot No.:-<?=$getsched->lot_no;?>)</h4>
+<div id="OrderPurchaseReturnResult" class="text-center " style="font-size: 15px;color: red;"></div> 
+<div class="modal-body">
+  <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="productionOrderPurchaseReturn" action="#" 
+        onsubmit="return SubmitmyProduction_purchase_return();"method="POST">
+<div class="row" id="purchaseReturnDiv">
+
+
+
+
+
+
+
+
+</div>
+</form>
+</div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div>
+</div>
+
+
+
+<!-- ends -->
+
+
+
+
+
+
+
+
 <!-- checking starts here -->
 
 <div id="modal-order-checking" class="modal fade" tabindex="-1" role="dialog">
@@ -2084,7 +2337,7 @@ document.getElementById("divPoDtl").innerHTML = xhttp.responseText;
 
 
 function qtyValidation(v)
-{
+
 
 	var zz=document.getElementById(v).id;
 	
@@ -2203,7 +2456,7 @@ function submitrawMaterialReceive() {
 
 function qtyVal(d)
 {
-
+alert();
 var zz=document.getElementById(d).id;
 var myarra = zz.split("qty");
 var asx= myarra[1];

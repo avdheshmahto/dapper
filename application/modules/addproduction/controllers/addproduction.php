@@ -1,7 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 error_reporting (E_ALL ^ E_NOTICE);
+
 class addproduction extends my_controller {
+
 function __construct(){
    parent::__construct();
    $this->load->model('model_purchase_order');
@@ -105,11 +107,6 @@ $data = array(
 'id' => $id
 );
 
-	
-
-
-
-
 
  $url="assets/sales_order_pdf/invoice_order'".$id."'.pdf";
 
@@ -174,7 +171,6 @@ $config = Array(
 		}
 
 }
-
 
 
 
@@ -411,7 +407,6 @@ public function insertPurchaseOrder(){
 				$rediectInvoice="addproduction/manage_purchase_order";
 		
 		redirect($rediectInvoice);	
-	   
 					
 	
 	}

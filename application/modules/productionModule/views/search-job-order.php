@@ -423,7 +423,7 @@ foreach($vendor_query->result() as $getVendor){
 <h4>Select</h4>
 <div class="form-group">
 
-<select class="form-control" name="type" id="select_id" required="">
+<select class="form-control" name="type" id="select_id" >
         <option value="">--Select--</option>
         <option value="Shape">Shape Complete</option>
         <option value="ShapePart">Shape in Parts</option>

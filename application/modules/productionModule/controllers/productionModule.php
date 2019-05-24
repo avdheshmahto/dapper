@@ -1754,6 +1754,58 @@ public function search_job_order()
 {
 $this->load->view("search-job-order");
 }
+public function purchase_order_return()
+{
+@extract($_POST);
+$data=array('id' => $id,
+);
+$this->load->view("purchase-order-return",$data);	
+}
+
+
+public function productionPurchaseReturn()
+{
+
+	extract($_POST);
+		
+		$table_name ='tbl_job_purchase_order_return';
+			
+		
+			$this->load->model('Model_admin_login');
+			$rows=count($qty);
+
+		    for($i=0; $i<$rows; $i++)
+		    {
+			  if($qty[$i]!=''){
+                 $data_dtl=array(
+				 'lot_no'		=> $lot_no,
+				 'order_no'		=> $order_no,
+				 'return_no' => $return_no,
+				 'return_date' => $return_date,
+				 'vendor_id' => $vendor_id,
+				 'job_order_id' => $job_order_id,
+				 'part_id'		=> $productid[$i],				 
+				 'qty'		=> $qty[$i],
+				 'maker_id'			=> $this->session->userdata('user_id'),
+				 'maker_date'		=> date('y-m-d'),
+				 'comp_id'			=> $this->session->userdata('comp_id'),
+				 'zone_id'			=> $this->session->userdata('zone_id'),
+				 'brnh_id'			=> $this->session->userdata('brnh_id')
+				);
+			
+		//print_r($data_dtl);die;
+			  $this->Model_admin_login->insert_user($table_name,$data_dtl);
+		  
+	  		//  $this->po_stock_in($qty[$i],$productid[$i]);	
+	  	
+		 }
+	 }
+	 echo "1";	
+
+
+
+}
+
 
 
 }
