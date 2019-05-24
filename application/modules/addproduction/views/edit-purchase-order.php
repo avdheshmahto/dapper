@@ -36,8 +36,8 @@ if($_GET['id']!='' or $_GET['view']!=''){
 <tr>
 <th>Lot No.</th>
 <th><input type="text" name="lot_no" class="form-control"  required  value="<?php echo $fetchq->lot_no;?>"></th>
-<th>Purchase Order No.</th>
-<th><input type="text" name="purchase_no" class="form-control"  required  value="<?php echo $fetchq->purchase_no;?>"></th>
+<th><p style="display:none">Purchase Order No.</p></th>
+<th><p style="display:none"><input type="text" name="purchase_no" class="form-control"  value="<?php echo $fetchq->purchase_no;?>"></p></th>
 <th>&nbsp;</th>
 <th>
 <div class="field">
@@ -83,7 +83,7 @@ if($_GET['id']!='' or $_GET['view']!=''){
 				</select>
 
 </th>
-<th>Expected Date of Delivery</th>
+<th>Dispatch Date</th>
 <th>
 <input type="date" class="form-control" name="edd" value="<?php echo $fetchq->edd;?>" />
 </th>
@@ -248,10 +248,10 @@ foreach($portOfDischarge->result() as $getportOfDischarge){
 <th>Item Code</th>
 <th style="display:none">Quantity In Stock</th>
 <th>Usage Unit</th>
-<th>Qty</th>
+<th>Total Ord Qty.</th>
                  <th >Per Crt Qty.</th>
                
-                <th >Total Ord Qty.</th>
+                <th >Qty</th>
 				<th >Additional % Qty </th>
 <th style="display:none">Discount%</th>
 <th style="display:none">Discount Amt</th>
@@ -301,11 +301,12 @@ $this->load->view('getproduct');
 
 				<b id="lpr" style="display:none"></b>
 				<th >
-				 <input type="number" id="ord_qty" min="1" style="width:70px;"    class="form-control">
+				<input type="number" id="qn" min="1" style="width:70px;"   class="form-control">
+               
 				</th>
                 <th><input type="number" id="per_crt_qn" min="1" style="width:70px;" readonly="readonly"   class="form-control"></th>
                 <th>
-                <input type="number" id="qn" min="1" style="width:70px;"   class="form-control">
+                 <input type="number" id="ord_qty" min="1" style="width:70px;"    class="form-control">
                </th>
 				<th ><input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:70px;" readonly="readonly" ></th>
                 
@@ -345,10 +346,10 @@ $this->load->view('getproduct');
 <tr>
 <td style="width:1%;"><div align="center"><u>Sl No</u>.</div></td>
 <td style="width:11%;"><div align="center"><u>Item Code</u></div></td>
-<td style="width:3%;"><div align="center"><u>Qty</u></div></td>
+<td style="width:3%;"><div align="center"><u>Order Qty</u></div></td>
                 <td style="width:3%;"><div align="center"><u>Per Crt Qty</u></div></td>
                 	
-                <td style="width:3%;"><div align="center"><u>Order Qty</u></div></td>
+                <td style="width:3%;"><div align="center"><u>Qty</u></div></td>
 				<td style="width:3%;"> <div align="center"><u>Additional % Qty</u></div></td>
                 
 <td style="width:3%;display:none;"> <div align="center"><u>Dis.%</u></div></td>
@@ -389,11 +390,13 @@ $getProductName=$productQuery->row();
 </td>
 
 
-<td align="center" style="width: 3%;"><input type="text" name="ord_qty[]" id="ord_qty<?php echo $z;?>" value="<?php echo $invoiceFetch->ord_qty;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
+<td align="center" style="width: 3%;"><input type="text" name="qty[]" id="qnty<?php echo $z;?>" value="<?php echo $invoiceFetch->qty;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
 <td align="center" style="width: 3%;"><input type="text" name="per_crt_qn[]" id="per_crt_qn<?php echo $z;?>" value="<?php echo $invoiceFetch->per_crt_qn;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
 
 
-<td align="center" style="width: 3%;"><input type="text" name="qty[]" id="qnty<?php echo $z;?>" value="<?php echo $invoiceFetch->qty;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
+<td align="center" style="width: 3%;">
+<input type="text" name="ord_qty[]" id="ord_qty<?php echo $z;?>" value="<?php echo $invoiceFetch->ord_qty;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
+</td>
 <td align="center" style="width: 3%;">
 <input type="text" name="list_price[]" id="lph<?php echo $z;?>" value="<?php echo $invoiceFetch->list_price;?>" readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
 <td align="center" style="width: 3%;"><input type="text" name="tot[]" id="tot<?php echo $z;?>" value="<?php echo $invoiceFetch->total_price;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
@@ -590,7 +593,7 @@ for(n=1;n<=countids;n++)
 document.getElementById("tyd"+n).onkeyup  = function (e) {
 var entr =(e.keyCode);
 if(entr==13){
-document.getElementById("ord_qty").focus();
+document.getElementById("qn").focus();
 document.getElementById("prdsrch").innerHTML=" ";
 
 }
@@ -606,27 +609,32 @@ document.getElementById("lph").focus();
 }*/
 
 
-document.getElementById("ord_qty").onchange = function (e) {
+document.getElementById("qn").onchange = function (e) {
 var entr  = (e.keyCode);
+
 
 var rate  = document.getElementById("lph").value;
 var per_crt_qn  = document.getElementById("per_crt_qn").value;
 var ord_qty  = document.getElementById("ord_qty").value;
-//alert(rate)
 var qnt   = document.getElementById("qn").value;
 
-var totalQty=Number(ord_qty)*Number(per_crt_qn);
+var totalQty=Number(qnt)*Number(per_crt_qn);
 
-document.getElementById("qn").value=totalQty;
+//document.getElementById("qn").value=totalQty;
 
 
 
-var total = Number(totalQty)*Number(rate)/100;
-var tott=Number(total)+Number(totalQty);
+var total = Number(qnt)*Number(rate)/100;
+//alert(total);
+var tott=Number(total)+Number(qnt);
+
+var totalPackingCrt=Number(qnt)/Number(per_crt_qn);
 
 document.getElementById("tot").value = Math.round(tott);
-document.getElementById("priceT").focus();
-}
+
+document.getElementById("ord_qty").value = Math.round(totalPackingCrt);
+
+document.getElementById("priceT").focus();}
 
 
 
@@ -961,20 +969,19 @@ function getdata()
 				cell.style.width="3%";
 				cell.align="center"
 		//========================================start qnty===================================	
-				var ord_qtyY = document.createElement("input");
-							ord_qtyY.type="text";
-							ord_qtyY.border ="0";
-							ord_qtyY.value=ord_qty;	    
-							ord_qtyY.name ='ord_qty[]';
-							ord_qtyY.id='ord_qty'+rid;
-							ord_qtyY.readOnly = true;
-							ord_qtyY.style="text-align:center";
-							ord_qtyY.style.width="100%";
-							ord_qtyY.style.border="hidden"; 
-							cell.appendChild(ord_qtyY);
+				var qtty = document.createElement("input");
+							qtty.type="text";
+							qtty.border ="0";
+							qtty.value=qn;	    
+							qtty.name ='qty[]';
+							qtty.id='qnty'+rid;
+							qtty.readOnly = true;
+							qtty.style="text-align:center";
+							qtty.style.width="100%";
+							qtty.style.border="hidden"; 
+							cell.appendChild(qtty);
 								
 		//======================================close 3rd cell========================================
-		
 		
 		
 		
@@ -1006,29 +1013,29 @@ function getdata()
 		
 			//==============================close 2nd cell =========================================
 		
-		//#################cell 3rd starts here####################//					
+		
+	//#################cell 3rd starts here####################//					
 	indexcell=Number(indexcell+1);		
 	var cell=cell+indexcell;		
 	    cell = row.insertCell(indexcell);
 				cell.style.width="3%";
 				cell.align="center"
 		//========================================start qnty===================================	
-				var qtty = document.createElement("input");
-							qtty.type="text";
-							qtty.border ="0";
-							qtty.value=qn;	    
-							qtty.name ='qty[]';
-							qtty.id='qnty'+rid;
-							qtty.readOnly = true;
-							qtty.style="text-align:center";
-							qtty.style.width="100%";
-							qtty.style.border="hidden"; 
-							cell.appendChild(qtty);
+				var ord_qtyY = document.createElement("input");
+							ord_qtyY.type="text";
+							ord_qtyY.border ="0";
+							ord_qtyY.value=ord_qty;	    
+							ord_qtyY.name ='ord_qty[]';
+							ord_qtyY.id='ord_qty'+rid;
+							ord_qtyY.readOnly = true;
+							ord_qtyY.style="text-align:center";
+							ord_qtyY.style.width="100%";
+							ord_qtyY.style.border="hidden"; 
+							cell.appendChild(ord_qtyY);
 								
 		//======================================close 3rd cell========================================
 		
 		
-	
 	
 	indexcell=Number(indexcell+1);		
 	var cell=cell+indexcell;
