@@ -42,8 +42,8 @@ $getInv=$quryinv->row();*/
 				<tr>
 				<th>Lot No.</th>
 				<th><input type="text" name="lot_no" style="width:100px;"  class="form-control"  required <?php if(@$_GET['view']!=''){ ?> disabled="disabled" <?php }?>></th>
-				<th>Po. No.</th>
-				<th><input type="text" name="purchase_no" style="width:100px;" onkeyup="duplicate_po_check1(this.value);" class="form-control"  required <?php if(@$_GET['view']!=''){ ?> disabled="disabled" <?php }?>></th>
+				<th><p style="display:none">Po. No.</p></th>
+				<th><p style="display:none"><input type="text" name="purchase_no" style="width:100px;" onkeyup="duplicate_po_check1(this.value);" class="form-control"   <?php if(@$_GET['view']!=''){ ?> disabled="disabled" <?php }?>></p></th>
 				<th>&nbsp;</th>
 				<th>
 				<div class="field" style="width:200px;"> 
@@ -87,7 +87,7 @@ $getInv=$quryinv->row();*/
 				</select>
 				
 				</th>					
-				<th>Expected Date of Delivery</th>
+				<th>Dispatch Date</th>
 				<th>
 				<input type="date"  class="form-control"  name="edd" value="<?php echo $detail->wff_date;?>" />
 				</th>
@@ -251,10 +251,10 @@ foreach($portOfDischarge->result() as $getportOfDischarge){
 				<th style="display: none;">Quantity In Stock</th>
 				
 				<th>Usage Unit</th>
-				<th>Qty</th>
+				<th>Total Ord Qty.</th>
                  <th >Per Crt Qty.</th>
                
-                <th >Total Ord Qty.</th>
+                <th >Qty</th>
 				<th >Additional % Qty </th>
 				
                 
@@ -300,11 +300,12 @@ foreach($portOfDischarge->result() as $getportOfDischarge){
 
 				<b id="lpr" style="display:none"></b>
 				<th >
-				 <input type="number" id="ord_qty" min="1" style="width:70px;"    class="form-control">
+                 <input type="number" id="qn" min="1" style="width:70px;"   class="form-control">
+				
 				</th>
                 <th><input type="number" id="per_crt_qn" min="1" style="width:70px;" readonly="readonly"   class="form-control"></th>
                 <th>
-                <input type="number" id="qn" min="1" style="width:70px;"   class="form-control">
+                 <input type="number" id="ord_qty" min="1" style="width:70px;"    class="form-control" readonly="readonly">
                </th>
 				<th ><input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:70px;" readonly="readonly" ></th>
 				
@@ -335,10 +336,10 @@ foreach($portOfDischarge->result() as $getportOfDischarge){
 				<tr>
 				<td style="width:1%;"><div align="center"><u>Sl No</u>.</div></td>
 				<td style="width:11%;"><div align="center"><u>Item Code</u></div></td>
-                <td style="width:3%;"><div align="center"><u>Qty</u></div></td>
+                <td style="width:3%;"><div align="center"><u>Total Order Qty</u></div></td>
                 <td style="width:3%;"><div align="center"><u>Per Crt Qty</u></div></td>
                 	
-                <td style="width:3%;"><div align="center"><u>Order Qty</u></div></td>
+                <td style="width:3%;"><div align="center"><u>Qty</u></div></td>
 				<td style="width:3%;"> <div align="center"><u>Additional % Qty</u></div></td>
 				
 				<td style="width:3%;display: none;"> <div align="center"><u>Discount</u></div></td>
@@ -431,7 +432,7 @@ for(n=1;n<=countids;n++)
 document.getElementById("tyd"+n).onkeyup  = function (e) {
 var entr =(e.keyCode);
 if(entr==13){
-document.getElementById("ord_qty").focus();
+document.getElementById("qn").focus();
 document.getElementById("prdsrch").innerHTML=" ";
 
 }
@@ -510,25 +511,30 @@ document.getElementById("lph").focus();
 
 
 
-document.getElementById("ord_qty").onchange = function (e) {
+document.getElementById("qn").onchange = function (e) {
 var entr  = (e.keyCode);
 
 var rate  = document.getElementById("lph").value;
 var per_crt_qn  = document.getElementById("per_crt_qn").value;
 var ord_qty  = document.getElementById("ord_qty").value;
-//alert(rate)
 var qnt   = document.getElementById("qn").value;
 
-var totalQty=Number(ord_qty)*Number(per_crt_qn);
+var totalQty=Number(qnt)*Number(per_crt_qn);
 
-document.getElementById("qn").value=totalQty;
+//document.getElementById("qn").value=totalQty;
 
 
 
-var total = Number(totalQty)*Number(rate)/100;
-var tott=Number(total)+Number(totalQty);
+var total = Number(qnt)*Number(rate)/100;
+//alert(total);
+var tott=Number(total)+Number(qnt);
+
+var totalPackingCrt=Number(qnt)/Number(per_crt_qn);
 
 document.getElementById("tot").value = Math.round(tott);
+
+document.getElementById("ord_qty").value = Math.round(totalPackingCrt);
+
 document.getElementById("priceT").focus();
 }
 
@@ -764,6 +770,9 @@ function getdata()
 	
 	//==============================close 2nd cell =========================================
 		
+		
+			//==============================close 2nd cell =========================================
+		
 		//#################cell 3rd starts here####################//					
 	indexcell=Number(indexcell+1);		
 	var cell=cell+indexcell;		
@@ -771,21 +780,19 @@ function getdata()
 				cell.style.width="3%";
 				cell.align="center"
 		//========================================start qnty===================================	
-				var ord_qtyY = document.createElement("input");
-							ord_qtyY.type="text";
-							ord_qtyY.border ="0";
-							ord_qtyY.value=ord_qty;	    
-							ord_qtyY.name ='ord_qty[]';
-							ord_qtyY.id='ord_qty'+rid;
-							ord_qtyY.readOnly = true;
-							ord_qtyY.style="text-align:center";
-							ord_qtyY.style.width="100%";
-							ord_qtyY.style.border="hidden"; 
-							cell.appendChild(ord_qtyY);
+				var qtty = document.createElement("input");
+							qtty.type="text";
+							qtty.border ="0";
+							qtty.value=qn;	    
+							qtty.name ='qty[]';
+							qtty.id='qnty'+rid;
+							qtty.readOnly = true;
+							qtty.style="text-align:center";
+							qtty.style.width="100%";
+							qtty.style.border="hidden"; 
+							cell.appendChild(qtty);
 								
 		//======================================close 3rd cell========================================
-		
-		
 		
 		
 		
@@ -814,7 +821,6 @@ function getdata()
 								
 		//======================================close 3rd cell========================================
 		
-			//==============================close 2nd cell =========================================
 		
 		//#################cell 3rd starts here####################//					
 	indexcell=Number(indexcell+1);		
@@ -823,17 +829,17 @@ function getdata()
 				cell.style.width="3%";
 				cell.align="center"
 		//========================================start qnty===================================	
-				var qtty = document.createElement("input");
-							qtty.type="text";
-							qtty.border ="0";
-							qtty.value=qn;	    
-							qtty.name ='qty[]';
-							qtty.id='qnty'+rid;
-							qtty.readOnly = true;
-							qtty.style="text-align:center";
-							qtty.style.width="100%";
-							qtty.style.border="hidden"; 
-							cell.appendChild(qtty);
+				var ord_qtyY = document.createElement("input");
+							ord_qtyY.type="text";
+							ord_qtyY.border ="0";
+							ord_qtyY.value=ord_qty;	    
+							ord_qtyY.name ='ord_qty[]';
+							ord_qtyY.id='ord_qty'+rid;
+							ord_qtyY.readOnly = true;
+							ord_qtyY.style="text-align:center";
+							ord_qtyY.style.width="100%";
+							ord_qtyY.style.border="hidden"; 
+							cell.appendChild(ord_qtyY);
 								
 		//======================================close 3rd cell========================================
 		
