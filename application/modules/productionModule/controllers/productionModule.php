@@ -1754,6 +1754,8 @@ public function search_job_order()
 {
 $this->load->view("search-job-order");
 }
+
+
 public function purchase_order_return()
 {
 @extract($_POST);
@@ -1761,6 +1763,21 @@ $data=array('id' => $id,
 );
 $this->load->view("purchase-order-return",$data);	
 }
+
+
+
+public function rm_return()
+{
+@extract($_POST);
+$data=array('id' => $id,
+);
+$this->load->view("rm-return",$data);	
+}
+
+
+
+
+
 
 
 public function productionPurchaseReturn()
