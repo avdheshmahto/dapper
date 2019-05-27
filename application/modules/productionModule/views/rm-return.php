@@ -108,6 +108,7 @@ $getIssueHdr=$issueQueryHdr->row();
         
       <?php
 	//  echo "select productid,inboundrhdr,receive_qty,remaining_qty,order_qty,rem_order_qty from tbl_issuematrial_dtl where inboundrhdr='$id' group by productid";
+	
 		$productQuery=$this->db->query("select productid,inboundrhdr,receive_qty,remaining_qty,order_qty,rem_order_qty from tbl_issuematrial_dtl where inboundrhdr='$getIssueHdr->inboundid' group by productid");
 		$i=1;
 		foreach($productQuery->result() as $getProduct){
