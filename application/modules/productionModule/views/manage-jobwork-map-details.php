@@ -83,6 +83,56 @@ function SubmitmyProduction_purchase_return() {
 
 
 
+//starts purchase return  query
+
+function SubmitmyProduction_RM_return() {
+      
+  var form_data = new FormData(document.getElementById("productionOrderRMReturn"));
+  form_data.append("label", "WEBUPLOAD");
+
+  $.ajax({
+      url: "productionModule/productionRMReturn",
+      type: "POST",
+      data: form_data,
+      processData: false,  // tell jQuery not to process the data
+      contentType: false   // tell jQuery not to set contentType
+  }).done(function( data ) {
+	alert(data);
+	
+	
+	  if(data == 1 || data == 2){
+		
+                      if(data == 1)
+					    
+                        var msg = "Data Successfully Add !";
+                      else
+                        var msg = "Data Successfully Updated !";
+						$("#OrderPurchaseReturnResult").text(msg);
+						setTimeout(function() {   //calls click event after a certain time
+                       $("#modal-purchase-return .close").click();
+                       $("#OrderPurchaseReturnResult").text(" "); 
+                       $('#myProduction_order_repair')[0].reset(); 
+					   //$("#quotationTable").text(" "); 
+					   
+                       //$("#id").val("");
+     
+                    }, 1000);
+                  }else{
+                    $("#OrderRepairresultarea").text(data);
+					
+                 }
+				// ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
+ 
+	 
+    console.log(data);
+    //Perform ANy action after successfuly post data
+       
+  });
+  return false;     
+}
+// ends
+
+
 
 
 //starts order repair  query
@@ -1280,7 +1330,7 @@ else
 </thead>
 <tbody>
 <?php
-$poquery=$this->db->query("select *  from tbl_job_purchase_order_return where status='A' and job_order_id='".$_GET['id']."' group by order_no");
+$poquery=$this->db->query("select *  from tbl_job_rm_return where  job_order_id='".$_GET['id']."' group by return_no");
 foreach($poquery->result() as $getPo){
 ?>
 <tr class="gradeC record">
@@ -1955,11 +2005,11 @@ var cell2 = row.insertCell(1);
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-<h4 class="modal-title">Purchase Return(Lot No.:-<?=$getsched->lot_no;?>)</h4>
+<h4 class="modal-title">RM Return(Lot No.:-<?=$getsched->lot_no;?>)</h4>
 <div id="OrderPurchaseReturnResult" class="text-center " style="font-size: 15px;color: red;"></div> 
 <div class="modal-body">
-  <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="productionOrderPurchaseReturn" action="#" 
-        onsubmit="return SubmitmyProduction_purchase_return();"method="POST">
+  <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="productionOrderRMReturn" action="#" 
+        onsubmit="return SubmitmyProduction_RM_return();"method="POST">
 <div class="row" id="purchaseReturnDiv">
 
 
