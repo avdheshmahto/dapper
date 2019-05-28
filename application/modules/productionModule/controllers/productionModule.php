@@ -1764,8 +1764,6 @@ $data=array('id' => $id,
 $this->load->view("purchase-order-return",$data);	
 }
 
-
-
 public function rm_return()
 {
 @extract($_POST);
@@ -1773,11 +1771,6 @@ $data=array('id' => $id,
 );
 $this->load->view("rm-return",$data);	
 }
-
-
-
-
-
 
 
 public function productionPurchaseReturn()
@@ -1856,14 +1849,11 @@ public function productionRMReturn()
 	  	}
 	 }
 	 echo "1";	
-
 }
 
 public function raw_material_scrap()
 {
-
 	$this->load->view("raw-material-scrap");
 }
-
 
 }

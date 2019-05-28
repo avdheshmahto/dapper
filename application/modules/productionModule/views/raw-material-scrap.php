@@ -458,9 +458,9 @@ foreach($vendor_query->result() as $getVendor){
         <th class="tdcenter">Description</th>
         
 		<th class="tdcenter">Usage Unit</th>
-		<th class="tdcenter">Ordered Qty</th>
-        <th class="tdcenter">Circle Weight</th>
-        <th class="tdcenter">Ordered Weight</th>
+		
+        <th class="tdcenter">Net Weight</th>
+        <th class="tdcenter">Cast Weight</th>
 	</tr>
 </thead>
 <tbody>
@@ -470,31 +470,19 @@ foreach($vendor_query->result() as $getVendor){
 if($Search!='')
 {
 
-
-
-					$qry = "select *from tbl_job_work where order_type='Job Order' ";
+					$qry = "select *from tbl_product_stock where type='13'";
 	//$qry = "select *from tbl_job_work where order_type='Purchase Order'";				
 					
-					
-					   if($shape_id!= "")
-						
-						  $qry .= " AND shape_id = '$shape_id'";
-					  
-					   if($vendor_id != "")
-					
-					     $qry .= " AND vendor_id = '$vendor_id'";
-						
-						 if($part_id != "")
-					
-					     $qry .= " AND part_id LIKE '%".$part_id."%'";
-						 
-						 
-						 
-						 
+					 
 						$queryData=$this->db->query($qry); 
-						 
+	$i=1;		 
   foreach($queryData->result() as $fetch_list)
   {
+	  $unitQuery=$this->db->query("select *from tbl_master_data where serial_number='$fetch_list->usageunit'");
+	  $getUnit=$unitQuery->row();
+ 
+
+ 
   
 ?>
 
@@ -503,20 +491,23 @@ if($Search!='')
          <tr class="gradeX odd" role="row">
                                             <td class="size-60 text-center sorting_1"><?=$i;?></td>
 																								
-											<td><?=$getProductStock->sku_no;?>
-                                            <td><?=$getProductStock->productname;?>
+											<td><?=$fetch_list->sku_no;?>
+                                            <td><?=$fetch_list->productname;?>
                                             
                                             <input type="hidden"  name="productid[]" value="<?=$getProduct->productid;?>" class="form-control">
                                             </td>
-											<td><?=$getProductUOM->keyvalue;?></td>
+											<td><?=$getUnit->keyvalue;?></td>
                                             <?php
+											$netWeightQuery=$this->db->query("select *from tbl_issuematrial_dtl where productid='$fetch_list->Product_id'");
+											$getNetWeight=$netWeightQuery->row();
 											
-											$poLogQuery=$this->db->query("select SUM(qty) as po_qty from tbl_purchase_order_production_dtl where purchaseid='$getHdr->po_no' and productid='$getProduct->productid'");
-											$getPoQty=$poLogQuery->row();
 											?>
-											<td><?=$getProduct->order_qty;?></td>
-                                            <td><?=$getProductStock->circle_weight;?></td>
-                                            <td><?=$getProduct->receive_qty;?></td>
+											<td><?=$getNetWeight->receive_qty;?></td>
+                                            <td><?=$getNetWeight->receive_qty;?>
+                                            
+                                         
+                                            </td>
+                                         
                                             
                                            
                                            
