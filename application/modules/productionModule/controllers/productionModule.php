@@ -1859,5 +1859,11 @@ public function productionRMReturn()
 
 }
 
+public function raw_material_scrap()
+{
+
+	$this->load->view("raw-material-scrap");
+}
+
 
 }
