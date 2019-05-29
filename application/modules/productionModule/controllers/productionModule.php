@@ -836,7 +836,6 @@ $this->load->view("view-scrap-order",$data);
 }
 
 
-
 public function view_transfer_order()
 {
 @extract($_GET);
@@ -1854,6 +1853,12 @@ public function productionRMReturn()
 public function raw_material_scrap()
 {
 	$this->load->view("raw-material-scrap");
+}
+
+public function manage_scrap_job_work()
+{
+$this->load->view("manage-scrap-job-work");
+
 }
 
 }
