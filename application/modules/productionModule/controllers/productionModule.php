@@ -1862,4 +1862,12 @@ $this->load->view("manage-scrap-job-work");
 
 }
 
+
+public function manage_scrap_job_work_details()
+{
+$this->load->view("manage-scrap-job-work-details");
+
+}
+
+
 }

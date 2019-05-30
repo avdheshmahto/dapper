@@ -428,15 +428,20 @@ function ajex_JobWorkListData(production_id){
 <tbody>
 <?php
 
-$queryData=$this->db->query("select *from tbl_job_work_log  ");
+
+
+
+
+$queryData=$this->db->query("select *from tbl_job_work_log where order_type='Job Order' ");
   foreach($queryData->result() as $fetch_list)
   {
 	  
-	  
+$rmQuery=$this->db->query("select *from tbl_product_stock where Product_id='$fetch_list->part_id'");
+$getRM=$rmQuery->row(); 
+
+
   
 ?>
-
-
 
     <tr class="gradeU record">
 	<td>
@@ -445,7 +450,7 @@ $queryData=$this->db->query("select *from tbl_job_work_log  ");
     
     
     
-    <a href="<?=base_url();?>productionModule/manage_jobwork_map_details?id=<?=$fetch_list->id;?>&&p_id=<?=$_GET['id'];?>"><?=$fetch_list->order_type;?></a>
+    <a href="<?=base_url();?>productionModule/manage_scrap_job_work_details?id=<?=$fetch_list->id;?>&&p_id=<?=$_GET['id'];?>"><?=$fetch_list->order_type;?></a>
    
     <button style="display:none" type="button" class="btn btn-default modalMapSpare" onclick="Order('<?=$fetch_list->job_order_no;?>');" data-toggle="modal" data-target="#modal-order"><?=$fetch_list->order_type;?></button></td>
 	 <td>
