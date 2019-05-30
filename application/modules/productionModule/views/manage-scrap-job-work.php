@@ -421,17 +421,18 @@ function ajex_JobWorkListData(production_id){
 		<th>Order no.</th>
 		<th>Vendor Name</th>
 		<th>Date</th>
-        <th>Status</th>
+        
 		
-		<th>Action</th>
 	</tr>
 </thead>
 <tbody>
 <?php
 
-$queryData=$this->db->query("select *from tbl_job_work where production_id='".$_GET['id']."' ");
+$queryData=$this->db->query("select *from tbl_job_work_log  ");
   foreach($queryData->result() as $fetch_list)
   {
+	  
+	  
   
 ?>
 
@@ -466,20 +467,11 @@ $queryData=$this->db->query("select *from tbl_job_work where production_id='".$_
 	
 	
 <td><?=$fetch_list->date;?></td>
-<td>Pending</td>
+
 	
 	
         
-        <td><?php $pri_col='id';
-                  $table_name='tbl_schedule_triggering';
-         ?>
        
-       
-       
-        <button class="btn btn-default" onclick="viewWorkOrder(<?=$fetch_list->id;?>);" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>
-        
-        <a target="_blank" href="<?=base_url();?>productionModule/print_challan?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
-        </td>
     </tr>
 <?php  }?>
 

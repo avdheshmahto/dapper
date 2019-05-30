@@ -1857,6 +1857,7 @@ public function raw_material_scrap()
 
 public function manage_scrap_job_work()
 {
+
 $this->load->view("manage-scrap-job-work");
 
 }

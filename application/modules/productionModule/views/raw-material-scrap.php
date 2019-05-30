@@ -491,7 +491,7 @@ if($Search!='')
          <tr class="gradeX odd" role="row">
                                             <td class="size-60 text-center sorting_1"><?=$i;?></td>
 																								
-											<td><a href="productionModule/manage_scrap_job_work"><?=$fetch_list->sku_no;?></a>
+											<td><a href="productionModule/manage_scrap_job_work?scrap_id=<?=$fetch_list->Product_id;?>"><?=$fetch_list->sku_no;?></a>
                                             <td><?=$fetch_list->productname;?>
                                             
                                             <input type="hidden"  name="productid[]" value="<?=$getProduct->productid;?>" class="form-control">
