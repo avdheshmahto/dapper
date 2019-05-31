@@ -432,7 +432,7 @@ function ajex_JobWorkListData(production_id){
 
 
 
-$queryData=$this->db->query("select *from tbl_job_work_log where order_type='Job Order' ");
+$queryData=$this->db->query("select *from tbl_job_work_log where order_type='Job Order' and vendor_id='".$_GET['vendor_id']."' ");
   foreach($queryData->result() as $fetch_list)
   {
 	  

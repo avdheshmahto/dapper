@@ -815,7 +815,7 @@ $getIssueMat=$queryIssueMat->row();
 
 <div class="tabs-container">
 <ul class="nav nav-tabs">
-<li ><a href="#home" data-toggle="tab">GRN</a></li>
+<li ><a href="#home" data-toggle="tab">Scrap GRN</a></li>
 
 
 </ul>

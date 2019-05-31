@@ -1311,10 +1311,6 @@ $this->load->view("scrap-grn-details",$data);
 
 
 
-
-
-
-
 public function order_check()
 {
 
