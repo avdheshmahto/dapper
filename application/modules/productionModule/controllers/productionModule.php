@@ -1295,6 +1295,26 @@ $this->load->view("order-details",$data);
 }
 
 
+
+public function scrap_grn_details()
+{
+
+@extract($_POST);
+$data=array('id' => $id,
+
+	'order_type' => $order_type,
+	'lot_no' => $lot_no
+);
+$this->load->view("scrap-grn-details",$data);
+}
+
+
+
+
+
+
+
+
 public function order_check()
 {
 

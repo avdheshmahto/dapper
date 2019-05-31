@@ -379,7 +379,7 @@ var lot_no=document.getElementById("lot_no").innerHTML;
 
  	$.ajax({   
 		    type: "POST",  
-			url: "order_details",  
+			url: "scrap_grn_details",  
 			cache:false,  
 			data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},  
 			success: function(data)  
@@ -807,46 +807,6 @@ $getVendor=$queryVendor->row();
 $queryIssueMat=$this->db->query("select SUM(qty) as qty from tbl_quotation_purchase_order_dtl where purchaseid='$getsched->purchaseid'");
 $getIssueMat=$queryIssueMat->row();
 ?>
-
-<div class="row">
-<div class="col-xs-6 col-sm-6 col-md-6">
-<div class="form-group">
-<h4>Status</h4>
-<?php
-if($getsched->status=='0')
-{
-echo "<input type='text'  class='form-control' value='Open' readonly >";
-}
-if($getsched->status=='1')
-{
-	echo "<input type='text'  class='form-control' value='Force Close' readonly >";
-
-}
-if($getsched->status=='2')
-{
-	echo "<input type='text'  class='form-control' value='Completed' readonly >";
-	
-}
-
-if($getsched->status=='3')
-{
-	echo "<input type='text'  class='form-control' value='Partial Completed' readonly >";
-
-}
-?>
-
-</div>
-</div>
-
-<div class="col-xs-6 col-sm-6 col-md-6">
-<div class="form-group">
-<h4>&nbsp;</h4>
-
-&nbsp;
-</div>
-</div>
-</div>
-
 </div>
 </div>
 </div>
@@ -1153,7 +1113,7 @@ var cell2 = row.insertCell(1);
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-<h4 class="modal-title">Order GRN(Lot No.:-<?=$getsched->lot_no;?>)</h4>
+<h4 class="modal-title">Scrap GRN(Lot No.:-<?=$getsched->lot_no;?>)</h4>
 <div id="Orderresultarea" class="text-center " style="font-size: 15px;color: red;"></div> 
 <div class="modal-body">
   <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_order_receive" action="#" 
