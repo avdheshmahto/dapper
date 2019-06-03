@@ -251,12 +251,12 @@ function submitProductionOrderCheck() {
 //starts order receive  query
 
 function submitProductionOrderReceive() {
-            
+           
   var form_data = new FormData(document.getElementById("myProduction_order_receive"));
   form_data.append("label", "WEBUPLOAD");
 
   $.ajax({
-      url: "productionModule/productionOrderInsert",
+      url: "productionModule/productionOrderScrapInsert",
       type: "POST",
       data: form_data,
       processData: false,  // tell jQuery not to process the data
@@ -751,7 +751,7 @@ function ajex_JobWorkListData(production_id){
 <div class="panel-heading" style="background-color: #F5F5F5; color:#fff; border-color:#DDDDDD;">
 <h3 class="panel-title" style="float: initial;"><span style="color:#000;">Order Details:-</span><?=$getsched->inboundid;?>
 	
-	<a href="<?=base_url();?>productionModule/manage_jobwork_map?id=<?=$getsched->production_id;?>" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
+	<a href="<?=base_url();?>productionModule/manage_scrap_job_work?id=<?=$getsched->production_id;?>" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
 </h3>
 </div>
 <div class="panel-body" style="padding:15px 0px;">

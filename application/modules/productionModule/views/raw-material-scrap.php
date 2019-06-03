@@ -461,6 +461,7 @@ foreach($vendor_query->result() as $getVendor){
 		
         <th class="tdcenter">Net Weight</th>
         <th class="tdcenter">Cast Weight</th>
+        <th class="tdcenter">Total Qty</th>
 	</tr>
 </thead>
 <tbody>
@@ -491,7 +492,7 @@ if($Search!='')
          <tr class="gradeX odd" role="row">
                                             <td class="size-60 text-center sorting_1"><?=$i;?></td>
 																								
-											<td><a href="productionModule/manage_scrap_job_work?scrap_id=<?=$fetch_list->Product_id;?>"><?=$fetch_list->sku_no;?></a>
+											<td><a href="productionModule/manage_scrap_job_work?scrap_id=<?=$fetch_list->Product_id;?> && vendor_id=<?=$_POST['vendor_id'];?>"><?=$fetch_list->sku_no;?></a>
                                             <td><?=$fetch_list->productname;?>
                                             
                                             <input type="hidden"  name="productid[]" value="<?=$getProduct->productid;?>" class="form-control">
@@ -503,10 +504,8 @@ if($Search!='')
 											
 											?>
 											<td><?=$getNetWeight->receive_qty;?></td>
-                                            <td><?=$getNetWeight->receive_qty;?>
-                                            
-                                         
-                                            </td>
+                                            <td><?=$getNetWeight->receive_qty;?>                                            </td>
+                                            <td><?=$getNetWeight->order_qty;?></td>
                                          
                                             
                                            
