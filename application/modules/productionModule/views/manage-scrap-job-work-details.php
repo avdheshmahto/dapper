@@ -251,7 +251,7 @@ function submitProductionOrderCheck() {
 //starts order receive  query
 
 function submitProductionOrderReceive() {
-           
+          
   var form_data = new FormData(document.getElementById("myProduction_order_receive"));
   form_data.append("label", "WEBUPLOAD");
 
@@ -838,7 +838,7 @@ $getIssueMat=$queryIssueMat->row();
 <tbody>
 <?php
 
-$queryData=$this->db->query("select *from tbl_production_order_log where job_order_id='".$_GET['id']."' and grn_type='Job Order' group by grn_no");
+$queryData=$this->db->query("select *from tbl_job_work_scrap group by grn_no");
   foreach($queryData->result() as $fetch_list)
   {
   

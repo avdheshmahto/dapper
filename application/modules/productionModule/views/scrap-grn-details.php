@@ -96,12 +96,11 @@ $getOrder=$orderQuery->row();
 					<th class="tdcenter"> Sl No</th>
 					<th class="tdcenter">Item Number & Description</th>
 					<th class="tdcenter">UOM</th>
-					<th class="tdcenter">Scrap Qty</th>
+					<th class="tdcenter">Ordered Qty</th>
 			        <th class="tdcenter">Remaining Qty</th>
                     <th class="tdcenter" style="display:none">Qty In Stock</th>
                      <th class="tdcenter">Receive Qty</th>
                     
-                     
 				</tr>
 			</thead>
         
@@ -115,12 +114,18 @@ $getOrder=$orderQuery->row();
 		####### ends ########
 		
 		###### get Part #####
-		
 		$productPartQuery=$this->db->query("select * from tbl_part_price_mapping where part_id='$getProductStock->Product_id'");
 		$getProductPart=$productPartQuery->row();
-		
-		
 		##### ends #####
+		
+		
+		
+		####### get RM #######
+		
+		$productStockRMQuery=$this->db->query("select * from tbl_product_stock where Product_id='$getProductPart->rowmatial'");
+		$getProductRMStock=$productStockRMQuery->row();
+		####### ends ########
+		
 		
 		####### get UOM #######
 		$productUOMQuery=$this->db->query("select *from tbl_master_data where serial_number='$getProduct->usageunit'");
@@ -140,8 +145,8 @@ $getOrder=$orderQuery->row();
 		?>
        <tr class="gradeX odd" role="row">
             <td class="size-60 text-center sorting_1"><?=$i;?></td>
-			<td><?=$getProduct->sku_no;?>&<?=$getProduct->productname;?>
-              <input type="hidden"  name="productid[]" value="<?=$getProduct->part_id;?>" class="form-control">
+			<td><?=$getProduct->sku_no;?>
+              <input type="hidden"  name="productid[]" value="<?=$getProduct->Product_id;?>" class="form-control">
               
             </td>
 			<td><?=$getProductUOM->keyvalue;?></td>
@@ -160,15 +165,19 @@ $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_pro
 			$getInboundGRNLog=$inbountLogGRNLogQuery->row();
 
 
+$jobQuery=$this->db->query("select *from tbl_job_work_log where job_order_no = '$lot_no' ");
+$getJob=$jobQuery->row();
+echo $getJob->qty;
+
 			?>
            
              <input type="hidden" min="0" name="ord_qty[]" value="<?=$getProduct->qty;?>" class="form-control">
                                             
                                              <input type="hidden" min="0" name="rm_qty[]" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" class="form-control">
-			<td><?=$getProduct->qty;?></td>
+			<td><?=$getProduct->qty;?>10</td>
             
             <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" />
-            <td><?php echo $reci_qty=$getProduct->qty-$getInboundGRNLog->rec_qty;?></td>
+            <td>10</td>
              <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
   
             <td>
@@ -180,9 +189,7 @@ $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_pro
             
             </td>
             
-          
-                                           
-		</tr>
+          </tr>
 	        <?php 
 			  $i++;
 			}?>

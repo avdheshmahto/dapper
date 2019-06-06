@@ -1880,13 +1880,13 @@ public function productionOrderScrapInsert()
                  $data_dtl=array(
 				 'lot_no'		=> $lot_no,
 				 'order_no'		=> $order_no,
-				 'return_no' => $return_no,
-				 'return_date' => $return_date,
-				 'vendor_id' => $vendor_id,
+				 'invoice_no' => $invoice_no,
+				 'grn_no' => $grn_no,
+				 'grn_date' => $grn_date,
 				 'job_order_id' => $job_order_id,
 				 'productid'		=> $productid[$i],				 
 				 'qty'		=> $qty[$i],
-				 'order_qty' => $order_qty[$i],
+				 
 				 'maker_id'			=> $this->session->userdata('user_id'),
 				 'maker_date'		=> date('y-m-d'),
 				 'comp_id'			=> $this->session->userdata('comp_id'),
