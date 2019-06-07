@@ -165,7 +165,7 @@ $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_pro
 			$getInboundGRNLog=$inbountLogGRNLogQuery->row();
 
 
-$jobQuery=$this->db->query("select *from tbl_job_work_log where job_order_no = '$lot_no' ");
+$jobQuery=$this->db->query("select *from tbl_job_work where job_order_no = '$id' ");
 $getJob=$jobQuery->row();
 echo $getJob->qty;
 
