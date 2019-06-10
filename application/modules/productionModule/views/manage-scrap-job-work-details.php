@@ -489,13 +489,15 @@ xhttp.send();
 function view_production_log(poid){
 	
 	
-	//alert(poid);
+	
 	var res = poid.split(",");
 	var poidd=res[0];
 	var ord=res[1];
+	
+	
     $.ajax({   
 	    type: "POST",  
-		url: "view_production_log_cont",  
+		url: "view_rm_details",  
 		cache:false,  
 		data: {'id':poidd,'ord':ord},  
 		success: function(data)  
@@ -1140,7 +1142,37 @@ var cell2 = row.insertCell(1);
 
 
 
+<!--Production log view starts here-->
 
+<div id="model-view-production-log" class="modal fade" tabindex="-1" role="dialog">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<h4 class="modal-title">View RM Details(Lot No.:-<?=$getsched->lot_no;?>)</h4>
+<div id="Orderresultarea" class="text-center " style="font-size: 15px;color: red;"></div> 
+<div class="modal-body">
+  <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_order_receive" action="#" 
+        onsubmit="return submitProductionOrderReceive();"method="POST">
+<div class="row" id="view-production-log">
+
+
+
+
+
+
+
+
+</div>
+</form>
+</div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div>
+</div>
+
+
+<!-- ends-->
 
 
 

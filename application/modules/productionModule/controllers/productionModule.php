@@ -1303,7 +1303,8 @@ public function scrap_grn_details()
 $data=array('id' => $id,
 
 	'order_type' => $order_type,
-	'lot_no' => $lot_no
+	'lot_no' => $lot_no,
+	
 );
 $this->load->view("scrap-grn-details",$data);
 }
@@ -1671,6 +1672,26 @@ $data=array('id' => $id,
 $this->load->view("view-production-log",$data);
 
 }
+
+
+public function view_rm_details()
+{
+@extract($_POST);
+
+$data=array('id' => $id,
+	'ord' => $ord
+	
+);
+$this->load->view("view-rm-details",$data);
+
+}
+
+
+
+
+
+
+
 
 public function manage_jobwork_map_details()
 {
