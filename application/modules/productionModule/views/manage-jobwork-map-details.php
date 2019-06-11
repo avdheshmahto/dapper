@@ -486,6 +486,18 @@ xhttp.send();
 
 
 
+function viewRMOrderDetails(v){
+	var pro=v;
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("GET", "productionModule/view_rm_order_details?ID="+pro, false);
+	xhttp.send();
+ 	document.getElementById("viewCheck").innerHTML = xhttp.responseText;
+}
+
+
+
+
+
 function view_production_log(poid){
 	
 	
@@ -1379,7 +1391,7 @@ else
  <?php /*?><button class="btn btn-default" onclick="viewPurchaseOrder(<?=$getPo->purchaseid;?>);" data-toggle="modal" data-target="#modal-6" type="button" ><i class="fa fa-eye"></i></button><?php */?>
  <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
 
-<button class="btn btn-default" onclick="viewChecking('<?=$getPo->check_no;?>');" data-toggle="modal" data-target="#modal-checking" type="button" ><i class="fa fa-eye"></i></button>
+<button class="btn btn-default" onclick="viewRMOrderDetails('<?=$getPo->check_no;?>');" data-toggle="modal" data-target="#modal-checking" type="button" ><i class="fa fa-eye"></i></button>
 <a style="display:none" href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
 
  
@@ -2222,23 +2234,17 @@ var cell2 = row.insertCell(1);
 
 <!-- ends-->
 
-<!-- view checking -->
+<!-- view RM Details -->
 <div id="modal-checking" class="modal fade" tabindex="-1" role="dialog">
 <div class="modal-dialog modal-lg">
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-<h4 class="modal-title">View Check Order(Lot No.:-<?=$getsched->lot_no;?>)</h4>
-<div id="resultarea" class="text-center " style="font-size: 15px;color: red;"></div> 
+<h4 class="modal-title">View RM Details(Lot No.:-<?=$getsched->lot_no;?>)</h4>
+<div id="resultarea" class="text-center " style="font-size: 15px;color: red;">
+</div> 
 <div class="modal-body">
 <div class="row" id="viewCheck">
-
-
-
-
-
-
-
 
 </div>
 </div>
@@ -2248,6 +2254,7 @@ var cell2 = row.insertCell(1);
 </div>
 
 <!-- ends -->
+
 
 <div id="modal-ChallanLog" class="modal fade" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-lg">
