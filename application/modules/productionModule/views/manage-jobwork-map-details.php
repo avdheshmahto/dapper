@@ -1391,7 +1391,7 @@ else
  <?php /*?><button class="btn btn-default" onclick="viewPurchaseOrder(<?=$getPo->purchaseid;?>);" data-toggle="modal" data-target="#modal-6" type="button" ><i class="fa fa-eye"></i></button><?php */?>
  <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
 
-<button class="btn btn-default" onclick="viewRMOrderDetails('<?=$getPo->check_no;?>');" data-toggle="modal" data-target="#modal-checking" type="button" ><i class="fa fa-eye"></i></button>
+<button class="btn btn-default" onclick="viewRMOrderDetails('<?=$getPo->return_no;?>');" data-toggle="modal" data-target="#modal-checking" type="button" ><i class="fa fa-eye"></i></button>
 <a style="display:none" href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
 
  

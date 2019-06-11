@@ -1808,7 +1808,7 @@ public function print_challan_grn()
 
 public function view_rm_order_details()
 {
-	$data=array('id' => $_GET['id']);
+	$data=array('id' => $_GET['ID']);
 	$this->load->view("view-rm-order-details",$data);
 }
 
