@@ -1395,7 +1395,7 @@ else
 <a style="display:none" href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
 
  
-  <a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
+  <a target="_blank" href="<?=base_url();?>productionModule/print_rm_return?id=<?=$getPo->return_no;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
 </th>
 </tr>
 <?php }?>
