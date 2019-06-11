@@ -32,7 +32,7 @@ public function add_production(){
 
 public function add_grn()
 {
-if($this->session->userdata('is_logged_in')){
+	if($this->session->userdata('is_logged_in')){
 		$this->load->view('add-grn');
 	}
 	else
@@ -53,6 +53,7 @@ public function manage_grn()
 	{
 	redirect('index');
 	}	
+
 }
 
 public function Manage_Inbound_Data()
@@ -60,7 +61,6 @@ public function Manage_Inbound_Data()
 
   	  $data['result'] = "";
       $table_name  = 'tbl_production_grn_hdr';
-	  //$url        = site_url('/inbound/manage_inbound?');
 	  $sgmnt      = "4";
 	  if($_GET['entries']!="")
 	  {
@@ -89,23 +89,20 @@ public function Manage_Inbound_Data()
 	  
 	  }
 	  $pagination   = $this->ciPagination($url,$totalData,$sgmnt,$showEntries);
-     $data=$this->user_function();   
-     $data['dataConfig']        = array('total'=>$totalData,'perPage'=>$pagination['per_page'],'page'=>$pagination['page']);
-     $data['pagination']        = $this->pagination->create_links();
+	  $data=$this->user_function();   
+      $data['dataConfig']        = array('total'=>$totalData,'perPage'=>$pagination['per_page'],'page'=>$pagination['page']);
+      $data['pagination']        = $this->pagination->create_links();
 	 
 	 if($this->input->get('filter') == 'filter')
         	$data['result']       = $this->model_production->filterInboundOrder($pagination['per_page'],$pagination['page'],$this->input->get());
           	else	
     		$data['result'] = $this->model_production->getInbound($pagination['per_page'],$pagination['page']);
-			
-     return $data;
+	    return $data;
 }
 
 public function manage_production(){
 	
 	if($this->session->userdata('is_logged_in')){
-	//$data=$this->user_function();// call permission fnctn
-	//$data['result'] = $this->model_production->getProduction();
 	$data =  $this->manage_productionJoin();
 	$this->load->view('manage-production',$data);
 	}
@@ -116,8 +113,8 @@ public function manage_production(){
 }
 
 function manage_productionJoin(){
-	$data['result'] = "";
-	////Pagination start ///
+	  $data['result'] = "";
+	 	///Pagination start ///	
       $table_name  = 'tbl_production_hdr';
 	  $url        = site_url('/production/manage_production?');
 	  $sgmnt      = "4";
@@ -134,7 +131,7 @@ function manage_productionJoin(){
    
      $data=$this->user_function();      // call permission fnctn
      $data['dataConfig']        = array('total'=>$totalData,'perPage'=>$pagination['per_page'],'page'=>$pagination['page']);
-     //$data['result']            = $this->model_template->contact_get($pagination['per_page'],$pagination['page']);	
+     
      $data['pagination']        = $this->pagination->create_links();
 	 
 	 if($this->input->get('filter') == 'filter')   ////filter start ////
@@ -164,11 +161,7 @@ public function insert_overlock(){
 	$pri_col_log ='production_log_id';
 	$status='Overlock';
     $count=count($qty);
-    //echo $count;die;
     $sumQty=0;
-   /* echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";die;*/
     for($i=0;$i<$count;$i++){
 			 $data_dtl['production_id']     = $this->input->post('production_id');
 			 $data_dtl['finishProductId']   = $this->input->post('finishProduct');
@@ -187,14 +180,14 @@ public function insert_overlock(){
 				$this->Model_admin_login->insert_user($table_name,$data_dtl);	
 				$lastid=$this->db->insert_id();
 			}else{
-				//echo $tailor_id[$i];
+				
 				if($qty[$i]!=''){
 				  $this->db->query("update tbl_overlock set qty='".$qty[$i]."', customer_name='".$contact_id[$i]."', date='".$date[$i]."' where overlock_id='".$overlock_id[$i]."'");
 				}
-				//$this->Model_admin_login->update_user($pri_col,$table_name,$IDE,$data_dtl);
+				
 					$lastid=$overlock_id[$i];
 				}	
-				//die;
+				
 				if($qty[$i]!=''){
 				 $data_dtl_log['production_id']= $this->input->post('production_id');
 				 $data_dtl_log['finishProductId']= $this->input->post('finishProduct');
@@ -265,7 +258,7 @@ public function insertProduction(){
 				}
 			}
 			
-			//$this->software_log_insert($lastHdrId,$vendor_id,$grand_total,'Template added');
+			
 		$rediectInvoice="production/manage_production";
 		redirect($rediectInvoice);	
 	}
@@ -275,11 +268,9 @@ public function insertProduction(){
 		extract($_POST);
 		$table_name ='tbl_production_hdr';
 		$table_name_dtl ='tbl_production_dtl';
-		//$table_name_log ='tbl_production_hdr_log';
 		$pri_col ='productionid';
 		$pri_col_dtl ='productionhdr';
-		//$pri_col_log ='productionhdr_id';
-		 $this->db->query("delete from $table_name_dtl where productionhdr='$id'");	
+		$this->db->query("delete from $table_name_dtl where productionhdr='$id'");	
 		$sess = array(
 					
 					'maker_id' => $this->session->userdata('user_id'),
@@ -300,11 +291,9 @@ public function insertProduction(){
 					
 					);
 			
-			$data_merge = array_merge($data,$sess);					
-		   
-			$this->load->model('Model_admin_login');	
+		$data_merge = array_merge($data,$sess);					
+		$this->load->model('Model_admin_login');	
 		$this->Model_admin_login->update_user($pri_col,$table_name,$id,$data_merge);
-
 		for($i=0; $i<=$rows; $i++)
 				{
 				 
@@ -321,14 +310,13 @@ public function insertProduction(){
 				 $data_dtl['brnh_id']=$this->session->userdata('brnh_id');
 				
 				$this->Model_admin_login->insert_user($table_name_dtl,$data_dtl);		
-			
 							}
-					}
+				}
 					
-		$sqlProdLog="insert into tbl_production_hdr_log set productionhdr_id ='$id',product_id='$product_id',qty='$qty',machine='$machine',date='$date', maker_date=NOW(), maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."' ";
-			$this->db->query($sqlProdLog);
+			$sqlProdLog="insert into tbl_production_hdr_log set productionhdr_id ='$id',product_id='$product_id',qty='$qty',machine='$machine',date='$date', maker_date=NOW(), maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."' ";
+				$this->db->query($sqlProdLog);
 				
-	   echo "<script type='text/javascript'>";
+	   			echo "<script type='text/javascript'>";
 					echo "window.close();";
 					echo "window.opener.location.reload();";
 					echo "</script>";
@@ -337,7 +325,7 @@ public function insertProduction(){
 	
 public function all_product_function(){
 	
-		$this->load->view('all-product',$data);
+	$this->load->view('all-product',$data);
 	
 	}
 
@@ -367,7 +355,7 @@ public function getproduct(){
 public function add_inspection()
 {
 	
-		if($this->session->userdata('is_logged_in')){
+	if($this->session->userdata('is_logged_in')){
 		$this->load->view('add-inspection');
 	}
 	else
@@ -379,39 +367,10 @@ public function add_inspection()
 		
 public function insert_insepction()
 {
-extract($_POST);
-
+		extract($_POST);
 		$table_name ='tbl_product_inspection';
-		
- 
-		 $this->db->query("delete from $table_name where productionid='$productionid' and type ='$type'");	
-				/*
-		
-		$data = array(
-	
-					'product_id' => $this->input->post('product_id'),
-					'test_param' => $this->input->post('test_param')[$i],
-					'specification' => $this->input->post('specification')[$i],
-					'insp1' => $this->input->post('insp1')[$i],
-					'insp2' => $this->input->post('insp2')[$i],
-					'insp3' => $this->input->post('insp3')[$i],
-					'insp4' => $this->input->post('insp4')[$i],
-					'insp5' => $this->input->post('insp5')[$i],
-					'insp6' => $this->input->post('insp6')[$i],
-					'insp7' => $this->input->post('insp7')[$i],
-					'insp8' => $this->input->post('insp8')[$i],
-					'insp9' => $this->input->post('insp9')[$i],
-					'insp10' => $this->input->post('insp10')[$i],
-					
-					);
-			
-			$data_merge = array_merge($data,$sess);					
-		   
-			
-		$this->Model_admin_login->update_user($pri_col,$table_name,$id,$data_merge);
-*/
-$this->load->model('Model_admin_login');	
-		
+		$this->db->query("delete from $table_name where productionid='$productionid' and type ='$type'");	
+		$this->load->model('Model_admin_login');	
 		$rows=count($test_param);
 		for($i=0; $i<=$rows; $i++)
 				{
@@ -439,22 +398,14 @@ $this->load->model('Model_admin_login');
 				 $data_dtl['comp_id']=$this->session->userdata('comp_id');
 				 $data_dtl['zone_id']=$this->session->userdata('zone_id');
 				 $data_dtl['brnh_id']=$this->session->userdata('brnh_id');
-				
-				$this->Model_admin_login->insert_user($table_name,$data_dtl);		
-				
-				
-			
-							}
+		    	$this->Model_admin_login->insert_user($table_name,$data_dtl);		
 					}
-					
-					
-	   echo "<script type='text/javascript'>";
+				}
+							
+	   			echo "<script type='text/javascript'>";
 					echo "window.close();";
 					echo "alert('Inspection Added Successfully')";
 					echo "</script>";
-		
-		
-		
 		
 }
 		
@@ -464,9 +415,7 @@ public function print_inspection()
 	$data=array(
 	'id' => $_GET['id']
 	);
-	
-$this->load->view("print-inspection",$data);	
-	
+	$this->load->view("print-inspection",$data);	
 }
 
 
@@ -475,9 +424,7 @@ public function print_request_challan()
 	$data=array(
 	'id' => $_GET['id']
 	);
-	
-$this->load->view("print-request-challan",$data);	
-	
+	$this->load->view("print-request-challan",$data);	
 }
 
 
@@ -486,26 +433,19 @@ public function print_issue_challan()
 	$data=array(
 	'id' => $_GET['id']
 	);
-	
-$this->load->view("print-issue-challan",$data);	
-	
+	$this->load->view("print-issue-challan",$data);	
 }
-
-
 
 public function stock_refill_qty1($qty,$main_id)
 	{
 	
-	//echo "update tbl_product_stock set quantity=quantity-'$qty' where Product_id='$main_id' and type='13'";die;
-				$this->db->query("update tbl_product_stock set quantity=quantity-'$qty' where Product_id='$main_id' and type='13'");
+		$this->db->query("update tbl_product_stock set quantity=quantity-'$qty' where Product_id='$main_id' and type='13'");
 	
 	}
+
 public function stock_refill_qty($qty,$main_id,$production_id)
 	{
-	//echo $production_id;
-	//$gethdrProduction=$this->db->query("select *from tbl_production_hdr where productionid='".$production_id."'");
-	//$gethdrProdfetch=$gethdrProduction->row();
-	//$tot_qty=$gethdrProdfetch->qty*$qty;
+	
 	$gethdrQuery=$this->db->query("select * from tbl_template_hdr where product_id='".$main_id."'");
 	$gethdrfetch=$gethdrQuery->row();
 	//echo $gethdrfetch->templateid;
@@ -513,14 +453,10 @@ public function stock_refill_qty($qty,$main_id,$production_id)
 	foreach($getdtlQuery->result() as $getdtlfetch){
 		echo $getdtlfetch->product_id;
 		$tot_qty=$getdtlfetch->quantity*$qty;
-		//echo "update tbl_product_stock set quantity=quantity-'$tot_qty' where Product_id='$getdtlfetch->product_id' and type='13'<br>";
 		$this->db->query("update tbl_product_stock set quantity=quantity-'$tot_qty' where Product_id='$getdtlfetch->product_id' and type='28'");
 	}
-	//die;
-				
+			
 	return;
-				
-	
 	}
 	
 	
@@ -537,9 +473,7 @@ public function stock_refill_qty($qty,$main_id,$production_id)
 	{
 	$this->db->query("update tbl_production_hdr set approve_status='Approve' where productionid='".$_GET['id']."'");
 	}
-	
-	
-redirect('production/manage_production');
+	redirect('production/manage_production');
 }
 
 
@@ -558,54 +492,38 @@ public function stockIn(){
 
 public function getRackQty()
 {
-$rackQty=$this->db->query("select SUM(quantity) as s from tbl_product_serial where location_id='".$_GET['location_rack_id']."' and product_id='".$_GET['pid']."'");
-$getQty=$rackQty->row();
-echo $getQty->s;
+	$rackQty=$this->db->query("select SUM(quantity) as s from tbl_product_serial where location_id='".$_GET['location_rack_id']."' and product_id='".$_GET['pid']."'");
+	$getQty=$rackQty->row();
+	echo $getQty->s;
 }		
 
 public function insertstockreff(){
 extract($_POST);
 if($save!=''){
-//echo "hell";die;
-
- $a=sizeof($product_id);
-for($i=0; $i<$a; $i++){
-if($new_quantity[$i]!='')
-{
-
-//echo $product_id[$i];
-
+	$a=sizeof($product_id);
+	for($i=0; $i<$a; $i++){
+	if($new_quantity[$i]!='')
+	{
 		 $selectQuery = "select * from tbl_product_serial where product_id='$product_id[$i]' and  location_id='$rack_id[$i]' ";
-		$selectQuery1=$this->db->query($selectQuery);
-
+		 $selectQuery1=$this->db->query($selectQuery);
 		 $num= $selectQuery1->num_rows();
-
 		if($num >0)
-
 		{	
+			$secode=$product_id[$i]."_".$location_id1;
+			$this->db->query("update tbl_product_serial set quantity =quantity+$new_quantity[$i] where product_id='".$product_id[$i]."'  and location_id='$rack_id[$i]'");
 
-		$secode=$product_id[$i]."_".$location_id1;
-	
-$this->db->query("update tbl_product_serial set quantity =quantity+$new_quantity[$i] where product_id='".$product_id[$i]."'  and location_id='$rack_id[$i]'");
-
-$p_Q=$this->db->query("update tbl_product_stock set quantity =quantity+$new_quantity[$i] where Product_id='".$product_id[$i]."' ");
-
- $sqlProdLoc1="insert into tbl_product_serial_log set quantity ='$new_quantity[$i]',location_id='$rack_id[$i]',type='Production_stockIn',product_id='$product_id[$i]',f_id='$inbound_id', maker_date=NOW(), author_date=now(), author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."' ";
-$this->db->query($sqlProdLoc1);
+			$p_Q=$this->db->query("update tbl_product_stock set quantity =quantity+$new_quantity[$i] where Product_id='".$product_id[$i]."' ");
+			$sqlProdLoc1="insert into tbl_product_serial_log set quantity ='$new_quantity[$i]',location_id='$rack_id[$i]',type='Production_stockIn',product_id='$product_id[$i]',f_id='$inbound_id', maker_date=NOW(), author_date=now(), author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."' ";
+			$this->db->query($sqlProdLoc1);
 
  		}else{
 			$sqlProdLoc2="insert into tbl_product_serial set product_id='$product_id[$i]',serial_number='$serialno', quantity ='$new_quantity[$i]', location_id='$rack_id[$i]', maker_date=NOW(), author_date=now(), author_id='".$this->session->userdata('user_id')."', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."'"; 
-$this->db->query($sqlProdLoc2);
-
-$this->db->query("update tbl_product_stock set quantity =quantity+$new_quantity[$i] where Product_id='".$product_id[$i]."' ");
-
- 
-$sqlProdLoc1="insert into tbl_product_serial_log set quantity ='$new_quantity[$i]',location_id='$rack_id[$i]',type='Production_stockIn',product_id='$product_id[$i]', maker_date=NOW(), author_date=now(), author_id='".$this->session->userdata('user_id')."',f_id='$inbound_id', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."' ";
-$this->db->query($sqlProdLoc1);
- 			
-				}
-
-	 $lastHdrId=$this->db->insert_id();
+			$this->db->query($sqlProdLoc2);
+			$this->db->query("update tbl_product_stock set quantity =quantity+$new_quantity[$i] where Product_id='".$product_id[$i]."' ");
+			$sqlProdLoc1="insert into tbl_product_serial_log set quantity ='$new_quantity[$i]',location_id='$rack_id[$i]',type='Production_stockIn',product_id='$product_id[$i]', maker_date=NOW(), author_date=now(), author_id='".$this->session->userdata('user_id')."',f_id='$inbound_id', maker_id='".$this->session->userdata('user_id')."', divn_id='".$this->session->userdata('divn_id')."', comp_id='".$this->session->userdata('comp_id')."', zone_id='".$this->session->userdata('zone_id')."', brnh_id='".$this->session->userdata('brnh_id')."' ";
+				$this->db->query($sqlProdLoc1);
+ 			}
+	 	$lastHdrId=$this->db->insert_id();
 		
 }
 }
@@ -619,7 +537,7 @@ window.close();
 <?php
 
  }
-//redirect('/StockRefill/add_multiple_qty');
+	
 } 
 
 public function getPart()
@@ -723,7 +641,6 @@ $sesio = array(
 					'author_date'=> date('y-m-d')
 				);
 
-
 $dataall = array_merge($data,$sesio);
 $this->Model_admin_login->insert_user(tbl_job_work_log,$dataall);
 
@@ -808,72 +725,72 @@ echo "1";
 
 public function getWorkOrder()
 {
-@extract($_POST);
-$data=array('id' => $id);
-$this->load->view("getWorkOrder",$data);
+	@extract($_POST);
+	$data=array('id' => $id);
+	$this->load->view("getWorkOrder",$data);
 }
 
 
 public function getPurchaseOrder()
 {
-@extract($_POST);
-$data=array('id' => $id);
-$this->load->view("getPurchaseOrder",$data);
+	@extract($_POST);
+	$data=array('id' => $id);
+	$this->load->view("getPurchaseOrder",$data);
 }
 
 public function view_request_raw()
-{
-@extract($_GET);
-$data=array('id' => $ID);
-$this->load->view("view-request-raw",$data);
+{	
+	@extract($_GET);
+	$data=array('id' => $ID);
+	$this->load->view("view-request-raw",$data);
 }
 
 public function view_scrap_order()
 {
-@extract($_GET);
-$data=array('id' => $ID);
-$this->load->view("view-scrap-order",$data);
+	@extract($_GET);
+	$data=array('id' => $ID);
+	$this->load->view("view-scrap-order",$data);
 }
 
 
 public function view_transfer_order()
 {
-@extract($_GET);
-$data=array('id' => $ID);
-$this->load->view("view-transfer-order",$data);
+	@extract($_GET);
+	$data=array('id' => $ID);
+	$this->load->view("view-transfer-order",$data);
 }
 
 
 public function view_repair_order()
 {
-@extract($_GET);
-$data=array('id' => $ID);
-$this->load->view("view-repair-order",$data);
+	@extract($_GET);
+	$data=array('id' => $ID);
+	$this->load->view("view-repair-order",$data);
 }
 
 public function view_check_order()
 {
-@extract($_GET);
-$data=array('id' => $ID);
-$this->load->view("view-check-order",$data);
+	@extract($_GET);
+	$data=array('id' => $ID);
+	$this->load->view("view-check-order",$data);
 }
 
 public function getPurchaseRawOrder()
 {
-@extract($_POST);
-$data=array('id' => $id);
-$this->load->view("getPurchaseRawOrder",$data);
+	@extract($_POST);
+	$data=array('id' => $id);
+	$this->load->view("getPurchaseRawOrder",$data);
 }
 
 
 public function view_work_order()
 {
 	$data=array('id' => $_GET['ID']);
-$this->load->view("view_work_order",$data);
-
+	$this->load->view("view_work_order",$data);
 }
 
 function item_Stock(){
+
    if($this->session->userdata('is_logged_in'))
 	{
 		$data = $this->manageItemJoinfun();	
@@ -932,9 +849,9 @@ public function manageItemJoinfun()
 
 function transfer_work_order()
 {
-@extract($_POST);
-  $data=array('id' => $id);
-  $this->load->view('transfer_work_order',$data);
+	@extract($_POST);
+	$data=array('id' => $id);
+  	$this->load->view('transfer_work_order',$data);
 }
 
 
@@ -991,37 +908,34 @@ public function insert_po_production()
 					 'brnh_id' => $this->session->userdata('brnh_id')
 					);
 					
-				//$this->stock_refill_qty($qty[$i],$main_id[$i]);
-				$this->Model_admin_login->insert_user($table_name_dtl,$data_dtl);		
+					$this->Model_admin_login->insert_user($table_name_dtl,$data_dtl);		
 		}
 	}
 	echo "1";
-				
-				//$rediectInvoice="addproduction/manage_purchase_order";
-				//redirect($rediectInvoice);	
+		
 }
 
 public function print_challan()
 {
-$data=array('id' => $_GET['id']);
-$this->load->view("print-challan",$data);
+	$data=array('id' => $_GET['id']);
+	$this->load->view("print-challan",$data);
 }
 
 public function print_po_challan()
 {
-$data=array('id' => $_GET['id']);
-$this->load->view("print-po-challan",$data);
+	$data=array('id' => $_GET['id']);
+	$this->load->view("print-po-challan",$data);
 }
 
 public function view_purchase_order()
 {
-@extract($_GET);
-$data=array('id' => $ID);
-$this->load->view("view-purchase-order",$data);
+	@extract($_GET);
+	$data=array('id' => $ID);
+	$this->load->view("view-purchase-order",$data);
 }
 
 function ajax_getitemmapping(){
- 	//echo $this->input->post('id');
+ 	
     $data['result'] =  $this->model_production->modgetitemspharemap($this->input->post('id'));
     $this->load->view('view_itemmapping',$data);
  }
@@ -1051,11 +965,10 @@ function insert_issue_row_material(){
 					'job_order_no' => $job_order_no
 		);
 		    $this->load->model('Model_admin_login');
-$data_merge = array_merge($data,$sess);
+			$data_merge = array_merge($data,$sess);
 		    $this->Model_admin_login->insert_user($table_name,$data_merge);	
-		    
 		    $lastId= $this->db->insert_id();	
-		    			
+		    		
 			for($i=0; $i<count($mproPrice); $i++)
 				{
 				
@@ -1073,25 +986,23 @@ $data_merge = array_merge($data,$sess);
 					 'brnh_id' => $this->session->userdata('brnh_id')
 					);
 					
-				//$this->stock_refill_qty($qty[$i],$main_id[$i]);
 				$this->Model_admin_login->insert_user($table_name_dtl,$data_dtl);		
 		}
 	}
 	echo "1";
-				
 			
  }
 
 
 public function getPo()
- {
-@extract($_GET);
-$queryData=$this->db->query("select *from tbl_po_order where vendor_id='$ID'");
-echo "<option value=''>--Select--</option>";
-foreach($queryData->result() as $getPo)
 {
-echo "<option value='$getPo->po_order_no'>$getPo->po_order_no</option>";
-}
+	@extract($_GET);
+	$queryData=$this->db->query("select *from tbl_po_order where vendor_id='$ID'");
+	echo "<option value=''>--Select--</option>";
+	foreach($queryData->result() as $getPo)
+	{
+		echo "<option value='$getPo->po_order_no'>$getPo->po_order_no</option>";
+	}
 }
 
 
@@ -1172,13 +1083,11 @@ public function productPoGrn()
 	
 	
 		$data = array(
-	            //'storage_location'    => $this->input->post('storage_location'),  
+	           
 				'po_no'    => $this->input->post('po_no'),
 				'vendor_id'    => $this->input->post('vendor_id'),
 				'production_id' => $GRNproduction_id,
-				//'grn_no'    	  => $this->input->post('grn_no'),
-				//'grn_date' 		  => $grn_date,
-		
+					
 				);
 			
 			$data_merge = array_merge($data,$sess);					
@@ -1230,16 +1139,16 @@ public function productPoGrn()
 
 public function view_inbound()
 {
-@extract($_GET);
-$data=array('id' => $ID);
-$this->load->view("view-inbound",$data);
+	@extract($_GET);
+	$data=array('id' => $ID);
+	$this->load->view("view-inbound",$data);
 }
 
 public function print_grn_challan()
 {
-@extract($_GET);
-$data=array('id' => $id);
-$this->load->view("print-grn-challan",$data);
+	@extract($_GET);
+	$data=array('id' => $id);
+	$this->load->view("print-grn-challan",$data);
 
 }
 
@@ -1268,103 +1177,84 @@ public function po_stock_in($receive_qty,$productid)
 							
 		}
 
-	//$this->db->query("update tbl_product_stock set quantity=quantity+'$receive_qty' where Product_id='$productid'");
+
 }
 
 public function view_raw_receive()
 {
 
-@extract($_POST);
-$data=array('id' => $id,
-'po_no' => $po_id,
-);
-$this->load->view("receive-raw-material",$data);
+	@extract($_POST);
+	$data=array('id' => $id,
+	'po_no' => $po_id,
+	);
+	$this->load->view("receive-raw-material",$data);
 }
 
 
 public function order_details()
 {
-
-@extract($_POST);
-$data=array('id' => $id,
-
+	@extract($_POST);
+	$data=array('id' => $id,
 	'order_type' => $order_type,
 	'lot_no' => $lot_no
-);
-$this->load->view("order-details",$data);
+	);
+	$this->load->view("order-details",$data);
 }
 
 
 
 public function scrap_grn_details()
 {
-
-@extract($_POST);
-$data=array('id' => $id,
-
+	@extract($_POST);
+	$data=array('id' => $id,
 	'order_type' => $order_type,
 	'lot_no' => $lot_no,
-	
-);
-$this->load->view("scrap-grn-details",$data);
+	);
+	$this->load->view("scrap-grn-details",$data);
 }
-
-
-
 
 public function order_check()
 {
-
-@extract($_POST);
-$data=array('id' => $id,
-
+	@extract($_POST);
+	$data=array('id' => $id,
 	'order_type' => $order_type,
 	'lot_no' => $lot_no
-);
-$this->load->view("order-check",$data);
+	);
+	$this->load->view("order-check",$data);
 }
 
 
 public function order_repair()
 {
-
-@extract($_POST);
-$data=array('id' => $id,
-
+	@extract($_POST);
+	$data=array('id' => $id,
 	'order_type' => $order_type,
 	'lot_no' => $lot_no
-);
-$this->load->view("order-repair",$data);
+	);
+	$this->load->view("order-repair",$data);
 }
-
-
 
 public function order_details_repair_grn()
 {
-@extract($_POST);
-$data=array('id' => $id,
-
+	@extract($_POST);
+	$data=array('id' => $id,
 	'order_type' => $order_type,
 	'lot_no' => $lot_no
-);
-$this->load->view("order-details-repair-grn",$data);
+	);
+	$this->load->view("order-details-repair-grn",$data);
 }
 
 
 
 public function order_transfer()
 {
-
-@extract($_POST);
-$data=array('id' => $id,
-
+	@extract($_POST);
+	$data=array('id' => $id,
 	'order_type' => $order_type,
 	'lot_no' => $lot_no
-);
-$this->load->view("order-transfer",$data);
+	);
+	$this->load->view("order-transfer",$data);
 }
-
-
 
 function insert_receive_row_material(){
 
@@ -1566,9 +1456,7 @@ public function productionOrderRepair()
 				);
 			
 			  $this->Model_admin_login->insert_user($table_name,$data_dtl);
-		  
-	  		//  $this->po_stock_in($qty[$i],$productid[$i]);	
-	  	
+		 	
 		 }
 	 }
 	 echo "1";
@@ -1607,9 +1495,7 @@ public function productionOrderTransferToModule()
 				);
 			
 			  $this->Model_admin_login->insert_user($table_name,$data_dtl);
-			  
-	  		//  $this->po_stock_in($qty[$i],$productid[$i]);	
-	  	
+		
 		 }
 	 }
 	 echo "1";
@@ -1652,8 +1538,7 @@ public function productionOrderCheck()
 				 {
 				 $this->Model_admin_login->insert_user($table_name_available,$data_dtl);
 				}
-		  		//  $this->po_stock_in($qty[$i],$productid[$i]);	
-  	
+		
 		 }
 
 	 }
@@ -1663,121 +1548,97 @@ public function productionOrderCheck()
 
 public function view_production_log_cont()
 {
-@extract($_POST);
-
-$data=array('id' => $id,
+	@extract($_POST);
+	$data=array('id' => $id,
 	'ord' => $ord
-	
-);
-$this->load->view("view-production-log",$data);
-
+	);
+	$this->load->view("view-production-log",$data);
 }
-
 
 public function view_rm_details()
 {
-@extract($_POST);
-
-$data=array('id' => $id,
+	@extract($_POST);
+	$data=array('id' => $id,
 	'ord' => $ord
-	
-);
-$this->load->view("view-rm-details",$data);
-
+	);
+	$this->load->view("view-rm-details",$data);
 }
-
-
-
-
-
-
-
 
 public function manage_jobwork_map_details()
 {
-@extract($_POST);
-$data=array('id' => $id,
-
-);
-$this->load->view("manage-jobwork-map-details",$data);
+	@extract($_POST);
+	$data=array('id' => $id,
+	);
+	$this->load->view("manage-jobwork-map-details",$data);
 }
 
 public function manage_jobwork_map_rm_details()
 {
-@extract($_POST);
-$data=array('id' => $id,
-
-);
-$this->load->view("manage-jobwork-map-rm-details",$data);
+	@extract($_POST);
+	$data=array('id' => $id,
+	);
+	$this->load->view("manage-jobwork-map-rm-details",$data);
 }
 
 public function manage_jobwork_map_order_repair()
 {
-@extract($_POST);
-$data=array('id' => $id,
-
-);
-$this->load->view("manage-jobwork-map-order-repair",$data);
+	@extract($_POST);
+	$data=array('id' => $id,
+	);
+	$this->load->view("manage-jobwork-map-order-repair",$data);
 }
-
-
 
 public function getGRNOrder()
 {
-
-@extract($_POST);
-$data=array('id' => $id,
-
-);
-$this->load->view("getGrnOrder",$data);
+	@extract($_POST);
+	$data=array('id' => $id,
+	);
+	$this->load->view("getGrnOrder",$data);
 }
 
 public function getCheckingOrder()
 {
 
-@extract($_POST);
-$data=array('id' => $id,
-
-);
-$this->load->view("getCheckingOrder",$data);
+	@extract($_POST);
+	$data=array('id' => $id,
+	);
+	$this->load->view("getCheckingOrder",$data);
 }
 
 
 public function ajexRequestRM()
 {
-@extract($_POST);
-$data=array('id' => $id,
-
-);
-$this->load->view("getRequestRM",$data);
+	@extract($_POST);
+	$data=array('id' => $id,
+	);
+	$this->load->view("getRequestRM",$data);
 }
 
 
 public function order_details_rm()
 {
-@extract($_POST);
-$data=array('id' => $id,
-);
-$this->load->view("order-details-rm",$data);
+	@extract($_POST);
+	$data=array('id' => $id,
+	);
+	$this->load->view("order-details-rm",$data);
 }
 
 
 public function order_details_repair()
 {
-@extract($_POST);
-$data=array('id' => $id,
-);
-$this->load->view("order-details-repair",$data);
+	@extract($_POST);
+	$data=array('id' => $id,
+	);
+	$this->load->view("order-details-repair",$data);
 }
 
 public function view_rm()
 {
 
-@extract($_POST);
-$data=array('id' => $id,
-);
-
-$this->load->view("view-production-rm",$data);	
+	@extract($_POST);
+	$data=array('id' => $id,
+	);
+	$this->load->view("view-production-rm",$data);	
 }
 
 public function myProduction_order_receive()
@@ -1788,24 +1649,24 @@ echo "dfsd";die;
 
 public function search_job_order()
 {
-$this->load->view("search-job-order");
+	$this->load->view("search-job-order");
 }
 
 
 public function purchase_order_return()
 {
-@extract($_POST);
-$data=array('id' => $id,
-);
-$this->load->view("purchase-order-return",$data);	
+	@extract($_POST);
+	$data=array('id' => $id,
+	);
+	$this->load->view("purchase-order-return",$data);	
 }
 
 public function rm_return()
 {
-@extract($_POST);
-$data=array('id' => $id,
-);
-$this->load->view("rm-return",$data);	
+	@extract($_POST);
+	$data=array('id' => $id,
+	);
+	$this->load->view("rm-return",$data);	
 }
 
 
@@ -1838,12 +1699,9 @@ public function productionPurchaseReturn()
 				 'zone_id'			=> $this->session->userdata('zone_id'),
 				 'brnh_id'			=> $this->session->userdata('brnh_id')
 				);
-			
-		//print_r($data_dtl);die;
+					
 			  $this->Model_admin_login->insert_user($table_name,$data_dtl);
 		  
-	  		//  $this->po_stock_in($qty[$i],$productid[$i]);	
-	  	
 		 }
 	 }
 	 echo "1";	
@@ -1877,12 +1735,9 @@ public function productionRMReturn()
 				 'zone_id'			=> $this->session->userdata('zone_id'),
 				 'brnh_id'			=> $this->session->userdata('brnh_id')
 				);
-			
-		//print_r($data_dtl);die;
+		
 				  $this->Model_admin_login->insert_user($table_name,$data_dtl);
-		  
-	  		//  $this->po_stock_in($qty[$i],$productid[$i]);	
-	  	}
+		  	}
 	 }
 	 echo "1";	
 }
@@ -1915,11 +1770,8 @@ public function productionOrderScrapInsert()
 				 'brnh_id'			=> $this->session->userdata('brnh_id')
 				);
 			
-		//print_r($data_dtl);die;
 				  $this->Model_admin_login->insert_user($table_name,$data_dtl);
-		  
-	  		//  $this->po_stock_in($qty[$i],$productid[$i]);	
-	  	}
+		   	}
 	 }
 	 echo "1";	
 }
@@ -1944,6 +1796,13 @@ public function manage_scrap_job_work_details()
 {
 $this->load->view("manage-scrap-job-work-details");
 
+}
+
+
+public function print_challan_grn()
+{
+	$data=array('id' => $_GET['id']);
+	$this->load->view("print-challan-grn",$data);
 }
 
 

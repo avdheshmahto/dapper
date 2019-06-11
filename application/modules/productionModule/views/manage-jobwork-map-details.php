@@ -1068,7 +1068,7 @@ $queryData=$this->db->query("select *from tbl_production_order_log where job_ord
          ?>
        
         <a href="#" title="GRN VIEW" data-toggle="modal" data-target="#model-view-production-log" onclick="view_production_log('<?=$fetch_list->grn_no;?>,<?=$fetch_list->order_no;?>');"><i class="fa fa-eye"></i></a>&nbsp;
-        <a target="_blank" href="<?=base_url();?>productionModule/print_challan?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
+        <a target="_blank" href="<?=base_url();?>productionModule/print_challan_grn?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
         </td>
     </tr>
 <?php  }?>
