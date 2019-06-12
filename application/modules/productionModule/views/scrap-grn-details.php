@@ -1,6 +1,12 @@
 <?php
 $orderQuery=$this->db->query("select *from tbl_job_work where job_order_no='$id'");
 $getOrder=$orderQuery->row();
+
+
+
+
+
+
 ?>
 <div class="panel-body">
           <div class="row">

@@ -1209,6 +1209,7 @@ public function scrap_grn_details()
 	$data=array('id' => $id,
 	'order_type' => $order_type,
 	'lot_no' => $lot_no,
+	'scrap_id' => $scrap_id
 	);
 	$this->load->view("scrap-grn-details",$data);
 }
@@ -1777,8 +1778,6 @@ public function productionOrderScrapInsert()
 }
 
 
-
-
 public function raw_material_scrap()
 {
 	$this->load->view("raw-material-scrap");
@@ -1818,7 +1817,6 @@ public function view_rm_order_details()
 	$data=array('id' => $_GET['ID']);
 	$this->load->view("view-rm-order-details",$data);
 }
-
 
 
 }
