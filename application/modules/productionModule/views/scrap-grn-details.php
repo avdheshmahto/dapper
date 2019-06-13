@@ -121,19 +121,22 @@ $getJob->qty;
 <input type="hidden" min="0" name="ord_qty[]" value="<?=$getProduct->qty;?>" class="form-control">
 <input type="hidden" min="0" name="rm_qty[]" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" class="form-control">
 <td><?=$getProduct->qty;?></td>
-<td><?=$getProductPart->qty*$getProduct->qty;?></td>
+<td id="weight<?=$i;?>"><?=$getProductPart->qty*$getProduct->qty;?></td>
 <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" />
 
 <?php
 ####### get remaining qty #######
-$productRemainingQuery=$this->db->query("select * from tbl_job_work_scrap where order_no='$id' and productid='$getProducttScrapStock->Product_id'");
+$productRemainingQuery=$this->db->query("select SUM(qty) as qty from tbl_job_work_scrap where order_no='$id' and productid='$getProducttScrapStock->Product_id'");
 $getProductRemainingQty=$productRemainingQuery->row();
 ####### ends ########
 
 ?>
 
 
-<td><?=$getProductPart->qty*$getProduct->qty-$getProductRemainingQty->qty;?></td>
+<td id="rem_qty<?=$i;?>">
+<input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProductPart->qty*$getProduct->qty-$getProductRemainingQty->qty;?>" />
+
+<?=$getProductPart->qty*$getProduct->qty-$getProductRemainingQty->qty;?></td>
 <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
 <td>
 <input name="tolerance_percentage[]" id="tolerance_percentage<?=$i;?>"  type="hidden" class="form-control" value="<?=$getProductStock->tolerance_percentage;?>"/>

@@ -25,7 +25,28 @@ $sumRmShape=$getsched->shape_qty;
 </style>
 
 <script>
+function qtyVal(d)
+{
+var zz=document.getElementById(d).id;
+var myarra = zz.split("qty");
+var asx= myarra[1];
+//alert(asx);
+var entQty=document.getElementById("qty"+asx).value;	
+var remQty=document.getElementById("rem_qty"+asx).value;	
+if(Number(remQty)<Number(entQty))	
+{
+alert("Enter Qty should be less then remaining Qty");
+	document.getElementById("qty"+asx).focus();	
+	document.getElementById("add_req").disabled = true;
+	
+	return false;
+}
+else
+{
+document.getElementById("add_req").disabled = false;
 
+}
+}
 
 
 //starts purchase return  query
@@ -1332,33 +1353,6 @@ function submitrawMaterialReceive() {
 }
 // ends
 
-
-
-
-
-function qtyVal(d)
-{
-alert();
-var zz=document.getElementById(d).id;
-var myarra = zz.split("qty");
-var asx= myarra[1];
-//alert(asx);
-var entQty=document.getElementById("qty"+asx).value;	
-var remQty=document.getElementById("rem_qty"+asx).value;	
-if(Number(remQty)<Number(entQty))	
-{
-alert("Enter Qty should be less then remaining Qty");
-	document.getElementById("qty"+asx).focus();	
-	document.getElementById("add_req").disabled = true;
-	
-	return false;
-}
-else
-{
-document.getElementById("add_req").disabled = false;
-
-}
-}
 </script>
 
 <script>
