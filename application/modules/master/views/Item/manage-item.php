@@ -71,9 +71,9 @@ $entries = "";
 <ol class="breadcrumb breadcrumb-2"> 
 	<li><a href="<?=base_url();?>master/Item/dashboar"><i class="fa fa-home"></i>Dashboard</a></li> 
 	<li><a href="#">Super Admin</a></li> 
-	<li class="active"><strong><?php if($_GET['p_type']=='13'){?>Manage Raw material<?php } elseif($_GET['p_type']=='32'){?>Manage Product Parts <?php } elseif($_GET['p_type']=='33'){ echo "Manage Shape";} elseif($_GET['p_type']=='35'){ echo "Manage Accessories";} elseif($_GET['p_type']=='34'){ echo "Manage Packaging Material";} else{ echo "Manage Finish Goods";}?></strong></li>
+	<li class="active"><strong><?php if($_GET['p_type']=='13'){?>Manage Raw material<?php } elseif($_GET['p_type']=='32'){?>Manage Product Parts <?php } elseif($_GET['p_type']=='33'){ echo "Manage Shape";} elseif($_GET['p_type']=='35'){ echo "Manage Accessories";} elseif($_GET['p_type']=='34'){ echo "Manage Packaging Material";} elseif($_GET['p_type']=='50'){ echo "Manage Scrap";} else{ echo "Manage Finish Goods";}?></strong></li>
 <div class="pull-right">
-	<button type="button" onclick="getFG();" class="btn btn-sm" data-toggle="modal" data-target="#modal-0" formid="#ItemForm" id="formreset"><i class="fa fa-plus"></i><?php if($_GET['p_type']=='13'){?>Add Raw Material<?php } elseif($_GET['p_type']=='32'){?>Add Part<?php } elseif($_GET['p_type']=='33'){ echo "Add Shape";} elseif($_GET['p_type']=='35'){ echo "Add Accessories";} elseif($_GET['p_type']=='34'){ echo "Add Packaging Material ";} else{ echo "Add Finish Goods";}?></button>
+	<button type="button" onclick="getFG();" class="btn btn-sm" data-toggle="modal" data-target="#modal-0" formid="#ItemForm" id="formreset"><i class="fa fa-plus"></i><?php if($_GET['p_type']=='13'){?>Add Raw Material<?php } elseif($_GET['p_type']=='32'){?>Add Part<?php } elseif($_GET['p_type']=='33'){ echo "Add Shape";} elseif($_GET['p_type']=='35'){ echo "Add Accessories";} elseif($_GET['p_type']=='34'){ echo "Add Packaging Material ";} elseif($_GET['p_type']=='50'){ echo "Add Scrap";} else{ echo "Add Finish Goods";}?></button>
 	<a class="btn btn-secondary btn-sm delete_two_all"><i class="fa fa-trash-o"></i> Delete All</a>
 </div>
 </ol>
@@ -131,7 +131,7 @@ $entries = "";
 </div>
 
 <div class="form-group">
-<label class="col-sm-2 control-label" > *<?php if($_GET['p_type']=='13'){?>RM Code<?php } elseif($_GET['p_type']=='32'){?>Part Code <?php } elseif($_GET['p_type']=='33'){ echo "Shape Code";} elseif($_GET['p_type']=='35'){ echo "Accessories Code";} elseif($_GET['p_type']=='34'){ echo "Packaging Material Code";} else{ echo "Item Code";}?> </label> 
+<label class="col-sm-2 control-label" > *<?php if($_GET['p_type']=='13'){?>RM Code<?php } elseif($_GET['p_type']=='32'){?>Part Code <?php } elseif($_GET['p_type']=='33'){ echo "Shape Code";} elseif($_GET['p_type']=='35'){ echo "Accessories Code";} elseif($_GET['p_type']=='34'){ echo "Packaging Material Code";} elseif($_GET['p_type']=='50'){ echo "Scrap Codde";} else{ echo "Item Code";}?> </label> 
 <div class="col-sm-4"> 
 <div id="subcategory1" style="display:none">
 </div>
@@ -140,7 +140,7 @@ $entries = "";
 <input type="text" class="form-control" name="sku_no" value=""  id="sku_no"> 
 </div>  
 </div>
-<label class="col-sm-2 control-label">*<?php if($_GET['p_type']=='13'){?>Raw Material Name<?php } elseif($_GET['p_type']=='32'){?>Part Name <?php } elseif($_GET['p_type']=='33'){ echo "Shape Name";} elseif($_GET['p_type']=='35'){ echo "Accessories Name";} elseif($_GET['p_type']=='34'){ echo "Packaging Material Name";} else{ echo "Finish Goods";}?>:</label> 
+<label class="col-sm-2 control-label">*<?php if($_GET['p_type']=='13'){?>Raw Material Name<?php } elseif($_GET['p_type']=='32'){?>Part Name <?php } elseif($_GET['p_type']=='33'){ echo "Shape Name";} elseif($_GET['p_type']=='35'){ echo "Accessories Name";} elseif($_GET['p_type']=='34'){ echo "Packaging Material Name";} elseif($_GET['p_type']=='50'){ echo "Scrap Name";} else{ echo "Finish Goods";}?>:</label> 
 <div class="col-sm-4"> 
 <input name="productname"  type="text" value="" class="form-control" id="productname" > 
 </div> 
@@ -289,6 +289,27 @@ $entries = "";
 </div> 
 </div>
 
+<?php if($_GET['p_type']=='13'){?>
+
+<div class="form-group"> 
+<label class="col-sm-2 control-label">Scrap Name:</label> 
+<div class="col-sm-4" id="regid"> 
+<select name="scrap_id" id="scrap_id" class="form-control" >
+<option value="">--Select--</option>
+<?php
+$scrapQuery=$this->db->query("select *from tbl_product_stock where type='50'");
+foreach($scrapQuery->result() as $getScrap){
+?>
+<option value="<?=$getScrap->Product_id?>"><?=$getScrap->productname;?></option>
+<?php }?>
+</select>
+</div> 
+<label class="col-sm-2 control-label">&nbsp;</label> 
+<div class="col-sm-4" > 
+&nbsp;
+</div> 
+</div>
+<?php }?>
 </div>
 
 
@@ -581,7 +602,7 @@ entries</label>
 	<th><div style="width:100px;"><?php if($_GET['p_type']=='13'){?>RM Code<?php } elseif($_GET['p_type']=='32'){?>Part Code <?php } elseif($_GET['p_type']=='33'){ echo "Shape Code";} elseif($_GET['p_type']=='35'){ echo "Accessories Code";} elseif($_GET['p_type']=='34'){ echo "Packaging Material Code";} else{ echo "Item Code";}?></div></th>
 	<th style="display:none1;"><div style="width:100px;">Product Type</div> </th>
 	<th><div style="width:100px;">Category</div></th>
-	<th><div style="width:100px;"><?php if($_GET['p_type']=='13'){?>Raw Material Name<?php } elseif($_GET['p_type']=='32'){?>Part Name <?php } elseif($_GET['p_type']=='33'){ echo "Shape Name";} elseif($_GET['p_type']=='35'){ echo "Accessories Name";} elseif($_GET['p_type']=='34'){ echo "Packaging Material Name";} else{ echo "Finish Goods";}?></div></th>
+	<th><div style="width:100px;"><?php if($_GET['p_type']=='13'){?>Raw Material Name<?php } elseif($_GET['p_type']=='32'){?>Part Name <?php } elseif($_GET['p_type']=='33'){ echo "Shape Name";} elseif($_GET['p_type']=='35'){ echo "Accessories Name";} elseif($_GET['p_type']=='34'){ echo "Packaging Material Name";} elseif($_GET['p_type']=='50'){ echo "Scrap";} else{ echo "Finish Goods";}?></div></th>
 	<th><div style="width:100px;">Usage Unit</div></th>
 	<th><div style="width:50px;">Size</div></th>
 	<?php if($_GET['p_type']=='13'){?><th ><div style="width:100px;">Thickness</div></th><?php }?>

@@ -565,6 +565,7 @@ function editItem(ths) {
       $('#Product_id').val(editVal.Product_id);
       $('#type').val(editVal.type);
       $('#category').val(editVal.category).prop('selected', true);
+	  $('#scrap_id').val(editVal.scrap_id).prop('selected', true);
   	  $('#sku_no').val(editVal.sku_no);
 	  $('#circle_weight').val(editVal.circle_weight);
   	  $('#productname').val(editVal.productname);
@@ -613,7 +614,7 @@ function editItem(ths) {
         changing(editVal.category);
      
      $('#subcategory').val(editVal.subcategory).prop('selected', true);
-
+	$('#scrap_id').val(editVal.scrap_id).prop('selected', true);
     /*if(editVal.scope_doc != ""){
       $('#image').attr('href',image_url+editVal.scope_doc);
       $('#image').attr('title',editVal.scope_doc);
@@ -628,6 +629,12 @@ function editItem(ths) {
 		  ?>
 	   $('.top_title').html('View Raw Material');
 	   <?php }
+	    
+		  if($_GET['p_type']=='50'){
+		  ?>
+	   $('.top_title').html('View Scrap');
+	   <?php }
+	   
 	   if($_GET['p_type']=='32'){
 	   ?>
 	   $('.top_title').html('View Part Name');
@@ -681,6 +688,12 @@ function editItem(ths) {
 	   if($_GET['p_type']=='33'){
 	   ?>
 	   $('.top_title').html('Update Shape ');
+	   <?php }?>
+	   
+	    <?php 
+	   if($_GET['p_type']=='50'){
+	   ?>
+	   $('.top_title').html('Update Scrap ');
 	   <?php }?>
 	   
 	   <?php 

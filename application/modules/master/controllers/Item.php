@@ -39,7 +39,7 @@ public function ajax_getentityRows(){
 
 
 public function ajax_getentityShape(){
-	// echo $this->input->post('id');
+	
        $result  =  $this->model_master->get_getentityRowsItemShape($this->input->post('id'));
  }
 
@@ -121,7 +121,7 @@ public function insert_item()
 		
 					$data= array(
 
-					 //'industry'           => $this->input->post('industry'),
+					 'scrap_id'           => $this->input->post('scrap_id'),
 					 'type'               => $this->input->post('type'),
 					 'category'           => $this->input->post('category'),
 					 'sku_no'             => $this->input->post('sku_no'),
@@ -191,10 +191,7 @@ public function insert_item()
         }
 
 
-
-
-
-         for($s= 0;$s<count($prodcId);$s++){
+     for($s= 0;$s<count($prodcId);$s++){
          $data = array(
      	  'rowmatial'  => $prodcId[$s],
      	  'qty'        => $mproPrice[$s],
@@ -298,7 +295,6 @@ public function ajex_ItemListData()
 {
 	
 	$d=$_POST['id'];
-	
 	$data =  $this->manageItemJoinfun($d);  	
 	$this->load->view('Item/edit-item',$data);
 } 
