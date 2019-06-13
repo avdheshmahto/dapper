@@ -1,12 +1,13 @@
 <?php
 $orderQuery=$this->db->query("select *from tbl_job_work where job_order_no='$id'");
 $getOrder=$orderQuery->row();
+//echo $getOrder->qty."-".$getOrder->part_id;
 
 
-
-
-
-
+$partQuery=$this->db->query("select *from tbl_part_price_mapping where part_id in ($getOrder->part_id)");
+foreach($partQuery->result() as $getPart){
+	echo $getPart->rowmatial."<br>";
+}
 ?>
 <div class="panel-body">
           <div class="row">
@@ -71,6 +72,7 @@ $getOrder=$orderQuery->row();
 				<tr>
 					<th class="tdcenter"> Sl No</th>
 					<th class="tdcenter">Item Number & Description</th>
+                    <th class="tdcenter">Scrap Name</th>
 					<th class="tdcenter">UOM</th>
 					<th class="tdcenter">Ordered Qty</th>
 			        <th class="tdcenter">Remaining Qty</th>
@@ -117,6 +119,11 @@ $getOrder=$orderQuery->row();
 		$getProductSerialStock=$productStockSerialQuery->row();
 		####### ends ########
 		
+		####### get product serial #######
+		$productScrapQuery=$this->db->query("select * from tbl_product_stock where Product_id='$getProduct->scrap_id'");
+		$getProductScrapStock=$productScrapQuery->row();
+		####### ends ########
+		
 		
 		?>
        <tr class="gradeX odd" role="row">
@@ -125,6 +132,7 @@ $getOrder=$orderQuery->row();
               <input type="hidden"  name="productid[]" value="<?=$getProduct->Product_id;?>" class="form-control">
               
             </td>
+            <td><?=$getProductScrapStock->sku_no;?>
 			<td><?=$getProductUOM->keyvalue;?></td>
             <?php
 
