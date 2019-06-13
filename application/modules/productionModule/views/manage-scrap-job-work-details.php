@@ -374,6 +374,10 @@ var lot_no=document.getElementById("lot_no").innerHTML;
 
 function Order(viewId){
 
+var scrapData = viewId.split("^");
+var id=scrapData[0];
+var scrapId=scrapData[1];
+
 var order_type=document.getElementById("order_type").innerHTML;
 var lot_no=document.getElementById("lot_no").innerHTML;
 
@@ -381,7 +385,7 @@ var lot_no=document.getElementById("lot_no").innerHTML;
 		    type: "POST",  
 			url: "scrap_grn_details",  
 			cache:false,  
-			data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},  
+			data: {'id':id,'order_type':order_type,'lot_no':lot_no,'scrap_id':scrapId},  
 			success: function(data)  
 			{  
 			  
@@ -880,7 +884,7 @@ $queryData=$this->db->query("select *from tbl_job_work_scrap group by grn_no");
   <p style="display:none" id="lot_no"><?=$_GET['id'];?></p>
     <p style="display:none" id="order_type"><?=$getsched->order_type;?></p>
  
- <button style="display:none1" type="button" class="btn btn-default modalMapSpare" onclick="Order('<?=$getsched->job_order_no;?>');" data-toggle="modal" data-target="#modal-order"><img src="<?=base_url();?>assets/images/plus.png" /></button>
+ <button style="display:none1" type="button" class="btn btn-default modalMapSpare" onclick="Order('<?=$getsched->job_order_no;?>^<?=$_GET['scrap_id'];?>');" data-toggle="modal" data-target="#modal-order"><img src="<?=base_url();?>assets/images/plus.png" /></button>
  
  
 </td>
