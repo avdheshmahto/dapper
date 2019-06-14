@@ -3,17 +3,10 @@ $this->load->view("header.php");
 
 $scheQuery=$this->db->query("select *from tbl_job_work where id='".$_GET['id']."' ");
 $getsched=$scheQuery->row();
-
-
 $input = $getsched->qty;
 $res = explode(',',$input);
 $sumRm= array_sum($res);
-
-
-
 ?>
-
-
 <style type="text/css">
 
 	.select2-container--open {
@@ -25,111 +18,71 @@ $sumRm= array_sum($res);
 </style>
 
 <script>
-
-
-
 //starts order repair  query
-
 function submitProductionOrderRepaire() {
-           
-  var form_data = new FormData(document.getElementById("myProduction_order_repair"));
-  form_data.append("label", "WEBUPLOAD");
+	var form_data = new FormData(document.getElementById("myProduction_order_repair"));
+	form_data.append("label", "WEBUPLOAD");
+	$.ajax({
+		url: "productionModule/productionOrderRepair",
+		type: "POST",
+		data: form_data,
+		processData: false,  // tell jQuery not to process the data
+		contentType: false   // tell jQuery not to set contentType
+}).done(function( data ) {
 
-  $.ajax({
-      url: "productionModule/productionOrderRepair",
-      type: "POST",
-      data: form_data,
-      processData: false,  // tell jQuery not to process the data
-      contentType: false   // tell jQuery not to set contentType
-  }).done(function( data ) {
-	//alert(data);
-	
-	
-	  if(data == 1 || data == 2){
-		
-                      if(data == 1)
-					    
-                        var msg = "Data Successfully Add !";
-                      else
-                        var msg = "Data Successfully Updated !";
-						$("#Orderresultarea").text(msg);
-						setTimeout(function() {   //calls click event after a certain time
-                       $("#modal-order-repair").click();
-                       $("#OrderRepairresultarea").text(" "); 
-                       $('#myProduction_order_repair')[0].reset(); 
-					   //$("#quotationTable").text(" "); 
-					   
-                       //$("#id").val("");
-     
-                    }, 1000);
-                  }else{
-                    $("#OrderRepairresultarea").text(data);
-					
-                 }
-				// ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
- 
-	 
-    console.log(data);
-    //Perform ANy action after successfuly post data
-       
-  });
-  return false;     
+if(data == 1 || data == 2){
+	if(data == 1)
+		var msg = "Data Successfully Add !";
+		else
+		var msg = "Data Successfully Updated !";
+		$("#Orderresultarea").text(msg);
+		setTimeout(function() {   //calls click event after a certain time
+			$("#modal-order-repair").click();
+			$("#OrderRepairresultarea").text(" "); 
+			$('#myProduction_order_repair')[0].reset(); 
+			}, 1000);
+            }else{
+            $("#OrderRepairresultarea").text(data);
+			}
+			console.log(data);
+    });
+	return false;     
 }
+
 // ends
+
 
 //starts order check  query
-
 function submitProductionOrderCheck() {
-           
-  var form_data = new FormData(document.getElementById("myProduction_order_check"));
-  form_data.append("label", "WEBUPLOAD");
-
-  $.ajax({
-      url: "<?=base_url();?>productionModule/productionOrderCheck",
-      type: "POST",
-      data: form_data,
-      processData: false,  // tell jQuery not to process the data
-      contentType: false   // tell jQuery not to set contentType
-  }).done(function( data ) {
-	
-	
-	//alert(data);
-	  if(data == 1 || data == 2){
-		
-                      if(data == 1)
-					    
-                        var msg = "Data Successfully Add !";
-                      else
-                        var msg = "Data Successfully Updated !";
-						$("#OrderCheckresultarea").text(msg);
-						setTimeout(function() {   //calls click event after a certain time
-                       $("#modal-order-checking").click();
-                       $("#OrderRepairresultarea").text(" "); 
-                       $('#myProduction_order_check')[0].reset(); 
-					   //$("#quotationTable").text(" "); 
-					   
-                       //$("#id").val("");
-     
-                    }, 1000);
-                  }else{
-                    $("#OrderRepairresultarea").text(data);
-					
-                 }
-				// ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
- 
-	 
-    console.log(data);
-    //Perform ANy action after successfuly post data
-       
-  });
-  return false;     
+	 var form_data = new FormData(document.getElementById("myProduction_order_check"));
+	form_data.append("label", "WEBUPLOAD");
+	$.ajax({
+		url: "<?=base_url();?>productionModule/productionOrderCheck",
+		type: "POST",
+		data: form_data,
+		processData: false,  // tell jQuery not to process the data
+		contentType: false   // tell jQuery not to set contentType
+		}).done(function( data ){
+		if(data == 1 || data == 2){
+			if(data == 1)
+				var msg = "Data Successfully Add !";
+				else
+				var msg = "Data Successfully Updated !";
+				$("#OrderCheckresultarea").text(msg);
+				setTimeout(function() {   //calls click event after a certain time
+				$("#modal-order-checking").click();
+				$("#OrderRepairresultarea").text(" "); 
+				$('#myProduction_order_check')[0].reset(); 
+				}, 1000);
+                }else{
+                $("#OrderRepairresultarea").text(data);
+				}
+				console.log(data);
+      });
+				return false;     
 }
+
 // ends
-
-
-
-
-
 
 //starts order receive  query
 

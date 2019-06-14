@@ -11,6 +11,7 @@ function __construct(){
 
 public function manage_stock()
 {
+
 $this->load->view('manage-stock');	
 	
 }
@@ -32,6 +33,7 @@ public function view_work_order(){
 
 $data=array(
   'id' => $_GET['ID']);
+
   if($this->session->userdata('is_logged_in')){
    
     $this->load->view('view-work-order',$data);
@@ -42,37 +44,33 @@ $data=array(
   }   
 }
 
-
-
 public function order_transfer()
 {
-@extract($_POST);
-$data=array('id' => $id,
-
-'order_type' => $order_type,
- 'lot_no' => $lot_no
-);
- $data['result'] =  $this->model_finish->modgetitemspharemap(2);
-$this->load->view("order-transfer",$data);
+  @extract($_POST);
+  $data=array('id' => $id,
+              'order_type' => $order_type,
+              'lot_no' => $lot_no
+            );
+  $data['result'] =  $this->model_finish->modgetitemspharemap(2);
+  $this->load->view("order-transfer",$data);
 }
 
 public function view_transfer_order()
 {
 
-@extract($_POST);
-$data=array('id' => $id,
-
-  'order_type' => $order_type,
-  'lot_no' => $lot_no
-);
-$this->load->view("view-transfer-order",$data);
+  @extract($_POST);
+  $data=array('id' => $id,
+              'order_type' => $order_type,
+              'lot_no' => $lot_no
+            );
+  $this->load->view("view-transfer-order",$data);
 }
 
 public function manage_finish_jobwork_map_details(){
 
 	if($this->session->userdata('is_logged_in')){
-		
-		$this->load->view('manage-finish-jobwork-map-details');
+	
+  		$this->load->view('manage-finish-jobwork-map-details');
 	}
 	else
 	{
@@ -80,29 +78,23 @@ public function manage_finish_jobwork_map_details(){
 	}		
 }
 
-
 public function order_details()
 {
-
-@extract($_POST);
-$data=array('id' => $id,
-
-	'order_type' => $order_type,
-	'lot_no' => $lot_no
-);
-$this->load->view("order-details",$data);
+  @extract($_POST);
+  $data=array('id' => $id,
+              'order_type' => $order_type,
+              'lot_no' => $lot_no
+            );
+  $this->load->view("order-details",$data);
 }
 
-
 public function getPart()
-
 {
-@extract($_POST);
-$data=array('id' => $shape,
-'production_id' => $production_id,
-);
-$this->load->view("getpartCode",$data);
-
+  @extract($_POST);
+  $data=array('id' => $shape,
+              'production_id' => $production_id,
+              );
+  $this->load->view("getpartCode",$data);
 }
 
 public function view_finish_order(){

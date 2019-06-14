@@ -164,6 +164,13 @@ $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_pro
             
             <input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> />
             <input type="hidden" name="qty_weight" />
+            
+            <input type="hidden" name="weight[]" />
+            <input type="hidden" name="total_weight[]" />
+             <input type="hidden" name="rate[]" />
+              <input type="hidden" name="total_rm_rate[]" />
+               <input type="hidden" name="total_labour_rate[]" />
+                <input type="hidden" name="total_cost[]" />
             </td>
                                            
 		</tr>
