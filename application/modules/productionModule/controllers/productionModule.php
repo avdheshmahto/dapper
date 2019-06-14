@@ -1746,35 +1746,34 @@ public function productionRMReturn()
 
 public function productionOrderScrapInsert()
 {
-	
 	extract($_POST);
 	$table_name ='tbl_job_work_scrap';
-		$this->load->model('Model_admin_login');
-		$rows=count($qty);
-	    for($i=0; $i<$rows; $i++)
-		    {
-			  if($qty[$i]!=''){
-                 $data_dtl=array(
-				 'lot_no'		=> $lot_no,
-				 'order_no'		=> $order_no,
-				 'invoice_no' => $invoice_no,
-				 'grn_no' => $grn_no,
-				 'grn_date' => $grn_date,
-				 'job_order_id' => $job_order_id,
-				 'productid'		=> $productid[$i],				 
-				 'qty'		=> $qty[$i],
-				 
-				 'maker_id'			=> $this->session->userdata('user_id'),
-				 'maker_date'		=> date('y-m-d'),
-				 'comp_id'			=> $this->session->userdata('comp_id'),
-				 'zone_id'			=> $this->session->userdata('zone_id'),
-				 'brnh_id'			=> $this->session->userdata('brnh_id')
+	$this->load->model('Model_admin_login');
+	$rows=count($qty);
+	for($i=0; $i<$rows; $i++)
+	{
+		if($qty[$i]!=''){
+        	$data_dtl=array(
+				'lot_no'	=> $lot_no,
+				'order_no'	=> $order_no,
+				'invoice_no'=> $invoice_no,
+				'grn_no'	=> $grn_no,
+				'grn_date'	=> $grn_date,
+				'job_order_id'=> $job_order_id,
+				'productid'	=> $productid[$i],				 
+				'qty'		=> $qty[$i],
+				'maker_id'	=> $this->session->userdata('user_id'),
+				'maker_date'=> date('y-m-d'),
+				'comp_id'	=> $this->session->userdata('comp_id'),
+				'zone_id'	=> $this->session->userdata('zone_id'),
+				'brnh_id'	=> $this->session->userdata('brnh_id')
 				);
 			
-				  $this->Model_admin_login->insert_user($table_name,$data_dtl);
+				$this->Model_admin_login->insert_user($table_name,$data_dtl);
+				$this->db->query("update tbl_product_stock set quantity=quantity+'$qty[$i]' where Product_id='$productid[$i]'");
 		   	}
-	 }
-	 echo "1";	
+	}
+	echo "1";	
 }
 
 
