@@ -61,68 +61,44 @@ function count_finish($tableName,$status = 0,$get)
 function gettest($last,$strat)
 {
 	
-	  $query=$this->db->query("select * from tbl_production_available_order where status='A' and test_qty!=''    group by lot_no desc limit $strat,$last ");
+	  $query=$this->db->query("select * from tbl_production_order_check where status='A' and test_qty!=''    group by lot_no desc limit $strat,$last ");
 	  return $result=$query->result();  
 }
 
 function filterTest($perpage,$pages,$get){
 
-	$qry = "select * from tbl_production_available_order where status = 'A' and test_qty!=''";
+	$qry = "select * from tbl_production_order_check where status = 'A' and test_qty!=''";
 	if(sizeof($get) > 0)
-		{
+	{
 		if($get['p_id'] != "")
-			$qry .= " AND productionid = '".$get['p_id']."'";
-			if($get['date'] != "")
-				$qry .= " AND date LIKE '%".$get['date']."%'";
-					if($get['goods'] != "")
-						{
-							$unitQuery=$this->db->query("select * from tbl_product_stock where productname LIKE '%".$get['goods']."%'");
-							$getUnit=$unitQuery->row();
-							$sr_no=$getUnit->Product_id;
-					 		$qry .= " AND product_id ='$sr_no'";
-			  		    } 
-					    if($get['qty'] != "")
-						    $qry .= " AND qty = '".$get['qty']."'"; 
-				    	}
+	
+			$qry .= " AND lot_no = '".$get['p_id']."' ";
+			
+			$qry .="group by lot_no order by lot_no desc ";
+	}
+
+		
+				    
 	$data =  $this->db->query($qry)->result();
 	return $data;
 }
 
 function count_test($tableName,$status = 0,$get)
 {
-	$qry ="select count(*) as countval from tbl_production_available_order where status='A' and test_qty!=''";
+	$qry ="select count(*) as countval from tbl_production_order_check where status='A' and test_qty!=''";
     if(sizeof($get) > 0)
-		{
+	{
 		if($get['p_id'] != "")
-			$qry .= " AND productionid = '".$get['p_id']."' ";
-				if($get['date'] != "")
-					$qry .= " AND date LIKE '%".$get['date']."%'";
-					if($get['goods'] != "")
-					{
-						$unitQuery=$this->db->query("select * from tbl_product_stock where productname LIKE '%".$get['goods']."%'");
-						$getUnit=$unitQuery->row();
-						$sr_no=$getUnit->Product_id;
-					 	$qry .= " AND product_id ='$sr_no'";
-			  	    } 
-					if($get['qty'] != "")
-						$qry .= " AND qty = '".$get['qty']."'"; 
-		}
+			$qry .= " AND lot_no = '".$get['p_id']."' ";
+		
+			$qry .="group by lot_no order by lot_no desc ";				
+	}
 		 
    	$query=$this->db->query($qry,array($status))->result_array();
    	return $query[0]['countval'];
 }
 
-
 //Ends
-
-
-
-
-
-
-
-
-
 
 function modgetitemspharemap($id){
 	$qry   = "select * from tbl_quotation_purchase_order_dtl where purchaseid = $id AND status='A'";
