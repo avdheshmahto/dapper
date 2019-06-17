@@ -33,7 +33,9 @@ public function manage_test(){
 
   if($this->session->userdata('is_logged_in')){
     
+    $data =  $this->manage_testJoin();
     $this->load->view('manage-test',$data);
+  
   }
   else
   {
@@ -43,9 +45,33 @@ public function manage_test(){
   }   
 }
 
-
-
-
+function manage_testJoin(){
+  
+  $data['result'] = "";
+  ////Pagination start ///
+  $table_name  = 'tbl_production_available_order';
+  $url        = site_url('/finish/manage_test?');
+  $sgmnt      = "4";
+  $showEntries= 10;
+  $totalData  = $this->model_finish->count_test($table_name,'A',$this->input->get());
+  
+  if($_GET['entries']!=""){
+    $showEntries = $_GET['entries'];
+    $url     = site_url('/finish/manage_test?entries='.$_GET['entries']);
+  }
+  
+    $pagination   = $this->ciPagination($url,$totalData,$sgmnt,$showEntries);
+    //////Pagination end ///
+   
+    $data=$this->user_function();      // call permission fnctn
+    $data['dataConfig']        = array('total'=>$totalData,'perPage'=>$pagination['per_page'],'page'=>$agination['page']);
+    $data['pagination']        = $this->pagination->create_links();
+    if($this->input->get('filter') == 'filter')   ////filter start ////
+    $data['result']       = $this->model_finish->filterTest($pagination['per_page'],$pagination['page'],$this->input->get());
+            else  
+    $data['result'] = $this->model_finish->gettest($pagination['per_page'],$pagination['page']);
+    return $data;
+}
 
 public function view_work_order(){
 
