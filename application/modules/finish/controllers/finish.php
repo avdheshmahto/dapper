@@ -29,6 +29,24 @@ public function manage_finish(){
 }
 
 
+public function manage_test(){
+
+  if($this->session->userdata('is_logged_in')){
+    
+    $this->load->view('manage-test',$data);
+  }
+  else
+  {
+  
+  redirect('index');
+  
+  }   
+}
+
+
+
+
+
 public function view_work_order(){
 
 $data=array(
