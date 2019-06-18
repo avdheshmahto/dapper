@@ -155,6 +155,21 @@ public function view_finish_order(){
   }   
 }
 
+public function view_finish_order_test(){
+
+  if($this->session->userdata('is_logged_in')){
+    $data=array(
+      'id' =>$_POST['id']
+    );
+    $this->load->view('view-finish-order-test',$data);
+  }
+  else
+  {
+  redirect('index');
+  }   
+}
+
+
 
 public function manage_finish_map(){
 
@@ -321,5 +336,14 @@ $data=array('id' => $ID
 );
 $this->load->view("view-finish-parts",$data);
 }
+
+public function manage_finish_test_map()
+{
+
+$this->load->view("manage-finish-test-map");
+
+}
+
+
 
 }

@@ -111,7 +111,7 @@ foreach($result as $sales)
 	<div class="modal-content" >
 	<div class="modal-header">
 	<button  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<h4 class="modal-title">View Finish Details: </h4>
+	<h4 class="modal-title">View Finish Test Details: </h4>
 	<div id="msgdata" class="text-center " style="font-size: 15px;color: red;"></div>   </div>
 <div class="panel-body" id ="purchaseData">
 </div>
@@ -145,7 +145,7 @@ function exportTableToExcel(tableID, filename = ''){
  
 function getspharemap(idVal){
 	//alert(idVal);
-	var ur = "view_finish_order";
+	var ur = "view_finish_order_test";
 	$.ajax({
 	url:ur,
 	method:"POST",
