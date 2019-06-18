@@ -49,6 +49,7 @@ $getHdr=$hdrQuery->row();
 		<th class="tdcenter">Transfer Qty</th>
         <th class="tdcenter">Repair Qty</th>
         <th class="tdcenter">Scrap Qty</th>
+        <th class="tdcenter">Test Qty</th>
          <th class="tdcenter">Checked By</th>
 		</tr>
 		</thead>
@@ -86,6 +87,7 @@ $getHdr=$hdrQuery->row();
 											<td><?=$getProduct->transfer_qty;?></td>
                                             <td><?=$getProduct->repair_qty;?></td>
                                             <td><?=$getProduct->scrap_qty;?></td>
+                                            <td><?=$getProduct->test_qty;?></td>
                                             <td><?=$getProduct->name;?></td>
                                            
                                            

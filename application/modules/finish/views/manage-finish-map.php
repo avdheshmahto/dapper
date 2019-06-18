@@ -506,7 +506,7 @@ $queryData=$this->db->query("select *from tbl_job_work where production_id='".$_
          ?>
        
        
-       <a title="Finish Work" href="<?=base_url();?>finish/manage_finish_jobwork_map_details?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
+       
         <button class="btn btn-default" onclick="viewWorkOrder(<?=$fetch_list->id;?>);" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
         <a target="_blank" href="<?=base_url();?>productionModule/print_challan?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>	
               	

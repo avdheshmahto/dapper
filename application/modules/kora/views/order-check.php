@@ -159,6 +159,10 @@ $inbountLogGRNLogQuery=$this->db->query("select SUM(transfer_qty) as rec_qty fro
 			<td><?=$getProduct->qty;?></td>
             
             <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" />
+            
+            <input type="hidden" name="test_qty[]" value="" />
+            
+            
             <td><?php echo $reci_qty=$getProduct->qty-$getInboundGRNLog->rec_qty;?></td>
              <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
             <td><input name="transfer_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>

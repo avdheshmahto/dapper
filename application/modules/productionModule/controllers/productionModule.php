@@ -1328,7 +1328,7 @@ public function productionOrderInsert()
 		    			$p_ends='0';
 		    	}
 		    	else{
-	$p_ends='1';
+						$p_ends='1';
 		    	}
 			  if($qty[$i]!=''){
                  $data_dtl=array(
@@ -1504,36 +1504,35 @@ public function productionOrderTransferToModule()
 
 public function productionOrderCheck()
 {
-
 	extract($_POST);
 	$table_name ='tbl_production_order_check';
 	$table_name_available='tbl_production_available_order';
 	$this->load->model('Model_admin_login');
 	$rows=count($transfer_qty);
     for($i=0; $i<$rows; $i++)
-	    {
-			if($transfer_qty[$i]!='' or $repair_qty[$i]!='' or $scrap_qty[$i]!=''){
-				
-				$data_dtl=array(
-					'lot_no'		=> $lot_no,
-					'order_no'		=> $order_no,
-					'check_no' => $check_no,
-					'check_date' => $check_date,
-					'vendor_id' => $vendor_id,
-					'job_order_id' => $job_order_id,
-					'productid'		=> $productid[$i],				 
-					'transfer_qty'		=> $transfer_qty[$i],
-					'repair_qty'		=> $repair_qty[$i],
-					'scrap_qty'		=> $scrap_qty[$i],
-					'name' => 		$name[$i],
-					'order_type' => $order_type,
-					'maker_id'			=> $this->session->userdata('user_id'),
-					'maker_date'		=> date('y-m-d'),
-					'comp_id'			=> $this->session->userdata('comp_id'),
-					'zone_id'			=> $this->session->userdata('zone_id'),
-					'brnh_id'			=> $this->session->userdata('brnh_id')
+		{
+		if($transfer_qty[$i]!='' or $repair_qty[$i]!='' or $scrap_qty[$i]!='' or $test_qty[$i]!=''){
+		
+			$data_dtl=array(
+				'lot_no'		=> $lot_no,
+				'order_no'		=> $order_no,
+				'check_no'		=> $check_no,
+				'check_date'	=> $check_date,
+				'vendor_id'		=> $vendor_id,
+				'job_order_id'	=> $job_order_id,
+				'productid'		=> $productid[$i],				 
+				'transfer_qty'	=> $transfer_qty[$i],
+				'repair_qty'	=> $repair_qty[$i],
+				'scrap_qty'		=> $scrap_qty[$i],
+				'test_qty'		=> $test_qty[$i],
+				'name'			=> $name[$i],
+				'order_type'	=> $order_type,
+				'maker_id'		=> $this->session->userdata('user_id'),
+				'maker_date'	=> date('y-m-d'),
+				'comp_id'		=> $this->session->userdata('comp_id'),
+				'zone_id'		=> $this->session->userdata('zone_id'),
+				'brnh_id'		=> $this->session->userdata('brnh_id')
 				);
-			
 				 $this->Model_admin_login->insert_user($table_name,$data_dtl);
 				 if($transfer_qty[$i]!='')
 				 {
