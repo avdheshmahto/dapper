@@ -77,7 +77,7 @@ foreach($result as $sales)
 {
 ?>
 <tr class="gradeC record">
-<th><a href="<?=base_url();?>finish/manage_finish_map?id=<?=$sales->lot_no;?>"><?=$sales->lot_no;?></a></th>
+<th><a href="<?=base_url();?>finish/manage_finish_test_map?id=<?=$sales->lot_no;?>"><?=$sales->lot_no;?></a></th>
 <th>Pending</th>
 <th> <button class="btn btn-xs btn-black" data-toggle="modal" data-target="#modal-0" onclick="getspharemap('<?=$sales->lot_no;?>');"  type="button"><i class="icon-eye"></i></button>
 </th>

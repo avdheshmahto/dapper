@@ -85,12 +85,11 @@ function filterTest($perpage,$pages,$get){
 
 function count_test($tableName,$status = 0,$get)
 {
-	$qry ="select count(*) as countval from tbl_production_order_check where status='A' and test_qty!=''";
+	$qry ="select count(*) as countval from tbl_production_order_check where status='A' and test_qty!='' ";
     if(sizeof($get) > 0)
 	{
 		if($get['p_id'] != "")
 			$qry .= " AND lot_no = '".$get['p_id']."' ";
-		
 			$qry .="group by lot_no order by lot_no desc ";				
 	}
 		 
