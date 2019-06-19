@@ -345,5 +345,13 @@ $this->load->view("manage-finish-test-map");
 }
 
 
+public function view_finish_test()
+{
+
+$this->load->view("view-finish-test");
+
+}
+
+
 
 }
