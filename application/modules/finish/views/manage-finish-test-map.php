@@ -218,6 +218,42 @@ function submitForm() {
 				return false;     
 }
 
+
+function submitFinishTest() {
+
+		var form_data = new FormData(document.getElementById("myformFinish"));
+		form_data.append("label", "WEBUPLOAD");
+		$.ajax({
+			url: "finish/insert_insepction",
+			type: "POST",
+			data: form_data,
+			processData: false,  // tell jQuery not to process the data
+			contentType: false   // tell jQuery not to set contentType
+			
+		}).done(function( data ) {
+		if(data == 1 || data == 2){
+			if(data == 1)
+			
+				var msg = "Data Successfully Add !";
+                else
+                var msg = "Data Successfully Updated !";
+				$("#resultarea").text(msg);
+				setTimeout(function() {   //calls click event after a certain time
+                $("#modal-2 .close").click();
+                $("#resultarea").text(" "); 
+                $('#myformFinish')[0].reset(); 
+				$("#quotationTable").text(" "); 
+				$("#id").val("");
+     		    }, 1000);
+                }else{
+                $("#resultarea").text(data);
+			    }
+				
+				console.log(data);
+				});
+				return false;     
+}
+
 function Order_transfer(viewId){
 	var order_type=document.getElementById("order_type").innerHTML;
 	var lot_no=document.getElementById("lot_no").innerHTML;
@@ -863,6 +899,8 @@ $getProduct=$queryProduct->row();
 <div id="resultarea" class="text-center " style="font-size: 15px;color: red;"></div> 
 </div>
 <div class="modal-body">
+<form name="myForm" class="form-horizontal" id ="myformFinish" action="#" 
+onsubmit="return submitFinishTest();" method="POST" enctype="multipart/form-datam">
 <div class="row" id="viewWork">
 
 
@@ -873,6 +911,7 @@ $getProduct=$queryProduct->row();
 
 
 </div>
+</form>
 </div>
 </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
