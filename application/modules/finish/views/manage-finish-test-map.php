@@ -407,7 +407,7 @@ $queryData=$this->db->query("select * from tbl_production_order_check where stat
 	$getProcess=$processquery->row();
 	// ends
 	?>
-<a href="<?=base_url();?>finish/manage_finish_jobwork_map_details?id=<?=$fetch_list->id;?>"><?=$getProduct->sku_no;?>&nbsp;<?=$getProduct->productname;?></a>
+<?=$getProduct->sku_no;?>&nbsp;<?=$getProduct->productname;?>
 <button style="display:none" type="button" class="btn btn-default modalMapSpare" onclick="Order('<?=$fetch_list->job_order_no;?>');" data-toggle="modal" data-target="#modal-order"><?=$fetch_list->order_type;?></button></td>
 <td><?=$getProcess->keyvalue;?></td>
 <?php 
@@ -419,7 +419,6 @@ $getMachineIdview=$sqlQueryMachineIdview->row();
 $table_name='tbl_schedule_triggering';
 ?>
 <button class="btn btn-default" onclick="testOrder(<?=$fetch_list->id;?>);" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
-<a target="_blank" href="<?=base_url();?>productionModule/print_challan?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>	
 </td>
 </tr>
 <?php  }?>

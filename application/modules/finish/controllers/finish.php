@@ -350,7 +350,7 @@ $this->load->view("view-finish-test");
 
 public function insert_insepction()
 {
-
+echo "ssASA";die;
   extract($_POST);
   $table_name ='tbl_product_inspection';
   $this->db->query("delete from $table_name where productionid='$poid' and type ='$type'");  
@@ -373,7 +373,6 @@ public function insert_insepction()
       if($insp1[$i]!=''){
         $data_dtl['lot']= $lot;
          $data_dtl['product_id']= $p_id[$i];
-         $data_dtl['type']= $type;
          $data_dtl['test_param']=$this->input->post('test_param')[$i];         
          $data_dtl['specification']=$this->input->post('specification')[$i];
          $data_dtl['specification2']=$this->input->post('specification2')[$i];
@@ -395,6 +394,8 @@ public function insert_insepction()
          $this->Model_admin_login->insert_user($table_name,$data_dtl);   
          }
       }
+
+      echo "1";
  }
 
 
