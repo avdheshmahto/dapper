@@ -101,7 +101,6 @@ $getProduction=$productQuery->row();
 <th>&nbsp;</th>
 <th >&nbsp;</th>
 <th >&nbsp;</th>
-<th >&nbsp;</th>
 <th >&nbsp;<th></tr>
 
 <input type="hidden" name="poid" value="<?php echo $getDtl->purchaseorderdtlid;?>">

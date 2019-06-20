@@ -203,34 +203,30 @@ public function order_kora(){
 
 
 function manage_finishJoin(){
-	$data['result'] = "";
+  $data['result'] = "";
 	////Pagination start ///
-      $table_name  = 'tbl_production_order_log';
-	  $url        = site_url('/finish/manage_finish?');
-	  $sgmnt      = "4";
-	  $showEntries= 10;
-      $totalData  = $this->model_finish->count_finish($table_name,'A',$this->input->get());
-      //$showEntries= $_GET['entries']?$_GET['entries']:'12';
-      if($_GET['entries']!=""){
-         $showEntries = $_GET['entries'];
-         $url     = site_url('/finish/manage_finish?entries='.$_GET['entries']);
-      }
-     $pagination   = $this->ciPagination($url,$totalData,$sgmnt,$showEntries);
-  
-     //////Pagination end ///
-   
-     $data=$this->user_function();      // call permission fnctn
-     $data['dataConfig']        = array('total'=>$totalData,'perPage'=>$pagination['per_page'],'page'=>$pagination['page']);
-     //$data['result']            = $this->model_template->contact_get($pagination['per_page'],$pagination['page']);	
-     $data['pagination']        = $this->pagination->create_links();
-	 
-	 if($this->input->get('filter') == 'filter')   ////filter start ////
-        	$data['result']       = $this->model_finish->filterProductionList($pagination['per_page'],$pagination['page'],$this->input->get());
-          	else	
-    		$data['result'] = $this->model_finish->getfinish($pagination['per_page'],$pagination['page']);
-			
-     return $data;
+  $table_name  = 'tbl_production_order_log';
+	$url        = site_url('/finish/manage_finish?');
+	$sgmnt      = "4";
+	$showEntries= 10;
+  $totalData  = $this->model_finish->count_finish($table_name,'A',$this->input->get());
+  //$showEntries= $_GET['entries']?$_GET['entries']:'12';
+  if($_GET['entries']!=""){
+      $showEntries = $_GET['entries'];
+      $url     = site_url('/finish/manage_finish?entries='.$_GET['entries']);
   }
+  $pagination   = $this->ciPagination($url,$totalData,$sgmnt,$showEntries);
+  //////Pagination end ///
+  $data=$this->user_function();      // call permission fnctn
+  $data['dataConfig']= array('total'=>$totalData,'perPage'=>$pagination['per_page'],'page'=>$pagination['page']);
+  //$data['result']            = $this->model_template->contact_get($pagination['per_page'],$pagination['page']);	
+  $data['pagination']        = $this->pagination->create_links();
+	if($this->input->get('filter') == 'filter')   ////filter start ////
+    $data['result']       = $this->model_finish->filterProductionList($pagination['per_page'],$pagination['page'],$this->input->get());
+          	else	
+    $data['result'] = $this->model_finish->getfinish($pagination['per_page'],$pagination['page']);
+		return $data;
+}
 
 public function insert_jobwork()
 {
@@ -352,6 +348,54 @@ $this->load->view("view-finish-test");
 
 }
 
+public function insert_insepction()
+{
+
+  extract($_POST);
+  $table_name ='tbl_product_inspection';
+  $this->db->query("delete from $table_name where productionid='$poid' and type ='$type'");  
+  if($type=='Purchase Order')
+  {
+    $this->db->query("update  tbl_purchase_order_dtl set rej_qty=rej_qty+'$rec_qty' where purchaseorderdtlid='$poid' ");  
+  }
+  if($type=='production')
+  {
+    
+    $this->db->query("update  tbl_production_hdr set rej_qty=rej_qty+'$rec_qty' where productionid='$poid' ");  
+  
+  }
+     
+  $this->load->model('Model_admin_login');  
+  $rows=count($test_param);
+  
+  for($i=0; $i<=$rows; $i++)
+    {
+      if($insp1[$i]!=''){
+        $data_dtl['lot']= $lot;
+         $data_dtl['product_id']= $p_id[$i];
+         $data_dtl['type']= $type;
+         $data_dtl['test_param']=$this->input->post('test_param')[$i];         
+         $data_dtl['specification']=$this->input->post('specification')[$i];
+         $data_dtl['specification2']=$this->input->post('specification2')[$i];
+         $data_dtl['insp1']=$this->input->post('insp1')[$i];
+         $data_dtl['insp2']=$this->input->post('insp2')[$i];
+         $data_dtl['insp3']=$this->input->post('insp3')[$i];
+         $data_dtl['insp4']=$this->input->post('insp4')[$i];
+         $data_dtl['insp5']=$this->input->post('insp5')[$i];
+         $data_dtl['insp6']=$this->input->post('insp6')[$i];
+         $data_dtl['insp7']=$this->input->post('insp7')[$i];
+         $data_dtl['insp8']=$this->input->post('insp8')[$i];
+         $data_dtl['insp9']=$this->input->post('insp9')[$i];
+         $data_dtl['insp10']=$this->input->post('insp10')[$i];
+         $data_dtl['maker_id']=$this->session->userdata('user_id');
+         $data_dtl['maker_date']=date('y-m-d');
+         $data_dtl['comp_id']=$this->session->userdata('comp_id');
+         $data_dtl['zone_id']=$this->session->userdata('zone_id');
+         $data_dtl['brnh_id']=$this->session->userdata('brnh_id');
+         $this->Model_admin_login->insert_user($table_name,$data_dtl);   
+         }
+      }
+ }
 
 
 }
