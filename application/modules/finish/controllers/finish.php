@@ -405,7 +405,6 @@ public function manage_assemble()
     $data =  $this->manage_assembleJoin();
     $this->load->view("manage-assemble",$data);
   }  
-
 }
 
 function manage_assembleJoin(){
@@ -432,6 +431,16 @@ function manage_assembleJoin(){
             else  
     $data['result'] = $this->model_finish->getassemble($pagination['per_page'],$pagination['page']);
     return $data;
+}
+
+public function manage_assemble_map()
+{
+  if($this->session->userdata('is_logged_in')){
+   
+  $this->load->view("manage-assemble-map",$data);
+  
+  }  
+
 }
 
 }
