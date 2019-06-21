@@ -379,8 +379,12 @@ $getVendor=$queryVendor->row();
 </thead>
 <tbody>
 <?php
-$queryData=$this->db->query("select * from tbl_production_order_check where status='A' and test_qty!=''order by lot_no desc");
-	foreach($queryData->result() as $fetch_list)
+$queryData=$this->db->query("select * from tbl_quotation_purchase_order_hdr where status='A' and lot_no='".$_GET['id']."'");
+$getQueryData=$queryData->row();
+
+$queryPIData=$this->db->query("select * from tbl_quotation_purchase_order_dtl where status='A' and purchaseid='$getQueryData->purchaseid'");
+
+	foreach($queryPIData->result() as $fetch_list)
 	{
 ?>
 <tr class="gradeU record">
@@ -406,7 +410,7 @@ $queryData=$this->db->query("select * from tbl_production_order_check where stat
 $sqlQueryMachineIdview=$this->db->query("select * from tbl_contact_m where contact_id ='$fetch_list->vendor_id'  and status = 'A' ");
 $getMachineIdview=$sqlQueryMachineIdview->row();
 ?>
-<td><?=$fetch_list->test_qty;?></td>
+<td><?=$fetch_list->qty;?></td>
 <td><?php $pri_col='id';
 $table_name='tbl_schedule_triggering';
 ?>
