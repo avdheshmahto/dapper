@@ -350,7 +350,7 @@ $this->load->view("view-finish-test");
 
 public function insert_insepction()
 {
-echo "ssASA";die;
+
   extract($_POST);
   $table_name ='tbl_product_inspection';
   $this->db->query("delete from $table_name where productionid='$poid' and type ='$type'");  
@@ -398,5 +398,40 @@ echo "ssASA";die;
       echo "1";
  }
 
+public function manage_assemble()
+{
+  if($this->session->userdata('is_logged_in')){
+   
+    $data =  $this->manage_assembleJoin();
+    $this->load->view("manage-assemble",$data);
+  }  
+
+}
+
+function manage_assembleJoin(){
+  $data['result'] = "";
+  ////Pagination start ///
+  $table_name  = 'tbl_production_order_check';
+  $url        = site_url('/finish/manage_assemble?');
+  $sgmnt      = "4";
+  $showEntries= 10;
+  $totalData  = $this->model_finish->count_assemble($table_name,'A',$this->input->get());
+  //$showEntries= $_GET['entries']?$_GET['entries']:'12';
+  if($_GET['entries']!=""){
+      $showEntries = $_GET['entries'];
+      $url     = site_url('/finish/manage_assemble?entries='.$_GET['entries']);
+  }
+  $pagination   = $this->ciPagination($url,$totalData,$sgmnt,$showEntries);
+  //////Pagination end ///
+  $data=$this->user_function();      // call permission fnctn
+  $data['dataConfig']= array('total'=>$totalData,'perPage'=>$pagination['per_page'],'page'=>$pagination['page']);
+  //$data['result']            = $this->model_template->contact_get($pagination['per_page'],$pagination['page']); 
+  $data['pagination']        = $this->pagination->create_links();
+  if($this->input->get('filter') == 'filter')   ////filter start ////
+    $data['result']       = $this->model_finish->filterProductionList($pagination['per_page'],$pagination['page'],$this->input->get());
+            else  
+    $data['result'] = $this->model_finish->getassemble($pagination['per_page'],$pagination['page']);
+    return $data;
+}
 
 }
