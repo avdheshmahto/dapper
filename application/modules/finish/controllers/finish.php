@@ -440,7 +440,23 @@ public function manage_assemble_map()
   $this->load->view("manage-assemble-map",$data);
   
   }  
-
 }
+
+public function assemble_grn()
+{
+    @extract($_GET);
+    if($this->session->userdata('is_logged_in')){
+      $data=array(
+                'p_id'    =>   $ID,
+                'lot_id'  => $lot_id
+      );  
+      //print_r($data);
+
+     $this->load->view("order-assemble-details",$data);
+  }  
+}
+
+
+
 
 }

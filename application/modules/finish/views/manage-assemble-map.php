@@ -281,7 +281,15 @@ function testOrder(v){
 	document.getElementById("viewWork").innerHTML = xhttp.responseText;
 }
 
-
+function assemble_grn(v,w){
+	var pro=v;
+	var lot_id=w;
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("GET", "<?=base_url();?>finish/assemble_grn?ID="+pro+"&lot_id="+lot_id, false);
+	xhttp.send();
+	document.getElementById("viewWork").innerHTML = xhttp.responseText;
+	
+}
 
 
 
@@ -403,8 +411,8 @@ $queryPIData=$this->db->query("select * from tbl_quotation_purchase_order_dtl wh
 	$getProcess=$processquery->row();
 	// ends
 	?>
-<?=$getProduct->sku_no;?>&nbsp;<?=$getProduct->productname;?>
-<button style="display:none" type="button" class="btn btn-default modalMapSpare" onclick="Order('<?=$fetch_list->job_order_no;?>');" data-toggle="modal" data-target="#modal-order"><?=$fetch_list->order_type;?></button></td>
+<a href="#" onclick="assemble_grn('<?=$getProduct->Product_id;?>','<?=$_GET['id'];?>');" data-toggle="modal" data-target="#modal-3"><?=$getProduct->sku_no;?>&nbsp;<?=$getProduct->productname;?></a>
+</td>
 <td><?=$getProcess->keyvalue;?></td>
 <?php 
 $sqlQueryMachineIdview=$this->db->query("select * from tbl_contact_m where contact_id ='$fetch_list->vendor_id'  and status = 'A' ");
@@ -414,7 +422,6 @@ $getMachineIdview=$sqlQueryMachineIdview->row();
 <td><?php $pri_col='id';
 $table_name='tbl_schedule_triggering';
 ?>
-<button class="btn btn-default" onclick="testOrder(<?=$fetch_list->id;?>);" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
 </td>
 </tr>
 <?php  }?>
