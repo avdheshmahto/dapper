@@ -382,7 +382,7 @@ $getVendor=$queryVendor->row();
 	<th>ITEM NUMBER & DESCRIPTION</th>
 	<th>UOM</th>
 	<th>QTY</th>
-	<th>Action</th>
+	
 </tr>
 </thead>
 <tbody>
@@ -419,10 +419,7 @@ $sqlQueryMachineIdview=$this->db->query("select * from tbl_contact_m where conta
 $getMachineIdview=$sqlQueryMachineIdview->row();
 ?>
 <td><?=$fetch_list->qty;?></td>
-<td><?php $pri_col='id';
-$table_name='tbl_schedule_triggering';
-?>
-</td>
+
 </tr>
 <?php  }?>
 
