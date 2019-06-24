@@ -1,6 +1,12 @@
 <?php
 $orderQuery=$this->db->query("select *from tbl_job_work where job_order_no='$lot_id'");
 $getOrder=$orderQuery->row();
+
+//get shape query
+$shapeQuery=$this->db->query("select *from tbl_machine where code='$p_id'");
+$getShape=$shapeQuery->row();
+//ends
+
 ?>
 <div class="panel-body">
 <div class="row">
@@ -54,7 +60,8 @@ $getOrder=$orderQuery->row();
 </tr>
 </thead>
 <?php
-	$productQuery=$this->db->query("select *from tbl_job_work_log where job_order_no='$lot_id'");
+
+$productQuery=$this->db->query("select *from tbl_shape_part_mapping where product_id='$getShape->machine_name'");
 	$i=1;
 	foreach($productQuery->result() as $getProduct){
 		####### get product #######
@@ -96,12 +103,12 @@ $getTestQuery=$testQuery->row();
            
 <input type="hidden" min="0" name="ord_qty[]" value="<?=$getProduct->qty;?>" class="form-control">
 <input type="hidden" min="0" name="rm_qty[]" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" class="form-control">
-<td><?=$getProduct->qty;?></td>
+<td><?=$getTestQuery->test_qty;?></td>
 <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" />
 <td><?php echo $reci_qty=$getProduct->qty-$getInboundGRNLog->rec_qty;?></td>
 <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
 <td>
-<input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> />
+<input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control" />
 <input type="hidden" name="qty_weight" />
 <input type="hidden" name="weight[]" />
 <input type="hidden" name="total_weight[]" />
