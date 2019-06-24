@@ -216,16 +216,17 @@ function submitFinishTest() {
 		var form_data = new FormData(document.getElementById("myformFinish"));
 		form_data.append("label", "WEBUPLOAD");
 		$.ajax({
-			url: "finish/insert_insepction",
+			url: "finish/insert_finish_map",
 			type: "POST",
 			data: form_data,
 			processData: false,  // tell jQuery not to process the data
 			contentType: false   // tell jQuery not to set contentType
 			
 		}).done(function( data ) {
+		
 		if(data == 1 || data == 2){
 			if(data == 1)
-			
+				
 				var msg = "Data Successfully Add !";
                 else
                 var msg = "Data Successfully Updated !";

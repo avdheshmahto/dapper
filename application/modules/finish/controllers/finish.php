@@ -457,6 +457,39 @@ public function assemble_grn()
 }
 
 
+public function insert_finish_map()
+{
+
+@extract($_POST);
+$table_name='tbl_assemble_fg';
+$cnt=count($product_id);
+for($i=0;$i<$cnt;$i++){
+  $data=array(
+    'job_order_no' => $job_order_id,
+    'lot_no' => $lot_no,
+    'order_type' => 'Finish Order',
+    'grn_no' => $grn_no,
+    'grn_date' => $grn_date,
+    'product_id' => $product_id[$i],
+    'fg_id' => $fg_id,
+    'qty' => $qty[$i],
+    'module_name' => 'Finish Order'
+);
+
+$sesio = array(
+    'comp_id' => $this->session->userdata('comp_id'),
+    'zone_id' => $this->session->userdata('zone_id'),
+    'maker_date'=> date('y-m-d'),
+    'author_date'=> date('y-m-d')
+    );
+
+$dataall = array_merge($data,$sesio);
+$this->Model_admin_login->insert_user($table_name,$dataall);
+
+}
+echo "1";
+
+}
 
 
 }

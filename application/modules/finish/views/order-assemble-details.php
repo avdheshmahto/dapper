@@ -15,6 +15,7 @@ $getShape=$shapeQuery->row();
 <div class="panel-body">
 <div class="form-group">
 <div class="col-sm-6">
+<input type="hidden" name="fg_id" value="<?=$p_id;?>" />
 <input type="hidden" name="grn_type" value="<?=$getOrder->order_type;?>" />
 <input type="hidden" name="job_order_id" value="<?=$getOrder->id;?>" />
 <input type="hidden" name="vendor_id" value="<?=$getOrder->vendor_id;?>" />
@@ -94,7 +95,7 @@ $getInboundGRNLog=$inbountLogGRNLogQuery->row();
 
 // get test qty //
 
-$testQuery=$this->db->query("select * from tbl_production_available_order where productid='$getProduct->part_id' AND lot_no = '$lot_id'  and test_qty!='' ");
+$testQuery=$this->db->query("select * from tbl_production_available_order where productid='$getProduct->part_id' AND lot_no = '$lot_id'  and test_qty!='' and order_type='Finish Order' ");
 $getTestQuery=$testQuery->row();
 
 // ends //
@@ -104,8 +105,8 @@ $getTestQuery=$testQuery->row();
 <input type="hidden" min="0" name="ord_qty[]" value="<?=$getProduct->qty;?>" class="form-control">
 <input type="hidden" min="0" name="rm_qty[]" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" class="form-control">
 <td><?=$getTestQuery->test_qty;?></td>
-<input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" />
-<td><?php echo $reci_qty=$getProduct->qty-$getInboundGRNLog->rec_qty;?></td>
+<input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getTestQuery->test_qty-$getInboundGRNLog->rec_qty;?>" />
+<td><?php echo $reci_qty=$getTestQuery->test_qty-$getInboundGRNLog->rec_qty;?></td>
 <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
 <td>
 <input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control" />
