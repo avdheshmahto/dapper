@@ -1,12 +1,10 @@
 <?php
 $orderQuery=$this->db->query("select *from tbl_job_work where job_order_no='$lot_id'");
 $getOrder=$orderQuery->row();
-
 //get shape query
 $shapeQuery=$this->db->query("select *from tbl_machine where code='$p_id'");
 $getShape=$shapeQuery->row();
 //ends
-
 ?>
 <div class="panel-body">
 <div class="row">
@@ -54,7 +52,7 @@ $getShape=$shapeQuery->row();
 	<th class="tdcenter"> Sl No</th>
 	<th class="tdcenter">Item Number & Description</th>
 	<th class="tdcenter">UOM</th>
-	<th class="tdcenter">Ordered Qty</th>
+	<th class="tdcenter">Receive Qty</th>
 	<th class="tdcenter">Remaining Qty</th>
 	<th style="display:none" class="tdcenter">Qty In Stock</th>
 	<th class="tdcenter">Receive Qty</th>
