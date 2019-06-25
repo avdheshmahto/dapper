@@ -90,7 +90,7 @@ $productQuery=$this->db->query("select *from tbl_shape_part_mapping where produc
 	$poLogQuery=$this->db->query("select D.qty as po_qty,SUM(M.qty) as mqty from tbl_quotation_purchase_order_dtl D,tbl_part_price_mapping M,tbl_machine MM where MM.machine_name = D.productid AND MM.id = M.machine_id AND D.purchaseid='$getHdr->po_no' and M.rowmatial='$getProduct->productid' AND M.type ='part'");
 $getPoQty=$poLogQuery->row();
 
-$inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_production_order_log where productid='$getProduct->part_id' AND job_order_id = '$lot_no' and order_no='$id'");
+$inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as qty from tbl_assemble_fg where product_id='$getProduct->part_id' AND lot_no = '$lot_id' and fg_id='$p_id' ");
 $getInboundGRNLog=$inbountLogGRNLogQuery->row();
 
 // get test qty //
@@ -106,7 +106,7 @@ $getTestQuery=$testQuery->row();
 <input type="hidden" min="0" name="rm_qty[]" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" class="form-control">
 <td><?=$getTestQuery->test_qty;?></td>
 <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getTestQuery->test_qty-$getInboundGRNLog->rec_qty;?>" />
-<td><?php echo $reci_qty=$getTestQuery->test_qty-$getInboundGRNLog->rec_qty;?></td>
+<td><?php echo $reci_qty=$getTestQuery->test_qty-$getInboundGRNLog->qty;?></td>
 <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
 <td>
 <input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control" />

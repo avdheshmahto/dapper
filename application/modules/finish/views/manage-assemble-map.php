@@ -224,22 +224,21 @@ function submitFinishTest() {
 			
 		}).done(function( data ) {
 		
+		
 		if(data == 1 || data == 2){
 			if(data == 1)
-				
+		
 				var msg = "Data Successfully Add !";
                 else
                 var msg = "Data Successfully Updated !";
-				$("#resultarea").text(msg);
+				$("#resultAreaAssemble").text(msg);
 				setTimeout(function() {   //calls click event after a certain time
-                $("#modal-2 .close").click();
-                $("#resultarea").text(" "); 
+                $("#modal-3 .close").click();
+                $("#resultAreaAssemble").text(" "); 
                 $('#myformFinish')[0].reset(); 
-				$("#quotationTable").text(" "); 
-				$("#id").val("");
-     		    }, 1000);
+				}, 1000);
                 }else{
-                $("#resultarea").text(data);
+                $("#resultAreaAssemble").text(data);
 			    }
 				
 				console.log(data);
@@ -896,7 +895,7 @@ $getProduct=$queryProduct->row();
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 <h4 class="modal-title">View Finish Test(Lot No.:-<?=$getsched->lot_no;?>)</h4>
-<div id="resultarea" class="text-center " style="font-size: 15px;color: red;"></div> 
+<div id="resultAreaAssemble" class="text-center " style="font-size: 15px;color: red;"></div> 
 </div>
 <div class="modal-body">
 <form name="myForm" class="form-horizontal" id ="myformFinish" action="#" 
