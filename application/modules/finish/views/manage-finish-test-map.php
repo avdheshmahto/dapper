@@ -2211,4 +2211,19 @@ $.ajax({
 	});
 }
 
+// qty validation script//
+
+function qtyValidation()
+{
+var qty=document.getElementById("qty").value;	
+var rem_qty=document.getElementById("rem_qty").value;	
+
+	if(Number(rem_qty)<Number(qty))
+	{
+		alert("Qty must less then remaning qty");	
+	}
+}
+//ends
+
+
 </script>

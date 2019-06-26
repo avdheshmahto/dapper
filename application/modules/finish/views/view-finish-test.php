@@ -25,8 +25,8 @@ $queryRem=$this->db->query("select SUM(qty) as qty from tbl_product_inspection w
 $getRem=$queryRem->row();
 //
 ?>
-<th><input type="text" readonly="readonly"  value="<?=$qty-$getRem->qty;?>" class="form-control" /></th>
-<th><input type="text"  name="qty" value="" class="form-control" /></th>
+<th><input type="text" readonly="readonly" id="rem_qty"  value="<?=$qty-$getRem->qty;?>" class="form-control" /></th>
+<th><input type="text"  name="qty" id="qty" value="" class="form-control" onkeyup="qtyValidation();" /></th>
 <th>
 <input type="hidden" name="p_id" value="<?php echo $p_id; ?>">
 <select class="form-control" name="check_point" required>
@@ -64,7 +64,7 @@ else
 <th rowspan="2" >Description</th>
 </tr>
 <?php
-$testList=$this->db->query("select *from tbl_product_inspection where lot_no='$lot_no' and product_id='$p_id'");
+$testList=$this->db->query("select *from tbl_product_inspection where lot_no='$lot_no' and product_id='$p_id' and order_no='$order_no'");
 foreach($testList->result() as $getList){
 ?>
 <tr class="gradeA">
