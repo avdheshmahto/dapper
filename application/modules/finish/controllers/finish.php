@@ -348,6 +348,7 @@ public function view_finish_test()
               'p_id' => $ID,
               'lot_no' => $lot_no,
               'qty' => $qty,
+              'order_no' => $order_no
   );
   $this->load->view("view-finish-test",$data);
 
@@ -356,54 +357,26 @@ public function view_finish_test()
 public function insert_insepction()
 {
 
-echo "1";
-echo "hi";die;
   extract($_POST);
   $table_name ='tbl_product_inspection';
-  $this->db->query("delete from $table_name where productionid='$poid' and type ='$type'");  
-  if($type=='Purchase Order')
-  {
-    $this->db->query("update  tbl_purchase_order_dtl set rej_qty=rej_qty+'$rec_qty' where purchaseorderdtlid='$poid' ");  
-  }
-  if($type=='production')
-  {
-    
-    $this->db->query("update  tbl_production_hdr set rej_qty=rej_qty+'$rec_qty' where productionid='$poid' ");  
-  
-  }
-     
-  $this->load->model('Model_admin_login');  
-  $rows=count($test_param);
-  
-  for($i=0; $i<=$rows; $i++)
-    {
-      if($insp1[$i]!=''){
-        $data_dtl['lot']= $lot;
-         $data_dtl['product_id']= $p_id[$i];
-         $data_dtl['test_param']=$this->input->post('test_param')[$i];         
-         $data_dtl['specification']=$this->input->post('specification')[$i];
-         $data_dtl['specification2']=$this->input->post('specification2')[$i];
-         $data_dtl['insp1']=$this->input->post('insp1')[$i];
-         $data_dtl['insp2']=$this->input->post('insp2')[$i];
-         $data_dtl['insp3']=$this->input->post('insp3')[$i];
-         $data_dtl['insp4']=$this->input->post('insp4')[$i];
-         $data_dtl['insp5']=$this->input->post('insp5')[$i];
-         $data_dtl['insp6']=$this->input->post('insp6')[$i];
-         $data_dtl['insp7']=$this->input->post('insp7')[$i];
-         $data_dtl['insp8']=$this->input->post('insp8')[$i];
-         $data_dtl['insp9']=$this->input->post('insp9')[$i];
-         $data_dtl['insp10']=$this->input->post('insp10')[$i];
-         $data_dtl['maker_id']=$this->session->userdata('user_id');
-         $data_dtl['maker_date']=date('y-m-d');
-         $data_dtl['comp_id']=$this->session->userdata('comp_id');
-         $data_dtl['zone_id']=$this->session->userdata('zone_id');
-         $data_dtl['brnh_id']=$this->session->userdata('brnh_id');
-         $this->Model_admin_login->insert_user($table_name,$data_dtl);   
-         }
-      }
-
-      echo "1";
- }
+  $data=array(
+                'lot_no' => $lot_no,
+                'order_no' => $order_no,
+                'product_id' => $p_id,
+                'qty' => $qty,
+                'check_point' => $check_point,
+                'description' => $description
+  );
+  $sesio = array(
+    'comp_id' => $this->session->userdata('comp_id'),
+    'zone_id' => $this->session->userdata('zone_id'),
+    'maker_date'=> date('y-m-d'),
+    'author_date'=> date('y-m-d')
+    );
+  $dataall = array_merge($data,$sesio);
+  $this->Model_admin_login->insert_user($table_name,$dataall);
+  echo "1";
+}
 
 public function manage_assemble()
 {

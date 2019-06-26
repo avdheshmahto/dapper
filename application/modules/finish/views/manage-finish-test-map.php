@@ -231,7 +231,7 @@ function submitFinishTest() {
 			contentType: false   // tell jQuery not to set contentType
 			
 		}).done(function( data ) {
-		
+		alert(data);
 		if(data == 1 || data == 2){
 			;
 			if(data == 1)
@@ -282,11 +282,11 @@ function viewWorkOrder(v){
 }
 
 
-function testOrder(v,w,q){
+function testOrder(v,w,q,o){
 	
 	var pro=v;
 	var xhttp = new XMLHttpRequest();
-	xhttp.open("GET", "<?=base_url();?>finish/view_finish_test?ID="+pro+"&lot_no="+w+"&qty="+q, false);
+	xhttp.open("GET", "<?=base_url();?>finish/view_finish_test?ID="+pro+"&lot_no="+w+"&qty="+q+"&order_no="+o, false);
 	xhttp.send();
 	document.getElementById("viewWork").innerHTML = xhttp.responseText;
 }
@@ -422,7 +422,7 @@ $getMachineIdview=$sqlQueryMachineIdview->row();
 <td><?php $pri_col='id';
 $table_name='tbl_schedule_triggering';
 ?>
-<button class="btn btn-default" onclick="testOrder('<?=$fetch_list->productid;?>' , '<?=$fetch_list->lot_no;?>','<?=$fetch_list->test_qty;?>');" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
+<button class="btn btn-default" onclick="testOrder('<?=$fetch_list->productid;?>' , '<?=$fetch_list->lot_no;?>','<?=$fetch_list->test_qty;?>','<?=$fetch_list->order_no;?>');" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
 </td>
 </tr>
 <?php  }?>
