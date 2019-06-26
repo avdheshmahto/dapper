@@ -343,14 +343,21 @@ $this->load->view("manage-finish-test-map");
 
 public function view_finish_test()
 {
-
-$this->load->view("view-finish-test");
+  @extract($_GET);
+  $data=array(
+              'p_id' => $ID,
+              'lot_no' => $lot_no,
+              'qty' => $qty,
+  );
+  $this->load->view("view-finish-test",$data);
 
 }
 
 public function insert_insepction()
 {
 
+echo "1";
+echo "hi";die;
   extract($_POST);
   $table_name ='tbl_product_inspection';
   $this->db->query("delete from $table_name where productionid='$poid' and type ='$type'");  

@@ -282,11 +282,11 @@ function viewWorkOrder(v){
 }
 
 
-function testOrder(v,w){
+function testOrder(v,w,q){
 	
 	var pro=v;
 	var xhttp = new XMLHttpRequest();
-	xhttp.open("GET", "<?=base_url();?>finish/view_finish_test?ID="+pro+"&lot_no="+w, false);
+	xhttp.open("GET", "<?=base_url();?>finish/view_finish_test?ID="+pro+"&lot_no="+w+"&qty="+q, false);
 	xhttp.send();
 	document.getElementById("viewWork").innerHTML = xhttp.responseText;
 }
@@ -382,6 +382,7 @@ $getVendor=$queryVendor->row();
 <thead>
 <tr>
 	<th>ITEM NUMBER & DESCRIPTION</th>
+    <th>Order No.</th>
 	<th>UOM</th>
 	<th>QTY</th>
 	<th>Action</th>
@@ -389,7 +390,7 @@ $getVendor=$queryVendor->row();
 </thead>
 <tbody>
 <?php
-$queryData=$this->db->query("select * from tbl_production_order_check where status='A' and test_qty!=''order by lot_no desc");
+$queryData=$this->db->query("select * from tbl_production_order_check where status='A' and test_qty!='' order by lot_no desc");
 	foreach($queryData->result() as $fetch_list)
 	{
 ?>
@@ -411,6 +412,7 @@ $queryData=$this->db->query("select * from tbl_production_order_check where stat
 	?>
 <?=$getProduct->sku_no;?>&nbsp;<?=$getProduct->productname;?>
 <button style="display:none" type="button" class="btn btn-default modalMapSpare" onclick="Order('<?=$fetch_list->job_order_no;?>');" data-toggle="modal" data-target="#modal-order"><?=$fetch_list->order_type;?></button></td>
+<td><?=$fetch_list->order_no;?></td>
 <td><?=$getProcess->keyvalue;?></td>
 <?php 
 $sqlQueryMachineIdview=$this->db->query("select * from tbl_contact_m where contact_id ='$fetch_list->vendor_id'  and status = 'A' ");
@@ -420,7 +422,7 @@ $getMachineIdview=$sqlQueryMachineIdview->row();
 <td><?php $pri_col='id';
 $table_name='tbl_schedule_triggering';
 ?>
-<button class="btn btn-default" onclick="testOrder('<?=$fetch_list->productid;?>' , '<?=$fetch_list->lot_no;?>');" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
+<button class="btn btn-default" onclick="testOrder('<?=$fetch_list->productid;?>' , '<?=$fetch_list->lot_no;?>','<?=$fetch_list->test_qty;?>');" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
 </td>
 </tr>
 <?php  }?>
