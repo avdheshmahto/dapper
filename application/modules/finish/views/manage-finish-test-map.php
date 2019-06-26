@@ -231,22 +231,24 @@ function submitFinishTest() {
 			contentType: false   // tell jQuery not to set contentType
 			
 		}).done(function( data ) {
+		
 		if(data == 1 || data == 2){
+			;
 			if(data == 1)
 			
 				var msg = "Data Successfully Add !";
                 else
                 var msg = "Data Successfully Updated !";
-				$("#resultarea").text(msg);
+				$("#resultareaFinish").text(msg);
 				setTimeout(function() {   //calls click event after a certain time
-                $("#modal-2 .close").click();
-                $("#resultarea").text(" "); 
+                $("#modal-3 .close").click();
+                $("#resultareaFinish").text(" "); 
                 $('#myformFinish')[0].reset(); 
-				$("#quotationTable").text(" "); 
+				//$("#quotationTable").text(" "); 
 				$("#id").val("");
      		    }, 1000);
                 }else{
-                $("#resultarea").text(data);
+                $("#resultareaFinish").text(data);
 			    }
 				
 				console.log(data);
@@ -280,11 +282,11 @@ function viewWorkOrder(v){
 }
 
 
-function testOrder(v){
-
+function testOrder(v,w){
+	
 	var pro=v;
 	var xhttp = new XMLHttpRequest();
-	xhttp.open("GET", "<?=base_url();?>finish/view_finish_test?ID="+pro, false);
+	xhttp.open("GET", "<?=base_url();?>finish/view_finish_test?ID="+pro+"&lot_no="+w, false);
 	xhttp.send();
 	document.getElementById("viewWork").innerHTML = xhttp.responseText;
 }
@@ -418,7 +420,7 @@ $getMachineIdview=$sqlQueryMachineIdview->row();
 <td><?php $pri_col='id';
 $table_name='tbl_schedule_triggering';
 ?>
-<button class="btn btn-default" onclick="testOrder(<?=$fetch_list->id;?>);" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
+<button class="btn btn-default" onclick="testOrder('<?=$fetch_list->productid;?>' , '<?=$fetch_list->lot_no;?>');" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
 </td>
 </tr>
 <?php  }?>
@@ -482,7 +484,6 @@ else
 ?>
 </th>
 <th>
-<?php /*?><button class="btn btn-default" onclick="viewPurchaseOrder(<?=$getPo->purchaseid;?>);" data-toggle="modal" data-target="#modal-6" type="button" ><i class="fa fa-eye"></i></button><?php */?>
 <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
 <button class="btn btn-default" onclick="viewTransferOrder('<?=$getPo->transfer_no;?>');" data-toggle="modal" data-target="#modal-view-transfer" type="button" ><i class="fa fa-eye"></i></button>
 <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
@@ -894,8 +895,8 @@ $getProduct=$queryProduct->row();
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-<h4 class="modal-title">View Finish Test(Lot No.:-<?=$getsched->lot_no;?>)</h4>
-<div id="resultarea" class="text-center " style="font-size: 15px;color: red;"></div> 
+<h4 class="modal-title">Finish Test(Lot No.:-<?=$getsched->lot_no;?>)</h4>
+<div id="resultareaFinish" class="text-center " style="font-size: 15px;color: red;"></div> 
 </div>
 <div class="modal-body">
 <form name="myForm" class="form-horizontal" id ="myformFinish" action="#" 
@@ -1641,7 +1642,6 @@ $getProduct=$queryProduct->row();
 <script>
 //starts production purchase query
 
-
 function submitProductionPurchase() {
             
   var form_data = new FormData(document.getElementById("myProduction_purchase"));
@@ -1898,11 +1898,6 @@ xhttp.send();
  document.getElementById("viewFinishOrder").innerHTML = xhttp.responseText;
 }
 
-
-
-
-
-
 function val(d)
 {
 var zz=document.getElementById(d).id;
@@ -2037,277 +2032,189 @@ function selectListdataPurchase(ths){
 
 function getPo(v)
 {
-var pro=v;
 
-var xhttp = new XMLHttpRequest();
-xhttp.open("GET", "productionModule/getPo?ID="+pro, false);
-xhttp.send();
-document.getElementById("divPo").innerHTML = xhttp.responseText;
+	var pro=v;
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("GET", "productionModule/getPo?ID="+pro, false);
+	xhttp.send();
+	document.getElementById("divPo").innerHTML = xhttp.responseText;
 
 }
-
 
 function getPodtl(v)
 {
-var pro=v;
-
-var xhttp = new XMLHttpRequest();
-xhttp.open("GET", "productionModule/getPoDtl?ID="+pro, false);
-xhttp.send();
-document.getElementById("divPoDtl").innerHTML = xhttp.responseText;
-	
+	var pro=v;
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("GET", "productionModule/getPoDtl?ID="+pro, false);
+	xhttp.send();
+	document.getElementById("divPoDtl").innerHTML = xhttp.responseText;
 }
-
 
 function qtyValidation(v)
 {
 
 	var zz=document.getElementById(v).id;
-	
 	var myarra = zz.split("rec_qty");
 	var asx= myarra[1];
 	var rec_qty=document.getElementById("rec_qty"+asx).value;
 	var rem_qty=document.getElementById("rem_qty"+asx).value;
-	
 	var validationCheck=document.getElementById("validationCheck").value;
-	
 	document.getElementById("validationCheck").value=rec_qty;
-
-if(rec_qty)
-{
-
-	if(Number(rec_qty)==0)
+	if(rec_qty)
 	{
-		
-		alert("Qty must be grater than 0");
-		document.getElementById("sv1").disabled = true;
-		return false;
-	}
-	
+		if(Number(rec_qty)==0)
+		{
+			alert("Qty must be grater than 0");
+			document.getElementById("sv1").disabled = true;
+			return false;
+		}
 }
 	if(Number(rem_qty)<Number(rec_qty))
 	{
 		alert("Enter Qty must be less then enter qty");
 		document.getElementById("sv1").disabled = true;
-		
-		
 	}
 	else
 	{
 		document.getElementById("sv1").disabled = false;
 	}
-	
-	
-	
 }
 
 function viewrawReceiveFun(viewId){
-var po_no=document.getElementById("p_n").value;
 
+	var po_no=document.getElementById("p_n").value;
  	$.ajax({   
-		    type: "POST",  
-			url: "view_raw_receive",  
-			cache:false,  
-			data: {'id':viewId,'po_id':po_no,},  
-			success: function(data)  
-			{  
-			  
-			 $("#viewrawReceiveDiv").empty().append(data).fadeIn();
-			//referesh table
-			}   
+		type: "POST",  
+		url: "view_raw_receive",  
+		cache:false,  
+		data: {'id':viewId,'po_id':po_no,},  
+		success: function(data)  
+		{  
+			$("#viewrawReceiveDiv").empty().append(data).fadeIn();
+		}   
 	});
-
- }
-
+}
 
 //starts receive raw Material query
 
-
 function submitrawMaterialReceive() {
-        
-  var form_data = new FormData(document.getElementById("rawMaterialReceive"));
-  form_data.append("label", "WEBUPLOAD");
-
-  $.ajax({
-      url: "productionModule/insert_receive_row_material",
-      type: "POST",
-      data: form_data,
-      processData: false,  // tell jQuery not to process the data
-      contentType: false   // tell jQuery not to set contentType
-  }).done(function( data ) {
-	
-	
-	
-	  if(data == 1 || data == 2){
-		
-                      if(data == 1)
-					    
-                        var msg = "Data Successfully Add !";
-                      else
-                        var msg = "Data Successfully Updated !";
-						$("#resultarea").text(msg);
-						setTimeout(function() {   //calls click event after a certain time
-                       $("#modal-rawReceive .close").click();
-					   
-					   
-					   
-                       $("#resultareaRaw").text(" "); 
-                       $('#requestRawMat')[0].reset(); 
-					   //$("#quotationTable").text(" "); 
-					   
-                       //$("#id").val("");
-     
-                    }, 1000);
-                  }else{
-                    $("#resultareaRaw").text(data);
-					
-                 }
-				 ajex_RawMatData(<?=$_GET['id'];?>);
- 
-	 
-    console.log(data);
-    //Perform ANy action after successfuly post data
-       
-  });
-  return false;     
+	var form_data = new FormData(document.getElementById("rawMaterialReceive"));
+	form_data.append("label", "WEBUPLOAD");
+	$.ajax({
+		url: "productionModule/insert_receive_row_material",
+		type: "POST",
+		data: form_data,
+		processData: false,  // tell jQuery not to process the data
+		contentType: false   // tell jQuery not to set contentType
+	}).done(function( data ) {
+	if(data == 1 || data == 2){
+		if(data == 1)
+			var msg = "Data Successfully Add !";
+			else
+			var msg = "Data Successfully Updated !";
+			$("#resultarea").text(msg);
+			setTimeout(function() {   //calls click event after a certain time
+			$("#modal-rawReceive .close").click();
+			$("#resultareaRaw").text(" "); 
+			$('#requestRawMat')[0].reset(); 
+			//$("#quotationTable").text(" "); 
+			//$("#id").val("");
+			}, 1000);
+			}else{
+			$("#resultareaRaw").text(data);
+            }
+			ajex_RawMatData(<?=$_GET['id'];?>);
+			console.log(data);
+		});
+		return false;     
 }
 // ends
 
-
-
-
-
 function qtyVal(d)
 {
-	
-var zz=document.getElementById(d).id;
-var myarra = zz.split("qty");
-var asx= myarra[1];
-//alert(asx);
-var entQty=document.getElementById("qty"+asx).value;	
-var remQty=document.getElementById("rem_qty"+asx).value;	
 
-if(Number(remQty)<Number(entQty))	
-{
-alert("Enter Qty should be less then remaining Qty");
-	document.getElementById("qty"+asx).focus();	
-	document.getElementById("add_req").disabled = true;
-	
-	return false;
-}
-else
-{
-document.getElementById("add_req").disabled = false;
-	
-}
+	var zz=document.getElementById(d).id;
+	var myarra = zz.split("qty");
+	var asx= myarra[1];
+	//alert(asx);
+	var entQty=document.getElementById("qty"+asx).value;	
+	var remQty=document.getElementById("rem_qty"+asx).value;	
+	if(Number(remQty)<Number(entQty))	
+	{
+		alert("Enter Qty should be less then remaining Qty");
+		document.getElementById("qty"+asx).focus();	
+		document.getElementById("add_req").disabled = true;
+		return false;
+	}
+	else
+	{
+		document.getElementById("add_req").disabled = false;
+	}
 }
 </script>
 
 <script>
-
 function Order(viewId){
 
-var order_type=document.getElementById("order_type").innerHTML;
-var lot_no=document.getElementById("lot_no").innerHTML;
-
+	var order_type=document.getElementById("order_type").innerHTML;
+	var lot_no=document.getElementById("lot_no").innerHTML;
  	$.ajax({   
-		    type: "POST",  
-			url: "order_details",  
-			cache:false,  
-			data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},  
-			success: function(data)  
-			{  
-			  
-			 $("#orderDetails").empty().append(data).fadeIn();
-			//referesh table
-			}   
+		type: "POST",  
+		url: "order_details",  
+		cache:false,  
+		data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},  
+		success: function(data)  
+		{  
+			$("#orderDetails").empty().append(data).fadeIn();
+		}   
 	});
-
- }
-
-
-
-
-
-
-
-
-
-
+}
 //starts order receive  query
-
 function submitProductionOrderReceive() {
-            
-  var form_data = new FormData(document.getElementById("myProduction_order_receive"));
-  form_data.append("label", "WEBUPLOAD");
-
-  $.ajax({
-      url: "productionModule/productionOrderInsert",
-      type: "POST",
-      data: form_data,
-      processData: false,  // tell jQuery not to process the data
-      contentType: false   // tell jQuery not to set contentType
-  }).done(function( data ) {
-	//alert(data);
-	
-	
-	  if(data == 1 || data == 2){
-		
-                      if(data == 1)
-					    
-                        var msg = "Data Successfully Add !";
-                      else
-                        var msg = "Data Successfully Updated !";
-						$("#Orderresultarea").text(msg);
-						setTimeout(function() {   //calls click event after a certain time
-                       $("#modal-order").click();
-                       $("#Orderresultarea").text(" "); 
-                       $('#myProduction_order_receive')[0].reset(); 
-					   //$("#quotationTable").text(" "); 
-					   
-                       //$("#id").val("");
-     
-                    }, 1000);
-                  }else{
-                    $("#Orderresultarea").text(data);
-					
-                 }
-				 //ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
- 
-	 
-    console.log(data);
-    //Perform ANy action after successfuly post data
-       
-  });
-  return false;     
+	var form_data = new FormData(document.getElementById(	"myProduction_order_receive"));
+	form_data.append("label", "WEBUPLOAD");
+	$.ajax({
+		url: "productionModule/productionOrderInsert",
+		type: "POST",
+		data: form_data,
+		processData: false,  // tell jQuery not to process the data
+		contentType: false   // tell jQuery not to set contentType
+	}).done(function( data ) {
+	if(data == 1 || data == 2){
+		if(data == 1)
+			var msg = "Data Successfully Add !";
+			else
+			var msg = "Data Successfully Updated !";
+			$("#Orderresultarea").text(msg);
+			setTimeout(function() {   //calls click event after a certain time
+			$("#modal-order").click();
+			$("#Orderresultarea").text(" "); 
+			$('#myProduction_order_receive')[0].reset(); 
+            }, 1000);
+            }else{
+            $("#Orderresultarea").text(data);
+            }
+			//ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
+			console.log(data);
+		});
+		return false;     
 }
 // ends
 
 function view_production_log(poid){
-	
-	
-    $.ajax({   
-	    type: "POST",  
+
+	$.ajax({   
+		type: "POST",  
 		url: "view_production_log_cont",  
 		cache:false,  
 		data: {'id':poid},  
 		success: function(data)  
 		{  
-		// /alert(data); 
-		// $("#loading").hide();  
-		 $("#view-production-log").empty().append(data).fadeIn();
-		//referesh table
+			$("#view-production-log").empty().append(data).fadeIn();
 		}   
 	});
 }
 
 
-/*
-window.onbeforeunload = function (e) {
-// Your logic to prepare for 'Stay on this Page' goes here 
 
-    return "Please click 'Stay on this Page' and we will give you candy";
-};
-*/
 </script>
-
