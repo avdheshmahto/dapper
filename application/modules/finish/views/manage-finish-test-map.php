@@ -221,21 +221,17 @@ function submitForm() {
 
 function submitFinishTest() {
 
-		var form_data = new FormData(document.getElementById("myformFinish"));
-		form_data.append("label", "WEBUPLOAD");
-		$.ajax({
-			url: "finish/insert_insepction",
-			type: "POST",
-			data: form_data,
-			processData: false,  // tell jQuery not to process the data
-			contentType: false   // tell jQuery not to set contentType
-			
+	var form_data = new FormData(document.getElementById("myformFinish"));
+	form_data.append("label", "WEBUPLOAD");
+	$.ajax({
+		url: "finish/insert_insepction",
+		type: "POST",
+		data: form_data,
+		processData: false,  // tell jQuery not to process the data
+		contentType: false   // tell jQuery not to set contentType
 		}).done(function( data ) {
-		alert(data);
 		if(data == 1 || data == 2){
-			;
 			if(data == 1)
-			
 				var msg = "Data Successfully Add !";
                 else
                 var msg = "Data Successfully Updated !";
@@ -2157,7 +2153,7 @@ function qtyVal(d)
 
 <script>
 function Order(viewId){
-
+	
 	var order_type=document.getElementById("order_type").innerHTML;
 	var lot_no=document.getElementById("lot_no").innerHTML;
  	$.ajax({   
@@ -2173,7 +2169,7 @@ function Order(viewId){
 }
 //starts order receive  query
 function submitProductionOrderReceive() {
-	var form_data = new FormData(document.getElementById(	"myProduction_order_receive"));
+	var form_data = new FormData(document.getElementById(			"myProduction_order_receive"));
 	form_data.append("label", "WEBUPLOAD");
 	$.ajax({
 		url: "productionModule/productionOrderInsert",
@@ -2202,21 +2198,17 @@ function submitProductionOrderReceive() {
 		return false;     
 }
 // ends
-
 function view_production_log(poid){
-
-	$.ajax({   
-		type: "POST",  
-		url: "view_production_log_cont",  
-		cache:false,  
-		data: {'id':poid},  
-		success: function(data)  
-		{  
-			$("#view-production-log").empty().append(data).fadeIn();
-		}   
+$.ajax({   
+	type: "POST",  
+	url: "view_production_log_cont",  
+	cache:false,  
+	data: {'id':poid},  
+	success: function(data)  
+	{  
+		$("#view-production-log").empty().append(data).fadeIn();
+	}   
 	});
 }
-
-
 
 </script>
