@@ -2221,7 +2221,13 @@ var rem_qty=document.getElementById("rem_qty").value;
 	if(Number(rem_qty)<Number(qty))
 	{
 		alert("Qty must less then remaning qty");	
+		document.getElementById("submit_btn").disabled = true;
 	}
+	else
+	{
+		document.getElementById("submit_btn").disabled = false;
+	}
+		
 }
 //ends
 

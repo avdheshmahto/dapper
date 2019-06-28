@@ -51,7 +51,7 @@ if($qty-$getRem->qty=='0')
 }
 else
 {?>
-<input type="submit" class="btn btn-sm" id="add_req" value="Save">
+<input type="submit" class="btn btn-sm" id="submit_btn" value="Save">
 <?php }?>
 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
 </div>   
