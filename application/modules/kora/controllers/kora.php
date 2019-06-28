@@ -293,6 +293,11 @@ public function print_repair_challan()
   $this->load->view("print-repair-challan",$data);
 }
 
+public function print_check_challan()
+{
+  $data=array('id' => $_GET['id']);
+  $this->load->view("print-check-challan",$data);
+}
 
 
 }
