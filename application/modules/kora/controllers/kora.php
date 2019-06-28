@@ -299,5 +299,11 @@ public function print_check_challan()
   $this->load->view("print-check-challan",$data);
 }
 
+public function print_grn_challan()
+{
+  $data=array('id' => $_GET['id']);
+  $this->load->view("print-grn-challan",$data);
+}
+
 
 }
