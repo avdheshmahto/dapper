@@ -1,7 +1,7 @@
 <?php
 $this->load->view("header.php");
 
-$scheQuery=$this->db->query("select *from tbl_job_work where id='".$_GET['id']."' ");
+$scheQuery=$this->db->query("select *from tbl_production_order_repair where repair_no='".$_GET['id']."' ");
 $getsched=$scheQuery->row();
 
 
@@ -1171,7 +1171,7 @@ else
 <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>&check_no=<?=$getPo->check_no;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
 
  
-  <a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
+  <a target="_blank" href="<?=base_url();?>kora/print_repair_challan?id=<?=$getPo->repair_no;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
 </th>
 <?php }?>
 
