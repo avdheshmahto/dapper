@@ -11,14 +11,13 @@ function __construct(){
 
 public function manage_stock()
 {
-$this->load->view('manage-stock');	
-	
+  $this->load->view('manage-stock');	
 }
 
 public function manage_inspection(){
 
-	if($this->session->userdata('is_logged_in')){
-		$data =  $this->manage_finishJoin();
+if($this->session->userdata('is_logged_in')){
+    $data =  $this->manage_finishJoin();
 		$this->load->view('manage-inspection',$data);
 	}
 	else
@@ -27,11 +26,11 @@ public function manage_inspection(){
 	}		
 }
 
-
 public function view_work_order(){
-
-$data=array(
-  'id' => $_GET['ID']);
+  $data=array(
+    'id' => $_GET['ID']
+  );
+  
   if($this->session->userdata('is_logged_in')){
    
     $this->load->view('view-work-order',$data);
@@ -42,37 +41,34 @@ $data=array(
   }   
 }
 
-
-
 public function order_transfer()
 {
-@extract($_POST);
-$data=array('id' => $id,
 
-  'order_type' => $order_type,
-  'lot_no' => $lot_no
+  @extract($_POST);
+  $data=array('id' => $id,
+    'order_type' => $order_type,
+    'lot_no' => $lot_no
 );
-$this->load->view("order-transfer",$data);
+  $this->load->view("order-transfer",$data);
 }
 
 public function view_transfer_order()
 {
 
-@extract($_POST);
-$data=array('id' => $id,
-
-  'order_type' => $order_type,
-  'lot_no' => $lot_no
-);
-$this->load->view("view-transfer-order",$data);
+  @extract($_POST);
+  $data=array('id' => $id,
+    'order_type' => $order_type,
+    'lot_no' => $lot_no
+  );
+  $this->load->view("view-transfer-order",$data);
 }
 
 public function manage_inspection_jobwork_map_details(){
 
 	if($this->session->userdata('is_logged_in')){
-		
+
 		$this->load->view('manage-inspection-jobwork-map-details');
-	}
+  }
 	else
 	{
 	redirect('index');
@@ -82,32 +78,27 @@ public function manage_inspection_jobwork_map_details(){
 
 public function order_details()
 {
-
-@extract($_POST);
-$data=array('id' => $id,
-
-	'order_type' => $order_type,
-	'lot_no' => $lot_no
+  @extract($_POST);
+  $data=array('id' => $id,
+  	'order_type' => $order_type,
+	 'lot_no' => $lot_no
 );
-$this->load->view("order-details",$data);
+  $this->load->view("order-details",$data);
 }
 
-
 public function getPart()
-
 {
-@extract($_POST);
-$data=array('id' => $shape,
-'production_id' => $production_id,
-);
-$this->load->view("getpartCode",$data);
+  @extract($_POST);
+  $data=array('id' => $shape,
+  'production_id' => $production_id,
+  );
+  $this->load->view("getpartCode",$data);
 
 }
 
 public function view_finish_order(){
-
   if($this->session->userdata('is_logged_in')){
-    $data=array(
+     $data=array(
       'id' =>$_POST['id']
     );
     $this->load->view('view-finish-order',$data);
@@ -117,7 +108,6 @@ public function view_finish_order(){
   redirect('index');
   }   
 }
-
 
 public function manage_inspection_map(){
 
@@ -279,6 +269,17 @@ public function productionOrderCheck()
 
 	 }
 	 echo "1";
+}
+
+public function test_order()
+{
+  @extract($_GET);
+  $data=array(
+        'p_id' => $_GET['ID'],
+        'qty' => $_GET['qty'],
+        'lot_no' => $_GET['lot_no'],
+  );
+  $this->load->view('view-inspection-test',$data);
 }
 
 }

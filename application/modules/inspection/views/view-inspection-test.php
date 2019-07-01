@@ -16,13 +16,14 @@ $getData=$queryData->row();
 <tr class="gradeA">
 <input type="hidden" name="lot_no" value="<?=$lot_no;?>">
 <input type="hidden" name="order_no" value="<?=$order_no;?>">
-<input type="hidden" name="type" value="Finish" />
+
+<input type="hidden" name="type" value="Inspection" />
 </tr>
 <tr class="gradeA">
 <th><input type="text" readonly="readonly"  value="<?=$qty;?>" class="form-control" /></th>
 <?php
 // this query is for geeting remaning qty
-$queryRem=$this->db->query("select SUM(qty) as qty from tbl_product_inspection where lot_no='$lot_no' and product_id='$p_id' and order_no='$order_no'");
+$queryRem=$this->db->query("select SUM(qty) as qty from tbl_product_inspection where lot_no='$lot_no' and product_id='$p_id' and order_no='$order_no' and type='Inspection'");
 $getRem=$queryRem->row();
 //
 ?>
@@ -65,7 +66,7 @@ else
 <th rowspan="2" >Description</th>
 </tr>
 <?php
-$testList=$this->db->query("select *from tbl_product_inspection where lot_no='$lot_no' and product_id='$p_id' and order_no='$order_no' and type='Finish'");
+$testList=$this->db->query("select *from tbl_product_inspection where lot_no='$lot_no' and product_id='$p_id' and order_no='$order_no'");
 foreach($testList->result() as $getList){
 ?>
 <tr class="gradeA">

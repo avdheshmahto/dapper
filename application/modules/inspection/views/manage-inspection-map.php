@@ -309,7 +309,7 @@ $getVendor=$queryVendor->row();
 </thead>
 <tbody>
 <?php
-$queryData=$this->db->query("select SUM(qty) as qty,fg_id,grn_date from tbl_assemble_fg where lot_no='".$_GET['id']."' group by fg_id");
+$queryData=$this->db->query("select SUM(qty) as qty,fg_id,grn_date,lot_no from tbl_assemble_fg where lot_no='".$_GET['id']."' group by fg_id");
 foreach($queryData->result() as $fetch_list)
 {
 //product query
@@ -322,7 +322,7 @@ $getProduct=$productQuery->row();
 <td><?=$fetch_list->grn_date;?></td>
 <td><?=$fetch_list->qty;?></td>
 <td>
-<button class="btn btn-default" onclick="viewWorkOrder(<?=$fetch_list->id;?>);" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
+<button class="btn btn-default" onclick="testOrder('<?=$getProduct->Product_id;?>','<?=$fetch_list->qty;?>','<?=$fetch_list->lot_no;?>');" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
 <a target="_blank" href="<?=base_url();?>productionModule/print_challan?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>	
 </td>
 </tr>
@@ -685,12 +685,15 @@ onsubmit="return submitorderTransferToModule();"method="POST">
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-<h4 class="modal-title">View Job Order Issue(Lot No.:-<?=$getsched->lot_no;?>)</h4>
+<h4 class="modal-title">Test Order(Lot No.:-<?=$getsched->lot_no;?>)</h4>
 <div id="resultarea" class="text-center " style="font-size: 15px;color: red;"></div> 
 </div>
 <div class="modal-body">
+<form name="myForm" class="form-horizontal" id ="myformFinish" action="#" 
+onsubmit="return submitFinishTest();" method="POST" enctype="multipart/form-datam">
 <div class="row" id="viewWork">
 </div>
+</form>
 </div>
 </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
@@ -1686,6 +1689,49 @@ function view_production_log(poid){
 		
 		}   
 	});
+}
+
+
+function testOrder(v,w,x){
+	var pro=v;
+	
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("GET", "<?=base_url();?>inspection/test_order?ID="+pro+"&qty="+w+"&lot_no="+x, false);
+	xhttp.send();
+	document.getElementById("viewWork").innerHTML = xhttp.responseText;
+}
+
+function submitFinishTest() {
+
+	var form_data = new FormData(document.getElementById("myformFinish"));
+	form_data.append("label", "WEBUPLOAD");
+	$.ajax({
+		url: "<?=base_url();?>finish/insert_insepction",
+		type: "POST",
+		data: form_data,
+		processData: false,  // tell jQuery not to process the data
+		contentType: false   // tell jQuery not to set contentType
+		}).done(function( data ) {
+		if(data == 1 || data == 2){
+			if(data == 1)
+				var msg = "Data Successfully Add !";
+                else
+                var msg = "Data Successfully Updated !";
+				$("#resultareaFinish").text(msg);
+				setTimeout(function() {   //calls click event after a certain time
+                $("#modal-3 .close").click();
+                $("#resultareaFinish").text(" "); 
+                $('#myformFinish')[0].reset(); 
+				//$("#quotationTable").text(" "); 
+				$("#id").val("");
+     		    }, 1000);
+                }else{
+                $("#resultareaFinish").text(data);
+			    }
+				
+				console.log(data);
+				});
+				return false;     
 }
 </script>
 

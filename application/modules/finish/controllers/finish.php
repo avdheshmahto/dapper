@@ -365,7 +365,8 @@ public function insert_insepction()
                 'product_id' => $p_id,
                 'qty' => $qty,
                 'check_point' => $check_point,
-                'description' => $description
+                'description' => $description,
+                'type' => $type
   );
   $sesio = array(
     'comp_id' => $this->session->userdata('comp_id'),
