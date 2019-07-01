@@ -305,5 +305,11 @@ public function print_grn_challan()
   $this->load->view("print-grn-challan",$data);
 }
 
+public function print_transfer_challan()
+{
+  $data=array('id' => $_GET['id']);
+  $this->load->view("print-transfer-challan",$data);
+}
+
 
 }
