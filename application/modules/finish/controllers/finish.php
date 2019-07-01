@@ -473,5 +473,10 @@ echo "1";
 
 }
 
+public function print_transfer_challan()
+{
+  $data=array('id' => $_GET['id']);
+  $this->load->view("print-transfer-challan",$data);
+}
 
 }

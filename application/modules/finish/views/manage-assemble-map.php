@@ -486,7 +486,7 @@ else
 <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
 <button class="btn btn-default" onclick="viewTransferOrder('<?=$getPo->transfer_no;?>');" data-toggle="modal" data-target="#modal-view-transfer" type="button" ><i class="fa fa-eye"></i></button>
 <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
-<a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
+<a target="_blank" href="<?=base_url();?>finish/print_transfer_challan?id=<?=$getPo->transfer_no;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
 </th>
 </tr>
 <?php }?>
