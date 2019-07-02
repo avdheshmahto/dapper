@@ -282,4 +282,11 @@ public function test_order()
   $this->load->view('view-inspection-test',$data);
 }
 
+public function print_test_order_challan()
+{
+
+$this->load->view("print-test-order-challan");
+
+}
+
 }
