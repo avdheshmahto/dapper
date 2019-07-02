@@ -411,6 +411,11 @@ window.close();
 
 } 
 
+public function manage_packing_map()
+{
 
+$this->load->view("manage-packing-map");
+
+}
 		
 }

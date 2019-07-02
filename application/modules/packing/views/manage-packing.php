@@ -70,7 +70,7 @@ echo $m >= $dataConfig['total']?$dataConfig['total']:$m;
 <form method="get">
 <tr>
 <td><input name="production_id"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-<td><input name="productname"  type="text"  class="search_box form-control input-sm"  value="" /></td>
+<td><input name="productname"  type="text"  class="search_box form-control input-sm"value="" /></td>
 <td><button type="submit" class="btn btn-sm" name="filter" value="filter"><span>Search</span></button></td>
 </tr>
 </form>
@@ -80,11 +80,11 @@ foreach($result as $sales)
 {
 ?>
 <tr class="gradeC record" >
-<th><?php echo $sales->lot_no;?></th>
+<th><a href="packing/manage_packing_map?id=<?=$sales->lot_no;?>"><?php echo $sales->lot_no;?></a></th>
 <th><?php echo $sales->maker_date;?></th>
 <th><button class="btn btn-default" style="display:none" onClick="openpopup('<?=base_url();?>production/edit_production',1400,600,'view',<?=$sales->productionid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-eye"></i></button>
 <button class="btn btn-default" style="display:none" onClick="openpopup('<?=base_url();?>production/edit_production',1400,600,'id',<?=$sales->productionid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-pencil"></i></button>
-	<button class="btn btn-default delbuttonpacking" id="<?php echo $sales->cutting_id."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button>
+<button class="btn btn-default delbuttonpacking" id="<?php echo $sales->cutting_id."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button>
 </th>
 </tr>
 <?php }  ?>
@@ -115,7 +115,6 @@ $this->load->view("footer.php");
 ?>
 <script>
 function exportTableToExcel(tableID, filename = ''){
-
     var downloadLink;
     var dataType = 'application/vnd.ms-excel';
     var tableSelect = document.getElementById(tableID);
