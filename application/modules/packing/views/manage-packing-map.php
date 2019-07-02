@@ -183,7 +183,7 @@ function ajex_JobWorkListData(production_id){
 <div class="panel panel-default____">
 <div class="panel-heading" style="background-color: #F5F5F5; color:#fff; border-color:#DDDDDD;">
 <h3 class="panel-title" style="float: initial;"><span style="color:#000;">Packing Details:-</span><?=$getsched->inboundid;?>
-<a href="<?=base_url();?>productionModule/manage_production" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
+<a href="<?=base_url();?>packing/manage_packing" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
 </h3>
 </div>
 <div class="panel-body" style="padding:15px 0px;">
@@ -223,20 +223,7 @@ $getIssueMat=$queryIssueMat->row();
 </div>
 </div>
 </div>
-<div class="row">
-<div class="col-xs-6 col-sm-6 col-md-6">
-<div class="form-group">
-<h4>Dispatch Date</h4>
-<input type="text" name="" class="form-control" value="<?php echo $obj->explode_date($getsched->edd);?>" readonly >
-</div>
-</div>
-<div class="col-xs-6 col-sm-6 col-md-6">
-<div class="form-group">
-<h4>&nbsp;</h4>
-&nbsp;
-</div>
-</div>
-</div>
+
 </div>
 </div>
 </div>
@@ -270,7 +257,7 @@ $getIssueMat=$queryIssueMat->row();
 </thead>
 <tbody>
 <?php
-$queryData=$this->db->query("select *from tbl_job_work where production_id='".$_GET['id']."' ");
+$queryData=$this->db->query("select *from tbl_product_inspection where lot_no='".$_GET['id']."' group by lot_no ");
 foreach($queryData->result() as $fetch_list)
 {
 ?>
