@@ -417,5 +417,14 @@ public function manage_packing_map()
 $this->load->view("manage-packing-map");
 
 }
+
+public function order_grn()
+{
+
+$this->load->view("order-grn");
+
+}
+
+
 		
 }

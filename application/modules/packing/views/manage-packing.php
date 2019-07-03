@@ -70,7 +70,7 @@ echo $m >= $dataConfig['total']?$dataConfig['total']:$m;
 <form method="get">
 <tr>
 <td><input name="production_id"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-<td><input name="productname"  type="text"  class="search_box form-control input-sm"value="" /></td>
+<td><input name="productname"  type="text"  class="search_box form-control input-sm"value=""  /></td>
 <td><button type="submit" class="btn btn-sm" name="filter" value="filter"><span>Search</span></button></td>
 </tr>
 </form>

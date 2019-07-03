@@ -130,24 +130,19 @@ function submitForm() {
 
 
 function Order_transfer(viewId){
-
-var order_type=document.getElementById("order_type").innerHTML;
-var lot_no=document.getElementById("lot_no").innerHTML;
-
- 	$.ajax({   
-		    type: "POST",  
-			url: "order_transfer",  
-			cache:false,  
-			data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},  
-			success: function(data)  
-			{  
-			  
-			 $("#orderTransfer").empty().append(data).fadeIn();
-			//referesh table
-			}   
+	
+	$.ajax({   
+		type: "POST",  
+		url: "order_grn",  
+		cache:false,  
+		data: {'id':viewId},  
+		success: function(data)  
+		{  
+			$("#orderTransfer").empty().append(data).fadeIn();
+			 //alert(data);
+		}   
 	});
-
- }
+}
 
 function viewWorkOrder(v){
 
@@ -247,40 +242,29 @@ $getIssueMat=$queryIssueMat->row();
 <table class="table table-striped table-bordered table-hover dataTables-example1" id="listingData">
 <thead>
 <tr>
-	<th>Order Type</th>
-	<th>Order no.</th>
-	<th>Vendor Name</th>
+	<th>ITEM NUMBER & DESCRIPTION</th>
 	<th>Date</th>
-	<th>Status</th>
+	<th>Qty.</th>
 	<th>Action</th>
 </tr>
 </thead>
 <tbody>
 <?php
-$queryData=$this->db->query("select *from tbl_product_inspection where lot_no='".$_GET['id']."' group by lot_no ");
+$queryData=$this->db->query("select *from tbl_product_inspection where lot_no='".$_GET['id']."' and type='Inspection' group by lot_no ");
 foreach($queryData->result() as $fetch_list)
 {
+//product query
+$productQuery=$this->db->query("select *from tbl_product_stock where Product_id='$fetch_list->product_id'");
+$getProduct=$productQuery->row();	
 ?>
 <tr class="gradeU record">
 <td>
-	<p style="display:none" id="lot_no"><?=$_GET['id'];?></p>
-	<p style="display:none" id="order_type"><?=$fetch_list->order_type;?></p>
-<a href="<?=base_url();?>productionModule/manage_jobwork_map_details?id=<?=$fetch_list->id;?>&&p_id=<?=$_GET['id'];?>"><?=$fetch_list->order_type;?></a>
-<button style="display:none" type="button" class="btn btn-default modalMapSpare" onclick="Order('<?=$fetch_list->job_order_no;?>');" data-toggle="modal" data-target="#modal-order"><?=$fetch_list->order_type;?></button></td>
+<a href="<?=base_url();?>inspection/manage_inspection_jobwork_map_details?id=<?=$getProduct->id;?>"> <?=$getProduct->sku_no;?>&<?=$getProduct->productname;?></a></td>
+<td><?=$fetch_list->maker_date;?></td>
+<td><?=$fetch_list->qty;?></td>
 <td>
-<?=$fetch_list->job_order_no;?></td>
-<?php 
-$sqlQueryMachineIdview=$this->db->query("select * from tbl_contact_m where contact_id ='$fetch_list->vendor_id'  and status = 'A' ");
-$getMachineIdview=$sqlQueryMachineIdview->row();
-?>
-<td><?=$getMachineIdview->first_name;?></td>
-<td><?=$fetch_list->date;?></td>
-<td>Pending</td>
-<td><?php $pri_col='id';
-$table_name='tbl_schedule_triggering';
-?>
-<button class="btn btn-default" onclick="viewWorkOrder(<?=$fetch_list->id;?>);" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>
-<a target="_blank" href="<?=base_url();?>productionModule/print_challan?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
+<button class="btn btn-default" onclick="testOrder('<?=$getProduct->Product_id;?>','<?=$fetch_list->qty;?>','<?=$fetch_list->lot_no;?>');" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
+<a target="_blank" href="<?=base_url();?>productionModule/print_challan?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>	
 </td>
 </tr>
 <?php  }?>
@@ -288,8 +272,6 @@ $table_name='tbl_schedule_triggering';
 <td>
 <button type="button" formid="#myform" id="formreset" class="btn btn-default modalMapSpare" data-toggle="modal" data-target="#modal-2"><img src="<?=base_url();?>assets/images/plus.png" /></button> 
 </td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
