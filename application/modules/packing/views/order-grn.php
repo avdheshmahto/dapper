@@ -1,5 +1,5 @@
 <?php
-$orderQuery=$this->db->query("select *from tbl_job_work where job_order_no='$id'");
+$orderQuery=$this->db->query("select *from tbl_assemble_fg where lot_no='$lot_no'");
 $getOrder=$orderQuery->row();
 ?>
 <div class="panel-body">
@@ -46,14 +46,14 @@ $getOrder=$orderQuery->row();
 	<tr>
 		<th class="tdcenter"> Sl No</th>
 		<th class="tdcenter">Item Number & Description</th>
-		<th class="tdcenter">UOM</th>
-		<th class="tdcenter">Ordered Qty</th>
-		<th class="tdcenter">Remaining Qty</th>
-		<th class="tdcenter">Receive Qty</th>
+        <th class="tdcenter">Item Number & Description</th>
+		<th class="tdcenter">Qty</th>
+		
 	</tr>
 </thead>
 <?php
-		$productQuery=$this->db->query("select *from tbl_job_work_log where job_order_no='$id'");
+		
+		$productQuery=$this->db->query("select *from tbl_product_inspection where lot_no='$lot_no' and type='Inspection' group by lot_no");
 		$i=1;
 		foreach($productQuery->result() as $getProduct){
 		####### get product #######
@@ -73,21 +73,37 @@ $getOrder=$orderQuery->row();
 ?>
 <tr class="gradeX odd" role="row">
 <td class="size-60 text-center sorting_1"><?=$i;?></td>
-<td><?=$getProductStock->sku_no;?>
-<input type="hidden"  name="productid[]" value="<?=$getProduct->part_id;?>" class="form-control">
-</td>
-<td><?=$getProductUOM->keyvalue;?></td>
+<td><select name="" class="form-control">
+<option value="">--select--</option>
 <?php
-$poLogQuery=$this->db->query("select D.qty as po_qty,SUM(M.qty) as mqty from tbl_quotation_purchase_order_dtl D,tbl_part_price_mapping M,tbl_machine MM where MM.machine_name = D.productid AND MM.id = M.machine_id AND D.purchaseid='$getHdr->po_no' and M.rowmatial='$getProduct->productid' AND M.type ='part'");
-$getPoQty=$poLogQuery->row();
-$inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_production_order_log where productid='$getProduct->part_id' AND job_order_id = '$lot_no' and order_no='$id'");
-$getInboundGRNLog=$inbountLogGRNLogQuery->row();
+$queryData=$this->db->query("select *from tbl_product_inspection where lot_no='$lot_no' and type='Inspection' group by lot_no ");
+foreach($queryData->result() as $fetch_list)
+{
+//product query
+$productQuery=$this->db->query("select *from tbl_product_stock where Product_id='$fetch_list->product_id'");
+$getProduct=$productQuery->row();	
 ?>
-<input type="hidden" min="0" name="ord_qty[]" value="<?=$getProduct->qty;?>" class="form-control">
-<input type="hidden" min="0" name="rm_qty[]" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" class="form-control">
-<td><?=$getProduct->qty;?></td>
-<input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" />
-<td><?php echo $reci_qty=$getProduct->qty-$getInboundGRNLog->rec_qty;?></td>
+<option value="<?=$getProduct->Product_id;?>"><?=$getProduct->productname;?></option>
+<?php
+}?>
+</select>
+</td>
+<td><select name="" class="form-control">
+<option value="">--select--</option>
+<?php
+$queryData=$this->db->query("select *from tbl_product_inspection where lot_no='$lot_no' and type='Inspection' group by lot_no ");
+foreach($queryData->result() as $fetch_list)
+{
+//product query
+$productQuery=$this->db->query("select *from tbl_product_stock where Product_id='$fetch_list->product_id'");
+$getProduct=$productQuery->row();	
+?>
+<option value="<?=$getProduct->Product_id;?>"><?=$getProduct->productname;?></option>
+<?php
+}?>
+</select>
+</td>
+<td><input type="text" class="form-control" /></td>
 </td>
 </tr>
 <?php 

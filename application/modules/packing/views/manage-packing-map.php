@@ -131,15 +131,16 @@ function submitForm() {
 
 function Order_transfer(viewId){
 	
+	var lot_no='<?=$_GET['id'];?>';
 	$.ajax({   
 		type: "POST",  
-		url: "order_grn",  
+		url: "<?=base_url('packing/order_grn');?>",  
 		cache:false,  
-		data: {'id':viewId},  
+		data: {'lot_no':lot_no},  
 		success: function(data)  
 		{  
 			$("#orderTransfer").empty().append(data).fadeIn();
-			 //alert(data);
+			// alert(data);
 		}   
 	});
 }
