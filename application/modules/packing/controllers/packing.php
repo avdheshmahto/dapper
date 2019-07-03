@@ -421,10 +421,12 @@ $this->load->view("manage-packing-map");
 public function order_grn()
 {
 
-$this->load->view("order-grn");
+$data=array(
+			'lot_no'=>$_POST['lot_no']
+);
+$this->load->view("order-grn",$data);
 
 }
-
 
 		
 }
