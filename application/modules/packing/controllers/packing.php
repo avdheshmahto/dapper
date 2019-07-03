@@ -428,5 +428,16 @@ $this->load->view("order-grn",$data);
 
 }
 
+public function order_fg_grn()
+{
+
+$data=array(
+			'lot_no'=>$_POST['lot_no']
+);
+$this->load->view("order-fg-grn",$data);
+
+}
+
+
 		
 }
