@@ -50,7 +50,7 @@ function getPartPo(v)
 //starts order repair  query
 
 function submitorderTransferToModule() {
-	var form_data = new FormData(document.getElementById("myProduction_order_transfer_to_module"));
+	var form_data = new FormData(document.getElementById(		"myProduction_order_transfer_to_module"));
 	form_data.append("label", "WEBUPLOAD");
 	$.ajax({
 		url: "<?=base_url();?>packing/transferToModule",
@@ -59,23 +59,21 @@ function submitorderTransferToModule() {
 		processData: false,  // tell jQuery not to process the data
 		contentType: false   // tell jQuery not to set contentType
 	}).done(function( data ) {
-		alert(data);
 	if(data == 1 || data == 2){
-		
-		if(data == 1)
-			var msg = "Data Successfully Add !";
-			else
-			var msg = "Data Successfully Updated !";
-			$("#OrderTransferToModuleresultarea").text(msg);
-			setTimeout(function() {   //calls click event after a certain time
-			$("#modal-order-repair").click();
-			$("#OrderTransferToModuleresultarea").text(" "); 
-			$('#myProduction_order_transfer_to_module')[0].reset(); 
-            }, 1000);
-            }else{
-            $("#OrderTransferToModuleresultarea").text(data);
-            }
-			console.log(data);
+	if(data == 1)
+		var msg = "Data Successfully Add !";
+		else
+		var msg = "Data Successfully Updated !";
+		$("#OrderTransferToModuleresultarea").text(msg);
+		setTimeout(function() {   //calls click event after a certain time
+		$("#modal-order-repair .close").click();
+		//$("#OrderTransferToModuleresultarea").text(" "); 
+		//$('#myProduction_order_transfer_to_module')[0].reset(); 
+        }, 1000);
+        }else{
+        $("#OrderTransferToModuleresultarea").text(data);
+        }
+		console.log(data);
 	});
 	return false;     
 }
@@ -84,49 +82,35 @@ function submitorderTransferToModule() {
 
 <script>
 function submitForm() {
-            
-  var form_data = new FormData(document.getElementById("myform"));
-  form_data.append("label", "WEBUPLOAD");
 
-  $.ajax({
-      url: "productionModule/insert_jobwork",
-      type: "POST",
-      data: form_data,
-      processData: false,  // tell jQuery not to process the data
-      contentType: false   // tell jQuery not to set contentType
-  }).done(function( data ) {
-	
-	
-	
-	  if(data == 1 || data == 2){
-		
-                      if(data == 1)
-					    
-                        var msg = "Data Successfully Add !";
-                      else
-                        var msg = "Data Successfully Updated !";
-						$("#resultarea").text(msg);
-						setTimeout(function() {   //calls click event after a certain time
-                       $("#modal-2 .close").click();
-                       $("#resultarea").text(" "); 
-                       $('#myform')[0].reset(); 
-					   $("#quotationTable").text(" "); 
-					   
-                       $("#id").val("");
-     
-                    }, 1000);
-                  }else{
-                    $("#resultarea").text(data);
-					
-                 }
-				 ajex_JobWorkListData(<?=$_GET['id'];?>);
- 
-	 
-    console.log(data);
-    //Perform ANy action after successfuly post data
-       
-  });
-  return false;     
+	var form_data = new FormData(document.getElementById("myform"));
+	form_data.append("label", "WEBUPLOAD");
+	$.ajax({
+		url: "productionModule/insert_jobwork",
+		type: "POST",
+		data: form_data,
+		processData: false,  // tell jQuery not to process the data
+		contentType: false   // tell jQuery not to set contentType
+	}).done(function( data ) {
+	if(data == 1 || data == 2){
+		if(data == 1)
+		var msg = "Data Successfully Add !";
+        else
+        var msg = "Data Successfully Updated !";
+		$("#resultarea").text(msg);
+		setTimeout(function() {   //calls click event after a certain time
+        $("#modal-2 .close").click();
+        $("#resultarea").text(" "); 
+        $('#myform')[0].reset(); 
+		$("#quotationTable").text(" "); 
+		}, 1000);
+        }else{
+        $("#resultarea").text(data);
+		}
+		ajex_JobWorkListData(<?=$_GET['id'];?>);
+		console.log(data);
+	});
+	return false;     
 }
 
 
@@ -284,56 +268,44 @@ $getProduct=$productQuery->row();
 <table class="table table-striped table-bordered table-hover dataTables-example1" id="listingAjexRequestRM">
 <thead>
 <tr>
-	<th style="width:150px;">Transfer No.</th>
-	<th>Date</th>
-	<th style="display:none">Status</th>
-    <th>Action</th>
+	<th style="width:150px;">Lot No.</th>
+    <th style="width:150px;">Grn No.</th>
+    <th style="width:150px;">Grn Date</th>
+    <th style="width:150px;">To FG</th>
+	<th style="width:150px;">From FG</th>
+    <th style="width:150px;">Qty.</th>
 </tr>
 </thead>
 <tbody>
 <?php
-$poquery=$this->db->query("select * from tbl_production_order_transfer_another_module where status='A' and lot_no='$getsched->lot_no' and module_name='Kora'  group by transfer_no desc");
+$poquery=$this->db->query("select * from tbl_product_transfer_to_packing ");
 foreach($poquery->result() as $getPo){
-?>
-<tr class="gradeC record">
-<th><?=$getPo->transfer_no;?></th>
-<th><?=$getPo->transfer_date;?></th>
-<?php
-$poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$getPo->inboundid'");
-$getQty=$poquery->row();
-// tbl_receive_matrial_grn_log query
-$poquerygrnLog=$this->db->query("select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->po_no'");
-$getQtygrnLog=$poquerygrnLog->row();
-?>
-<th style="display:none">
-<?php
-if($getQty->qty==$getQtygrnLog->qty)
-{
-	echo "Completed";
-}
-elseif($getQty->qty<$getQtygrnLog->qty)
-{
-	echo "Partial Completed";
-}
-else
-{
-	echo "Pending";
-}
+//to product query
+$toProductQuery=$this->db->query("select *from tbl_product_stock where Product_id='$getPo->to_fg'");	
+$getToProduct=$toProductQuery->row();	
+
+//from product query
+$frmProductQuery=$this->db->query("select *from tbl_product_stock where Product_id='$getPo->frm_fg'");	
+$getFrmProduct=$frmProductQuery->row();	
 
 ?>
-</th>
-<th>
-<input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
-<button class="btn btn-default" onclick="viewTransferOrder('<?=$getPo->transfer_no;?>');" data-toggle="modal" data-target="#modal-view-transfer" type="button" ><i class="fa fa-eye"></i></button>
-<a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
-<a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
-</th>
+<tr class="gradeC record">
+<th><?=$getPo->lot_no;?></th>
+<th><?=$getPo->grn_no;?></th>
+<th><?=$getPo->grn_date;?></th>
+<th><?=$getToProduct->productname;?></th>
+<th><?=$getFrmProduct->productname;?></th>
+<th><?=$getPo->qty;?></th>
 </tr>
 <?php }?>
 <tr class="gradeU">
 <td>
 <button style="display:none1" type="button" class="btn btn-default modalMapSpare" onclick="Order_transfer('<?=$getsched->lot_no;?>');" data-toggle="modal" data-target="#modal-order-transfer"><img src="<?=base_url();?>assets/images/plus.png" /></button>
 </td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr>
