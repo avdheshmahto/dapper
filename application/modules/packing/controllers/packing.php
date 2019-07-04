@@ -432,12 +432,32 @@ public function order_fg_grn()
 {
 
 $data=array(
-			'lot_no'=>$_POST['lot_no']
+	'lot_no'=> $_POST['lot_no']
 );
 $this->load->view("order-fg-grn",$data);
 
 }
 
-
+public function transferToModule()
+{
+	extract($_POST);
+	$table_name ='tbl_product_transfer_to_packing';
+	$this->load->model('Model_admin_login');
+    $data_dtl=array(
+	'lot_no'		=> $lot_no,
+	'grn_no' => $grn_no,
+	'grn_date' => $grn_date,
+	'to_fg' => $to_fg,
+	'frm_fg' => $frm_fg,
+	'qty' => $qty,
+	'maker_id'			=> $this->session->userdata('user_id'),
+	'maker_date'		=> date('y-m-d'),
+	'comp_id'			=> $this->session->userdata('comp_id'),
+	'zone_id'			=> $this->session->userdata('zone_id'),
+	'brnh_id'			=> $this->session->userdata('brnh_id')
+	);
+	$this->Model_admin_login->insert_user($table_name,$data_dtl);
+	echo "1";
+}
 		
 }
