@@ -131,6 +131,23 @@ function Order_transfer(viewId){
 	});
 }
 
+function Order_packing(viewId){
+
+var lot_no='<?=$_GET['id'];?>';
+	$.ajax({   
+		type: "POST",  
+		url: "<?=base_url('packing/order_packing_grn');?>",  
+		cache:false,  
+		data: {'lot_no':lot_no},  
+		success: function(data)  
+		{  
+			$("#orderPacking").empty().append(data).fadeIn();
+			// alert(data);
+		}   
+	});
+}
+
+
 function viewWorkOrder(v){
 
 	var pro=v;
@@ -213,14 +230,9 @@ $getIssueMat=$queryIssueMat->row();
 <div class="tabs-container">
 <ul class="nav nav-tabs">
 <li class="active"><a href="#home" data-toggle="tab">Order</a></li>
-<li style="display:none1;"><a href="#Transfer" data-toggle="tab">Transfer</a></li>
 <li style="display:none;" ><a href="#receiveJobWork" data-toggle="tab">Transfer</a></li>
-<li style="display:none;"><a href="#store" data-toggle="tab">Join</a></li>
-<li style="display:none1;"><a href="#store" data-toggle="tab">Stock</a></li>
-<li style="display:none;"><a href="#PurchaseGRN" data-toggle="tab">Purchase GRN</a></li>
-<li style="display:none" class=""><a href="#four" data-toggle="tab">Request Raw Material</a></li>
-<li style="display:none" class=""><a href="#receiveRaw" data-toggle="tab">Receive Raw Material</a></li>
-<li style="display:none" class=""><a href="#work_order" data-toggle="tab">Transfer to Module</a></li>
+<li><a href="#packing" data-toggle="tab">Packing</a></li>
+<li><a href="#store" data-toggle="tab">Stock</a></li>
 </ul>
 <div class="tab-content">
 <div class="tab-pane  active" id="home">
@@ -305,6 +317,57 @@ $getFrmProduct=$frmProductQuery->row();
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+
+</tr>
+</tbody>
+<tfoot>
+</tfoot>
+</table>
+</div>
+</div>
+</div>
+<!-- ends -->
+
+<!-- packing starts here -->
+
+<div class="tab-pane" id="packing">
+<div class="panel-body">
+<div class="table-responsive">
+<table class="table table-striped table-bordered table-hover dataTables-example1" id="listingAjexRequestRM">
+<thead>
+<tr>
+<th style="width:150px;">Lot No.</th>
+<th style="width:150px;">Grn No.</th>
+<th style="width:150px;">Grn Date</th>
+<th style="width:150px;">Action</th>
+</tr>
+</thead>
+<tbody>
+<?php
+$poquery=$this->db->query("select * from tbl_product_transfer_to_packing ");
+foreach($poquery->result() as $getPo){
+//to product query
+$toProductQuery=$this->db->query("select *from tbl_product_stock where Product_id='$getPo->to_fg'");	
+$getToProduct=$toProductQuery->row();	
+
+//from product query
+$frmProductQuery=$this->db->query("select *from tbl_product_stock where Product_id='$getPo->frm_fg'");	
+$getFrmProduct=$frmProductQuery->row();	
+
+?>
+<tr class="gradeC record">
+<th><?=$getPo->lot_no;?></th>
+<th><?=$getPo->grn_no;?></th>
+<th><?=$getPo->grn_date;?></th>
+<th><button class="btn btn-default" onclick="itemOrder('<?=$getProduct->Product_id;?>','<?=$fetch_list->qty;?>','<?=$fetch_list->lot_no;?>');" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button> </th>
+</tr>
+<?php }?>
+<tr class="gradeU">
+<td>
+<button  type="button" class="btn btn-default modalMapSpare" onclick="Order_packing('<?=$getsched->lot_no;?>');" data-toggle="modal" data-target="#modal-order-packing"><img src="<?=base_url();?>assets/images/plus.png" /></button>
+</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
@@ -639,6 +702,26 @@ $rowmatrialuom = $uom->row();
 <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_order_transfer_to_module" action="#" 
 onsubmit="return submitorderTransferToModule();"method="POST">
 <div class="row" id="orderTransfer">
+</div>
+</form>
+</div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div>
+</div>
+<!-- ends -->
+<!-- packing -->
+<div id="modal-order-packing" class="modal fade" tabindex="-1" role="dialog">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<h4 class="modal-title">Order Packing(Lot No.:-<?=$getsched->lot_no;?>)</h4>
+<div id="OrderTransferToModuleresultarea" class="text-center " style="font-size: 15px;color: red;"></div> 
+<div class="modal-body">
+<form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_order_transfer_to_module" action="#" 
+onsubmit="return submitorderTransferToModule();"method="POST">
+<div class="row" id="orderPacking">
 </div>
 </form>
 </div>

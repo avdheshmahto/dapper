@@ -459,5 +459,11 @@ public function transferToModule()
 	$this->Model_admin_login->insert_user($table_name,$data_dtl);
 	echo "1";
 }
-		
+
+public function order_packing_grn()
+{
+
+	$this->load->view("order-packing-grn");
+
+}		
 }
