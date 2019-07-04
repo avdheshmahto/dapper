@@ -7,23 +7,7 @@ $getOrder=$orderQuery->row();
 <div class="col-lg-12">
 <div class="panel panel-default">
 <div class="panel-body">
-<div class="form-group">
-<div class="col-sm-6">
-<input type="hidden" name="grn_type" value="<?=$getOrder->order_type;?>" />
-<input type="hidden" name="job_order_id" value="<?=$getOrder->id;?>" />
-<input type="hidden" name="vendor_id" value="<?=$getOrder->vendor_id;?>" />
-<label for="po_order">Order No.:</label>
-<input type="hidden" name="lot_no" value="<?=$getOrder->lot_no;?>" />
-<input type="hidden" name="order_type" value="<?=$order_type;?>" />
-<input type="hidden" name="request_no" value="<?=$getHdr->request_no?>" />
-<input type="hidden" name="req_production_id" value="<?=$po_no;?>" />
-<input type="text" name="order_no"  class="form-control" value="<?=$getOrder->job_order_no;?>" readonly="readonly" required />
-</div>
-<div class="col-sm-6" id="invoiceId" >
-<label for="po_order">Order Date:</label>
-<input type="text" name="invoice_no"  class="form-control" value="<?=$getOrder->date;?>" readonly="readonly" required />
-</div>
-</div>
+
 <div class="form-group">
 <div class="col-sm-6">
 <label for="po_order">GRN No.:</label>
@@ -47,7 +31,8 @@ $getOrder=$orderQuery->row();
 		<th class="tdcenter"> Sl No</th>
 		<th class="tdcenter">Item Number & Description</th>
         <th class="tdcenter">Item Number & Description</th>
-		<th class="tdcenter">Qty</th>
+        <th class="tdcenter">Remaining Qty</th>
+		<th class="tdcenter">Enter Qty</th>
 		
 	</tr>
 </thead>
@@ -73,10 +58,28 @@ $getOrder=$orderQuery->row();
 ?>
 <tr class="gradeX odd" role="row">
 <td class="size-60 text-center sorting_1"><?=$i;?></td>
+<td>
+<select name="" class="form-control">
+<option value="">--select--</option>
+<?php
+$queryData=$this->db->query("select *from tbl_product_inspection where lot_no='$lot_no' and type='Inspection' ");
+foreach($queryData->result() as $fetch_list)
+{
+//product query
+$productQuery=$this->db->query("select *from tbl_product_stock where Product_id='$fetch_list->product_id'");
+$getProduct=$productQuery->row();	
+?>
+<option value="<?=$getProduct->Product_id;?>"><?=$getProduct->productname;?></option>
+<?php
+}
+
+?>
+</select>
+</td>
 <td><select name="" class="form-control">
 <option value="">--select--</option>
 <?php
-$queryData=$this->db->query("select *from tbl_product_inspection where lot_no='$lot_no' and type='Inspection' group by lot_no ");
+$queryData=$this->db->query("select *from tbl_product_inspection where lot_no='$lot_no' and type='Inspection' ");
 foreach($queryData->result() as $fetch_list)
 {
 //product query
@@ -88,21 +91,7 @@ $getProduct=$productQuery->row();
 }?>
 </select>
 </td>
-<td><select name="" class="form-control">
-<option value="">--select--</option>
-<?php
-$queryData=$this->db->query("select *from tbl_product_inspection where lot_no='$lot_no' and type='Inspection' group by lot_no ");
-foreach($queryData->result() as $fetch_list)
-{
-//product query
-$productQuery=$this->db->query("select *from tbl_product_stock where Product_id='$fetch_list->product_id'");
-$getProduct=$productQuery->row();	
-?>
-<option value="<?=$getProduct->Product_id;?>"><?=$getProduct->productname;?></option>
-<?php
-}?>
-</select>
-</td>
+<td><input type="text"  class="form-control" value="<?=$fetch_list->qty;?>" /></td>
 <td><input type="text" class="form-control" /></td>
 </td>
 </tr>

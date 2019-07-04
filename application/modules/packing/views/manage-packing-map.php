@@ -53,13 +53,15 @@ function submitorderTransferToModule() {
 	var form_data = new FormData(document.getElementById("myProduction_order_transfer_to_module"));
 	form_data.append("label", "WEBUPLOAD");
 	$.ajax({
-		url: "productionModule/productionOrderTransferToModule",
+		url: "<?=base_url();?>packing/transferToModule",
 		type: "POST",
 		data: form_data,
 		processData: false,  // tell jQuery not to process the data
 		contentType: false   // tell jQuery not to set contentType
 	}).done(function( data ) {
+		alert(data);
 	if(data == 1 || data == 2){
+		
 		if(data == 1)
 			var msg = "Data Successfully Add !";
 			else
@@ -251,7 +253,7 @@ $getIssueMat=$queryIssueMat->row();
 </thead>
 <tbody>
 <?php
-$queryData=$this->db->query("select *from tbl_product_inspection where lot_no='".$_GET['id']."' and type='Inspection' group by lot_no ");
+$queryData=$this->db->query("select *from tbl_product_inspection where lot_no='".$_GET['id']."' and type='Inspection'  ");
 foreach($queryData->result() as $fetch_list)
 {
 //product query
@@ -259,24 +261,15 @@ $productQuery=$this->db->query("select *from tbl_product_stock where Product_id=
 $getProduct=$productQuery->row();	
 ?>
 <tr class="gradeU record">
-<td>
-<a href="<?=base_url();?>inspection/manage_inspection_jobwork_map_details?id=<?=$getProduct->id;?>"> <?=$getProduct->sku_no;?>&<?=$getProduct->productname;?></a></td>
+<td><?=$getProduct->sku_no;?>&<?=$getProduct->productname;?></td>
 <td><?=$fetch_list->maker_date;?></td>
 <td><?=$fetch_list->qty;?></td>
 <td>
-<button class="btn btn-default" onclick="testOrder('<?=$getProduct->Product_id;?>','<?=$fetch_list->qty;?>','<?=$fetch_list->lot_no;?>');" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
-<a target="_blank" href="<?=base_url();?>productionModule/print_challan?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>	
+<button class="btn btn-default" onclick="itemOrder('<?=$getProduct->Product_id;?>','<?=$fetch_list->qty;?>','<?=$fetch_list->lot_no;?>');" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
 </td>
 </tr>
 <?php  }?>
-<tr class="gradeU">
-<td>
-<button type="button" formid="#myform" id="formreset" class="btn btn-default modalMapSpare" data-toggle="modal" data-target="#modal-2"><img src="<?=base_url();?>assets/images/plus.png" /></button> 
-</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
+
 </tbody>
 <tfoot>
 </tfoot>
@@ -688,11 +681,13 @@ onsubmit="return submitorderTransferToModule();"method="POST">
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-<h4 class="modal-title">View Job Order Issue(Lot No.:-<?=$getsched->lot_no;?>)</h4>
+<h4 class="modal-title">Order Issue(Lot No.:-
+  <?=$getsched->lot_no;?>)</h4>
 <div id="resultarea" class="text-center " style="font-size: 15px;color: red;"></div> 
 </div>
 <div class="modal-body">
 <div class="row" id="viewWork">
+
 </div>
 </div>
 </div><!-- /.modal-content -->
@@ -1747,5 +1742,19 @@ function view_production_log(poid){
 	});
 }
 
+
+function itemOrder(p,q,l){
+
+$.ajax({   
+	type: "POST",  
+	url: "<?=base_url('packing/order_fg_grn');?>",  
+	cache:false,  
+	data: {'p_id':p,'qty':q,'lot_no':l},  
+	success: function(data)  
+	{  
+		$("#viewWork").empty().append(data).fadeIn();
+	}   
+});
+}
 </script>
 
