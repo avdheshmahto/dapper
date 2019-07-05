@@ -290,7 +290,7 @@ $getProduct=$productQuery->row();
 </thead>
 <tbody>
 <?php
-$poquery=$this->db->query("select * from tbl_product_transfer_to_packing ");
+$poquery=$this->db->query("select * from tbl_product_transfer_to_packing where lot_no='".$_GET['id']."' ");
 foreach($poquery->result() as $getPo){
 //to product query
 $toProductQuery=$this->db->query("select *from tbl_product_stock where Product_id='$getPo->to_fg'");	
@@ -346,7 +346,7 @@ $getFrmProduct=$frmProductQuery->row();
 </thead>
 <tbody>
 <?php
-$poquery=$this->db->query("select * from tbl_product_transfer_to_packing ");
+$poquery=$this->db->query("select * from tbl_product_transfer_to_packing where lot_no='".$_GET['id']."' ");
 foreach($poquery->result() as $getPo){
 //to product query
 $toProductQuery=$this->db->query("select *from tbl_product_stock where Product_id='$getPo->to_fg'");	
