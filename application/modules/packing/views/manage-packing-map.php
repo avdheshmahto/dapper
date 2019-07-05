@@ -230,7 +230,7 @@ $getIssueMat=$queryIssueMat->row();
 <div class="tabs-container">
 <ul class="nav nav-tabs">
 <li class="active"><a href="#home" data-toggle="tab">Order</a></li>
-<li style="display:none;" ><a href="#receiveJobWork" data-toggle="tab">Transfer</a></li>
+<li ><a href="#Transfer" data-toggle="tab">Transfer</a></li>
 <li><a href="#packing" data-toggle="tab">Packing</a></li>
 <li><a href="#store" data-toggle="tab">Stock</a></li>
 </ul>

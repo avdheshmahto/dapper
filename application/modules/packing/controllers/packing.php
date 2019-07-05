@@ -463,7 +463,10 @@ public function transferToModule()
 public function order_packing_grn()
 {
 
-	$this->load->view("order-packing-grn");
+	$data=array(
+		'lot_no' => $_POST['lot_no']
+	);
+	$this->load->view("order-packing-grn",$data);
 
 }		
 }
