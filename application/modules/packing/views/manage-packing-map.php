@@ -78,6 +78,38 @@ function submitorderTransferToModule() {
 	return false;     
 }
 // ends
+
+//starts order packing  query
+
+function submitOrderPacking() {
+alert();
+	var form_data = new FormData(document.getElementById(				"OrderPacking"));
+	form_data.append("label", "WEBUPLOAD");
+	$.ajax({
+		url: "<?=base_url();?>packing/transferToModule",
+		type: "POST",
+		data: form_data,
+		processData: false,  // tell jQuery not to process the data
+		contentType: false   // tell jQuery not to set contentType
+	}).done(function( data ) {
+	if(data == 1 || data == 2){
+	if(data == 1)
+		var msg = "Data Successfully Add !";
+		else
+		var msg = "Data Successfully Updated !";
+		$("#OrderTransferToModuleresultarea").text(msg);
+		setTimeout(function() {   //calls click event after a certain time
+		$("#modal-order-repair .close").click();
+	    }, 1000);
+        }else{
+        $("#OrderTransferToModuleresultarea").text(data);
+        }
+		console.log(data);
+	});
+	return false;     
+}
+// ends
+
 </script>
 
 <script>
@@ -719,8 +751,8 @@ onsubmit="return submitorderTransferToModule();"method="POST">
 <h4 class="modal-title">Order Packing(Lot No.:-<?=$getsched->lot_no;?>)</h4>
 <div id="OrderTransferToModuleresultarea" class="text-center " style="font-size: 15px;color: red;"></div> 
 <div class="modal-body">
-<form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_order_transfer_to_module" action="#" 
-onsubmit="return submitorderTransferToModule();"method="POST">
+<form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="OrderPacking" action="#" 
+onsubmit="return submitOrderPacking();"method="POST">
 <div class="row" id="orderPacking">
 </div>
 </form>
