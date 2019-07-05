@@ -31,6 +31,7 @@ $getOrder=$orderQuery->row();
 		<th class="tdcenter">Item Number & Description</th>
         <th class="tdcenter">Remaining Qty</th>
 		<th class="tdcenter">Enter Qty</th>
+        <th class="tdcenter">Packing Qty</th>
 		
 	</tr>
 </thead>
@@ -60,7 +61,8 @@ $getOrder=$orderQuery->row();
 <?=$getProductStock->sku_no;?>&<?=$getProductStock->productname;?>
 </td>
 <td><input type="text" readonly="readonly"  class="form-control" value="<?=$getProduct->qty;?>" /></td>
-<td><input type="text" class="form-control" /></td>
+<td><input type="text" name="qty[]" class="form-control" /></td>
+<td><input type="text" name="packing_qty[]" class="form-control" /></td>
 </td>
 </tr>
 <?php 

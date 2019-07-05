@@ -11,6 +11,7 @@ $getOrder=$orderQuery->row();
 <div class="form-group">
 <div class="col-sm-6">
 <label for="po_order">GRN No.:</label>
+<input type="hidden" name="lot_no"  class="form-control" value="<?=$lot_no;?>"  required />
 <input type="text" name="grn_no"  class="form-control" value="<?=$getOrder->order_receive_date;?>"  required />
 </div>
 <div class="col-sm-6" id="invoiceId" >
@@ -59,7 +60,7 @@ $getOrder=$orderQuery->row();
 <tr class="gradeX odd" role="row">
 <td class="size-60 text-center sorting_1"><?=$i;?></td>
 <td>
-<select name="" class="form-control">
+<select name="to_fg" class="form-control">
 <option value="">--select--</option>
 <?php
 $queryData=$this->db->query("select *from tbl_product_inspection where lot_no='$lot_no' and type='Inspection' ");
@@ -76,7 +77,7 @@ $getProduct=$productQuery->row();
 ?>
 </select>
 </td>
-<td><select name="" class="form-control">
+<td><select name="frm_fg" class="form-control">
 <option value="">--select--</option>
 <?php
 $queryData=$this->db->query("select *from tbl_product_inspection where lot_no='$lot_no' and type='Inspection' ");
@@ -92,7 +93,7 @@ $getProduct=$productQuery->row();
 </select>
 </td>
 <td><input type="text"  class="form-control" value="<?=$fetch_list->qty;?>" /></td>
-<td><input type="text" class="form-control" /></td>
+<td><input type="text" class="form-control" name="qty" /></td>
 </td>
 </tr>
 <?php 
