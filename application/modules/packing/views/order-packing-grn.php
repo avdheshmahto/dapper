@@ -58,6 +58,10 @@ $getOrder=$orderQuery->row();
 <tr class="gradeX odd" role="row">
 <td class="size-60 text-center sorting_1"><?=$i;?></td>
 <td>
+<input type="hidden" name="productid[]" value="<?=$getProductStock->Product_id;?>" class="form-control" />
+
+<input type="hidden" name="lot_no" value="<?=$lot_no;?>" class="form-control" />
+
 <?=$getProductStock->sku_no;?>&<?=$getProductStock->productname;?>
 </td>
 <td><input type="text" readonly="readonly"  class="form-control" value="<?=$getProduct->qty;?>" /></td>

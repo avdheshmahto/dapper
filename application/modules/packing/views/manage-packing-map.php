@@ -82,16 +82,17 @@ function submitorderTransferToModule() {
 //starts order packing  query
 
 function submitOrderPacking() {
-alert();
+
 	var form_data = new FormData(document.getElementById(				"OrderPacking"));
 	form_data.append("label", "WEBUPLOAD");
 	$.ajax({
-		url: "<?=base_url();?>packing/transferToModule",
+		url: "<?=base_url();?>packing/insert_packing",
 		type: "POST",
 		data: form_data,
 		processData: false,  // tell jQuery not to process the data
 		contentType: false   // tell jQuery not to set contentType
 	}).done(function( data ) {
+		alert(data);
 	if(data == 1 || data == 2){
 	if(data == 1)
 		var msg = "Data Successfully Add !";
