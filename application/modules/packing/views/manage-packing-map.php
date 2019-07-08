@@ -145,8 +145,6 @@ function submitForm() {
 	return false;     
 }
 
-
-
 function Order_transfer(viewId){
 	
 	var lot_no='<?=$_GET['id'];?>';
@@ -178,7 +176,6 @@ var lot_no='<?=$_GET['id'];?>';
 		}   
 	});
 }
-
 
 function viewWorkOrder(v){
 
@@ -254,7 +251,6 @@ $getIssueMat=$queryIssueMat->row();
 </div>
 </div>
 </div>
-
 </div>
 </div>
 </div>
@@ -297,7 +293,6 @@ $getProduct=$productQuery->row();
 </td>
 </tr>
 <?php  }?>
-
 </tbody>
 <tfoot>
 </tfoot>
@@ -331,7 +326,6 @@ $getToProduct=$toProductQuery->row();
 //from product query
 $frmProductQuery=$this->db->query("select *from tbl_product_stock where Product_id='$getPo->frm_fg'");	
 $getFrmProduct=$frmProductQuery->row();	
-
 ?>
 <tr class="gradeC record">
 <th><?=$getPo->lot_no;?></th>
@@ -351,7 +345,6 @@ $getFrmProduct=$frmProductQuery->row();
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
-
 </tr>
 </tbody>
 <tfoot>
@@ -361,9 +354,7 @@ $getFrmProduct=$frmProductQuery->row();
 </div>
 </div>
 <!-- ends -->
-
 <!-- packing starts here -->
-
 <div class="tab-pane" id="packing">
 <div class="panel-body">
 <div class="table-responsive">
@@ -387,7 +378,6 @@ $getToProduct=$toProductQuery->row();
 //from product query
 $frmProductQuery=$this->db->query("select *from tbl_product_stock where Product_id='$getPo->frm_fg'");	
 $getFrmProduct=$frmProductQuery->row();	
-
 ?>
 <tr class="gradeC record">
 <th><?=$getPo->lot_no;?></th>
@@ -470,14 +460,11 @@ $issueMat=$this->db->query("select *from tbl_issuematrial_dtl where productid='$
 $getIssueMat=$issueMat->row();
 ?>
 <th><?=$getIssueMat->receive_qty;?></th>
-
 <!-- <th class="bs-example">
 <?php if($view!=''){ ?>
 <button class="btn btn-default" property="view" arrt= '<?=json_encode($fetch_list);?>' onclick ="editItem(this);" type="button" data-toggle="modal" data-target="#modal-0" data-backdrop='static' data-keyboard='false'> <i class="fa fa-eye"></i></button>
-
 <?php } if($edit!=''){ ?>
 <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#modal-0" arrt= '<?=json_encode($fetch_list);?>' onclick="editItem(this)"><i class="icon-pencil"></i></button>
-
 <?php }
 $pri_col='Product_id';
 $table_name='tbl_product_stock';
@@ -587,7 +574,6 @@ try {
 .c-error input, .c-error select{ 
   border: 1px solid #c51244 !important; 
 }
-
 </style>
 <!--Large Modal-->
 <div id="modal-2" class="modal fade" tabindex="-1" role="dialog">
@@ -769,12 +755,11 @@ onsubmit="return submitOrderPacking();"method="POST">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 <h4 class="modal-title">Order Issue(Lot No.:-
-  <?=$getsched->lot_no;?>)</h4>
+<?=$getsched->lot_no;?>)</h4>
 <div id="resultarea" class="text-center " style="font-size: 15px;color: red;"></div> 
 </div>
 <div class="modal-body">
 <div class="row" id="viewWork">
-
 </div>
 </div>
 </div><!-- /.modal-content -->
@@ -1182,7 +1167,6 @@ onsubmit="return submitProductionPurchaseGrn();"method="POST">
 <select name="vendor_id" class="form-control" onchange="getPo(this.value);" >
 	<option value="">----Select Vendor----</option>
 <?php
-
 $vendorQuery=$this->db->query("select *from tbl_contact_m where group_name='5'");
 foreach($vendorQuery->result() as $getVendor){
 ?>
@@ -1290,7 +1274,6 @@ function submitProductionPurchase() {
 }
 // ends
 //starts request raw Material query
-
 function submitRequestRawMat() {
 
 	var form_data = new FormData(document.getElementById("requestRawMat"));
@@ -1324,7 +1307,6 @@ function submitRequestRawMat() {
 // ends
 
 //starts production purchase Grn  query
-
 function submitProductionPurchaseGrn() {
 	var form_data = new FormData(document.getElementById("myProduction_purchase_grn"));
 	form_data.append("label", "WEBUPLOAD");
@@ -1355,7 +1337,6 @@ function submitProductionPurchaseGrn() {
 		return false;     
 }
 // ends
-
 function ajex_PurchaseListData(production_id){
 
   ur = "<?=base_url('productionModule/getPurchaseOrder');?>";
@@ -1438,8 +1419,6 @@ xhttp.send();
  document.getElementById("viewRequest").innerHTML = xhttp.responseText;
 }
 
-
-
 function viewTransferOrder(v){
 	
 var pro=v;
@@ -1448,8 +1427,6 @@ xhttp.open("GET", "productionModule/view_transfer_order?ID="+pro, false);
 xhttp.send();
  document.getElementById("viewTransferDiv").innerHTML = xhttp.responseText;
 }
-
-
 
 function val(d)
 {
@@ -1492,7 +1469,6 @@ var rate=document.getElementById("rate"+asx).value;
 totalRMRate=Number(total_weight)*Number(rate);
 document.getElementById("total_rm_rate"+asx).value=totalRMRate;
 document.getElementById("total_cost"+asx).value=totalRMRate;
-
 
 }
 
@@ -1600,7 +1576,6 @@ function selectListdata(ths){
 
   }
 
-
 function selectListdataPurchase(ths){
 
   	 
@@ -1615,7 +1590,6 @@ function selectListdataPurchase(ths){
      $("#Umuom").attr('disabled',true);
 
   }
-
 
 function getPo(v)
 {
@@ -1681,7 +1655,6 @@ var po_no=document.getElementById("p_n").value;
 }
 
 //starts receive raw Material query
-
 function submitrawMaterialReceive() {
        
 	var form_data = new FormData(document.getElementById("rawMaterialReceive"));
@@ -1829,7 +1802,6 @@ function view_production_log(poid){
 	});
 }
 
-
 function itemOrder(p,q,l){
 
 $.ajax({   
@@ -1850,10 +1822,10 @@ function calPacking(v)
 	var myarra = zz.split("qty");
 	var asx= myarra[1];
 	var qty=document.getElementById("qty"+asx).value;
-	var sets=document.getElementById("sets"+asx).innerHTML;	
+	var sets=document.getElementById("sets"+asx).value;	
 	var packingVal=Number(qty)/Number(sets);
 	var packingData=packingVal.toString().split(".")[0];
 	document.getElementById("packing_qty"+asx).value=packingData;
-	}
+}
 </script>
 
