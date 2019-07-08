@@ -73,64 +73,6 @@ public function edit_packing(){
 	}		
 }
 
-	
-public function insert_packing(){
-	@extract($_POST);
-	$table_name     = 'tbl_packing';
-	$pri_col        = 'packing_id';
-	$table_name_log ='tbl_production_log';
-	$pri_col_log    = 'production_log_id';
-	$status         = 'Packing';
-    $table_name_stock = 'tbl_product_stock';
-			
-	$data = array(
-			     'cutting_id'=> $this->input->post('cutting_id'),
-				 'finishProductId'=>$this->input->post('finishProduct'),
-				 'customer_name'=>$this->input->post('contact_id'),	
-				 'production_status'=>$status,			 
-				 'qty'=>$this->input->post('qty'),
-				 'date'=>$this->input->post('date'),
-				 'maker_id'=>$this->session->userdata('user_id'),
-				 'maker_date'=>date('y-m-d'),
-				 'comp_id'=>$this->session->userdata('comp_id'),
-				 'zone_id'=>$this->session->userdata('zone_id'),
-				 'brnh_id'=>$this->session->userdata('brnh_id'),
-				 );
-
-                //$this->load->Model_admin_login->insert_user($table_name,$data);
-				$this->load->model('Model_admin_login');
-				if($packing_id==''){	
-		    	$this->Model_admin_login->insert_user($table_name,$data);
-				$lastid=$this->db->insert_id();	
-			    }else{
-				$lastid=$packing_id;
-				$this->db->query("update $table_name set qty=qty+'$qty', date='$date' where packing_id='$lastid'");	
-			}	
-			
-            $datalog = array(
-			     'packing_id'=> $lastid,
-				 'finishProductId'=>$this->input->post('finishProduct'),
-				 'customer_name'=>$this->input->post('contact_id'),	
-				 'production_status'=>$status,			 
-				 'qty'=>$this->input->post('qty'),
-				 'date'=>$this->input->post('date'),
-				 'maker_id'=>$this->session->userdata('user_id'),
-				 'maker_date'=>date('y-m-d'),
-				 'comp_id'=>$this->session->userdata('comp_id'),
-				 'zone_id'=>$this->session->userdata('zone_id'),
-				 'brnh_id'=>$this->session->userdata('brnh_id'),
-			);
-			
-			$this->model_qc->stockqty($this->input->post('finishProduct'),$this->input->post('qty'));
-			// update Quantity in stock //
-			$this->model_qc->update_stock_qty($this->input->post('finishProduct'),$this->input->post('qty'));	
-			$this->Model_admin_login->insert_user($table_name_log,$datalog);
-			$rediectInvoice="packing/manage_packing";
-		    redirect($rediectInvoice);	
-}
-
-    
-
 public function insertProduction(){
 		
 		extract($_POST);
@@ -460,6 +402,33 @@ public function transferToModule()
 	echo "1";
 }
 
+public function insert_packing()
+{
+
+	extract($_POST);
+	$table_name ='tbl_product_packing';
+	$this->load->model('Model_admin_login');
+	$cnt=count($productid);
+
+	for($i=0;$i<$cnt;$i++){
+    	$data_dtl=array(
+		'lot_no'		=> $lot_no,
+		'grn_no' => $grn_no,
+		'grn_date' => $grn_date,
+		'productid' => $productid[$i],
+		'packing_qty' => $packing_qty[$i],
+		'qty' => $qty[$i],
+		'maker_id'			=> $this->session->userdata('user_id'),
+		'maker_date'		=> date('y-m-d'),
+		'comp_id'			=> $this->session->userdata('comp_id'),
+		'zone_id'			=> $this->session->userdata('zone_id'),
+		'brnh_id'			=> $this->session->userdata('brnh_id')
+	);
+   	$this->Model_admin_login->insert_user($table_name,$data_dtl);
+	}
+	echo "1";
+}
+
 public function order_packing_grn()
 {
 
@@ -468,5 +437,7 @@ public function order_packing_grn()
 	);
 	$this->load->view("order-packing-grn",$data);
 
-}		
+}
+
+
 }

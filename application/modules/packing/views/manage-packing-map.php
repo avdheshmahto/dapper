@@ -67,8 +67,8 @@ function submitorderTransferToModule() {
 		$("#OrderTransferToModuleresultarea").text(msg);
 		setTimeout(function() {   //calls click event after a certain time
 		$("#modal-order-repair .close").click();
-		//$("#OrderTransferToModuleresultarea").text(" "); 
-		//$('#myProduction_order_transfer_to_module')[0].reset(); 
+		$("#OrderTransferToModuleresultarea").text(" "); 
+		$('#myProduction_order_transfer_to_module')[0].reset(); 
         }, 1000);
         }else{
         $("#OrderTransferToModuleresultarea").text(data);
@@ -92,18 +92,17 @@ function submitOrderPacking() {
 		processData: false,  // tell jQuery not to process the data
 		contentType: false   // tell jQuery not to set contentType
 	}).done(function( data ) {
-		alert(data);
 	if(data == 1 || data == 2){
 	if(data == 1)
 		var msg = "Data Successfully Add !";
 		else
 		var msg = "Data Successfully Updated !";
-		$("#OrderTransferToModuleresultarea").text(msg);
+		$("#OrderPackingToModuleResultarea").text(msg);
 		setTimeout(function() {   //calls click event after a certain time
-		$("#modal-order-repair .close").click();
+		$("#modal-order-packing .close").click();
 	    }, 1000);
         }else{
-        $("#OrderTransferToModuleresultarea").text(data);
+        $("#OrderPackingToModuleResultarea").text(data);
         }
 		console.log(data);
 	});
@@ -379,7 +378,7 @@ $getFrmProduct=$frmProductQuery->row();
 </thead>
 <tbody>
 <?php
-$poquery=$this->db->query("select * from tbl_product_transfer_to_packing where lot_no='".$_GET['id']."' ");
+$poquery=$this->db->query("select * from tbl_product_packing where lot_no='".$_GET['id']."' ");
 foreach($poquery->result() as $getPo){
 //to product query
 $toProductQuery=$this->db->query("select *from tbl_product_stock where Product_id='$getPo->to_fg'");	
@@ -750,7 +749,7 @@ onsubmit="return submitorderTransferToModule();"method="POST">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 <h4 class="modal-title">Order Packing(Lot No.:-<?=$getsched->lot_no;?>)</h4>
-<div id="OrderTransferToModuleresultarea" class="text-center " style="font-size: 15px;color: red;"></div> 
+<div id="OrderPackingToModuleResultarea" class="text-center " style="font-size: 15px;color: red;"></div> 
 <div class="modal-body">
 <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="OrderPacking" action="#" 
 onsubmit="return submitOrderPacking();"method="POST">
