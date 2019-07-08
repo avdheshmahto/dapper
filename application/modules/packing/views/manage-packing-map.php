@@ -1843,5 +1843,17 @@ $.ajax({
 	}   
 });
 }
+
+function calPacking(v)
+{
+	var zz=document.getElementById(v).id;
+	var myarra = zz.split("qty");
+	var asx= myarra[1];
+	var qty=document.getElementById("qty"+asx).value;
+	var sets=document.getElementById("sets"+asx).innerHTML;	
+	var packingVal=Number(qty)/Number(sets);
+	var packingData=packingVal.toString().split(".")[0];
+	document.getElementById("packing_qty"+asx).value=packingData;
+	}
 </script>
 

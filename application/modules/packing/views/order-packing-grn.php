@@ -29,6 +29,9 @@ $getOrder=$orderQuery->row();
 	<tr>
 		<th class="tdcenter"> Sl No</th>
 		<th class="tdcenter">Item Number & Description</th>
+        <th class="tdcenter">Set Of</th>
+        <th class="tdcenter">Cash Qty</th>
+        <th class="tdcenter">Case Pack</th>
         <th class="tdcenter">Remaining Qty</th>
 		<th class="tdcenter">Enter Qty</th>
         <th class="tdcenter">Packing Qty</th>
@@ -64,9 +67,12 @@ $getOrder=$orderQuery->row();
 
 <?=$getProductStock->sku_no;?>&<?=$getProductStock->productname;?>
 </td>
+<td><?=$getProductStock->qty_box;?></td>
+<td><?=$getProductStock->packing;?></td>
+<td id="sets<?=$i;?>"><?=$getProductStock->packing*$getProductStock->qty_box;?></td>
 <td><input type="text" readonly="readonly"  class="form-control" value="<?=$getProduct->qty;?>" /></td>
-<td><input type="text" name="qty[]" class="form-control" /></td>
-<td><input type="text" name="packing_qty[]" class="form-control" /></td>
+<td><input type="text" id="qty<?=$i;?>" name="qty[]" onchange="calPacking(this.id);" class="form-control" /></td>
+<td><input type="text" id="packing_qty<?=$i;?>" name="packing_qty[]" readonly="readonly" class="form-control" /></td>
 </td>
 </tr>
 <?php 
