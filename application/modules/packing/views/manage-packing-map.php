@@ -1823,9 +1823,12 @@ function calPacking(v)
 	var asx= myarra[1];
 	var qty=document.getElementById("qty"+asx).value;
 	var sets=document.getElementById("sets"+asx).value;	
-	var packingVal=Number(qty)/Number(sets);
-	var packingData=packingVal.toString().split(".")[0];
-	document.getElementById("packing_qty"+asx).value=packingData;
+	var packingVal=(Number(qty)/Number(sets));
+	var packDecimal=packingVal.toFixed(2);
+	var packDecimalVal=packDecimal.toString().split(".")[1];
+	var packingDataVal=packDecimal.toString().split(".")[0];
+	document.getElementById("loose_qty"+asx).value=packDecimalVal;
+	document.getElementById("packing_qty"+asx).value=packingDataVal;
 }
 </script>
 

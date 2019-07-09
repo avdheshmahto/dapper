@@ -30,11 +30,12 @@ $getOrder=$orderQuery->row();
 		<th class="tdcenter"> Sl No</th>
 		<th class="tdcenter">Item Number & Description</th>
         <th class="tdcenter">Set Of</th>
-        <th class="tdcenter">Cash Qty</th>
+        <th class="tdcenter">Case Qty</th>
         <th class="tdcenter">Case Pack</th>
         <th class="tdcenter">Remaining Qty</th>
 		<th class="tdcenter">Enter Qty</th>
         <th class="tdcenter">Packing Qty</th>
+        <th class="tdcenter">Loose Qty</th>
 	</tr>
 </thead>
 <?php
@@ -71,6 +72,8 @@ $getOrder=$orderQuery->row();
 <td><input type="text" id="qty<?=$i;?>" name="qty[]" onchange="calPacking(this.id);" class="form-control" /></td>
 <td><input type="text" id="packing_qty<?=$i;?>" name="packing_qty[]" readonly="readonly" class="form-control" /></td>
 </td>
+<td><input type="text" id="loose_qty<?=$i;?>" name="loose_qty[]" readonly="readonly" class="form-control" /></td>
+
 </tr>
 <?php 
 $i++;
