@@ -1823,7 +1823,8 @@ function calPacking(v)
 	var asx= myarra[1];
 	var qty=document.getElementById("qty"+asx).value;
 	var sets=document.getElementById("sets"+asx).value;	
-	var packingVal=(Number(qty)/Number(sets));
+	var packingVal=parseFloat(qty)/parseFloat(sets);
+	alert(packingVal);
 	var packDecimal=packingVal.toFixed(2);
 	var packDecimalVal=packDecimal.toString().split(".")[1];
 	var packingDataVal=packDecimal.toString().split(".")[0];

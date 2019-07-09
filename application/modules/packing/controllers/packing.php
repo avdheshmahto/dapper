@@ -421,6 +421,7 @@ public function insert_packing()
 		'set_of' => $set_of[$i],
 		'case_qty' => $case_qty[$i],
 		'case_pack' => $case_pack[$i],
+		'loose_qty' => $loose_qty[$i],
 		'maker_id'			=> $this->session->userdata('user_id'),
 		'maker_date'		=> date('y-m-d'),
 		'comp_id'			=> $this->session->userdata('comp_id'),
