@@ -30,11 +30,11 @@ $getOrder=$orderQuery->row();
 	<tr>
 		<th class="tdcenter"> Sl No</th>
 		<th class="tdcenter">Item Number & Description</th>
-        <th class="tdcenter">Set Of</th>
-        <th class="tdcenter">Cash Qty</th>
-        <th class="tdcenter">Case Pack</th>
-       
-		<th class="tdcenter">Packing Qty</th>
+        <th class="tdcenter">Usage Unit</th>
+        <th class="tdcenter">Case Qty</th>
+        <th class="tdcenter">Qty Req.</th>
+    	<th class="tdcenter">Case Pack</th>
+        <th class="tdcenter">Loose Qty</th>
 	</tr>
 </thead>
 <?php
@@ -64,12 +64,16 @@ $getOrder=$orderQuery->row();
 <input type="hidden" name="lot_no" value="<?=$lot_no;?>" class="form-control" />
 <?=$getProductStock->sku_no;?>&<?=$getProductStock->productname;?>
 </td>
-<td><input type="text" name="set_of[]" readonly="readonly"  class="form-control" value="<?=$getProductStock->qty_box;?>" /></td>
+<td>
+<?=$getProductUOM->keyvalue;?>/<?=$getProductStock->qty_box;?>
+<input type="hidden" name="set_of[]" readonly="readonly"  class="form-control" value="<?=$getProductStock->qty_box;?>" /></td>
 <td><input type="text" name="case_qty[]" readonly="readonly"  class="form-control" value="<?=$getProductStock->packing;?>" /></td>
 <td><input type="text" name="case_pack[]" id="sets<?=$i;?>" readonly="readonly"  class="form-control" value="<?=$getProductStock->packing*$getProductStock->qty_box;?>" /></td>
 
-<td><input type="text" id="packing_qty<?=$i;?>" name="packing_qty[]" readonly="readonly" value="<?=$getProduct->packing_qty;?>" class="form-control" /></td>
+<td><input type="text" id="packing_qty<?=$i;?>" name="packing_qty[]" readonly="readonly" class="form-control" value="<?=$getProduct->packing_qty;?>" /></td>
 </td>
+<td><input type="text" id="loose_qty<?=$i;?>" value="<?=$getProduct->loose_qty;?>" name="loose_qty[]" readonly="readonly" class="form-control" /></td>
+
 </tr>
 <?php 
 $i++;
@@ -80,7 +84,6 @@ $i++;
 </div><!--scrollbar-y close-->		
 </div>
 <div class="modal-footer">
-<input type="submit" class="btn btn-sm" id="add_req" value="Save">
 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
 </div>       
         
