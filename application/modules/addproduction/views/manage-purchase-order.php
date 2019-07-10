@@ -95,8 +95,7 @@ Entries</label>
 <tr>
 <th style="display:none"><input name="check_all" type="checkbox" id="check_all" onClick="checkall(this.checked)" value="check_all" /></th>
 	    <th>Lot No.</th>
-		<th>Purchase Order No.</th>
-	    <th style="display:none">Invoice Type</th>
+		<th style="display:none">Invoice Type</th>
 		  <th>Date</th>
       <th>Customer Name</th>
 	<!-- 	<th>Due Date</th> -->
@@ -110,7 +109,7 @@ Entries</label>
 <form method="get">
 <tr>
 <td><input name="lot_no"  type="text"  class="search_box form-control input-sm" style="width:100px;"  value="" /></td>
-	<td><input name="purchaseid"  type="text"  class="search_box form-control input-sm" style="width:100px;"  value="" /></td>
+	
 	<td><input name="date"  type="date"  class="search_box form-control input-sm"  value="" /></td>
 	<td><input name="cust_name"  type="text"  class="search_box form-control input-sm"  value="" /></td>
 	<!-- <td>&nbsp;</td>
@@ -129,7 +128,6 @@ foreach($result as $sales)
 <tr class="gradeC record">
 <th style="display:none;"><input type="checkbox" /></th>
 <th><?=$sales->lot_no;?></th>
-<th><?=$sales->purchase_no;?></th>
 <th style="display:none"><?php echo $sales->invoice_status;?></th>
 <th><?=$sales->invoice_date;?></th>
 <th><?php 
