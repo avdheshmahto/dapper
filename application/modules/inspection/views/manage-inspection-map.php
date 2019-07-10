@@ -323,7 +323,7 @@ $getProduct=$productQuery->row();
 <td><?=$fetch_list->qty;?></td>
 <td>
 <button class="btn btn-default" onclick="testOrder('<?=$getProduct->Product_id;?>','<?=$fetch_list->qty;?>','<?=$fetch_list->lot_no;?>');" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
-<a target="_blank" href="<?=base_url();?>productionModule/print_challan?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>	
+<a target="_blank" href="<?=base_url();?>inspection/print_test_order_challan?id=<?=$fetch_list->lot_no;?>&&<?=$getProduct->Product_id;?> "><img src="<?=base_url();?>assets/images/print1.png" /></a>	
 </td>
 </tr>
 <?php  }?>

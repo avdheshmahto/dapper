@@ -363,7 +363,12 @@ $this->load->view('getproduct');
 <td style="width:3%;"> <div align="center"><u>Production Qty</u></div></td>
                 <td style="width:3%;display: none1;"> <div align="center"><u> Price</u></div></td>
 				<td style="width:3%;display: none1;"> <div align="center"><u>Total Price</u></div></td>
+        <?php
+		if($_GET['id']!='')
+		{
+		?>        
 <td style="width:3%;"> <div align="center"><u>Action</u></div></td>
+<?php }?>
 </tr>
 </table>
 
