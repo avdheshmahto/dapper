@@ -58,7 +58,7 @@ $getGrnQty=$queryGrn->row();
 		$getfgHdr=$fgHdrQuery->row();
 		//echo "select *from tbl_quotation_purchase_order_dtl where purchaseid='$getfgHdr->purchaseid' "
 		?>
-        <select name="fg[]" id="finish_goods<?=$i;?>" class="form-control">
+        <select name="fghh[]" id="finish_goods<?=$i;?>" class="form-control">
         
         <option value="">--Select--</option>
         <?php
@@ -74,7 +74,9 @@ $getGrnQty=$queryGrn->row();
         <option value="<?=$getProduct->Product_id?>"><?=$getProduct->sku_no;?></option>
         <?php }?>
         
-        </select></td>
+        </select>
+        <input type="hidden" name="fg[]" id="finish_goods_val<?=$i;?>" />
+        </td>
         
         <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="qty[]" id="entQty<?=$i;?>" onchange="val(this.id)" /></td>
         <td>  <input class="form-control" style="margin-bottom:10px; width:55px;" value="<?=$getJob->partQty;?>" id="orderQty<?=$i;?>" name="qtyy[]" readonly="readonly" /></td>

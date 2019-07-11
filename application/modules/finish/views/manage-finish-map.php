@@ -1920,8 +1920,13 @@ function getFinishGoods()
 {
 var cntVal=	document.getElementById("cntVal").value;
 var fg=document.getElementById("fg").value;
+var e = document.getElementById("fg");
+var fgText = e.options[e.selectedIndex].text;
 for(i=1;i<=cntVal;i++){
 	$('#finish_goods'+i).val(fg).prop('selected', true);
+	document.getElementById("finish_goods_val"+i).value=fg;
+	document.getElementById("finish_goods"+i).disabled = true;
+
 }
 	
 }
