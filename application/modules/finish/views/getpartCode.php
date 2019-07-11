@@ -58,7 +58,7 @@ $getGrnQty=$queryGrn->row();
 		$getfgHdr=$fgHdrQuery->row();
 		//echo "select *from tbl_quotation_purchase_order_dtl where purchaseid='$getfgHdr->purchaseid' "
 		?>
-        <select name="fg[]" id="fg<?=$i;?>" class="form-control">
+        <select name="fg[]" id="finish_goods<?=$i;?>" class="form-control">
         
         <option value="">--Select--</option>
         <?php

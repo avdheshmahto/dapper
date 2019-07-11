@@ -715,7 +715,7 @@ $getProduct=$queryProduct->row();
 </div>
 <label class="col-sm-2 control-label">Finish Goods:</label> 
 <div class="col-sm-4">
-<select name="fg[]" id="fg<?=$i;?>" class="form-control">
+<select name="fg[]" id="fg<?=$i;?>" class="form-control" onchange="getFinishGoods();">
         
         <option value="">--Select--</option>
 <?php
@@ -1915,5 +1915,15 @@ window.onbeforeunload = function (e) {
     return "Please click 'Stay on this Page' and we will give you candy";
 };
 */
+
+function getFinishGoods()
+{
+var cntVal=	document.getElementById("cntVal").value;
+var fg=document.getElementById("fg").value;
+for(i=1;i<=cntVal;i++){
+	$('#finish_goods'+i).val(fg).prop('selected', true);
+}
+	
+}
 </script>
 
