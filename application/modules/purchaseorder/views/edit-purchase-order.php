@@ -366,13 +366,13 @@ $getType=$selectTypeQuery->row();
 
 
 
-<tr  class="gradeA" style="display:none;"">
+<tr  class="gradeA" style="display:none;">
 <th>CGST TAX</th>
 <th><input style="display:none;" type="number" name="total_cgst"  id="total_cgst" step="any" min="0" value="<?=$fetchq->total_cgst;?>" placeholder="%" class="form-control"></th>
 <th><input type="number" readonly="" name="total_tax_cgst_amt" id="total_tax_cgst_amt"  value="<?=$fetchq->total_tax_cgst_amt;?>" step="any" placeholder="Placeholder" class="form-control"></th>
 </tr>
 
-<tr  class="gradeA">
+<tr  class="gradeA" style="display:none;">
 <th>SGST TAX</th>
 <th><input style="display:none;" type="number" name="total_sgst"  id="total_sgst" step="any" min="0" placeholder="%" value="<?=$fetchq->total_sgst;?>" class="form-control"></th>
 <th><input type="number" readonly="" name="total_tax_sgst_amt" id="total_tax_sgst_amt" step="any" value="<?=$fetchq->total_tax_sgst_amt;?>" placeholder="Placeholder" class="form-control"></th>
@@ -392,7 +392,7 @@ $getType=$selectTypeQuery->row();
 
 
 
-<tr  class="gradeA">
+<tr  class="gradeA" style="display:none;">
 <th>Total Discount</th>
 <th><input style="display:none;" type="number" name="total_dis" value="<?=$fetchq->total_dis;?>"  id="total_dis" step="any" min="0" placeholder="%" class="form-control"></th>
 <th><input type="number" readonly="" name="total_dis_amt" id="total_dis_amt" step="any" value="<?=$fetchq->total_dis_amt;?>"  placeholder="Placeholder" class="form-control"></th>
