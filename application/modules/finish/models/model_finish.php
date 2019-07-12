@@ -10,11 +10,11 @@ function getfinish($last,$strat)
 
 function filterfinishList($perpage,$pages,$get){
 
-	$qry = "select * from tbl_production_order_log where status = 'A'";
+	$qry = "select * from tbl_production_order_log where status = 'A' group by lot_no";
 	if(sizeof($get) > 0)
 		{
 		if($get['p_id'] != "")
-			$qry .= " AND productionid = '".$get['p_id']."'";
+			$qry .= " AND lot_no = '".$get['p_id']."'";
 			if($get['date'] != "")
 				$qry .= " AND date LIKE '%".$get['date']."%'";
 					if($get['goods'] != "")
@@ -37,7 +37,7 @@ function count_finish($tableName,$status = 0,$get)
     if(sizeof($get) > 0)
 		{
 		if($get['p_id'] != "")
-			$qry .= " AND productionid = '".$get['p_id']."' ";
+			$qry .= " AND lot_no = '".$get['p_id']."' ";
 				if($get['date'] != "")
 					$qry .= " AND date LIKE '%".$get['date']."%'";
 					if($get['goods'] != "")

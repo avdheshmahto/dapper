@@ -222,7 +222,7 @@ function manage_finishJoin(){
   //$data['result']            = $this->model_template->contact_get($pagination['per_page'],$pagination['page']);	
   $data['pagination']        = $this->pagination->create_links();
 	if($this->input->get('filter') == 'filter')   ////filter start ////
-    $data['result']       = $this->model_finish->filterProductionList($pagination['per_page'],$pagination['page'],$this->input->get());
+    $data['result']       = $this->model_finish->filterfinishList($pagination['per_page'],$pagination['page'],$this->input->get());
           	else	
     $data['result'] = $this->model_finish->getfinish($pagination['per_page'],$pagination['page']);
 		return $data;
