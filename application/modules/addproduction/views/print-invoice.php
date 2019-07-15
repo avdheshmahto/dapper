@@ -188,12 +188,12 @@ $getUnit=$usagesQuery->row();
 <td><?=$getProduct->sku_no;?></td>
 <td></td>
 <td><p><?=$getProduct->productname;?><br>
-<strong>Packing:</strong>&nbsp;<?=$getProduct->packing;?>/<?=$getDtl->ord_qty;?></span>
+<strong>Packing:</strong>&nbsp;<?=$getProduct->packing;?>/<?=$getDtl->ord_qty;?></span><span><strong>T.CBM:</strong><?php echo round($getProduct->cbm,3);?></span>
 </p>
 </td>
 <td class="right"><?=$getDtl->qty;?> <?=$getUnit->keyvalue;?></td>
-<td class="right"><?=$getDtl->price;?></td>
-<td class="right"><?php echo $getDtl->price*$getDtl->qty;?></td>
+<td class="right"><?=$getDtl->price;?>$</td>
+<td class="right"><?php echo $getDtl->price*$getDtl->qty;?>$</td>
 </tr>
 <?php
 $totalQty=$totalQty+$getDtl->qty;
@@ -201,8 +201,8 @@ $price=$price+$getDtl->price;
 $Totalprice=$Totalprice+$getDtl->price*$getDtl->qty;
 $totalCbm=$totalCbm+$getProduct->cbm;
 $totalNetWeight=$totalNetWeight+$getProduct->net_weight*$getDtl->qty;
-$Totalpacking=$Totalpacking+$getProduct->packing;
-$TotalGrossWeight=($getDtl->weight*$getProduct->packing+5);
+$Totalpacking=$Totalpacking+$getDtl->ord_qty;
+$TotalGrossWeight=($getProduct->weight*$getProduct->packing)+5;
 $finalGrossWeight=$TotalGrossWeight*$getDtl->ord_qty;
 
 
@@ -223,15 +223,15 @@ $finalGrossWeight=$TotalGrossWeight*$getDtl->ord_qty;
 <ul>
 <li>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?=$totalQty;?></li>
 <li>US $<?=$price;?></li>
-<li><?=$Totalprice;?></li>
+<li>US $<?=$Totalprice;?></li>
 </ul>
 <h4 class="dollar">US. Dollars <?php echo  words_repues(number_format((float)$getDtl->price*$getDtl->qty, 2, '.', '')); ?></h4>
 <ol class="total">
 <li>TOTAL QTY : <?=$totalQty;?> Pcs.</li>
-<li>TOTAL CARTONS : <?=$Totalpacking*$getDtl->qty;?></li>
-<li>CARTONS TOTAL NET WT. : <?=$totalNetWeight;?> KGS.</li>
+<li>TOTAL CARTONS : <?=$Totalpacking;?></li>
+<li>TOTAL NET WT. : <?=$totalNetWeight;?> KGS.</li>
 <li>TOTAL GROSS WT. : <?=$finalGrossWeight?> KGS.</li>
-<li>TOTAL CBM : <?=$totalCbm*$getDtl->qty;?> CBM</li>
+<li>TOTAL CBM : <?php echo round($totalCbm*$getDtl->ord_qty,3);?> CBM</li>
 </ol>
 <span>Please send us a copy of Proforma Invoice duly signed and stamped.</span>
 <div class="signature1">
