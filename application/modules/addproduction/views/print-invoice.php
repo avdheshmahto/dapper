@@ -55,9 +55,9 @@ function words_repues($num)
 	$groundA=$action23[0];
 	$groundV=$action23[1];	
 	if($groundV >=1 ){
-		$goundStr=strtoupper($result . "Rupees and" . $points . " Paise");
+		$goundStr=strtoupper($result . " and" . $points . " ");
 	}else{
-		$goundStr=strtoupper($result . "Rupees");
+		$goundStr=strtoupper($result . "");
 	}	
 	 return $goundStr;
 	}
@@ -69,8 +69,10 @@ function words_repues($num)
 <link rel="stylesheet" href="<?=base_url();?>assets/pi_css/css/style.css">
 </head>
 <body>
-<div class="page01">
+
+<div class="page03">
 <h2>PROFORMA INVOICE</h2>
+
 <table class="table1" align="center">
 <tr>
 <td rowspan="5">
@@ -162,96 +164,7 @@ IFSC CODE  :  KKBK0000218<br>
 SWIFT CODE :  KKBKINBBXXX<br>
 </p>
 </td>
-</tr>
-<table class="table2" align="center">
-<tr>
-<th>Item No.</th>
-<th>Buyer No.</th>
-<th>Description</th>
-<th>Order Qty</th>
-<th>Price US $</th>
-<th>Amount</th>
-</tr>
-<?php
-$dtlQuery=$this->db->query("select *from tbl_quotation_purchase_order_dtl where purchaseid='$getPrint->purchaseid'");
-foreach($dtlQuery->result() as $getDtl){
-$productQuery=$this->db->query("select *from tbl_product_stock where Product_id='$getDtl->productid'");
-$getProduct=$productQuery->row();
-
-$usagesQuery=$this->db->query("select *from tbl_master_data where serial_number='$getProduct->usageunit'");
-$getUnit=$usagesQuery->row();
-?>
-<tr>
-<td><?=$getProduct->sku_no;?></td>
-<td></td>
-<td><p><?=$getProduct->productname;?><br>
-<strong>Packing:</strong>&nbsp;<?=$getProduct->packing;?>/<?=$getDtl->ord_qty;?> <span><strong>T.CBM:</strong><?=$getProduct->cbm;?></span>
-</p>
-</td>
-<td class="right"><?=$getDtl->qty;?> <?=$getUnit->keyvalue;?></td>
-<td class="right"><?=$getDtl->price;?></td>
-<td class="right"><?php echo $getDtl->price*$getDtl->qty;?></td>
-</tr>
-<?php }?>
-<tr>
-<td rowspan="3" class="space"></td>
-<td rowspan="3" class="space"></td>
-<td rowspan="3" class="space"></td>
-<td rowspan="3" class="space"></td>
-<td rowspan="3" class="space"></td>
-<td rowspan="3" class="space"></td>
-</tr>
-</table>
-<table class="table3">
-<tr>
-<td rowspan="6" colspan="6">
-<h5>Amount in Figure</h5>
-<h4>Continued on Page 2</h4>
-<div class="signature">
-<p>Signature &amp; Date</p>
-<ol>
-<li>FOR DAPPER EXPOSRTS PVT. LTD.</li>
-<li>AUTH. SIGN.</li>
-</ol>
-</div>
-</td>
-</tr>
-</table>
-</table>
-</div>
-<div class="page03">
-<h2>PROFORMA INVOICE</h2>
-<p class="page-no">Page: 2</p>
-<table class="table6" align="center">
-<tr>
-<td rowspan="5">
-<h5>Manufacturer &amp; Explorer</h5>
-<h3>DAPPER EXPORTS PVT. LTD.</h3>
-<h4>
-B.O. : LAKRI FAZALPUR INDUSTRIAL AREA,<br>
-<span>MINI BYE PASS, DELHI ROAD, MORADABAD.</span><br>
-H.O. : F-35 BASEMENT, EAST OF KAILASH,<br>
-<span>NEW DELHI - 110 065. [INDIA]</span><br>
-</h4>
-</td>
-</tr>
-<tr>
-<th>Proforma#</th>
-<td colspan="2">TB570 &nbsp;&nbsp;&nbsp;&nbsp;<span><strong>Date</strong>03/04/2019</span></td>
-</tr>
-<tr>
-<th>BuyOrder#</th>
-<td>0001511 <span><strong>Date</strong> 02/04/2019</span></td>
-</tr>
-<tr>
-<th>Ship Date</th>
-<td>30/06/2019 &nbsp; Ex-Factory</td>
-</tr>
-<tr>
-<th>Payment terms</th>
-<td>DP</td>
-</tr>
-<table class="table2" align="center">
+</tr><table class="table2" align="center">
 <!-- DESCRIPTION -->
 <tr>
 <th>Item No.</th>
@@ -259,7 +172,7 @@ H.O. : F-35 BASEMENT, EAST OF KAILASH,<br>
 <th>Description</th>
 <th>Order Qty</th>
 <th>Price US $</th>
-<th>Amount</th>
+<th>Amount $</th>
 </tr>
 <?php
 $dtlQuery=$this->db->query("select *from tbl_quotation_purchase_order_dtl where purchaseid='$getPrint->purchaseid'");
@@ -287,6 +200,12 @@ $totalQty=$totalQty+$getDtl->qty;
 $price=$price+$getDtl->price;
 $Totalprice=$Totalprice+$getDtl->price*$getDtl->qty;
 $totalCbm=$totalCbm+$getProduct->cbm;
+$totalNetWeight=$totalNetWeight+$getProduct->net_weight*$getDtl->qty;
+$Totalpacking=$Totalpacking+$getProduct->packing;
+$TotalGrossWeight=($getDtl->weight*$getProduct->packing+5);
+$finalGrossWeight=$TotalGrossWeight*$getDtl->ord_qty;
+
+
 }?>
 <tr>
 <td rowspan="3" class="space"></td>
@@ -303,16 +222,16 @@ $totalCbm=$totalCbm+$getProduct->cbm;
 <h5>Amount in Figure</h5>
 <ul>
 <li>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?=$totalQty;?></li>
-<li>US <?=$price;?></li>
+<li>US $<?=$price;?></li>
 <li><?=$Totalprice;?></li>
 </ul>
 <h4 class="dollar">US. Dollars <?php echo  words_repues(number_format((float)$getDtl->price*$getDtl->qty, 2, '.', '')); ?></h4>
 <ol class="total">
 <li>TOTAL QTY : <?=$totalQty;?> Pcs.</li>
-<li>TOTAL CARTONS : 796</li>
-<li>CARTONS TOTAL NET WT. : 9541.040 KGS.</li>
-<li>TOTAL GROSS WT. : 13000.000 KGS.</li>
-<li>TOTAL CBM : <?=$totalCbm;?> CBM</li>
+<li>TOTAL CARTONS : <?=$Totalpacking*$getDtl->qty;?></li>
+<li>CARTONS TOTAL NET WT. : <?=$totalNetWeight;?> KGS.</li>
+<li>TOTAL GROSS WT. : <?=$finalGrossWeight?> KGS.</li>
+<li>TOTAL CBM : <?=$totalCbm*$getDtl->qty;?> CBM</li>
 </ol>
 <span>Please send us a copy of Proforma Invoice duly signed and stamped.</span>
 <div class="signature1">
