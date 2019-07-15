@@ -158,9 +158,9 @@ $entries = "";
 </div> 
 </div>
 <div class="form-group"> 
-<label class="col-sm-2 control-label">Weight</label> 
+<label class="col-sm-2 control-label">&nbsp;</label> 
 <div class="col-sm-4" id="regid"> 
-<input type="text" step="any" name="weight" value="" id="weight" class="form-control" >
+&nbsp;
 </div> 
 <label class="col-sm-2 control-label">Circle Weight</label> 
 <div class="col-sm-4" id="regid">  <input type="text" name="circle_weight" id="circle_weight" class="form-control"  />
@@ -207,13 +207,22 @@ $entries = "";
 </div> 
 </div>
 <div class="form-group"> 
-<label class="col-sm-2 control-label">Net Weight:</label> 
+<label class="col-sm-2 control-label">Cast Weight:</label> 
 <div class="col-sm-4" id="regid"> 
-<input type="number" name="net_weight" value="" id="net_weight" class="form-control" >
+<input type="number" name="cast_weight" id="cast_weight" class="form-control" />
 </div> 
-<label class="col-sm-2 control-label">Cast Weight</label> 
+<label class="col-sm-2 control-label">Net Weight:</label> 
 <div class="col-sm-4" > 
 <input type="number" name="cast_weight" id="cast_weight" class="form-control" />
+</div> 
+</div>
+<div class="form-group"> 
+<label class="col-sm-2 control-label">Gross Weight:</label> 
+<div class="col-sm-4" id="regid"> 
+<input type="number" name="net_weight" value="" id="net_weight" class="form-control" ></div> 
+<label class="col-sm-2 control-label">&nbsp;</label> 
+<div class="col-sm-4" > 
+&nbsp;
 </div> 
 </div>
 <div class="form-group"> 
