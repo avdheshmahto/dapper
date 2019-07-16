@@ -79,10 +79,9 @@ function words_repues($num)
 <h5>Manufacturer &amp; Explorer</h5>
 <h3>DAPPER EXPORTS PVT. LTD.</h3>
 <h4>
-B.O. : LAKRI FAZALPUR INDUSTRIAL AREA,<br>
-<span>MINI BYE PASS, DELHI ROAD, MORADABAD.</span><br>
-H.O. : F-35 BASEMENT, EAST OF KAILASH,<br>
-<span>NEW DELHI - 110 065. [INDIA]</span><br>
+LAKRI FAZALPUR INDUSTRIAL AREA,<br>
+MINI BYE PASS, DELHI ROAD,<br> MORADABAD,244001(India)<br>
+
 </h4>
 </td>
 </tr>
@@ -188,12 +187,12 @@ $getUnit=$usagesQuery->row();
 <td><?=$getProduct->sku_no;?></td>
 <td></td>
 <td><p><?=$getProduct->productname;?><br>
-<strong>Packing:</strong>&nbsp;<?=$getProduct->packing;?>/<?=$getDtl->ord_qty;?></span><span><strong>T.CBM:</strong><?php echo round($getProduct->cbm,3);?></span>
+<strong>Packing:</strong>&nbsp;<?=$getProduct->packing;?>/<?=$getDtl->ord_qty;?></span><span><strong>T.CBM:</strong><?php echo round($getProduct->cbm*$getDtl->ord_qty,3);?></span>
 </p>
 </td>
 <td class="right"><?=$getDtl->qty;?> <?=$getUnit->keyvalue;?></td>
-<td class="right"><?=$getDtl->price;?>$</td>
-<td class="right"><?php echo $getDtl->price*$getDtl->qty;?>$</td>
+<td class="right">$<?=$getDtl->price;?></td>
+<td class="right">$<?php echo $getDtl->price*$getDtl->qty;?></td>
 </tr>
 <?php
 $totalQty=$totalQty+$getDtl->qty;
