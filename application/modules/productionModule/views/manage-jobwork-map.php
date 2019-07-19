@@ -29,13 +29,14 @@ $getDtl->productid;
 <script>
 function getPart(v)
 {
+	var production_id=document.getElementById("lot_number").value;
 	
 	var select_id=document.getElementById("select_id").value;
 	var ur = '<?=base_url();?>productionModule/getPart';
 	$.ajax({
 	type: "POST",
 	url: ur,
-	data: {'shape':v,'production_id':<?=$_GET['id'];?>,'shapeName':select_id},
+	data: {'shape':v,'production_id':production_id,'shapeName':select_id},
 	success: function(data){
     // console.log(data);
     $("#getPartView").empty().append(data).fadeIn();
@@ -1019,7 +1020,7 @@ var cell2 = row.insertCell(1);
 
 
 </div>
-<input type="hidden" name="lot_number" value="<?=$getsched->lot_no;?>" />
+<input type="hidden" name="lot_number" id="lot_number" value="<?=$getsched->lot_no;?>" />
 <label class="col-sm-2 control-label">Order No.:</label> 
 <div class="col-sm-4"> 
 <input name="job_order_no" type="text" value="" class="form-control" id="thickness"></div>
@@ -1056,6 +1057,8 @@ foreach($queryProductShape->result() as $getProductShape){
         <option value="ShapePart">Shape in Parts</option>
       </select> 
 </div>
+
+
 <label class="col-sm-2 control-label">Shape:</label> 
 <div class="col-sm-4"> 
 <select class="form-control" name="shape" id="shape" onchange="getPart(this.value);">

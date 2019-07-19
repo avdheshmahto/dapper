@@ -1,3 +1,26 @@
+<?php
+$dtlQuery=$this->db->query("select *from tbl_machine where machine_name='$id'");
+foreach($dtlQuery->result() as $getDtl){
+$hdrQuery=$this->db->query("select * from tbl_quotation_purchase_order_hdr where lot_no='$production_id'");
+$getHdr=$hdrQuery->row();
+
+$queryProductShape=$this->db->query("select SUM(total_price) as qty from tbl_quotation_purchase_order_dtl where productid ='$getDtl->code' and purchaseid='$getHdr->purchaseid'  ");
+$shapeCnt=$queryProductShape->row();
+$qtySum=$qtySum+$shapeCnt->qty."<br>";
+}
+
+
+//@$getP=implode(",",$pId);
+//$queryProductShape=$this->db->query("select count(machine_name) as cnt from tbl_machine where code in($getP)");
+//$shapeCnt=$queryProductShape->row();
+//echo "aaa".$shapeCnt->cnt;
+
+
+
+
+
+
+?>
 <table class="table table-striped table-bordered table-hover dataTables-example1" >
     <thead>
       <tr>
@@ -19,7 +42,7 @@
 $productionqty=$this->db->query("select *from tbl_quotation_purchase_order_hdr where purchaseid='$production_id'");
 $getProduction=$productionqty->row();
 
-$queryProductShape=$this->db->query("select *from tbl_shape_part_mapping where product_id='$id' ");
+$queryProductShape=$this->db->query("select *from tbl_shape_part_mapping where product_id='$id' group by part_id ");
 $cnt=$queryProductShape->num_rows();
 $i=1;
 foreach($queryProductShape->result() as $getProductShape){
@@ -34,7 +57,7 @@ $queryProduct=$this->db->query("select *from tbl_product_stock where Product_id=
 $getProduct=$queryProduct->row();
 ?>
       <tr class="gradeU record">
-        <td> <input class="form-control" readonly="readonly" style="margin-bottom:10px; border:none; width:80px;" value="<?=$getProduct->sku_no;?>" name="part[]"/>
+        <td> <input class="form-control" readonly="readonly" style="margin-bottom:10px; border:none; width:100px;" value="<?=$getProduct->sku_no;?>" name="part[]"/>
          <input class="form-control" type="hidden" style="margin-bottom:10px;" value="<?=$getProduct->Product_id;?>" name="part_code[]"/>
         </td>
         <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="qty[]" id="entQty<?=$i;?>" onchange="val(this.id)" <?php if($shapeName=='Shape'){?> readonly="readonly"<?php } ?> /></td>
@@ -53,7 +76,7 @@ $getProduct=$queryProduct->row();
         <td>  <input class="form-control" style="margin-bottom:10px; width:55px;" value="<?=$getJob->partQty;?>" id="orderQty<?=$i;?>" name="qtyy[]" readonly="readonly" /></td>
         
         <td><?php
-$remQty=$getProduction->sub_total-$getJob->partQty;
+$remQty=$qtySum-$getJob->partQty;
 ?>
       <input class="form-control" style="margin-bottom:10px;width:55px;" value="<?=$remQty;?>" name="qtyy[]" id="remQty<?=$i;?>" readonly="readonly" />
       
