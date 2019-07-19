@@ -1,4 +1,5 @@
 <?php
+  $id=$_GET['id'];
   if($id!="")
   {
   $invice12=$this->db->query("select * from tbl_sales_order_hdr where salesid='$id'");
@@ -204,7 +205,8 @@
                       <td><?php echo number_format( $invoiceFetch->list_price,2, '.', '');  ?></td>
                       <td><?php echo $ntp=number_format( $invoiceFetch->total,2, '.', ''); ?></td>
                     </tr>
-                    <?php } }?>
+                    <?php $n++; } }
+                      ?>
                     <tr>
                       <td colspan="3" class="total-line"><strong>Total</strong></td>
                       <td class="total-value">

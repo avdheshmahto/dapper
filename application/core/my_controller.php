@@ -2,161 +2,182 @@
 
 /* load the MX_Router class */
 
-class my_controller extends MX_Controller {
-function __construct(){
-   parent::__construct(); 
-   $this->load->model('Model_admin_login'); 
-    
-  
-}
-	
-public function page_protection(){
-	
-	
-$mod_sql2 = $this->db->query("select distinct f.function_url from tbl_module_function f  join tbl_role_func_action rf on f.func_id=rf.function_url where rf.role_id='".$this->session->userdata('role')."' and rf.action_id !='Inactive'");
-  $CUrl="../".$this->uri->segment(1)."/".$this->uri->segment(2);
-foreach($mod_sql2->result() as $mdd_f)
-
+class my_controller extends MX_Controller 
 {
 	
+	function __construct(){
+   	parent::__construct(); 
+   	$this->load->model('Model_admin_login'); 
+    
+}
 	
-	  $geturl=$mdd_f->function_url;
-	 
-	if($CUrl==$geturl)
+public function page_protection()
+{
+		
+	$mod_sql2 = $this->db->query("select distinct f.function_url from tbl_module_function f  join tbl_role_func_action rf on f.func_id=rf.function_url where rf.role_id='".$this->session->userdata('role')."' and rf.action_id !='Inactive'");
+	$CUrl="../".$this->uri->segment(1)."/".$this->uri->segment(2);
+	
+	foreach($mod_sql2->result() as $mdd_f)
 	{
-	
-	
-	$active='1';
-	//redirect("/report/report_function");
-	
+				
+		$geturl=$mdd_f->function_url;
+		if($CUrl==$geturl)
+		{
+			$active='1';
+			//redirect("/report/report_function");
+		}
+
+		$active;
+
 	}
-	
-$active;
-	
-}
 
-return $active;
+	return $active;
 	
 }
 
 
-public function user_function(){
-if($this->session->userdata('is_logged_in')){
-$userRole=$this->db->query("select * from tbl_user_role_mst where user_id='".$this->session->userdata('user_id')."' ");
-$userRoleFetch=$userRole->row();
-$userRoleFetch->role_id;
-$userRole1=$this->db->query("select * from tbl_role_mst where role_id='".$userRoleFetch->role_id."'");
-$userRoleFetch1=$userRole1->row();
-$userRoleFetch1->role_id;
-$data_user=$userRoleFetch1->action;
-$action=explode("-",$data_user);
-$kk['edit']=$action[0];
-$kk['view']=$action[1];
-$kk['delete']=$action[2];
-$kk['add']=$action[3];
-$kk['obj']=new my_controller();
-return $kk;
- }
+public function user_function()
+{
+	
+	if($this->session->userdata('is_logged_in'))
+	{
+		$userRole=$this->db->query("select * from tbl_user_role_mst where user_id='".$this->session->userdata('user_id')."' ");
+		$userRoleFetch=$userRole->row();
+		$userRoleFetch->role_id;
+		$userRole1=$this->db->query("select * from tbl_role_mst where role_id='".$userRoleFetch->role_id."'");
+		$userRoleFetch1=$userRole1->row();
+		$userRoleFetch1->role_id;
+		$data_user=$userRoleFetch1->action;
+		$action=explode("-",$data_user);
+		$kk['edit']=$action[0];
+		$kk['view']=$action[1];
+		$kk['delete']=$action[2];
+		$kk['add']=$action[3];
+		$kk['obj']=new my_controller();
+		return $kk;
+ 	}
 
 }
 
 ////////////function to give permission(add,edit,delete) to users starts///////////////
-public function dashboard(){
+public function dashboard()
+{
 						
-			$user_name = $this->input->post('username');
-			$password = $this->input->post('password');
-			$userQuery = $this->db->query("SELECT * FROM tbl_user_mst where status='A' and user_name='$user_name' and password='$password' ");
-			$fetchUser = $userQuery->row();
-			$roleQuery = $this->db->query("SELECT * FROM tbl_user_role_mst where   user_id='".$fetchUser->user_id."'");
-			$fetchRole = $roleQuery->row();
-			$cnt = $userQuery->num_rows();
-			$sess_array = array(
-         				'user_id' => $fetchUser->user_id,
-		 				'is_logged_in'=>1,
-         				'user_name' => $fetchUser->user_name,
-		 				'user_type' => $fetchUser->user_type,
-		 				'comp_id' 	=> $fetchUser->comp_id,
-		 				'zone_id' 	=> $fetchUser->zone_id,
-		 				'brnh_id' 	=> $fetchUser->brnh_id,
-		 				'divn_id' 	=> $fetchUser->divn_id,
-		  				'divn_id' 	=> $fetchUser->divn_id,
-		  				'role' 	  	=> @$fetchRole->role_id
-       				);
-				if($cnt>0){
-				$this->session->set_userdata(@$sess_array);
-				redirect('master/Item/dashboar');
-				//redirect('dashboard');
-				}	else{
-					$this->session->set_flashdata('error', 'Invalid username/password');
-
-	redirect('index');
+	$user_name = $this->input->post('username');
+	$password = $this->input->post('password');
+	$userQuery = $this->db->query("SELECT * FROM tbl_user_mst where status='A' and user_name='$user_name' and password='$password' ");
+	$fetchUser = $userQuery->row();
+	$roleQuery = $this->db->query("SELECT * FROM tbl_user_role_mst where   user_id='".$fetchUser->user_id."'");
+	$fetchRole = $roleQuery->row();
+	$cnt = $userQuery->num_rows();
+	$sess_array = array(
+ 				'user_id' => $fetchUser->user_id,
+ 				'is_logged_in'=>1,
+ 				'user_name' => $fetchUser->user_name,
+ 				'user_type' => $fetchUser->user_type,
+ 				'comp_id' 	=> $fetchUser->comp_id,
+ 				'zone_id' 	=> $fetchUser->zone_id,
+ 				'brnh_id' 	=> $fetchUser->brnh_id,
+ 				'divn_id' 	=> $fetchUser->divn_id,
+  				'divn_id' 	=> $fetchUser->divn_id,
+  				'role' 	  	=> @$fetchRole->role_id
+				);
+	if($cnt>0)
+	{
+		$this->session->set_userdata(@$sess_array);
+		redirect('master/Item/dashboar');
+		//redirect('dashboard');
 	}
-					
-				
-				
-				
-}
-
- function index() {
-	if($this->session->userdata('is_logged_in')){
-		redirect('master/dashboar');
-		}	else{
-	redirect('index');
-	}
-}
-
-
-
-public function dashboar(){
-
-if($this->session->userdata('is_logged_in')){
-	$this->load->view('dashboard');
-    }else{	
+	else
+	{
+		$this->session->set_flashdata('error', 'Invalid username/password');
 		redirect('index');
 	}
-		}
+																
+}
 
-public function logout(){
-
-		$this->session->sess_destroy();
-		redirect('/index');
+function index() 
+{
+	if($this->session->userdata('is_logged_in'))
+	{
+		redirect('master/dashboar');
+	}
+	else
+	{
+		redirect('index');
+	}
 }
 
 
 
+public function dashboar()
+{
 
+	if($this->session->userdata('is_logged_in'))
+	{
+		$this->load->view('dashboard');
+    }
+    else
+    {	
+		redirect('index');
+	}
 
-
-
-public function popupclose(){
-echo "<script type='text/javascript'>";
-echo "window.close();";
-echo "window.opener.location.reload();";
-echo "</script>";
 }
 
-public function get_cid() {
-	if($this->session->userdata('is_logged_in')){
-	$data=$this->user_function();
+public function logout()
+{
+
+	$this->session->sess_destroy();
+	redirect('/index');
+
+}
+
+
+public function popupclose()
+{
+	echo "<script type='text/javascript'>";
+	echo "window.close();";
+	echo "window.opener.location.reload();";
+	echo "</script>";
+}
+
+public function get_cid() 
+{
+
+	if($this->session->userdata('is_logged_in'))
+	{
+		
+		$data=$this->user_function();
 		$this->load->view('get_cid',$data); 
 	
-	}	else{
+	}	
+	else
+	{
 	
 		$this->load->view('index');
 	
 	}
-		}
+
+}
 		
 		
-public function error_page() {
-	if($this->session->userdata('is_logged_in')){
-			$this->load->view('invalid_url');
-		}	else{
+public function error_page() 
+{
+
+	if($this->session->userdata('is_logged_in'))
+	{
+		$this->load->view('invalid_url');
+	}	
+	else
+	{
 		$this->load->view('index');
 	}
-		}
+
+}
 		
-public function session_data() {
+public function session_data() 
+{
+
 	$data = array(
 					
 					'comp_id' => $this->session->userdata('comp_id'),
@@ -169,17 +190,22 @@ public function session_data() {
 					'author_date'=> date('y-m-d')
 					);
 	return $data;
-		}	
+
+}	
 			
 
- function load_page1($page){
-	if($this->session->userdata('is_logged_in')){
+function load_page1($page)
+{
+
+	if($this->session->userdata('is_logged_in'))
+	{
 		$this->load->view($page);
 	}
 	else
 	{
-	redirect('/master/index');
+		redirect('/master/index');
 	}
+
 }	
 
 
@@ -219,26 +245,29 @@ function parseWord($filename)
     $striped_content = strip_tags($content);
 
     return $striped_content;
+
 } 
 	
 	
 	
 
- function load_page($page){
-	 $pageActive=$this->page_protection();
+function load_page($page)
+{
+
+	$pageActive=$this->page_protection();
 	
-	if($this->session->userdata('is_logged_in')){
+	if($this->session->userdata('is_logged_in'))
+	{
 		
 		$data=$this->user_function();
-		
-			$this->load->view($page,$data);
-		
-		
+		$this->load->view($page,$data);
+				
 	}
 	else
 	{
-	redirect('/master/index');
+		redirect('/master/index');
 	}
+
 }	
 
  public function product_check($productId){
@@ -424,57 +453,62 @@ function parseWord($filename)
 //=================================Close User===============================
  
 //================================*Start delete data ============== 
- function delete_data() {
+ function delete_data() 
+ {
 	
 	$this->load->model('Model_admin_login');
-		$getdata= $_GET['id'];
-		$dataex=explode("^",$getdata);
-		$id=$dataex[0];
-		$table_name =$dataex[1];
-		$pri_col =$dataex[2];
+	$getdata= $_GET['id'];
+	$dataex=explode("^",$getdata);
+	$id=$dataex[0];
+	$table_name =$dataex[1];
+	$pri_col =$dataex[2];
 
-		$table_name1 =tbl_product_serial_log;
-		$pri_col1 =product_id;
-		$table_name2 =tbl_product_serial;
-		$pri_col2 =product_id;		
+	$table_name1 =tbl_product_serial_log;
+	$pri_col1 =product_id;
+	$table_name2 =tbl_product_serial;
+	$pri_col2 =product_id;		
 
-		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
+	$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
 
-		if($table_name == 'tbl_contact_m'){
-		   $table_name1 = 'tbl_product_mapping';
-		   $pri_col1    = 'contact_id';	
-		   $this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
-		   $table_name2 = 'tbl_price_mapping_log';
-		   $pri_col2    = 'contact_id';	
-		   $this->Model_admin_login->delete_user($pri_col2,$table_name2,$id);
-        }
-        
-	    $this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
-		$this->Model_admin_login->delete_user($pri_col2,$table_name2,$id);
+	if($table_name == 'tbl_contact_m')
+	{
+	   $table_name1 = 'tbl_product_mapping';
+	   $pri_col1    = 'contact_id';	
+	   $this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
+	   $table_name2 = 'tbl_price_mapping_log';
+	   $pri_col2    = 'contact_id';	
+	   $this->Model_admin_login->delete_user($pri_col2,$table_name2,$id);
+    }
+    
+    $this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
+	$this->Model_admin_login->delete_user($pri_col2,$table_name2,$id);
 		
 }
 //================================Close delete data ============== 
 
  
 //================================* Start Multiple delete table data ============== 
- function delete_multiple_table_data() {
+ function delete_multiple_table_data() 
+ {
 	
 	$this->load->model('Model_admin_login');
-		$getdata= $_GET['id'];
-		$dataex=explode("^",$getdata);
-		$id=$dataex[0];
-		$table_name =$dataex[1];
-		$pri_col =$dataex[2];
-		$table_name_dtl =$dataex[3];
-		$pri_col_dtl =$dataex[4];
-		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-		$this->Model_admin_login->delete_user($pri_col_dtl,$table_name_dtl,$id);		
+	$getdata= $_GET['id'];
+	$dataex=explode("^",$getdata);
+	$id=$dataex[0];
+	$table_name =$dataex[1];
+	$pri_col =$dataex[2];
+	$table_name_dtl =$dataex[3];
+	$pri_col_dtl =$dataex[4];
+	$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
+	$this->Model_admin_login->delete_user($pri_col_dtl,$table_name_dtl,$id);		
+
 }
 //================================Close Multiple delete table data ============== 
 
  
 //================================* Start Sales order Multiple delete table data ============== 
- function delete_multiple_table_data_sales_order() {
+function delete_multiple_table_data_sales_order() 
+{
 	
 	$this->load->model('Model_admin_login');
 		$getdata= $_GET['id'];
@@ -503,13 +537,15 @@ function parseWord($filename)
 			}
 		}
 	$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-	$this->Model_admin_login->delete_user($pri_col_dtl,$table_name_dtl,$id);	
+	$this->Model_admin_login->delete_user($pri_col_dtl,$table_name_dtl,$id);
+
 }
 //================================Close Sales order Multiple delete table data ============== 
 
 
 //================================*Start Select All delete data==================
-function multiple_delete_table(){		
+function multiple_delete_table()
+{		
 	
 	$id=$_POST['ids'];
 
@@ -523,7 +559,8 @@ function multiple_delete_table(){
 		
 }
 
-function multiple_delete_two_table(){		
+function multiple_delete_two_table()
+{		
 	
 	$id=$_POST['ids'];
 
@@ -542,8 +579,7 @@ function multiple_delete_two_table(){
 	$this->db->query("delete from $tabledata where $pri_data in($id)");
 	$this->db->query("delete from $table_name where $pri_col in($id)");
 	$this->db->query("delete from $table_name_dtl where $pri_col_dtl in($id)");
-		
-	
+			
 			
 }
 
@@ -551,13 +587,10 @@ function multiple_delete_two_table(){
 
 
 
-function multiple_delete_item(){		
-$id=$_POST['ids'];
-//$this->db->query("delete from $_POST['table_name'] where $_POST['pri_col'] in($id)");	
+function multiple_delete_item()
+{		
 
-	
-	
-	
+	$id=$_POST['ids'];
 
 	$table_name =$_POST['table_name'];
 	$table_name1 ='tbl_product_serial';
@@ -565,150 +598,126 @@ $id=$_POST['ids'];
 	$pri_coll =$_POST['pri_col'];
 	$pri_col ='product_id';
 	$this->db->query("delete from $table_name where $pri_coll in($id)");
-$this->db->query("delete from $table_name1 where $pri_coll in($id)");	
-$this->db->query("delete from $table_name2 where $pri_coll in($id)");
-	
-	/*
-	$this->load->model('Model_admin_login');
-	
+	$this->db->query("delete from $table_name1 where $pri_coll in($id)");	
+	$this->db->query("delete from $table_name2 where $pri_coll in($id)");
 		
-		$this->Model_admin_login->delete_user($pri_col,$table_name1,$id);
-		$this->Model_admin_login->delete_user($pri_col,$table_name2,$id);
-		return;
-		*/
-	
 }
 
 
-
-
-
-
 //================================*Start delete sales order ============== 
- function delete_sales_order_data() {
-	
+ function delete_sales_order_data() 
+ {
+
 	$this->load->model('Model_admin_login');
-		$getdata= $_GET['id'];
-		$dataex=explode("^",$getdata);
-		$id=$dataex[0];
-		$table_name =$dataex[1];
-		$pri_col =$dataex[2];
-		$table_name1 =tbl_sales_order_dtl;
-		$pri_col1 =salesid;
-		
-		
-		
-		
-		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-		$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
-		
-		
-		
+	$getdata= $_GET['id'];
+	$dataex=explode("^",$getdata);
+	$id=$dataex[0];
+	$table_name =$dataex[1];
+	$pri_col =$dataex[2];
+	$table_name1 =tbl_sales_order_dtl;
+	$pri_col1 =salesid;
+			
+	$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
+	$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
+
 }
 //================================Close delete sales order ============== 
 
 //================================*Start delete invoice ============== 
- function delete_invoice_data() {
+function delete_invoice_data() 
+{
 	
 	$this->load->model('Model_admin_login');
-		$getdata= $_GET['id'];
-		$dataex=explode("^",$getdata);
-		$id=$dataex[0];
-		$table_name =$dataex[1];
-		$pri_col =$dataex[2];
-		$table_name1 =tbl_invoice_dtl;
-		$pri_col1 =invoiceid;
-		$table_name_pay='tbl_invoice_payment';
-			
-		
-		
-		// starts select product id and qty from invoice table //
-		
-		$selectSalesDtl=$this->db->query("select *from $table_name1 where invoiceid='$id'");
-		foreach($selectSalesDtl->result() as $getSalesDtl){
-		$qty=$getSalesDtl->qty;
-		$main_id=$getSalesDtl->productid;
-		$this->delete_updata_stock($qty,$main_id);
-		}
-		// ends//
-		
-		
-		
-		
-		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-		$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
-		
-		$this->db->query("delete from $table_name_pay where $pri_col1='$id' and status='invoice'");
+	$getdata= $_GET['id'];
+	$dataex=explode("^",$getdata);
+	$id=$dataex[0];
+	$table_name =$dataex[1];
+	$pri_col =$dataex[2];
+	$table_name1 =tbl_invoice_dtl;
+	$pri_col1 =invoiceid;
+	$table_name_pay='tbl_invoice_payment';
+
+
+
+	// starts select product id and qty from invoice table //
+
+	$selectSalesDtl=$this->db->query("select *from $table_name1 where invoiceid='$id'");
+	foreach($selectSalesDtl->result() as $getSalesDtl){
+	$qty=$getSalesDtl->qty;
+	$main_id=$getSalesDtl->productid;
+	$this->delete_updata_stock($qty,$main_id);
+	}
+	// ends//
+				
+	$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
+	$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
+
+	$this->db->query("delete from $table_name_pay where $pri_col1='$id' and status='invoice'");
+
 		
 }
 //================================Close delete invoice ============== 
 
- function delete_production_data() {
+function delete_production_data() 
+{
 	
 	$this->load->model('Model_admin_login');
-		$getdata= $_GET['id'];
-		$dataex=explode("^",$getdata);
-		$id=$dataex[0];
-		$table_name =$dataex[1];
-		$pri_col =$dataex[2];
-		$table_name1 =tbl_production_dtl;
-		$pri_col1 =productionhdr;
-		
-		
-		
-		
-		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-		$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
-		
-		
-		
+	$getdata= $_GET['id'];
+	$dataex=explode("^",$getdata);
+	$id=$dataex[0];
+	$table_name =$dataex[1];
+	$pri_col =$dataex[2];
+	$table_name1 =tbl_production_dtl;
+	$pri_col1 =productionhdr;
+
+	$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
+	$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
+			
 }
 
- function delete_cutting_data() {
+function delete_cutting_data() 
+{
+
 	
 	$this->load->model('Model_admin_login');
-		$getdata= $_GET['id'];
-		$dataex=explode("^",$getdata);
-		$id=$dataex[0];
-		$table_name =$dataex[1];
-		$pri_col =$dataex[2];
-		
-		$table_name1 =tbl_production_log;
-		$pri_col1 =overlock_id;
+	$getdata= $_GET['id'];
+	$dataex=explode("^",$getdata);
+	$id=$dataex[0];
+	$table_name =$dataex[1];
+	$pri_col =$dataex[2];
+
+	$table_name1 =tbl_production_log;
+	$pri_col1 =overlock_id;
+
+	$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
+	$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
 				
-		
-		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-		$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
-		
-		
 		
 }
 //================================*Start delete packing ============== 
- function delete_packing_data() {
+ function delete_packing_data() 
+ {
 	
 	$this->load->model('Model_admin_login');
-		$getdata= $_GET['id'];
-		$dataex=explode("^",$getdata);
-		$id=$dataex[0];
-		$table_name =$dataex[1];
-		$pri_col =$dataex[2];
-		$table_name1 =tbl_production_log;
-		$pri_col1 =cutting_id;
+	$getdata= $_GET['id'];
+	$dataex=explode("^",$getdata);
+	$id=$dataex[0];
+	$table_name =$dataex[1];
+	$pri_col =$dataex[2];
+	$table_name1 =tbl_production_log;
+	$pri_col1 =cutting_id;
 		
-		
-		
-		
-		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-		$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
-		
-		
+	$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
+	$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
+				
 		
 }
 //================================Close delete packing ============== 
 
 
 //================================*Start delete purchase order ============== 
- function delete_purchase_order_data() {
+ function delete_purchase_order_data() 
+ {
 	
 		$this->load->model('Model_admin_login');
 		$getdata     = $_GET['id'];
@@ -744,80 +753,88 @@ $this->db->query("delete from $table_name2 where $pri_coll in($id)");
 
 public function forgotPassword()
 {
-@extract($_POST);
-$userQuery=$this->db->query("select *from tbl_user_mst where email_id='$email_id'");
-$cnt=$userQuery->num_rows();
-if($cnt>0)
-{
-$getUser=$userQuery->row();
+	
+	@extract($_POST);
+	$userQuery=$this->db->query("select *from tbl_user_mst where email_id='$email_id'");
+	$cnt=$userQuery->num_rows();
+	if($cnt>0)
+	{
 
+		$getUser=$userQuery->row();
+		$msg="Your Password Is:-$password";
+		
+		$this->load->library('email');
+		$name=$first_name." ".$last_name;
+		
+		$this->email->from('info@techvyas.com', 'Techcyas');
+		$this->email->to($email_id);
+		$this->email->bcc('collestbablu@gmail.com');
 
-$msg="Your Password Is:-$password";
-					$this->load->library('email');
-$name=$first_name." ".$last_name;
-$this->email->from('info@techvyas.com', 'Techcyas');
-$this->email->to($email_id);
-$this->email->bcc('collestbablu@gmail.com');
+		$this->email->subject('Password Details');
+		$this->email->message($msg);
 
-$this->email->subject('Password Details');
-$this->email->message($msg);
+		$this->email->send();
+		$this->session->set_flashdata('message', 'Please check your mail for password ');
+		redirect('index');
+	}
+	else
+	{
 
-$this->email->send();
-$this->session->set_flashdata('message', 'Please check your mail for password ');
-redirect('index');
+		$this->session->set_flashdata('message', 'Email Id do not match to admin account.');
+		redirect('index');
+
+	}
 }
-else
-{
 
-$this->session->set_flashdata('message', 'Email Id do not match to admin account.');
-redirect('index');
-}
-}
 //starts
-function fillselect($name,$id,$field='contact_id_copy'){
+
+function fillselect($name,$id,$field='contact_id_copy')
+{
 	echo "<script>
 			foropener('".$name."','".$id."','".$field."');
-function foropener(text,value,field)
-{
-	var openerWindow= window.opener;
-	if (openerWindow != null && !openerWindow.closed) 
-    {
-		try{
-		var selectcopy = window.opener.document.getElementById(field);
-		var option = window.opener.document.createElement('option');
-		option.text = text;
-		option.value = value;
-		selectcopy.add(option, selectcopy[1]);
-		selectcopy.value=option.value;
-		return;
-		}catch(ex){}
-	}
-	else {
-    alert('Parent closed/does not exist.'); 
-	}
+			function foropener(text,value,field)
+			{
+				var openerWindow= window.opener;
+				if (openerWindow != null && !openerWindow.closed) 
+			    {
+					try{
+					var selectcopy = window.opener.document.getElementById(field);
+					var option = window.opener.document.createElement('option');
+					option.text = text;
+					option.value = value;
+					selectcopy.add(option, selectcopy[1]);
+					selectcopy.value=option.value;
+					return;
+					}catch(ex){}
+				}
+				else {
+			    alert('Parent closed/does not exist.'); 
+				}
+			}
+		</script>";
+	
+	return;
+
 }
-			</script>";
-			return;
-	}
 
 //ends
 
 public function software_log_insert($log_id,$contact_id,$total,$type)
 {
 
-$table_name='tbl_software_log';
-date_default_timezone_set("Asia/Kolkata");
-$dtTime = date('H:i:s');
+	$table_name='tbl_software_log';
+	date_default_timezone_set("Asia/Kolkata");
+	$dtTime = date('H:i:s');
 
-$data=array(
-'log_id' => $log_id,
-'contact_id' => $contact_id,
-'total' => $total,
-'type' => $type,
-'author_id' => $dtTime
-);
+	$data=array(
+	'log_id' => $log_id,
+	'contact_id' => $contact_id,
+	'total' => $total,
+	'type' => $type,
+	'author_id' => $dtTime
+	);
 
-$sess = array(
+	$sess = array(
 					
 					'maker_id' => $this->session->userdata('user_id'),
 					'maker_date' => date('y-m-d'),
@@ -826,10 +843,11 @@ $sess = array(
 					'zone_id' => $this->session->userdata('zone_id'),
 					'brnh_id' => $this->session->userdata('brnh_id'),
 					'divn_id' => $this->session->userdata('divn_id')
-		);
-$data_merge = array_merge($data,$sess);	
-$this->Model_admin_login->insert_user($table_name,$data_merge);
-return;
+				);
+	
+	$data_merge = array_merge($data,$sess);	
+	$this->Model_admin_login->insert_user($table_name,$data_merge);
+	return;
 
 }
 
@@ -838,26 +856,26 @@ return;
 public function pur_payment_due($contact_id)
 {
 
-$selectin1="select * from tbl_invoice_payment where contact_id='$contact_id'";
- $resultin1=$this->db->query($selectin1);
- foreach($resultin1->result() as $rowin1)
- {
- 
- 
- 
- if($rowin1->status=='Purchaseorder')
- {
-   $invoiceSum=$invoiceSum+$rowin1->receive_billing_mount;
- }
- if($rowin1->status=='payment')
- {
-  $paySum=$paySum+$rowin1->receive_billing_mount;
- 
- }
- 
- }
- $remaining_amt=$invoiceSum-$paySum;
-return $remaining_amt;
+	$selectin1="select * from tbl_invoice_payment where contact_id='$contact_id'";
+ 	$resultin1=$this->db->query($selectin1);
+ 	foreach($resultin1->result() as $rowin1)
+ 	{
+	 
+		if($rowin1->status=='Purchaseorder')
+		{
+			$invoiceSum=$invoiceSum+$rowin1->receive_billing_mount;
+		}
+		
+		if($rowin1->status=='payment')
+		{
+			$paySum=$paySum+$rowin1->receive_billing_mount;
+		}
+
+	}
+
+	$remaining_amt=$invoiceSum-$paySum;
+	return $remaining_amt;
+
 }
 
 
@@ -869,26 +887,25 @@ return $remaining_amt;
 public function payment_due($contact_id)
 {
 
-$selectin1="select * from tbl_invoice_payment where contact_id='$contact_id'";
- $resultin1=$this->db->query($selectin1);
- foreach($resultin1->result() as $rowin1)
- {
- 
- 
- 
- if($rowin1->status=='invoice')
- {
-   $invoiceSum=$invoiceSum+$rowin1->receive_billing_mount;
- }
- if($rowin1->status=='PaymentReceived')
- {
-  $paySum=$paySum+$rowin1->receive_billing_mount;
- 
- }
- 
- }
- $remaining_amt=$invoiceSum-$paySum;
-return $remaining_amt;
+	$selectin1="select * from tbl_invoice_payment where contact_id='$contact_id'";
+	$resultin1=$this->db->query($selectin1);
+	foreach($resultin1->result() as $rowin1)
+	{
+
+		if($rowin1->status=='invoice')
+		{
+			$invoiceSum=$invoiceSum+$rowin1->receive_billing_mount;
+		}
+		if($rowin1->status=='PaymentReceived')
+		{
+			$paySum=$paySum+$rowin1->receive_billing_mount;
+		}
+
+	}
+
+	$remaining_amt=$invoiceSum-$paySum;
+	return $remaining_amt;
+
 }
 
 
@@ -896,33 +913,33 @@ return $remaining_amt;
 
 public function getManagePageData($table_name,$pri_id,$id,$field_name)
 {
-//echo "select $field_name as field from $table_name where $pri_id='$id'";die;
-		$dataQuery=$this->db->query("select $field_name as field from $table_name where $pri_id='$id'");
-		$getData=$dataQuery->row();
-		$getField=$getData->field;	
-		return $getField;
+	//echo "select $field_name as field from $table_name where $pri_id='$id'";die;
+	$dataQuery=$this->db->query("select $field_name as field from $table_name where $pri_id='$id'");
+	$getData=$dataQuery->row();
+	$getField=$getData->field;	
+	return $getField;
 }
 
 // ends
-//================================*Start delete template order ============== 
- function delete_template()
-  {
-		$this->load->model('Model_admin_login');
-		$getdata= $_GET['id'];
-		$dataex=explode("^",$getdata);
-		$id=$dataex[0];
-		$table_name =$dataex[1];
-		$pri_col =$dataex[2];
-		$pro_id =$dataex[3];
-		$table_name1 =tbl_template_dtl;
-		$pri_col1 =templatehdr;
-		$this->db->query("update tbl_product_stock set templateid='0' where Product_id='$pro_id'");
-		$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
-		$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
-		
-		
 
- }
+//================================*Start delete template order ============== 
+function delete_template()
+{
+
+	$this->load->model('Model_admin_login');
+	$getdata= $_GET['id'];
+	$dataex=explode("^",$getdata);
+	$id=$dataex[0];
+	$table_name =$dataex[1];
+	$pri_col =$dataex[2];
+	$pro_id =$dataex[3];
+	$table_name1 =tbl_template_dtl;
+	$pri_col1 =templatehdr;
+	$this->db->query("update tbl_product_stock set templateid='0' where Product_id='$pro_id'");
+	$this->Model_admin_login->delete_user($pri_col,$table_name,$id);
+	$this->Model_admin_login->delete_user($pri_col1,$table_name1,$id);
+		
+}
  
  
 public function duplicate_po_check()
@@ -984,115 +1001,15 @@ public function duplicate_po_check()
  }
  
 
-
-
-
-
-
-
-
-
-/*public function ciPaginationProduct($url,$p_type,$totalData,$sgmnt,$showEntries){
-	   
-	  
-	    $config['use_page_numbers']     = FAlSE;
-        $config['page_query_string']    = TRUE;
-        $config['query_string_segment'] = 'offset';
-       
-        $config['base_url']       =  $url;
-        $config['p_type']         =  $p_type;
-        $config['total_rows']     =  $totalData;
-        $config['per_page']       =  $showEntries;
-        $config["uri_segment"]    =  $sgmnt;
-        $choice                   =  $config["total_rows"] / $config["per_page"];
-        $config["num_links"]      =  3;//floor($choice);
-
-        //config for bootstrap pagination class integration
-        $config['full_tag_open']  = '<ul class="pagination">';
-        $config['full_tag_close'] = '</ul>';
-        $config['first_link']     = 'First';
-        $config['last_link']      = 'Last';
-        $config['first_tag_open'] = '<li>';
-        $config['first_tag_close']= '</li>';
-        $config['prev_link']      = '&laquo';
-        $config['prev_tag_open']  = '<li class="prev">';
-        $config['prev_tag_close'] = '</li>';
-        $config['next_link']      = '&raquo'; 
-        $config['next_tag_open']  = '<li>';
-        $config['next_tag_close'] = '</li>';
-        $config['last_tag_open']  = '<li>';
-        $config['last_tag_close'] = '</li>';
-        $config['cur_tag_open']   = '<li class="active"><a href="#">';
-        $config['cur_tag_close']  = '</a></li>';
-        $config['num_tag_open']   = '<li>';
-        $config['num_tag_close']  = '</li>';
-
-        $this->pagination->initialize($config);
-        $pages = $_GET['offset'];
-        $postlist['page'] = ($pages != "") ? $pages : 0;
-
-        return array('per_page'=>$config['per_page'] ,'page'=>$postlist['page']);	
-	   
- }
- 
-
-
-
-public function ciPaginationContact($url,$con_type,$totalData,$sgmnt,$showEntries){
-	   
-	  
-	    $config['use_page_numbers']     = FAlSE;
-        $config['page_query_string']    = TRUE;
-        $config['query_string_segment'] = 'offset';
-
-       
-        $config['base_url']       =  $url;
-        $config['con_type']       =  $con_type;
-        $config['total_rows']     =  $totalData;
-        $config['per_page']       =  $showEntries;
-        $config["uri_segment"]    =  $sgmnt;
-        //$choice                   =  $config["total_rows"] / $config["per_page"];
-        $config["num_links"]      =  2;//floor($choice);
-
-        //config for bootstrap pagination class integration
-        $config['full_tag_open']  = '<ul class="pagination">';
-        $config['full_tag_close'] = '</ul>';
-        $config['first_link']     = 'First';
-        $config['last_link']      = 'Last';
-        $config['first_tag_open'] = '<li>';
-        $config['first_tag_close']= '</li>';
-        $config['prev_link']      = '&laquo';
-        $config['prev_tag_open']  = '<li class="prev">';
-        $config['prev_tag_close'] = '</li>';
-        $config['next_link']      = '&raquo'; 
-        $config['next_tag_open']  = '<li>';
-        $config['next_tag_close'] = '</li>';
-        $config['last_tag_open']  = '<li>';
-        $config['last_tag_close'] = '</li>';
-        $config['cur_tag_open']   = '<li class="active"><a href="#">';
-        $config['cur_tag_close']  = '</a></li>';
-        $config['num_tag_open']   = '<li>';
-        $config['num_tag_close']  = '</li>';
-
-        $this->pagination->initialize($config);
-        $pages = $_GET['offset'];
-        $postlist['page'] = ($pages != "") ? $pages : 0;
-
-        return array('per_page'=>$config['per_page'] ,'page'=>$postlist['page']);	
-	   
- }*/
-
-
-
 public function explode_date($data)
- {
-	 		$fdate=explode("-",$data);
-			$todate1=$fdate[2]."-".$fdate[1]."-".$fdate[0];
-			return $todate1;
-	        
-	 
- } 
-  
+{
+	
+	$fdate=explode("-",$data);
+	$todate1=$fdate[2]."-".$fdate[1]."-".$fdate[0];
+	return $todate1;
+	        	 
+} 
+
 }?>
 
 
