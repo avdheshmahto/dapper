@@ -30,11 +30,12 @@ $getDtl->productid;
 function getPart(v)
 {
 	
+	var select_id=document.getElementById("select_id").value;
 	var ur = '<?=base_url();?>productionModule/getPart';
 	$.ajax({
 	type: "POST",
 	url: ur,
-	data: {'shape':v,'production_id':<?=$_GET['id'];?>},
+	data: {'shape':v,'production_id':<?=$_GET['id'];?>,'shapeName':select_id},
 	success: function(data){
     // console.log(data);
     $("#getPartView").empty().append(data).fadeIn();
@@ -1049,7 +1050,7 @@ foreach($queryProductShape->result() as $getProductShape){
 <input type="hidden" name="production_id" id="production_id" value="<?=$_GET['id'];?>" />
 <label class="col-sm-2 control-label">Select:</label> 
 <div class="col-sm-4">
-<select class="form-control" name="type" id="select_id" required>
+<select class="form-control" name="type" id="select_id" required onchange="checkQtyVal();">
         <option value="">--Select--</option>
         <option value="Shape">Shape Complete</option>
         <option value="ShapePart">Shape in Parts</option>
@@ -1073,13 +1074,13 @@ $getProduct=$queryProduct->row();
 </div>
 </div>
 <div class="form-group">
-<label class="col-sm-2 control-label">Qty:</label> 
+<label class="col-sm-2 control-label" id="qtyn" style="display:none">Qty:</label> 
 <div class="col-sm-4">
 
-<input name="shape_qty" type="text" value="" id="fillQty" onchange="qtyFill(this.value);" class="form-control" > 
+<input name="shape_qty" type="text" value="" id="fillQty" onchange="qtyFill(this.value);" class="form-control" style="display:none" > 
 </div>
-<label class="col-sm-6 control-label">
-<div class="table-responsive" id="getPartView">
+<label class="col-sm-12 control-label">
+<div class="table-responsive" id="getPartView" >
   </div>
 
 
@@ -2609,6 +2610,38 @@ window.onbeforeunload = function (e) {
 };
 */
 
+function checkQtyVal()
+{
 
+var shapePart=document.getElementById("select_id").value;	
+if(shapePart=='Shape')
+{
+	
+	document.getElementById("fillQty").style.display = "block";
+	document.getElementById("qtyn").style.display = "block";
+	
+	for(i=1;i<=cntVal;i++)
+	{
+
+	document.getElementById("entQty"+i).readOnly = true;
+	}
+
+}
+else
+{
+document.getElementById("fillQty").style.display = "none";	
+document.getElementById("shape").value = "";	
+document.getElementById("qtyn").style.display = "none";	
+
+
+for(i=1;i<=10;i++)
+	{
+	
+	document.getElementById("entQty"+i).value = "";
+
+	}
+}
+
+}
 </script>
 

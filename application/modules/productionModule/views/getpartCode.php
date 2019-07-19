@@ -15,9 +15,7 @@
       </tr>
     </thead>
     <tbody>
-  <?php  	  
-
-
+<?php  	  
 $productionqty=$this->db->query("select *from tbl_quotation_purchase_order_hdr where purchaseid='$production_id'");
 $getProduction=$productionqty->row();
 
@@ -36,10 +34,10 @@ $queryProduct=$this->db->query("select *from tbl_product_stock where Product_id=
 $getProduct=$queryProduct->row();
 ?>
       <tr class="gradeU record">
-        <td> <input class="form-control" style="margin-bottom:10px; border:none; width:80px;" value="<?=$getProduct->sku_no;?>" name="part[]"/>
+        <td> <input class="form-control" readonly="readonly" style="margin-bottom:10px; border:none; width:80px;" value="<?=$getProduct->sku_no;?>" name="part[]"/>
          <input class="form-control" type="hidden" style="margin-bottom:10px;" value="<?=$getProduct->Product_id;?>" name="part_code[]"/>
         </td>
-        <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="qty[]" id="entQty<?=$i;?>" onchange="val(this.id)" /></td>
+        <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="qty[]" id="entQty<?=$i;?>" onchange="val(this.id)" <?php if($shapeName=='Shape'){?> readonly="readonly"<?php } ?> /></td>
         <td> <input class="form-control" readonly="" style="margin-bottom:10px;width:55px;" value="<?=$getProduct->net_weight;?>" name="weight[]" id="weight<?=$i;?>"  /></td>
 
         <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_weight[]" id="total_weight<?=$i;?>"  /></td>
