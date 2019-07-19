@@ -4,7 +4,7 @@ $id=$_GET['id'];
 
 if($_GET['id']!='' or $_GET['view']!=''){
 	$query=$this->db->query("select * from tbl_proforma_invoice_hdr where invoiceid='$id' or invoiceid='".$_GET['view']."'");	
-	$fetchq=$query->row();
+	$detail=$query->row();
 }
 
 ?>
@@ -31,176 +31,124 @@ if($_GET['id']!='' or $_GET['view']!=''){
 						</div>
 <div class="panel-body">
 <div class="table-responsive">
-<table class="table table-striped table-bordered table-hover" <?php if($_GET['view']!=''){?> oncontextmenu='return false;' onkeydown='return false;' onmousedown='return false;' <?php }?> >
+<table class="table table-striped table-bordered table-hover" >
 <thead>
 <tr>
-<th>State</th>
-<th>
-<div class="field">
-<select class="form-control" name="state_id" id="state" onchange="getCustomer();">
-<option value="">--Select--</option>
 
-
-<option value="07" <?php if($fetchq->state_id=='07'){ ?> selected="selected" <?php }?>>Delhi</option>
-<option value="06" <?php if($fetchq->state_id=='06'){ ?> selected="selected" <?php }?>>Haryana</option>
-<option value="08" <?php if($fetchq->state_id=='08'){ ?> selected="selected" <?php }?>>Rajasthan</option>
-<option value="24" <?php if($fetchq->state_id=='24'){ ?> selected="selected" <?php }?>>Gujrat</option>
-<option value="29" <?php if($fetchq->state_id=='29'){ ?> selected="selected" <?php }?>>Karnataka</option>
-<option value="09" <?php if($fetchq->state_id=='09'){ ?> selected="selected" <?php }?>>Uttar Pradesh</option>
-</select>
-</div>
-</th>
 <th>Customer Name</th>
 <th>
 <div class="field">
-
-
-
-<select name="vendor_id" required id="contact_id_copy" class="form-control ui fluid search dropdown email" onChange="document.getElementsByName('contactid')[0].value=this.value;">
-					<option value="">---select---</option>
-					 <?php
-					 
-					 $contQuery=$this->db->query("select * from tbl_contact_m where status='A' and group_name='4' order by first_name");
-					 foreach($contQuery->result() as $contRow)
-					{
-					  ?>
-						<option value="<?php echo $contRow->contact_id; ?>" <?php if($contRow->contact_id==$fetchq->vendor_id){?> selected="selected" <?php }?>>
-						<?php echo $contRow->first_name.' '.$contRow->last_name."(".$contRow->printname.")"; ?></option>
-						<?php } ?>
-</select>
-
-
-
-
-
-	<select style="display:none;" name="invoice_type" class="form-control"  required id="invoice_type"   <?php if(@$_GET['view']!=''){ ?> disabled="disabled" <?php }?>>
-		
-		
-			<option value="No-Tax" >
-			No-Tax
+<input type="hidden" name="id" value="<?=$_GET['id'];?>" />
+<select name="contactid" id="vendor_id" required  class="form-control" style="
+    width: 100%;" onChange="document.getElementsByName('contactid')[0].value=this.value;"   <?php if(@$_GET['view']!=''){ ?> disabled="disabled" <?php }?>>
+		<option value="" selected disabled>Select</option>
+		<?php
+		$contQuery=$this->db->query("select * from tbl_contact_m where status='A' and group_name='4'");
+		foreach($contQuery->result() as $contRow)
+		{
+		?>
+			<option value="<?php echo $contRow->contact_id; ?>" <?php if($contRow->contact_id==$detail->contactid){ ?> selected="selected"<?php }?>>
+			<?php echo $contRow->first_name; ?>
 			</option>
-            <option value="GST" selected="selected" >
-			GST
-			</option>
+			<?php } ?>
+	</select>
+	<select style="display:none" name="invoice_type" class="form-control"  required id="invoice_type"   <?php if(@$_GET['view']!=''){ ?> disabled="disabled" <?php }?>>
+				
+			<option value="No-Tax">	No-Tax	</option>
+            <option value="GST" selected="selected">GST	</option>
 		
 	</select>
 </div>
+
 </th>
-<th>Date</th>
+
+
+<th>Proforma No.</th>
 <th>
-<input type="date"  class="form-control" required name="date" value="<?php echo $fetchq->invoice_date;?>" />
-<input type="hidden"  class="form-control" required name="id" value="<?php echo $fetchq->invoiceid;?>" />
+<input type="text"  class="form-control" required name="proforma_no" value="<?php echo $detail->proforma_no;?>" />
 </th>
-<th>Payment Term</th>
+<th>Proforma Date</th>
 <th>
-<input type="number"  class="form-control" min="0" required name="due_date" value="<?php echo $fetchq->due_date;?>" />
+<input type="date"  class="form-control" min="0" name="proforma_date" value="<?php echo $detail->proforma_date;?>" />
 </th>
 </tr>
 <tr>
-<td>Dispatch Through</td>
+<td>Buyer Order</td>
 <th>
-<input type="text"  class="form-control"  name="Transportation" value="<?php echo $detail->Transportation;?>" />
+<input type="text"  class="form-control"  name="buyer_order" value="<?php echo $detail->buyer_order;?>" />
 </th>
-<td>Vehicle Number</td>
+<td>Date</td>
 <th>
-<input type="text"  class="form-control"  name="Vehicle_Number" value="<?php echo $detail->Vehicle_Number;?>" />
+<input type="date"  class="form-control"  name="buyer_date" value="<?php echo $detail->buyer_date;?>" />
 </th>
-<td>Date of Supply</td>
+<td>Ship Date</td>
 <th>
-<input type="date"  class="form-control"  name="Date_of_Supply" value="<?php echo $detail->Date_of_Supply;?>" />
-</th>
-<td>Place of Supply</td>
-<th>
-<input type="text"  class="form-control"  name="Place_of_Supply" value="<?php echo $detail->Place_of_Supply;?>" />
-</th>
-</tr>
-<tr>
-<td>Store No.</td>
-<th>
-<input type="text"  class="form-control" required name="storeno" value="<?php echo $fetchq->storeno;?>" />
-</th>
-<td>PO No.</td>
-<th>
-<input type="text"  class="form-control" required name="pono" value="<?php echo $fetchq->pono;?>" />
-</th>
-<td>PO Date</td>
-<th>
-<input type="date"  class="form-control" required name="podate" value="<?php echo $fetchq->podate;?>" />
+<input type="date"  class="form-control"  name="ship_date" value="<?php echo $detail->ship_date;?>" />
 </th>
 
-<td>Schedule</td>
-<th>
-<input type="text"  class="form-control"  name="schedule" value="<?php echo $fetchq->schedule;?>" />
-</th>
 </tr>
+
+
 
 <tr>
-<td>Eway Bill No.</td>
+
+<td>Payment Term</td>
 <th>
-<input type="text"  class="form-control"  name="ewaybillno" value="<?php echo $fetchq->ewaybillno;?>" />
-</th>
-
-<td>Eway Bill Date</td>
-<th>
-<input type="date"  class="form-control"  name="ewaybilldate" value="<?php echo $fetchq->ewaybilldate;?>" />
-</th>
-
-<td>No. Of Bags</td>
-<th>
-<input type="text"  class="form-control"  name="no_of_begs" value="<?php echo $fetchq->no_of_begs;?>" />
-</th>
-
-
-<td>Weight</td>
-<th>
-<input type="text"  class="form-control"  name="weight" value="<?php echo $fetchq->weight;?>" />
-</th>
-
-</tr>
-<tr>
-
-<td>Dispatch Document No.</td>
-<th>
-<input type="text"  class="form-control"  name="dispatch_document_no" value="<?php echo $fetchq->dispatch_document_no;?>" />
+<input type="text"  class="form-control"  name="payment_term" value="<?php echo $detail->payment_term;?>" />
 </th>
 
 
 
-<td>Dispatch Document Date</td>
+<td>Delivery Term</td>
 <th>
-<input type="date"  class="form-control"  name="dispatch_document_date" value="<?php echo $fetchq->dispatch_document_date;?>" />
+<input type="text"  class="form-control"  name="dilivery_term" value="<?php echo $detail->dilivery_term;?>" />
 </th>
 
 
 
-<td>Remarks</td>
+<td>Port Of loading</td>
 <th>
-<textarea name="remarks" class="form-control"><?php echo $fetchq->remarks;?></textarea>
+
+<select name="port_loading" class="form-control">
+<option value="">--Select--</option>
+<?php
+$portOfLoading=$this->db->query("select *from tbl_master_data where param_id='21'");
+foreach($portOfLoading->result() as $getPortOfLoading){
+?>
+<option value="<?=$getPortOfLoading->serial_number;?>" <?php if($getPortOfLoading->serial_number==$detail->port_loading){?> selected="selected"<?php }?>><?=$getPortOfLoading->keyvalue;?></option>
+<?php
+}
+?>
+</select>
+
 </th>
 
 </tr>
+
 
 <tr>
-<td>Attachment</td>
+<td>Port Of Discharge</td>
 <th>
-<input type="file"  class="form-control"  name="image[]" multiple  />
-</th>
-<td>&nbsp;</td>
-<th>&nbsp;
+<select name="port_of_discharge" class="form-control">
+<option value="">--Select--</option>
+<?php
+$portOfDischarge=$this->db->query("select *from tbl_master_data where param_id='22'");
+foreach($portOfDischarge->result() as $getportOfDischarge){
+?>
+<option value="<?=$getportOfDischarge->serial_number;?>" <?php if($getportOfDischarge->serial_number==$detail->port_of_discharge){ ?> selected="selected" <?php }?>><?=$getportOfDischarge->keyvalue;?></option>
+<?php
+}
+?>
+</select>
 
 </th>
-<td>&nbsp;</td>
-<th>&nbsp;
-
-</th>
-<td>&nbsp;</td>
-<th>&nbsp;
+<td>Partshipment</td>
+<th><input type="text"  class="form-control"  name="partshipment" value="<?=$detail->partshipment;?>"  /></th>
+<td>Forwarder</td>
+<th><input type="text"  class="form-control"  name="forwarder" value="<?=$detail->forwarder;?>"  /></th>
 
 </th>
 </tr>
-
-
-
 
 </thead>
 
@@ -211,17 +159,19 @@ if($_GET['id']!='' or $_GET['view']!=''){
 <table class="table table-striped table-bordered table-hover" <?php if($_GET['view']!=''){?> oncontextmenu='return false;' onkeydown='return false;' onmousedown='return false;' <?php }?> >
 <tbody>
 <tr class="gradeA">
-<th>Product Name</th>
-<th>Quantity In Stock</th>
-<th>Unit</th>
-<th>Rate</th>
+<th>Item Code</th>
+<th style="display:none">Quantity In Stock</th>
+<th>Usages Unit</th>
 <th>Quantity</th>
-<th>Discount%</th>
-<th>Discount Amt</th>
- <th><div align="center"><b>CGST</b></div></th>
-                    <th><div align="center"><b>SGST</b></div></th>
-                    <th><div align="center"><b>IGST</b></div></th>
-                    <th><div align="center"><b>GST Total</b></div></th>
+<th>Per Crt Qty.</th>
+<th>Total Qty.</th>
+<th>Price US $</th>
+<th style="display:none">Discount%</th>
+<th style="display:none">Discount Amt</th>
+ <th style="display:none"><div align="center"><b>CGST</b></div></th>
+                    <th style="display:none"><div align="center"><b>SGST</b></div></th>
+                    <th style="display:none"><div align="center"><b>IGST</b></div></th>
+                    <th style="display:none"><div align="center"><b>GST Total</b></div></th>
 <th>Total</th>
 <th>Net Price</th>
 </tr>
@@ -245,29 +195,31 @@ $this->load->view('getproduct');
 </div>
 </th>
 
-<th>
+<th style="display:none">
 <input type="hidden" id="reorder" />
 <input type="text" readonly="" id="qty_stock" style="width:70px;" class="form-control"> 
 </th>
 <th>
 <input type="text" readonly="" id="usunit" style="width:70px;" class="form-control"> 
 </th>
-<th>
-<b id="lpr"></b>
-<input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:112px;"></th>
 <th><input type="number" id="qn" min="1" style="width:70px;"   class="form-control"></th>
+<th><input type="number" id="per_crt_qn" min="1" style="width:70px;" readonly="readonly"   class="form-control"></th>
+<th><input type="number" id="total_qty" min="1" style="width:70px;" readonly="readonly"   class="form-control"></th>
+<th>
+<b style="display:none" id="lpr"></b>
+<input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:112px;"></th>
 
-<th><input type="number" step="any" name="saleamnt" id="discount" class="form-control"  style="width:70px;"/ ></th>
-<th><input type="number" step="any" name="saleamnt" id="disAmt" class="form-control"   style="width:70px;"/ ></th>
- <td> 
+<th style="display:none"><input type="number" step="any" name="saleamnt" id="discount" class="form-control"  style="width:70px;"/ ></th>
+<th style="display:none"><input type="number" step="any" name="saleamnt" id="disAmt" class="form-control"   style="width:70px;"/ ></th>
+ <td style="display:none"> 
 						 <input type="text" id="cgst" class="form-control"  onfocus="this.select()" style="width:62px;" readonly></td>	
                          
-                         <td> 
+                         <td style="display:none"> 
 						 <input type="text"  id="sgst" class="form-control" onfocus="this.select()" style="width:62px;" readonly></td>	
                          
-                         <td> 
+                         <td style="display:none"> 
 						 <input type="text" id="igst" class="form-control"  onfocus="this.select()" style="width:62px;" readonly></td>
-                          <td><input type="text" class="form-control" id="gstTotal"  onfocus="this.select()" style="width:62px;" readonly></td>	
+                          <td style="display:none"><input type="text" class="form-control" id="gstTotal"  onfocus="this.select()" style="width:62px;" readonly></td>	
 <th><input type="text" name="saleamnt" readonly=""  class="form-control" id="tot"  style="width:70px;"/ ></th>
 <th><input type="text" name="saleamnt" readonly="" class="form-control" id="nettot"  style="width:70px;"/ ></th>
 </tr>
@@ -279,16 +231,17 @@ $this->load->view('getproduct');
 <table id="invo" style="width:100%;  background:#dddddd;  height:70%;" title="Invoice"  >
 <tr>
 <td style="width:1%;"><div align="center"><u>Sl No</u>.</div></td>
-<td style="width:11%;"><div align="center"><u>Item</u></div></td>
-<td style="width:3%;"> <div align="center"><u>Rate</u></div></td>
+<td style="width:11%;"><div align="center"><u>Item Code</u></div></td>
 <td style="width:3%;"><div align="center"><u>Quantity</u></div></td>
-<td style="width:3%;"> <div align="center"><u>Dis.%</u></div></td>
-<td style="width:3%;"> <div align="center"><u>Discount Amt</u></div></td>
-<td style="width:3%;"> <div align="center"><u>CGST</u></div></td>
-<td style="width:3%;"> <div align="center"><u>SGST</u></div></td>
-<td style="width:3%;"> <div align="center"><u>IGST</u></div></td>
-<td style="width:3%;"> <div align="center"><u>GST TOTAL</u></div></td>
-
+<td style="width:3%;"><div align="center"><u>Per Crt Qty.</u></div></td>
+<td style="width:3%;"><div align="center"><u>Total Qty.</u></div></td>
+<td style="width:3%;"> <div align="center"><u>Price US $</u></div></td>
+<td style="width:3%; display:none;"> <div align="center"><u>Discount</u></div></td>
+<td style="width:3%; display:none;"> <div align="center"><u>Discount Amount</u></div></td>
+<td style="width:3%;  display:none;"> <div align="center"><u>CGST</u></div></td>
+<td style="width:3%;  display:none;"> <div align="center"><u>SGST</u></div></td>
+<td style="width:3%;  display:none;"> <div align="center"><u>IGST</u></div></td>
+<td style="width:3%;  display:none;"> <div align="center"><u>GST TOTAL</u></div></td>
 
 <td style="width:3%;"> <div align="center"><u>Total</u></div></td>
 <td style="width:3%;"> <div align="center"><u>Net Price</u></div></td>
@@ -314,31 +267,35 @@ $getProductName=$productQuery->row();
 <tr>
 <td align="center" style="width: 0.2%;"><?php echo $z;?></td>
 
-<td align="center" style="width: 11%;"><input type="text" name="pd[]" id="pd<?php echo $z;?>" value="<?php echo $getProductName->productname;?>^<?php echo $invoiceFetch->productid;?>" readonly="" style="text-align: center; width: 100%; border:hidden;">
+<td align="center" style="width: 11%;"><input type="text" name="pd[]" id="pd<?php echo $z;?>" value="<?php echo $getProductName->sku_no;?>" readonly="" style="text-align: center; width: 100%; border:hidden;">
 <input type="hidden" name="main_id[]" id="main_id<?php echo $z;?>" value="<?php echo $invoiceFetch->productid;?>" readonly="" style="text-align: center; width: 100%; border:hidden;"><input type="hidden" value="Box" name="unit[]" id="unit<?php echo $z;?>" readonly="" style="text-align: center; width: 100%; border: hidden;">
 </td>
 
+
+
+<td align="center" style="width: 3%;"><input type="text" name="qty[]" id="qnty<?php echo $z;?>" value="<?php echo $invoiceFetch->qty;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
+
+<td align="center" style="width: 3%;"><input type="text" name="per_crt_qn[]" id="per_crt_qn<?php echo $z;?>" value="<?php echo $invoiceFetch->per_crt_qn;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
+
+<td align="center" style="width: 3%;"><input type="text" name="total_qty[]" id="total_qty<?php echo $z;?>" value="<?php echo $invoiceFetch->total_qty;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
+
 <td align="center" style="width: 3%;">
-<input type="text" name="list_price[]" id="lph<?php echo $z;?>" value="<?php echo $invoiceFetch->list_price;?>" readonly="" style="text-align: center; width: 100%; border: hidden;">
+<input type="text" name="list_price[]" id="lph<?php echo $z;?>" value="<?php echo $invoiceFetch->list_price;?>" readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
 
-
-<td align="center" style="width: 3%;"><input type="text" name="qty[]" id="qnty<?php echo $z;?>" value="<?php echo $invoiceFetch->qty;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
-
-
-<td align="center" style="width: 3%;"><input type="text" name="discount[]" id="dis<?php echo $z;?>" value="<?php echo $invoiceFetch->discount;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
+<td align="center" style="width: 3%; display:none;"><input type="text" name="discount[]" id="dis<?php echo $z;?>" value="<?php echo $invoiceFetch->discount;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
 </td>
 
-<td align="center" style="width: 3%;"><input type="text" name="disAmount[]" id="disAmount<?php echo $z;?>" value="<?php echo $invoiceFetch->discount_amount;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
+<td align="center" style="width: 3%;display:none;"><input type="text" name="disAmount[]" id="disAmount<?php echo $z;?>" value="<?php echo $invoiceFetch->discount_amount;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
 </td>
 
 
-<td align="center" style="width: 3%;"><input type="text" name="cgst[]" id="cgst<?php echo $z;?>" value="<?php echo $invoiceFetch->cgst;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
+<td align="center" style="width: 3%;display:none;"><input type="text" name="cgst[]" id="cgst<?php echo $z;?>" value="<?php echo $invoiceFetch->cgst;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
 </td>
-<td align="center" style="width: 3%;"><input type="text" name="sgst[]" id="sgst<?php echo $z;?>" value="<?php echo $invoiceFetch->sgst;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
+<td align="center" style="width: 3%;display:none;"><input type="text" name="sgst[]" id="sgst<?php echo $z;?>" value="<?php echo $invoiceFetch->sgst;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
 </td>
-<td align="center" style="width: 3%;"><input type="text" name="igst[]" id="igst<?php echo $z;?>" value="<?php echo $invoiceFetch->igst;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
+<td align="center" style="width: 3%;display:none;"><input type="text" name="igst[]" id="igst<?php echo $z;?>" value="<?php echo $invoiceFetch->igst;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
 </td>
-<td align="center" style="width: 3%;"><input type="text" name="gstTotal[]" id="gstTotal<?php echo $z;?>" value="<?php echo $invoiceFetch->gstTotal;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
+<td align="center" style="width: 3%;display:none;"><input type="text" name="gstTotal[]" id="gstTotal<?php echo $z;?>" value="<?php echo $invoiceFetch->gstTotal;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
 </td>
 
 
@@ -392,19 +349,19 @@ $getProductName=$productQuery->row();
 <tr class="gradeA">
 <th>Sub Total</th>
 <th>&nbsp;</th>
-<th><input type="text" placeholder="Placeholder" id="sub_total" readonly="" name="sub_total" value="<?php echo $fetchq->sub_total; ?>" class="form-control"></th>
+<th><input type="text" placeholder="Placeholder" id="sub_total" readonly="" name="sub_total" value="<?php echo $detail->sub_total; ?>" class="form-control"></th>
 </tr>
 
 <tr style="display:none" class="gradeA">
 <th>Service Charge</th>
-<th><input type="number" step="any" min="1" id="service_charge" value="<?php echo $fetchq->service_charge_per; ?>" onkeyup="serviceChargeCal();" name="service_charge_per" placeholder="0%" class="form-control"></th>
-<th><input type="text" readonly="" id="service_charge_total" value="<?php echo $fetchq->service_charge_total; ?>" name="service_charge_total" placeholder="Placeholder" class="form-control"></th>
+<th><input type="number" step="any" min="1" id="service_charge" value="<?php echo $detail->service_charge_per; ?>" onkeyup="serviceChargeCal();" name="service_charge_per" placeholder="0%" class="form-control"></th>
+<th><input type="text" readonly="" id="service_charge_total" value="<?php echo $detail->service_charge_total; ?>" name="service_charge_total" placeholder="Placeholder" class="form-control"></th>
 </tr>
 
 <tr style="display:none" class="gradeA">
 <th>Gross Discount</th>
-<th><input type="number" name="gross_discount_per" onkeyup="grossDiscountCal()" value="<?php echo $fetchq->gross_discount_per; ?>" id="gross_discount_per" step="any" min="1" placeholder="%" class="form-control"></th>
-<th><input type="number" readonly="" name="gross_discount_total" value="<?php echo $fetchq->gross_discount_total; ?>" id="gross_discount_total" step="any" placeholder="Placeholder" class="form-control"></th>
+<th><input type="number" name="gross_discount_per" onkeyup="grossDiscountCal()" value="<?php echo $detail->gross_discount_per; ?>" id="gross_discount_per" step="any" min="1" placeholder="%" class="form-control"></th>
+<th><input type="number" readonly="" name="gross_discount_total" value="<?php echo $detail->gross_discount_total; ?>" id="gross_discount_total" step="any" placeholder="Placeholder" class="form-control"></th>
 </tr>
 
 <tr class="gradeA" style="display:none">
@@ -421,43 +378,43 @@ $getProductName=$productQuery->row();
 
 
 
-<tr  class="gradeA">
+<tr  class="gradeA" style="display:none">
 <th >CGST TAX</th>
 <th><input style="display:none;" type="number" name="total_cgst"  id="total_cgst" step="any" min="0" value="<?=$fetchq->total_cgst;?>" placeholder="%" class="form-control"></th>
-<th><input type="number" readonly="" name="total_tax_cgst_amt" id="total_tax_cgst_amt"  value="<?=$fetchq->total_tax_cgst_amt;?>" step="any" placeholder="Placeholder" class="form-control"></th>
+<th><input type="number" readonly="" name="total_tax_cgst_amt" id="total_tax_cgst_amt"  value="<?=$detail->total_tax_cgst_amt;?>" step="any" placeholder="Placeholder" class="form-control"></th>
 </tr>
 
-<tr  class="gradeA">
+<tr  class="gradeA" style="display:none">
 <th>SGST TAX</th>
 <th><input style="display:none;" type="number" name="total_sgst"  id="total_sgst" step="any" min="0" placeholder="%" value="<?=$fetchq->total_sgst;?>" class="form-control"></th>
-<th><input type="number" readonly="" name="total_tax_sgst_amt" id="total_tax_sgst_amt" step="any" value="<?=$fetchq->total_tax_sgst_amt;?>" placeholder="Placeholder" class="form-control"></th>
+<th><input type="number" readonly="" name="total_tax_sgst_amt" id="total_tax_sgst_amt" step="any" value="<?=$detail->total_tax_sgst_amt;?>" placeholder="Placeholder" class="form-control"></th>
 </tr>
 
-<tr  class="gradeA">
+<tr  class="gradeA" style="display:none">
 <th>IGST TAX</th>
 <th><input style="display:none;" type="number" value="<?=$fetchq->total_igst;?>" name="total_igst"  id="total_igst" step="any" min="0" placeholder="%" class="form-control"></th>
-<th><input type="number" readonly="" value="<?=$fetchq->total_tax_igst_amt;?>" name="total_tax_igst_amt" id="total_tax_igst_amt" step="any" placeholder="Placeholder" class="form-control"></th>
+<th><input type="number" readonly="" value="<?=$detail->total_tax_igst_amt;?>" name="total_tax_igst_amt" id="total_tax_igst_amt" step="any" placeholder="Placeholder" class="form-control"></th>
 </tr>
-<tr  class="gradeA">
+<tr  class="gradeA" style="display:none">
 <th>Total GST TAX</th>
 <th>&nbsp;</th>
-<th><input type="number" value="<?=$fetchq->total_gst_tax_amt;?>" readonly="" name="total_gst_tax_amt" id="total_gst_tax_amt" step="any" placeholder="Placeholder" class="form-control"></th>
+<th><input type="number" value="<?=$detail->total_gst_tax_amt;?>" readonly="" name="total_gst_tax_amt" id="total_gst_tax_amt" step="any" placeholder="Placeholder" class="form-control"></th>
 </tr>
 
 
 
 
-<tr  class="gradeA">
+<tr  class="gradeA" style="display:none">
 <th>Total Discount</th>
 <th><input style="display:none;" type="number" name="total_dis" value="<?=$fetchq->total_dis;?>"  id="total_dis" step="any" min="0" placeholder="%" class="form-control"></th>
-<th><input type="number" readonly="" name="total_dis_amt" id="total_dis_amt" step="any" value="<?=$fetchq->total_dis_amt;?>"  placeholder="Placeholder" class="form-control"></th>
+<th><input type="number" readonly="" name="total_dis_amt" id="total_dis_amt" step="any" value="<?=$detail->total_dis_amt;?>"  placeholder="Placeholder" class="form-control"></th>
 </tr>
 
 
 <tr class="gradeA">
 <th>Grand Total</th>
 <th>&nbsp;</th>
-<th><input type="number" readonly="" step="any" id="grand_total" value="<?php echo $fetchq->grand_total; ?>" name="grand_total" placeholder="Placeholder" class="form-control"></th>
+<th><input type="number" readonly="" step="any" id="grand_total" value="<?php echo $detail->grand_total; ?>" name="grand_total" placeholder="Placeholder" class="form-control"></th>
 </tr>
 
 <tr class="gradeA">
@@ -504,84 +461,42 @@ for(n=1;n<=countids;n++)
 document.getElementById("tyd"+n).onkeyup  = function (e) {
 var entr =(e.keyCode);
 if(entr==13){
-document.getElementById("lph").focus();
+document.getElementById("qn").focus();
 document.getElementById("prdsrch").innerHTML=" ";
 
 }
 }
 }
 
-document.getElementById("lph").onkeyup = function (e) {
-var entr =(e.keyCode);
-if(entr==13){
-
-document.getElementById("qn").focus();
-}
-}
-
-
-
 document.getElementById("qn").onkeyup = function (e) {
 var entr =(e.keyCode);
 if(entr==13){
 
+var per_crt_qn =document.getElementById("per_crt_qn").value;
+var qty =document.getElementById("qn").value;
+
+var totalQty=Number(per_crt_qn)*Number(qty);
+document.getElementById("total_qty").value=totalQty;
+
+document.getElementById("lph").focus();
+}
+}
+
+
+
+
+
+
+document.getElementById("lph").onkeyup = function (e) {
+var entr =(e.keyCode);
 var rate=document.getElementById("lph").value;
-var qnt=document.getElementById("qn").value;
-var gstTotal=document.getElementById("gstTotal").value;
+var qnt=document.getElementById("total_qty").value;
+
 var total=(Number(rate)*Number(qnt));
 
-var net_total=(Number(rate)*Number(qnt)+Number(gstTotal));
 document.getElementById("tot").value=total;
-document.getElementById("nettot").value=net_total;
-document.getElementById("discount").focus();
-}
-}
-
-document.getElementById("discount").onkeyup = function (e) {
-var entr =(e.keyCode);
-if(entr==13){
-
-var toT=document.getElementById("tot").value;
-
-var igst=document.getElementById("igst").value;
-var cgst=document.getElementById("cgst").value;
-var gstTotal=document.getElementById("gstTotal").value;
-var DisS=document.getElementById("discount").value;
-
-var disPer=(Number(toT)*Number(DisS))/100;
-
-
-
-var totAftDis=Number(toT)-Number(disPer);
-//var gstDis=Number(totAftDis)*Number(igst)/100;
-if(Number(igst!=''))
-{
-var aftGstPer=Number(totAftDis)*Number(igst)/100;
-}
-else
-{
-	
-	var aftGstPer=Number(totAftDis)*Number(cgst)*2/100;
-}
-var afterGstTot=Number(totAftDis)+Number(aftGstPer);
-
-//var Ftot=Number(afterGstTot)+Number(aftGstPer);
-
-document.getElementById("disAmt").value=disPer;
-
-document.getElementById("gstTotal").value=aftGstPer
-;
-document.getElementById("tot").value=toT;
-document.getElementById("nettot").value=afterGstTot.toFixed(2);
-document.getElementById("disAmt").focus();
-}
-}
-
-
-
-document.getElementById("disAmt").onkeyup = function (e) {
-var entr =(e.keyCode);
-if(document.getElementById("disAmt").value=="" && entr==08){
+document.getElementById("nettot").value=total;
+if(document.getElementById("lph").value=="" && entr==08){
 
 }
    if (e.keyCode == "13")
@@ -878,31 +793,14 @@ function getdata()
 		 currentCell = 0;
 		 var product1=document.getElementById("prd").value;	 
 		 var product=product1;
-		  var conatctId=document.getElementById("contact_id_copy").value;
-		   var state=document.getElementById("state").value;
-		 	var invoice_type=document.getElementById("invoice_type").value;
-			if(state=='')
-		{
-		alert('Plase Select State');
-		document.getElementById("state").focus();
-		}	
+		  
 			
-			if(conatctId=='')
-		{
-		alert('Plase Select Contact First');
-		document.getElementById("contact_id_copy").focus();
-		}	
-		if(invoice_type=='')
-		{
-		alert('Plase Select Invoice Type');
-		document.getElementById("invoice_type").focus();
-		}
 		    
 		    if(xobj)
 			 {
 			 var obj=document.getElementById("prdsrch");
 			
-			 xobj.open("GET","getproduct?con="+product+"&con_id="+conatctId+"&invoice_type="+invoice_type+"&state_id="+state,true);
+			 xobj.open("GET","getproduct?con="+product,true);
 			 xobj.onreadystatechange=function()
 			  {
 			  if(xobj.readyState==4 && xobj.status==200)
@@ -942,6 +840,8 @@ function getdata()
 
 				var qn=document.getElementById("qn").value;
 				var unit=document.getElementById("usunit").value;
+				var per_crt_qn=document.getElementById("per_crt_qn").value;
+				var total_qty= document.getElementById("total_qty").value;
 				var lph=document.getElementById("lph").value;
 				var dis=document.getElementById("discount").value;	
 				var disAmount=document.getElementById("disAmt").value;		
@@ -1033,7 +933,80 @@ function getdata()
 						// ends here
 	
 	
-	//#################cell 2nd starts here####################//
+		//#################cell 3rd starts here####################//					
+	indexcell=Number(indexcell+1);		
+	var cell=cell+indexcell;		
+	    cell = row.insertCell(indexcell);
+				cell.style.width="3%";
+				cell.align="center"
+		//========================================start qnty===================================	
+				var qtty = document.createElement("input");
+							qtty.type="text";
+							qtty.border ="0";
+							qtty.value=qn;	    
+							qtty.name ='qty[]';
+							qtty.id='qnty'+rid;
+							qtty.readOnly = true;
+							qtty.style="text-align:center";
+							qtty.style.width="100%";
+							qtty.style.border="hidden"; 
+							cell.appendChild(qtty);
+								
+		//======================================close 3rd cell========================================
+		
+		
+		
+		
+		
+		
+			
+		//#################cell 3rd starts here####################//					
+	indexcell=Number(indexcell+1);		
+	var cell=cell+indexcell;		
+	    cell = row.insertCell(indexcell);
+				cell.style.width="3%";
+				cell.align="center"
+		//========================================start qnty===================================	
+				var per_crt_qnY = document.createElement("input");
+							per_crt_qnY.type="text";
+							per_crt_qnY.border ="0";
+							per_crt_qnY.value=per_crt_qn;	    
+							per_crt_qnY.name ='per_crt_qn[]';
+							per_crt_qnY.id='per_crt_qn'+rid;
+							per_crt_qnY.readOnly = true;
+							per_crt_qnY.style="text-align:center";
+							per_crt_qnY.style.width="100%";
+							per_crt_qnY.style.border="hidden"; 
+							cell.appendChild(per_crt_qnY);
+								
+		//======================================close 3rd cell========================================
+		
+		
+	
+			
+		//#################cell 3rd starts here####################//					
+	indexcell=Number(indexcell+1);		
+	var cell=cell+indexcell;		
+	    cell = row.insertCell(indexcell);
+				cell.style.width="3%";
+				cell.align="center"
+		//========================================start qnty===================================	
+				var total_qtyY = document.createElement("input");
+							total_qtyY.type="text";
+							total_qtyY.border ="0";
+							total_qtyY.value=total_qty;	    
+							total_qtyY.name ='total_qty[]';
+							total_qtyY.id='total_qty'+rid;
+							total_qtyY.readOnly = true;
+							total_qtyY.style="text-align:center";
+							total_qtyY.style.width="100%";
+							total_qtyY.style.border="hidden"; 
+							cell.appendChild(total_qtyY);
+								
+		//======================================close 3rd cell========================================
+		
+		
+//======================================close 3rd cell========================================
 	
 	
 	indexcell=Number(indexcell+1);		
@@ -1059,33 +1032,12 @@ function getdata()
 	
 	
 	
-		//==============================close 2nd cell =========================================
-		
-		//#################cell 3rd starts here####################//					
-	indexcell=Number(indexcell+1);		
-	var cell=cell+indexcell;		
-	    cell = row.insertCell(indexcell);
-				cell.style.width="3%";
-				cell.align="center"
-		//========================================start qnty===================================	
-				var qtty = document.createElement("input");
-							qtty.type="text";
-							qtty.border ="0";
-							qtty.value=qn;	    
-							qtty.name ='qty[]';
-							qtty.id='qnty'+rid;
-							qtty.readOnly = true;
-							qtty.style="text-align:center";
-							qtty.style.width="100%";
-							qtty.style.border="hidden"; 
-							cell.appendChild(qtty);
-								
-		//======================================close 3rd cell========================================
 		
 		
 		
 		
-
+		
+		
 		
 		
 		
@@ -1096,7 +1048,8 @@ function getdata()
 		var cell=cell+indexcell;		
 	    cell = row.insertCell(indexcell);
 				cell.style.width="3%";
-				cell.align="center"	
+				cell.align="center";
+				cell.style.display="none";	
 				
 												
 				var discount = document.createElement("input");
@@ -1119,7 +1072,8 @@ function getdata()
 		var cell=cell+indexcell;		
 	    cell = row.insertCell(indexcell);
 				cell.style.width="3%";
-				cell.align="center"	
+				cell.align="center";
+				cell.style.display="none";	
 				
 												
 				var disAmtt = document.createElement("input");
@@ -1144,7 +1098,8 @@ function getdata()
 		var cell=cell+indexcell;		
 	    cell = row.insertCell(indexcell);
 				cell.style.width="3%";
-				cell.align="center"	
+				cell.align="center";
+				cell.style.display="none";	
 				
 												
 				var cgstt = document.createElement("input");
@@ -1166,7 +1121,8 @@ function getdata()
 		var cell=cell+indexcell;		
 	    cell = row.insertCell(indexcell);
 				cell.style.width="3%";
-				cell.align="center"	
+				cell.align="center";
+				cell.style.display="none";	
 				
 												
 				var sgstt = document.createElement("input");
@@ -1187,7 +1143,8 @@ function getdata()
 		var cell=cell+indexcell;		
 	    cell = row.insertCell(indexcell);
 				cell.style.width="3%";
-				cell.align="center"	
+				cell.align="center";
+				cell.style.display="none";	
 				
 												
 				var igstt = document.createElement("input");
@@ -1212,7 +1169,8 @@ function getdata()
 		var cell=cell+indexcell;		
 	    cell = row.insertCell(indexcell);
 				cell.style.width="3%";
-				cell.align="center"	
+				cell.align="center";
+				cell.style.display="none";	
 				
 												
 				var gstTotalt = document.createElement("input");

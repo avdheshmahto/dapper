@@ -85,10 +85,10 @@ Entries</label>
 	   
 	   <th><div style="width:100px;">Date</div></th>
        <th><div style="width:130px;">Customer Name</div></th>
-	   <th><div style="width:100px;">Due Date</div></th>
+	   
 	   <th style="display:none;"><div style="width:100px;">Status</div></th>
        <th><div style="width:100px;">Grand Total</div></th>
-       <th><div style="width:420px;">Action</div></th>
+       <th><div >Action</div></th>
 </tr>
 </thead>
 <tbody id="getDataTable">
@@ -99,7 +99,7 @@ Entries</label>
 	
 	<td><input name="invoice_date"  type="date"  class="search_box form-control input-sm"  value="" /></td>
 	<td><input name="cust_name"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-	<td>&nbsp;</td>
+	
 	<td style="display:none" >&nbsp;</td>
 	<td><input name="grand_total"  type="text"  class="search_box form-control input-sm"  value="" /></td>
 	<td><button type="submit" class="btn btn-sm" name="filter" value="filter"><span>Search</span></button></td>
@@ -120,19 +120,6 @@ $i=1;
 		$sqlgroup=$this->db->query("select * from tbl_contact_m where group_name='4' and contact_id='$sales->contactid'");
 		$res1 = $sqlgroup->row();
 		echo $res1->first_name;?></th>
-<th>
-<?php 
-$idt=$sales->invoice_date;
-$date = new DateTime("$idt");
-$fdate=$date->format("Y-m-d");
-$dt=$sales->due_date;
-if($dt!=''){
-echo $idate= date('Y-m-d', strtotime($fdate. " + $dt days"));
-}else{
-echo $fdate;
-}
-?>
-</th>
 
 <th style="display:none" ><?php 
 $cdate = date("Y-m-d");
@@ -169,27 +156,16 @@ echo abs($minutesLeft)." days over due";
 </samp></a></th>
 <th><?=$sales->grand_total;?></th>
 <th>
-<button class="btn btn-default" onClick="openpopup('<?=base_url();?>proformaInvoice/edit_invoice_order_1',1400,600,'view',<?=$sales->invoiceid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="fa fa-eye"></i> </button>
- <?php
- if($sales->invoice_coverted_status!='Converted')
-	 {
-		 ?>
-<button class="btn btn-default" onClick="openpopup('<?=base_url();?>proformaInvoice/edit_invoice_order_1',1400,600,'id',<?=$sales->invoiceid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-pencil"></i></button>
+<button class="btn btn-default" onClick="openpopup('<?=base_url();?>proformaInvoice/edit_invoice_order',1400,600,'view',<?=$sales->invoiceid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="fa fa-eye"></i> </button>
+
+<button class="btn btn-default" onClick="openpopup('<?=base_url();?>proformaInvoice/edit_invoice_order',1400,600,'id',<?=$sales->invoiceid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-pencil"></i></button>
 
 	<button class="btn btn-default delbutton" id="<?=$sales->invoiceid."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button>
 	
 
 
 
-<?php
-	 }
-if($sales->invoice_status=='GST')
-{
-?>
-<a href="<?=base_url();?>proformaInvoice/print_invoice?id=<?=$sales->invoiceid;?>" class="btn btn-default" target="blank"><i class="glyphicon glyphicon-print"></i></a>
-<?php } else {?>
-<a href="<?=base_url();?>invoice/invoice/case_memo?id=<?=$sales->invoiceid;?>" class="btn btn-default" target="blank"><i class="glyphicon glyphicon-print"></i>
-<?php }?>
+
 <?php
 $pri_col='invoiceid';
 $table_name='tbl_invoice_hdr';

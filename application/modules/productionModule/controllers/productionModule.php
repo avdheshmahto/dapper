@@ -546,6 +546,7 @@ public function getPart()
 @extract($_POST);
 $data=array('id' => $shape,
 'production_id' => $production_id,
+'shapeName'=> $shapeName
 );
 $this->load->view("getpartCode",$data);
 

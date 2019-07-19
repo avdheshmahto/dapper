@@ -398,7 +398,7 @@ public function insertInvoice(){
 
 $data_dtl=array(
 				 'invoiceid' => $lastHdrId,
-				 'productid' => $pri_id[$i],				 
+				 'productid' => $main_id[$i],				 
 				 'list_price' => $list_price[$i],
 				 'qty' => $qty[$i],
 				 'discount' => $discount[$i],
@@ -419,9 +419,6 @@ $data_dtl=array(
 				
 				);
 				
-				
-				
-				//$this->stock_refill_qty($qty[$i],$main_id[$i],$sizeval[$i]);
 				
 				
 				
@@ -492,6 +489,7 @@ $this->db->query("update tbl_sales_order_hdr set termandcondition='".addslashes(
 	
 		$data = array(
 					'invoiceid' => $this->input->post('id'),
+
 					'contactid' => $this->input->post('contactid'),
 					'proforma_no' => $this->input->post('proforma_no'),
 					'proforma_date' => $this->input->post('proforma_date'),
@@ -537,9 +535,11 @@ $this->db->query("update tbl_sales_order_hdr set termandcondition='".addslashes(
 				$data_dtl=array(	
 
 				 'invoiceid' => $id,
-				 'productid' => $pri_id[$i],				 
+				 'productid' => $main_id[$i],				 
 				 'list_price' => $list_price[$i],
 				 'qty' => $qty[$i],
+				  'per_crt_qn' => $per_crt_qn[$i],
+				 'total_qty' => $total_qty[$i],
 				 'discount' => $discount[$i],
 				 'discount_amount' => $disAmount[$i],
 				 'cgst' => $cgst[$i],
@@ -559,8 +559,8 @@ $this->db->query("update tbl_sales_order_hdr set termandcondition='".addslashes(
 	
 							}
 					}
-					//$this->paymentAmount($grand_total,$vendor_id,$lastHdrId,$id);
-					$this->software_log_insert($id,$vendor_id,$grand_total,'Proforma Invoice Updated');
+					
+					
 	   echo "<script type='text/javascript'>";
 					echo "window.close();";
 					echo "window.opener.location.reload();";

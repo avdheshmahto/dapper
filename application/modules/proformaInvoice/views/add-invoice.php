@@ -181,7 +181,7 @@ foreach($portOfDischarge->result() as $getportOfDischarge){
 <div class="input-group"> 
 <div style="width:100%; height:28px;" >
 <input type="text" name="prd"  onkeyup="getdata()" class="form-control" onClick="getdata()" id="prd" style=" width:280px; font-size:11px;"  placeholder=" Search Items..." tabindex="5" >
- <input type="hidden"  name="pri_id" id='pri_id'  value="" style="width:80px;"  />
+ <input type="hidden"  name="pri_id[]" id='pri_id'  value="" style="width:80px;"  />
 <img  style="display:none" src="<?php echo base_url();?>/assets/images/search11.png"  onClick="openpopup('<?=base_url();?>SalesOrder/all_product_function',1200,500,'view',<?=$sales[$i]['1'];?>)" /></div>
 
 </div>

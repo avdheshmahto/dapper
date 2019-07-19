@@ -1,5 +1,4 @@
 <?php
-
 $queryData=$this->db->query("select *from tbl_production_order_log where grn_no='$id'");
 $getHdr=$queryData->row();
 
@@ -97,8 +96,8 @@ $getHdr=$queryData->row();
 		</thead>
         
       <?php
-    
-		$productQuery=$this->db->query("select * from tbl_production_order_log where grn_no='$id' and order_no='$ord'");
+    // and order_no='$ord'
+		$productQuery=$this->db->query("select * from tbl_production_order_log where grn_no='$id' ");
 			$i=1;
 	      	foreach($productQuery->result() as $getProduct){
 	       	####### get product #######

@@ -44,6 +44,9 @@ $getProduct=$productQuery->row();
 <?php 
 $i++;
 }
+$a="test";
+$b="safi";
+echo $a+$b;
 ?>
 </table>
 </div>
