@@ -314,7 +314,7 @@
                     <tr>
                       <td>
                         <select  class="select2 form-control" id="entity" >
-                          <option value="">----Select ----</option>
+                          <option value="" selected disabled>----Select ----</option>
                           <?php 
                             $sqlprotype=$this->db->query("SELECT * FROM tbl_product_stock where type = '32'");
                             	foreach ($sqlprotype->result() as $fetch_protype){
@@ -323,7 +323,8 @@
                           <?php } ?>
                         </select>
                       </td>
-                      <button type="button" onclick="addconsignee()" class="btn btn-sm btn-black btn-outline">Add</button>
+                      <td>
+                      <button type="button" onclick="Toaddconsignee()" class="btn btn-sm btn-black btn-outline">Add</button>
                       </td>
                     </tr>
                   </tbody>
@@ -358,7 +359,7 @@
                       <?php } ?>
                     </select>
                   </div>
-                  <div class="col-sm-2">
+                  <div class="col-sm-3">
                     <label class="control-label">Usage Unit:</label> 
                     <select name="unit"  class="form-control" id="muom" disabled>
                       <option value="" >----Select Unit----</option>
@@ -372,17 +373,17 @@
                   </div>
                   <div class="col-sm-2" > 
                     <label class="control-label">Net Weight:</label> 
-                    <input type="text" class="form-control input-sm" value="" id="mPrice" >
+                    <input type="text" class="form-control" value="" id="mPrice" >
                     <input type="hidden" name = "partid" class="form-control" value="" id="partid">
                     <input type="hidden" name = "itemid" class="form-control" value="" id="itemid">
                     <input type="hidden" name = "mapType" class="form-control" value="" id="mapType">
                   </div>
                   <div class="col-sm-2" > 
                     <label class="control-label">Cast Weight:</label> 
-                    <input type="text" class="form-control input-sm" value="" id="EPrice" >
+                    <input type="text" class="form-control" value="" id="EPrice" >
                   </div>
-                  <div class="col-sm-2" > 
-                    <button  style = "margin-top: 20px;" class="btn btn-default"  type="button" onclick="addpricemap()"><img src="<?=base_url();?>assets/images/plus.png" />
+                  <div class="col-sm-1" > 
+                    <button  style = "margin-top: 25px;" class="btn btn-default"  type="button" onclick="addpricemap()"><img src="<?=base_url();?>assets/images/plus.png" />
                     </button>
                   </div>
                 </div>
@@ -813,7 +814,8 @@
   
   }
   
-  function addpricemap(){
+  function addpricemap()
+  {
   
   	var mproductname =  $('#mproductname').val();
   	var mproductid   =  $('#mproductid').val();
@@ -821,16 +823,24 @@
   	var Eprice        =  $('#EPrice').val();
   	var muom         =  $('#muom').val();
   	var muomval      =  $("#muom option:selected").text();
-  	$('#resultarea').text("");
-  	$('#prodetails option:selected').remove();
-  	$('#partTable').append('<tr><td><input type ="hidden" name="prodcId[]" value="'+mproductid+'">'+mproductname+'</td><td><input type ="hidden" name="uom[]" value="'+muom+'">'+muomval+'</td><td><input type ="hidden" name="mproPrice[]" value="'+price+'">'+price+'</td><td><input type ="hidden" name="EPrice[]" value="'+Eprice+'">'+Eprice+'</td><td><i class="fa fa-trash  fa-2x" mproductid="'+mproductid+'" mproductname="'+mproductname+'" id="quotationdel" aria-hidden="true"></i></td></tr>');
-  	$('#mproductname').val("");
-  	$('#mproductid').val("");
-  	$('#mPrice').val("");
-  	$('#EPrice').val("");
-  	$("#muom").val("");
-  	$("#prodetails").val("");
+
+    if(mproductid != '' && price != '' && Eprice != '' && muom != ''   ){
+
+    	$('#resultarea').text("");
+    	$('#prodetails option:selected').remove();
+    	$('#partTable').append('<tr><td><input type ="hidden" name="prodcId[]" value="'+mproductid+'">'+mproductname+'</td><td><input type ="hidden" name="uom[]" value="'+muom+'">'+muomval+'</td><td><input type ="hidden" name="mproPrice[]" value="'+price+'">'+price+'</td><td><input type ="hidden" name="EPrice[]" value="'+Eprice+'">'+Eprice+'</td><td><i class="fa fa-trash  fa-2x" mproductid="'+mproductid+'" mproductname="'+mproductname+'" uom="'+muom+'"  id="quotationdel" aria-hidden="true"></i></td></tr>');
+    	$('#mproductname').val("");
+    	$('#mproductid').val("");
+    	$('#mPrice').val("");
+    	$('#EPrice').val("");
+    	$("#muom").val("");
+    	$("#prodetails").val("");
       $("#select2-prodetails-container").text("--select--");
+
+    } else {
+      alert("Nothing to add !");
+    }
+  
   }
   
   $("#productpriceMapped").validate({
@@ -927,4 +937,92 @@
   document.getElementById("cbm").value=calcbm;
   }
   
+
+
+  function Toaddconsignee()
+  {
+  
+    var value        =  0;
+    var entity       =  $('#entity').val();
+    
+    //alert(entity) ;
+
+    if(entity != null)
+    {
+      
+      var x        = document.getElementById("entity").selectedIndex;
+      var y        = document.getElementById("entity").options;
+      var indexVal =  y[x].text;
+      $('#entity option:selected').remove();
+      
+      $('#consigneeTable').append('<tr class="'+'row_'+value+'"><td><input  type ="hidden" class="form-control" name="entity[]" value="'+entity+'"><input   type ="text" readonly class="form-control"  value="'+indexVal+'"></td><td><i class="fa fa-trash  fa-3x" style="font-size:20px;" id="quotationdel_shape" attrVal="'+entity+'" val="'+indexVal+'" aria-hidden="true"></i></td></tr>');
+      
+      //amazonEntity();
+      $("#entity").val("");
+      $("#select2-entity-container").text("--select--");
+
+    }
+    else
+    {
+      
+      alert('Please Select Part Code');
+      //$('#entity').focus();
+
+    }
+    
+  
+  }
+  
+  function amazonEntity(){
+  
+  
+  $("select#entity").prop('selectedIndex', 0);
+  var selectedentity = document.getElementsByName('entity[]'); 
+  // alert(selectedentity);
+  var selectboxes = [];
+  for(var i=0; i < selectedentity.length; i++){
+  
+  if(selectedentity[i] != ""){
+  selectboxes.push(selectedentity[i].value);
+  }
+  }
+  
+  $('select#entity').find('option').each(function() {
+  // alert($(this).val());
+  if(selectboxes.includes($(this).val()) == true){
+  // // alert(arrayloc.includes(checkboxes[i].value));
+  // checkboxes[i].checked = true;
+  //  alert($(this).val());
+  $(this).css("visibility", "hidden");
+  }
+  });
+  
+  $("#entity_code").empty().append('<option value="">--Select--</option>').fadeIn();
+  }
+  
+
+  function addconsigneeShape()
+  {
+  
+     var value        =  0;
+     var entityShape       =  $('#entityShape').val();
+     // var entity_code  =  $('#entity_code').val();
+  
+  
+     if(entityShape == ""){
+      alert('Please Select Shape Name');
+      $('#entityShape').focus();
+      return false;
+     }    
+      
+      var x        = document.getElementById("entityShape").selectedIndex;
+      var y        = document.getElementById("entityShape").options;
+      var indexVal =  y[x].text;
+     $('#entityShape option:selected').remove();
+     
+     $('#consigneeTableShape').append('<tr class="'+'row_'+value+'"><td><input  type ="hidden" class="form-control" name="entityShape[]" value="'+entityShape+'"><input   type ="text" readonly class="form-control"  value="'+indexVal+'"></td><td><i class="fa fa-trash  fa-3x" style="font-size:20px;" id="quotationdel_fg" attrVal="'+entityShape+'" val="'+indexVal+'" aria-hidden="true"></i></td></tr>');
+  
+    //amazonEntity();
+  //$('#entity option:selected').remove();  
+   }
 </script>
