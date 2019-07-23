@@ -8,16 +8,9 @@
   }
   
   ?>
+<div class="main-content">
 <form id="f1" name="f1" method="POST" action="updatePurchaseOrder" onSubmit="return checkKeyPressed(a)">
-  <!-- Main content -->
-  <div class="main-content">
-  <!-- Breadcrumb -->
-  <?php if(@$_GET['popup'] == 'True') {} else {?>
-  <ol class="breadcrumb breadcrumb-2">
-    <li><a class="btn btn-success" href="<?=base_url();?>master/dashboar"><i class="fa fa-home"></i>Dashboard</a></li>
-    <li><a class="btn btn-success" href="<?=base_url();?>SalesOrder/manageSalesOrder">Manage Lot Order </a></li>
-  </ol>
-  <?php }?>
+
   <div class="row">
     <div class="col-lg-12">
       <div class="panel panel-default">
@@ -29,7 +22,7 @@
         </div>
         <div class="panel-body">
           <div class="table-responsive-">
-            <table class="table table-striped table-bordered table-hover" <?php if($_GET['view']!=''){?> oncontextmenu='return false;' onkeydown='return false;' onmousedown='return false;' <?php }?> >
+            <table class="table table-striped table-bordered table-hover">
               <thead>
                 <tr>
                   <th>Lot No.</th>
@@ -204,13 +197,12 @@
                   <th><input type="text"  class="form-control"  name="partshipment" value="<?php echo $fetchq->partshipment;?>"  /></th>
                   <td>Forwarder</td>
                   <th><input type="text"  class="form-control"  name="forwarder" value="<?php echo $fetchq->forwarder;?>"  /></th>
-                  </th>
                 </tr>
               </thead>
             </table>
           </div>
           <div class="table-responsive" <?php if($_GET['view']!=''){?> style="display:none" <?php }?>>
-            <table class="table table-striped table-bordered table-hover" <?php if($_GET['view']!=''){?> oncontextmenu='return false;' onkeydown='return false;' onmousedown='return false;' <?php }?> >
+            <table class="table table-striped table-bordered table-hover">
               <tbody>
                 <tr class="gradeA">
                   <th>Item Code</th>
@@ -357,6 +349,7 @@
                 <?php }?>
               </tr>
             </table>
+          </div>
             <div style="width:100%; background:white;   color:#000000;  max-height:170px; overflow-x:auto;overflow-y:auto;" id="m">
               <table id="invoice"  style="width:100%;background:white;margin-bottom:0px;margin-top:0px;min-height:30px;" title="Invoice" class="table table-bordered blockContainer lineItemTable ui-sortable"  >
                 <tr></tr>
@@ -390,7 +383,6 @@
                   <td align="center" style="width: 3%;display:none;"><input type="text" name="sgst[]" id="sgst<?php echo $z;?>" value="<?php echo $invoiceFetch->sgst;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
                   <td align="center" style="width: 3%;display:none;"><input type="text" name="igst[]" id="igst<?php echo $z;?>" value="<?php echo $invoiceFetch->igst;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
                   <td align="center" style="width: 3%;display:none;"><input type="text" name="gstTotal[]" id="gstTotal<?php echo $z;?>" value="<?php echo $invoiceFetch->gstTotal;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
-                  </td>
                   <td align="center" style="width: 3%;display:none1;">
                     <input type="text" name="price[]" id="priceT<?php echo $z;?>" value="<?php echo $invoiceFetch->price;?>" readonly="" style="text-align: center; width: 100%; border: hidden;">
                   </td>
@@ -412,12 +404,15 @@
               </table>
             </div>
           </div>
+
+                    <!--//////////ADDING TEST/////////-->
           <input type="hidden" name="rows" id="rows" value="<?php echo $row;?>">
-          <!--//////////ADDING TEST/////////-->
           <input type="hidden" name="spid" id="spid" value="d1"/>
           <input type="hidden" name="ef" id="ef" value="0" />
+
+
           <div class="table-responsive">
-            <table class="table table-striped table-bordered table-hover" <?php if($_GET['view']!=''){?> oncontextmenu='return false;' onkeydown='return false;' onmousedown='return false;' <?php }?> >
+            <table class="table table-striped table-bordered table-hover">
               <tbody>
                 <tr class="gradeA">
                   <th>Total Quantity</th>
@@ -466,24 +461,27 @@
                   <th><input style="display:none;" type="number" value="<?=$fetchq->total_igst;?>" name="total_igst"  id="total_igst" step="any" min="0" placeholder="%" class="form-control"></th>
                   <th><input type="number" readonly="" value="<?=$fetchq->total_tax_igst_amt;?>" name="total_tax_igst_amt" id="total_tax_igst_amt" step="any" placeholder="Placeholder" class="form-control"></th>
                 </tr>
+              
                 <tr  class="gradeA" style="display:none">
                   <th>Total GST TAX</th>
                   <th>&nbsp;</th>
                   <th><input style="display:none;" type="number" value="<?=$fetchq->total_gst_tax_amt;?>" readonly="" name="total_gst_tax_amt" id="total_gst_tax_amt" step="any" placeholder="Placeholder" class="form-control"></th>
                 </tr>
+              
                 <tr  class="gradeA" style="display:none">
                   <th>Total Discount</th>
                   <th><input style="display:none;" type="number" name="total_dis" value="<?=$fetchq->total_dis;?>"  id="total_dis" step="any" min="0" placeholder="%" class="form-control"></th>
                   <th><input type="number" readonly="" name="total_dis_amt" id="total_dis_amt" step="any" value="<?=$fetchq->total_dis_amt;?>"  placeholder="Placeholder" class="form-control"></th>
                 </tr>
+                
                 <tr class="gradeA" style="display:none">
                   <th>Grand Total</th>
                   <th>&nbsp;</th>
                   <th><input type="number" readonly="" step="any" id="grand_total" value="<?php echo $fetchq->grand_total; ?>" name="grand_total" placeholder="Placeholder" class="form-control"></th>
                 </tr>
+
                 <tr class="gradeA">
-                  <th>
-                    <!-- <th>&nbsp;</th> -->
+                  <th></th>
                   <th>
                     <?php if($_GET['view']!='')
                       {} else {?>
@@ -491,15 +489,17 @@
                     <?php }?>
                     <a onclick="popupclose(this.value)" class="btn btn-secondary btn-sm">Cancel</a>
                   </th>
-                  </th>
                 </tr>
+
               </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
-  </div>
+
+
+
   <script>
     //add item into showling list
     window.addEventListener("keydown", checkKeyPressed, false);
@@ -914,13 +914,7 @@
     								
     		//======================================close 3rd cell========================================
     		
-    		
-    		
-    		
-    		
-    		
-    		
-    		
+    
     		//#################cell 3rd starts here####################//					
     	indexcell=Number(indexcell+1);		
     	var cell=cell+indexcell;		
@@ -985,19 +979,7 @@
     							salepr.style.width="100%";
     							salepr.style.border="hidden"; 
     							cell.appendChild(salepr);
-    					
-    
     	
-    	
-    	
-    	
-    		
-    		
-    		
-    		
-    		
-    		
-    		
     		
     		//===================================start 4th cell================================
     		indexcell=Number(indexcell+1);		
@@ -1144,9 +1126,6 @@
     
     		
     		
-    		
-    			
-    	
     				
     		//===================================start 6th cell================================
     		indexcell=Number(indexcell+1);		
@@ -1417,14 +1396,7 @@
     }
     // ##### ends ###########
     
-    
-    
-    
-    
-    
-    
-    
-    
+   
     
        }
     
@@ -1469,7 +1441,9 @@
     
           
   </script>
+
 </form>
+</div>
 <?php
   $this->load->view("footer.php");
-  ?>
+?>
