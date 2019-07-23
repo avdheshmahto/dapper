@@ -1464,7 +1464,7 @@
                         </tr>
                       </tbody>
                       <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
+                 
                       </tfoot>
                     </table>
                   </div>
@@ -1544,40 +1544,11 @@
   	}
   }
   
-  // function saveData()
-  // {
-  // 	  var code= document.getElementById("code").value;
-  // 	  var machine_name= document.getElementById("machine_name").value;
-  // 	  var machine_des= document.getElementById("machine_des").value;
-  // 	  var capacity= document.getElementById("capacity").value;
-   
-  // 	  if(code=='')
-  // 	  {
-  // 	   document.getElementById("codemsg").innerHTML = "Please Enter Code";
-  // 	   return false;
-  // 	  }
-  // 	 var xhttp = new XMLHttpRequest();
-  // 	 xhttp.open("GET", "insert_machine?code="+code+"&machine_name="+machine_name+"&machine_des="+machine_des+"&capacity="+capacity, false);
-  // 	 xhttp.send();
-  
-  // 	 $("#modal-0 .close").click();	   
-  // 	 document.getElementById("loadData").innerHTML = xhttp.responseText;
-  // 	 document.getElementById("code").value='';
-  // }
-  
   
   
     
 </SCRIPT>
-<script>
-  /*$(document).ready(function() {
-    $.ajaxSetup({ cache: false }); // This part addresses an IE bug.  without it, IE will only load the first number and will never refresh
-    setInterval(function() {
-      //$('#getDataTable').load('get_machine');
-    }, 3000); // the "3000" 
-  });
-  */
-</script>
+
 <style>
   .c-error .c-validation{ 
   background: #c51244 !important;
@@ -2504,13 +2475,5 @@
   document.getElementById("total_cost"+asx).value=Number(totalRMRate)+Number(total_cost);
   
   }
-  
-  
-  /*
-  window.onbeforeunload = function (e) {
-  // Your logic to prepare for 'Stay on this Page' goes here 
-  
-      return "Please click 'Stay on this Page' and we will give you candy";
-  };
-  */
+ 
 </script>

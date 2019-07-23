@@ -185,9 +185,7 @@
   	var pa_co=part_c;
   	var myString = JSON.stringify(myObject);    
   	
-  	 // $('#quotationProductmapValue').empty().append("<input type ='text' id ='proQuotation' name='quotationMapedValue[]' value='"+myString+"'>");
-        //$('#QuotationMap').val(myString);
-  	  
+ 
   	  
   	   $('#quotationTablePO').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
       
@@ -292,7 +290,8 @@
   
     }
     function submitForm() {
-              
+
+			  
     var form_data = new FormData(document.getElementById("myform"));
     form_data.append("label", "WEBUPLOAD");
   
@@ -334,8 +333,10 @@
       //Perform ANy action after successfuly post data
          
     });
-    return false;     
-  }
+    return false;  
+  
+}
+  
   
   
   
@@ -594,7 +595,7 @@
                               ?>
                           </th>
                           <th>
-                            <?php /*?><button class="btn btn-default" onclick="viewPurchaseOrder(<?=$getPo->purchaseid;?>);" data-toggle="modal" data-target="#modal-6" type="button" ><i class="fa fa-eye"></i></button><?php */?>
+                         
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewTransferOrder('<?=$getPo->transfer_no;?>');" data-toggle="modal" data-target="#modal-view-transfer" type="button" ><i class="fa fa-eye"></i></button>
                             <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
@@ -799,40 +800,13 @@
   		alert(e);
   	}
   }
-  
-  // function saveData()
-  // {
-  // 	  var code= document.getElementById("code").value;
-  // 	  var machine_name= document.getElementById("machine_name").value;
-  // 	  var machine_des= document.getElementById("machine_des").value;
-  // 	  var capacity= document.getElementById("capacity").value;
-   
-  // 	  if(code=='')
-  // 	  {
-  // 	   document.getElementById("codemsg").innerHTML = "Please Enter Code";
-  // 	   return false;
-  // 	  }
-  // 	 var xhttp = new XMLHttpRequest();
-  // 	 xhttp.open("GET", "insert_machine?code="+code+"&machine_name="+machine_name+"&machine_des="+machine_des+"&capacity="+capacity, false);
-  // 	 xhttp.send();
-  
-  // 	 $("#modal-0 .close").click();	   
-  // 	 document.getElementById("loadData").innerHTML = xhttp.responseText;
-  // 	 document.getElementById("code").value='';
-  // }
-  
+ 
   
   
     
 </SCRIPT>
 <script>
-  /*$(document).ready(function() {
-    $.ajaxSetup({ cache: false }); // This part addresses an IE bug.  without it, IE will only load the first number and will never refresh
-    setInterval(function() {
-      //$('#getDataTable').load('get_machine');
-    }, 3000); // the "3000" 
-  });
-  */
+  
 </script>
 <style>
   .c-error .c-validation{ 
@@ -993,7 +967,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <input type="submit" class="btn btn-sm" value="Save">
+          <input type="submit" id="saveId" class="btn btn-sm" value="Save">
           <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -1924,7 +1898,7 @@
     }
   
   function addpricemapPo(){
-  
+ 
      var mproductname =  $('#purmproductname').val();
      var mproductid   =  $('#purmproductid').val();
      var price        =  $('#purmPrice').val();

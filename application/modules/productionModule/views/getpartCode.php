@@ -39,7 +39,8 @@
       foreach($queryProductShape->result() as $getProductShape){
         
         
-      $jobQuery=$this->db->query("select sum(qty) as partQty from tbl_job_work_log where production_id='$production_id' and shape_id='$id' and part_id='$getProductShape->part_id'");
+		
+      $jobQuery=$this->db->query("select sum(qty) as partQty from tbl_job_work_log where lot_no='$production_id' and shape_id='$id' and part_id='$getProductShape->part_id'");
       $getJob=$jobQuery->row();
       $getJob->partQty;
         
