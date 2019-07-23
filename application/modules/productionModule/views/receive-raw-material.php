@@ -34,10 +34,7 @@
                       <label for="po_order">Date.:</label>
                       <input type="text" name="invoice_no"  class="form-control" value="<?=$getHdr->date;?>" readonly="readonly" required />
                     </div>
-                    <!--  <div class="col-sm-6" id="grnId" >
-                      <label for="po_order">GRN No.:</label>
-                        <input type="text" name="grn_no" class="form-control" required readonly="readonly" value="<?=$getHdr->grn_no;?>"  />
-                                     </div> -->
+                   
                   </div>
                 </div>
               </div>
@@ -127,14 +124,7 @@
               </div>
             </div>
           </div>
-          <!--scrollbar-y close-->		
-          <!-- <div style="width:100%; background:#dddddd; padding-left:0px; color:#000000; border:2px solid "> -->
-          <!-- <div style="width:100%; background:white;   color:#000000;  max-height:170px; overflow-x:auto;overflow-y:auto;" id="m">
-            <table id="invoice"  style="width:100%;background:white;margin-bottom:0px;margin-top:0px;min-height:30px;" title="Invoice" class="table table-bordered blockContainer lineItemTable ui-sortable"  >
-            
-            <tr></tr>
-            </table> -->
-          <!-- </div> -->
+      
         </div>
         <input type="hidden" name="rows" id="rows">
         <!--//////////ADDING TEST/////////-->
@@ -143,32 +133,7 @@
         <div class="table-responsive">
           <table class="table table-striped table-bordered table-hover" >
             <tbody>
-              <!-- 	<tr class="gradeA">
-                <th>Sub Total</th>
-                <th>&nbsp;</th>
-                <th>
-                <input type="text" placeholder="Placeholder" id="sub_total" readonly="" name="sub_total" class="form-control">
-                </th>
-                </tr>
-                
-                
-                
-                      <tr class="gradeA">
-                <th>Grand Total</th>
-                <th>&nbsp;</th>
-                <th><input type="number" readonly="" step="any" id="grand_total" name="grand_total" placeholder="Placeholder" class="form-control"></th>
-                </tr>
-                <tr class="gradeA">
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-                </tr>
-                <tr class="gradeA">
-                <th> -->
-              <!-- <th>&nbsp;</th>
-                <th >
-                
-                </th></th> -->
+           
               </tr>
             </tbody>
           </table>

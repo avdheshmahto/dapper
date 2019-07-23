@@ -24,10 +24,7 @@
               <label for="po_order">Order Date.:</label>
               <input type="text" name="invoice_no"  class="form-control" value="<?=$getOrder->date;?>" readonly="readonly" required />
             </div>
-            <!--  <div class="col-sm-6" id="grnId" >
-              <label for="po_order">GRN No.:</label>
-                <input type="text" name="grn_no" class="form-control" required readonly="readonly" value="<?=$getHdr->grn_no;?>"  />
-                             </div> -->
+           
           </div>
           <div class="form-group">
             <div class="col-sm-6">
@@ -38,10 +35,7 @@
               <label for="po_order">Return Date</label>
               <input type="date" name="return_date"  class="form-control" value="<?=$getOrder->order_receive_date;?>"  required />
             </div>
-            <!--  <div class="col-sm-6" id="grnId" >
-              <label for="po_order">GRN No.:</label>
-                <input type="text" name="grn_no" class="form-control" required readonly="readonly" value="<?=$getHdr->grn_no;?>"  />
-                             </div> -->
+         
           </div>
         </div>
       </div>
@@ -124,14 +118,7 @@
       </div>
     </div>
   </div>
-  <!--scrollbar-y close-->		
-  <!-- <div style="width:100%; background:#dddddd; padding-left:0px; color:#000000; border:2px solid "> -->
-  <!-- <div style="width:100%; background:white;   color:#000000;  max-height:170px; overflow-x:auto;overflow-y:auto;" id="m">
-    <table id="invoice"  style="width:100%;background:white;margin-bottom:0px;margin-top:0px;min-height:30px;" title="Invoice" class="table table-bordered blockContainer lineItemTable ui-sortable"  >
-    
-    <tr></tr>
-    </table> -->
-  <!-- </div> -->
+ 
 </div>
 <div class="modal-footer">
   <input type="submit" class="btn btn-sm" id="add_req" value="Save">
