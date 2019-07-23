@@ -42,10 +42,7 @@
                       <label for="po_order">Challan Date.:</label>
                       <input type="text" name="challan_date"  class="form-control" value=""  required />
                     </div>
-                    <!--  <div class="col-sm-6" id="grnId" >
-                      <label for="po_order">GRN No.:</label>
-                        <input type="text" name="grn_no" class="form-control" required readonly="readonly" value="<?=$getHdr->grn_no;?>"  />
-                                     </div> -->
+                   
                   </div>
                 </div>
               </div>
@@ -72,7 +69,7 @@
                     </tr>
                   </thead>
                   <?php
-                    //  echo "select productid,inboundrhdr,receive_qty,remaining_qty,order_qty,rem_order_qty from tbl_issuematrial_dtl where inboundrhdr='$id' group by productid";
+                    
                     	$productQuery=$this->db->query("select productid,inboundrhdr,receive_qty,remaining_qty,order_qty,rem_order_qty from tbl_issuematrial_dtl where inboundrhdr='$id' group by productid");
                     	$i=1;
                     	foreach($productQuery->result() as $getProduct){
@@ -94,7 +91,7 @@
                     </td>
                     <td><?=$getProductUOM->keyvalue;?></td>
                     <?php
-                      // select M.*,S.Product_id,S.quantity,S.usageunit,S.productname,S.Product_id from tbl_part_price_mapping M,tbl_product_stock S,tbl_machine MM where M.rowmatial = S.Product_id AND MM.id = M.machine_id AND MM.machine_name = $pid 
+                     
                       
                       $poLogQuery=$this->db->query("select D.qty as po_qty,SUM(M.qty) as mqty from tbl_quotation_purchase_order_dtl D,tbl_part_price_mapping M,tbl_machine MM where MM.machine_name = D.productid AND MM.id = M.machine_id AND D.purchaseid='$getHdr->po_no' and M.rowmatial='$getProduct->productid' AND M.type ='part'");
                       $getPoQty=$poLogQuery->row();
@@ -133,14 +130,7 @@
               </div>
             </div>
           </div>
-          <!--scrollbar-y close-->		
-          <!-- <div style="width:100%; background:#dddddd; padding-left:0px; color:#000000; border:2px solid "> -->
-          <!-- <div style="width:100%; background:white;   color:#000000;  max-height:170px; overflow-x:auto;overflow-y:auto;" id="m">
-            <table id="invoice"  style="width:100%;background:white;margin-bottom:0px;margin-top:0px;min-height:30px;" title="Invoice" class="table table-bordered blockContainer lineItemTable ui-sortable"  >
-            
-            <tr></tr>
-            </table> -->
-          <!-- </div> -->
+          
         </div>
         <input type="hidden" name="rows" id="rows">
         <!--//////////ADDING TEST/////////-->
@@ -149,32 +139,7 @@
         <div class="table-responsive">
           <table class="table table-striped table-bordered table-hover" >
             <tbody>
-              <!-- 	<tr class="gradeA">
-                <th>Sub Total</th>
-                <th>&nbsp;</th>
-                <th>
-                <input type="text" placeholder="Placeholder" id="sub_total" readonly="" name="sub_total" class="form-control">
-                </th>
-                </tr>
-                
-                
-                
-                      <tr class="gradeA">
-                <th>Grand Total</th>
-                <th>&nbsp;</th>
-                <th><input type="number" readonly="" step="any" id="grand_total" name="grand_total" placeholder="Placeholder" class="form-control"></th>
-                </tr>
-                <tr class="gradeA">
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-                </tr>
-                <tr class="gradeA">
-                <th> -->
-              <!-- <th>&nbsp;</th>
-                <th >
-                
-                </th></th> -->
+              
               </tr>
             </tbody>
           </table>
