@@ -168,19 +168,7 @@
         alert("Your broweser doesnot support ajax");
       
       	  }
-              /*   function abc(pt,pr,tid,qs,lq)
-      	  {
-             		   document.getElementById("prd").value=pt;
-      				document.getElementById("qn").value=1;
-      				document.getElementById("lpr").innerHTML=pr;
-      				document.getElementById("lph").value=pr;
-      	//document.getElementById("spid").value=tid;
-      			/*if(qs<lq)
-      				{
-      				///alert('The city of ' + city + ' is located in ' + country + '.');
-      			alert(pt+ '- has Reached to Re-Order Level (' + lq + '). \n Please Re-Order...! ');
-      				}
-      		}*/
+             
       
       
       	  function abc(pt,pr,tid,q,u,igst,quantity,reorder,p,cp){

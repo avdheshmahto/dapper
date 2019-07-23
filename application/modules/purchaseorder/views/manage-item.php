@@ -146,7 +146,7 @@
                       echo $compRow->name;
                       ?>
                     <?php
-                      //echo "select SUM(receive_qty) as qty,SUM(order_qty) as ordQty,SUM(remaining_qty) as remQty,SUM(rem_order_qty) as rem_order_qty from tbl_issuematrial_dtl where productid='$fetch_list->Product_id' group by productid";
+                      
                        $blockQtyQuery=$this->db->query("select SUM(receive_qty) as qty,SUM(order_qty) as ordQty,SUM(remaining_qty) as remQty,SUM(rem_order_qty) as rem_order_qtyy from tbl_issuematrial_dtl where productid='$fetch_list->Product_id' group by productid");
                        $getBlockQty=$blockQtyQuery->row();
                        //
@@ -172,22 +172,7 @@
                     echo $bQ=$getBlockQty->ordQty-$getBlockQty->rem_order_qtyy;?>/<?php echo $bQK=$getBlockQty->qty-$getBlockQty->remQty;?></th>
                   <th><?=$getSerial->qn_pc-$bQ;?>/<?=$fetch_list->quantity-$bQK;?></th>
                   <th>&nbsp;</th>
-                  <!-- <th class="bs-example">
-                    <?php if($view!=''){ ?>
-                    <button class="btn btn-default" property="view" arrt= '<?=json_encode($fetch_list);?>' onclick ="editItem(this);" type="button" data-toggle="modal" data-target="#modal-0" data-backdrop='static' data-keyboard='false'> <i class="fa fa-eye"></i></button>
-                    
-                    <?php } if($edit!=''){ ?>
-                    <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#modal-0" arrt= '<?=json_encode($fetch_list);?>' onclick="editItem(this)"><i class="icon-pencil"></i></button>
-                    
-                    <?php }
-                      $pri_col='Product_id';
-                      $table_name='tbl_product_stock';
-                      ?>
-                    <button class="btn btn-default delbutton" id="<?php echo $fetch_list->Product_id."^".$table_name."^".$pri_col ; ?>" type="button">
-                     <i class="icon-trash"></i></button>		
-                    <?php ?>
-                     
-                    </th> -->
+                  
                 </tr>
                 <?php $i++; } ?>
               </tbody>
@@ -210,14 +195,7 @@
   $this->load->view("footer.php");
   ?>
 <script>
-  // function editItem(v){
-  // //alert(v);
-  // var pro=v;
-  //  var xhttp = new XMLHttpRequest();
-  //   xhttp.open("GET", "updateItem?ID="+pro, false);
-  //   xhttp.send();
-  //   document.getElementById("contentitem").innerHTML = xhttp.responseText;
-  // }
+ 
   
   
   function changing(v)
