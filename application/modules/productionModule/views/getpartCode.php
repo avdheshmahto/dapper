@@ -9,16 +9,7 @@
   $qtySum=$qtySum+$shapeCnt->qty."<br>";
   }
   
-  
-  //@$getP=implode(",",$pId);
-  //$queryProductShape=$this->db->query("select count(machine_name) as cnt from tbl_machine where code in($getP)");
-  //$shapeCnt=$queryProductShape->row();
-  //echo "aaa".$shapeCnt->cnt;
-  
-  
-  
-  
-  
+ 
   
   ?>
 <table class="table table-striped table-bordered table-hover dataTables-example1" >
@@ -62,12 +53,12 @@
       </td>
       <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="qty[]" id="entQty<?=$i;?>" onchange="val(this.id)" <?php if($shapeName=='Shape'){?> readonly="readonly"<?php } ?> /></td>
       <td> <input class="form-control" readonly="" style="margin-bottom:10px;width:55px;" value="<?=$getProduct->net_weight;?>" name="weight[]" id="weight<?=$i;?>"  /></td>
-      <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_weight[]" id="total_weight<?=$i;?>"  /></td>
+      <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_weight[]" id="total_weight<?=$i;?>" readonly="readonly"  /></td>
       <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="rate[]" id="rate<?=$i;?>" onchange="RateCal(this.id)"  /></td>
-      <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_rm_rate[]" id="total_rm_rate<?=$i;?>"  /></td>
+      <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_rm_rate[]" id="total_rm_rate<?=$i;?>"  readonly="readonly" /></td>
       <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="labour_rate[]" id="labour_rate<?=$i;?>" onchange="labourRateCal(this.id)"  /></td>
-      <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_labour_rate[]" id="total_labour_rate<?=$i;?>"  /></td>
-      <td>  <input class="form-control" style="margin-bottom:10px; width:55px;" value="<?=$getJob->total_cost;?>" id="total_cost<?=$i;?>" name="total_cost[]"  /></td>
+      <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_labour_rate[]" id="total_labour_rate<?=$i;?>" readonly="readonly"  /></td>
+      <td>  <input class="form-control" style="margin-bottom:10px; width:55px;" value="<?=$getJob->total_cost;?>" id="total_cost<?=$i;?>" name="total_cost[]" readonly="readonly"  /></td>
       <td>  <input class="form-control" style="margin-bottom:10px; width:55px;" value="<?=$getJob->partQty;?>" id="orderQty<?=$i;?>" name="qtyy[]" readonly="readonly" /></td>
       <td><?php
         $remQty=$qtySum-$getJob->partQty;

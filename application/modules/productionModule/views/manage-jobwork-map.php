@@ -36,6 +36,8 @@
   	success: function(data){
       // console.log(data);
       $("#getPartView").empty().append(data).fadeIn();
+	 
+	  
   	// $("#btn").prop('disabled', false);
       }
       });
@@ -64,14 +66,19 @@
   
   function qtyFill(v)
   {
-  	
+  
   var cntV=document.getElementById("cntVal").value;
   
   for(i=1;i<=cntV;i++)
   {
-  	
+  	var weight=document.getElementById("weight"+i).value;
+	var weightTotal=Number(weight)*Number(v);
+	document.getElementById("total_weight"+i).value=weightTotal;
   	document.getElementById("entQty"+i).value=v;
-  	
+  	if(v=='ShapePart')
+	{
+		document.getElementById("total_weight"+i).value="";
+	}
   }
   	
   }
@@ -86,6 +93,8 @@
   {
   	
   	document.getElementById("entQty"+i).value=v;
+	
+	
   	
   }
   
@@ -933,7 +942,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" id="qtyn" style="display:none">Qty:</label> 
               <div class="col-sm-4">
-                <input name="shape_qty" type="text" value="" id="fillQty" onchange="qtyFill(this.value);" class="form-control" style="display:none" > 
+                <input name="shape_qty" type="number" value="" id="fillQty" onchange="qtyFill(this.value);" class="form-control" style="display:none" > 
               </div>
               <label class="col-sm-12 control-label">
                 <div class="table-responsive" id="getPartView" >
@@ -2249,16 +2258,6 @@
   
   
   
-  
-  
-  /*
-  window.onbeforeunload = function (e) {
-  // Your logic to prepare for 'Stay on this Page' goes here 
-  
-      return "Please click 'Stay on this Page' and we will give you candy";
-  };
-  */
-  
   function checkQtyVal()
   {
   
@@ -2268,7 +2267,10 @@
   	
   	document.getElementById("fillQty").style.display = "block";
   	document.getElementById("qtyn").style.display = "block";
-  	
+	document.getElementById("shape").value = "";
+	document.getElementById("fillQty").value = "";
+  	$('#getPartView').empty();
+	
   	for(i=1;i<=cntVal;i++)
   	{
   
@@ -2281,6 +2283,8 @@
   document.getElementById("fillQty").style.display = "none";	
   document.getElementById("shape").value = "";	
   document.getElementById("qtyn").style.display = "none";	
+ 
+  	$('#getPartView').empty();
   
   
   for(i=1;i<=10;i++)
