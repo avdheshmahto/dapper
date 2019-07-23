@@ -11,7 +11,7 @@
     <li><a href="#">Lot Order</a></li>
     <li class="active"><strong><a href="#">Manage Lot Order</a></strong></li>
     <div class="pull-right">
-      <a class="btn btn-sm" href="<?=base_url();?>addproduction/manage_purchase_order">Manage Lot Order</a>
+      <a class="btn btn-sm" href="<?=base_url();?>buyerorder/manage_purchase_order">Manage Lot Order</a>
     </div>
   </ol>
 
@@ -354,7 +354,7 @@
                   <th>&nbsp;</th>
                   <th>
                     <input class="btn btn-sm" type="button" value="SAVE"   id="sv1" onclick="fsv(this)" >
-                    &nbsp;<a href="<?=base_url();?>addproduction/manage_purchase_order" class="btn btn-secondary btn-sm">Cancel</a>
+                    &nbsp;<a href="<?=base_url();?>buyerorder/manage_purchase_order" class="btn btn-secondary btn-sm">Cancel</a>
                   </th>
                   </th>
                 </tr>

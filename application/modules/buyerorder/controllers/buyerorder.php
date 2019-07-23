@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 error_reporting(E_ALL ^ E_NOTICE);
 
-class addproduction extends my_controller
+class buyerorder extends my_controller
 {
     
     function __construct()
