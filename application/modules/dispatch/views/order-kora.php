@@ -27,10 +27,7 @@
               <label for="po_order">Transfer Date.:</label>
               <input type="text" name="transfer_date"  class="form-control" value="<?=$getData->transfer_date;?>" readonly="readonly" required />
             </div>
-            <!--  <div class="col-sm-6" id="grnId" >
-              <label for="po_order">GRN No.:</label>
-                <input type="text" name="grn_no" class="form-control" required readonly="readonly" value="<?=$getHdr->grn_no;?>"  />
-                             </div> -->
+            
           </div>
           <div class="form-group">
             <div class="col-sm-6">
@@ -41,10 +38,7 @@
               <label for="po_order">Repair Date</label>
               <input type="date" name="repair_date"  class="form-control" value="<?=$getOrder->order_receive_date;?>"  required />
             </div>
-            <!--  <div class="col-sm-6" id="grnId" >
-              <label for="po_order">GRN No.:</label>
-                <input type="text" name="grn_no" class="form-control" required readonly="readonly" value="<?=$getHdr->grn_no;?>"  />
-                             </div> -->
+            
           </div>
         </div>
       </div>
@@ -99,7 +93,7 @@
             </td>
             <td><?=$getProductUOM->keyvalue;?></td>
             <?php
-              // select M.*,S.Product_id,S.quantity,S.usageunit,S.productname,S.Product_id from tbl_part_price_mapping M,tbl_product_stock S,tbl_machine MM where M.rowmatial = S.Product_id AND MM.id = M.machine_id AND MM.machine_name = $pid 
+              
               
               $poLogQuery=$this->db->query("select D.qty as po_qty,SUM(M.qty) as mqty from tbl_quotation_purchase_order_dtl D,tbl_part_price_mapping M,tbl_machine MM where MM.machine_name = D.productid AND MM.id = M.machine_id AND D.purchaseid='$getHdr->po_no' and M.rowmatial='$getProduct->productid' AND M.type ='part'");
               $getPoQty=$poLogQuery->row();
@@ -128,14 +122,7 @@
       </div>
     </div>
   </div>
-  <!--scrollbar-y close-->		
-  <!-- <div style="width:100%; background:#dddddd; padding-left:0px; color:#000000; border:2px solid "> -->
-  <!-- <div style="width:100%; background:white;   color:#000000;  max-height:170px; overflow-x:auto;overflow-y:auto;" id="m">
-    <table id="invoice"  style="width:100%;background:white;margin-bottom:0px;margin-top:0px;min-height:30px;" title="Invoice" class="table table-bordered blockContainer lineItemTable ui-sortable"  >
-    
-    <tr></tr>
-    </table> -->
-  <!-- </div> -->
+  
 </div>
 <div class="modal-footer">
   <input type="submit" class="btn btn-sm" id="add_req" value="Save">
