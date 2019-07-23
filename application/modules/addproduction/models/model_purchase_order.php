@@ -104,11 +104,9 @@ class model_purchase_order extends CI_Model
                 $arr[$i]['productionQty'] = $pd->qty;
                 //$arr[$i]['qty']       = $pd->qty;
                 if ($pid != "") {
-                    // echo "select * from tbl_part_price_mapping M ,tbl_product_stock S,tbl_machine MM where M.part_id = S.Product_id AND MM.machine_name = '".$pid."' AND M.type = 'part' AND MM.id  = M.machine_id";
+
                     $qrym = "select *,sum(M.qty) as qty from tbl_part_price_mapping M ,tbl_product_stock S,tbl_machine MM ,tbl_machine_spare_map SM where MM.machine_name = S.Product_id AND MM.id = M.machine_id AND M.machine_id = SM.machine_id AND SM.spare_id = M.part_id AND MM.machine_name = '" . $pid . "' AND M.type = 'part' group by M.rowmatial";
-                    
-                    
-                    
+                                                            
                     
                     $querym = $this->db->query($qrym)->result_array();
                     

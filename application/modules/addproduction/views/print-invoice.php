@@ -62,14 +62,14 @@
   	 return $goundStr;
   	}
   ?>
-<!DOCTYPE html>
+
 <html>
   <head>
     <title>PROFORMA INVOICE</title>
     <link rel="stylesheet" href="<?=base_url();?>assets/pi_css/css/style.css">
   </head>
   <body>
-    <div class="page03">
+    <div class="page03__">
       <h2>PROFORMA INVOICE</h2>
       <table class="table1" align="center">
         <tr>
@@ -186,7 +186,7 @@
             <td></td>
             <td>
               <p><?=$getProduct->productname;?><br>
-                <strong>Packing:</strong>&nbsp;<?=$getProduct->packing;?>/<?=$getDtl->ord_qty;?></span><span><strong>T.CBM:</strong><?php echo round($getProduct->cbm*$getDtl->ord_qty,3);?></span>
+                <strong>Packing:</strong>&nbsp;<?=$getProduct->packing;?>/<?=$getDtl->ord_qty;?><span><strong>T.CBM:</strong><?php echo round($getProduct->cbm*$getDtl->ord_qty,3);?></span>
               </p>
             </td>
             <td class="right"><?=$getDtl->qty;?> <?=$getUnit->keyvalue;?></td>
@@ -214,6 +214,7 @@
             <td rowspan="3" class="space"></td>
           </tr>
         </table>
+
         <table class="table3">
           <tr>
             <td rowspan="6" colspan="3">

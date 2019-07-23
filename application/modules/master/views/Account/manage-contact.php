@@ -155,8 +155,6 @@
                     <tbody>
                       <tr class="gradeA">
                         <th>Consignee</th>
-                        <!-- <th>Location code</th> -->
-                        <!--<th>Location Address</th>-->
                         <th>Action</th>
                       </tr>
                     </tbody>
@@ -164,7 +162,7 @@
                       <tr>
                         <td>
                           <select  class="form-control" id="entity" >
-                            <option value="">----Select ----</option>
+                            <option value="" selected disabled>----Select ----</option>
                             <?php 
                               $sqlprotype=$this->db->query("SELECT * FROM tbl_contact_m where group_name = 7");
                               foreach ($sqlprotype->result() as $fetch_protype){
@@ -172,14 +170,8 @@
                             <option value="<?=$fetch_protype->contact_id;?>"><?=$fetch_protype->first_name; ?></option>
                             <?php } ?>
                           </select>
-                        </td>
-                        <!--<td>
-                          <select class="form-control" id="entity_code" multiple>
-                          <option value="">----Select ----</option>
-                          </select> 
-                          </td> -->
+                        </td>                        
                         <td>
-                          <!-- <i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i> -->
                           <button type="button" onclick="addconsignee()" class="btn btn-sm btn-black btn-outline">Add</button>
                         </td>
                       </tr>
@@ -295,11 +287,7 @@
                         $pri_col='contact_id';
                         $table_name='tbl_contact_m';
                         ?>
-                      <button class="btn btn-default delbutton" id="<?php echo $fetch_list->contact_id."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button>	
-                      <?php if($fetch_list->group_name == 4){ ?>
-                      <!--<button class="btn btn-xs btn-default" data-toggle="modal" data-target="#modal-2" type="button" data-backdrop='static' data-keyboard='false' title="Contact Mapping" onclick="mappingproduct(<?=$fetch_list->contact_id;?>,'edit');"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
-                        <button class="btn btn-xs btn-default" data-toggle="modal" data-target="#modal-2" type="button" data-backdrop='static' data-keyboard='false'  title=" View Contact Mapping" onclick="mappingproduct(<?=$fetch_list->contact_id;?>,'view');"><i class="icon-flow-tree"></i></button>-->
-                      <?php } ?>
+                      <button class="btn btn-default delbutton" id="<?php echo $fetch_list->contact_id."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button>	                      
                     </th>
                   </tr>
                   <?php $i++; } ?>
@@ -316,23 +304,7 @@
             </div>
           </div>
         </div>
-      </div>
-      <!-- <div id="modal-1" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content" >
-        	<div class="modal-header">
-        	<button  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        	<h4 class="modal-title">Edit Purchase Order</h4>
-        	<div id="msgdata" class="text-center " style="font-size: 15px;color: red;"></div> 
-        	</div>
-        	<form  class="form-horizontal" role="form" id="insertProductMapping"  >
-                <div class="panel-body" id ="mappingData">
-             </div>
-               </form>
-        		
-         </div>
-         </div>
-        </div> -->
+      </div>      
       <div id="modal-2" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
           <div class="modal-content" >
@@ -354,367 +326,7 @@
   </div>
 </div>
 <script>
-  //add item into showling list
-  window.addEventListener("keydown", checkKeyPressed, false);
-     //funtion to select product
-     function checkKeyPressed(e) {
-               // e.preventDefault();
-       var s=e.keyCode;
-       var ppp   = document.getElementById("prd").value;
-       var sspp  = document.getElementById("spid").value;//
-       var ef    = document.getElementById("ef").value;
-  	ef      = Number(ef);
   
-      var countids = document.getElementById("countid").value;
-      // alert(countids);
-       for(n=1;n<=countids;n++)
-        {
-           document.getElementById("tyd"+n).onkeyup  = function (e) {
-           var entr =(e.keyCode);
-           if(entr==13){
-             document.getElementById("priceVal").focus();
-             document.getElementById("prdsrch").innerHTML=" ";
-                 }
-        }
-      }
-              document.getElementById("priceVal").onkeyup  = function (e) {
-           var entr =(e.keyCode);
-           if(entr==13){
-                      document.getElementById("addRow").focus();
-           }
-     }
-              
-               document.getElementById("addRow").onclick = function (e) {
-               	//alert('dsd');
-         var entr = (e.keyCode);
-        //  if (e.keyCode == "13")
-        // {
-           e.preventDefault();
-              e.stopPropagation();
-     if(ppp!=='' || ef==1)
-         {
-         	//alert('sdsdsdd');
-        	 adda();	  	
-    		 var ddid = document.getElementById("spid").value;
-       var ddi  = document.getElementById(ddid);
-       ddi.id   = "d";
-            }
-        else
-        {
-         alert("Enter Correct Product");
-        }
-  
-        return false;
-      // }
-    }
-  
-         document.getElementById("addRow").onkeyup = function (e) {
-         var entr = (e.keyCode);
-          if (e.keyCode == "13")
-         {
-           e.preventDefault();
-              e.stopPropagation();
-     if(ppp!=='' || ef==1)
-         {
-         	//alert('sdsdsdd');
-        	 adda();	  	
-    		 var ddid = document.getElementById("spid").value;
-       var ddi  = document.getElementById(ddid);
-       ddi.id   = "d";
-            }
-        else
-        {
-         alert("Enter Correct Product");
-        }
-  
-        return false;
-       }
-    }
-  }
-  
-  
-  
-  function deleteselectrow(d,r) //delete dyanamicly created rows or product detail
-  {
-  var regex = /(\d+)/g;
-  nn = d.match(regex);
-  id = nn;
-  
-  if(document.getElementById("prd").value!=''){
-  document.getElementById("qn").focus();
-   alert("Product already in edit Mode");
-   return false;
-  }
-      var i = $(r).parent().parent();
-      var cnf = confirm('Are You Sure..??? you want to Delete line no1.'+(id));
-  if (cnf== true)
-  {
-  
-  var rows    = document.getElementById("rows").value; 
-  var rid     = Number(rows)-1;
-  
-  document.getElementById("rows").value = rid;
-  
-   i.remove();
-  // slr();
-  // editDeleteCalculation();
-  }
-  
-  }
-  
-  ////////////////////////////////// ends delete code ////////////////////////////////
-  ////////////////////////////////// starts edit code ////////////////////////////////
-  
-  
-  function editselectrow(d,r) //modify dyanamicly created rows or product detail
-  {
-  
-  var regex = /(\d+)/g;
-  nn        = d.match(regex)
-  id        = nn;
-  
-  if(document.getElementById("prd").value!=''){
-  document.getElementById("lph").focus();
-  alert("Product already in edit Mode");
-  return false;
-  }
-  
-    //####### starts ##############//
-      var pd        = document.getElementById("pd"+id).value;
-  var main_id   = document.getElementById("main_id"+id).value;
-   var priceval  = document.getElementById("price"+id).value;
-  //var qn          = document.getElementById("qty"+id).value;
-  //var actual      = document.getElementById("actual"+id).value;
-  	
-  document.getElementById("pri_id").value    = main_id;
-  document.getElementById("prd").value       = pd;
-  document.getElementById("priceVal").value  = priceval;
-              
-              $(r).parent().parent().remove();
-              var rows    = document.getElementById("rows").value; 
-      var rid     = Number(rows)-1;
-              document.getElementById("rows").value = rid;
-              document.getElementById("prd").focus();
-  }
-  
-  ////////////////////////////////// ends edit code ////////////////////////////////
-  
-  function getdata()
-  {
-  
-  // alert('sss');
-  currentCell          = 0;
-  var product1         = document.getElementById("prd").value;
-  var product          = product1;
-  var prdId            =  "";
-  
-  //alert(product);
-  if(xobj)
-  {
-  var obj=document.getElementById("prdsrch");
-  //alert("getproduct?con="+product1+"&con_id="+company+"&supplier_contact="+supplier_contact);
-  xobj.open("GET","getproduct?con="+product,true);
-  xobj.onreadystatechange=function()
-  {
-  if(xobj.readyState==4 && xobj.status==200)
-  {
-  //console.log(xobj.responseText);
-  obj.innerHTML=xobj.responseText;
-  }
-  }
-  }
-  xobj.send(null);
-  }
-  
-  ////////////////////////////////////////////////////   
-  function slr(){
-  var table    = document.getElementById('invoice');
-  var rowCount = table.rows.length;
-  for(var i=1;i<rowCount;i++)
-  {    
-        table.rows[i].cells[0].innerHTML=i;
-  }
-  }  
-      //////////////////////////////////////////////////////////////
-  var rw=0;
-  
-  function adda()
-  { 
-    var locationid =   "";//document.getElementById("locationid").value;     // enter quantity
-    var rows      = document.getElementById("rows").value;     //row value
-    var pri_id    = document.getElementById("pri_id").value;  //item id
-  var pd 		  = document.getElementById("prd").value;
-  var priceVal  = document.getElementById("priceVal").value;
-  var table     = document.getElementById("invoice");
-  var rid       = Number(rows)+1;
-  
-            
-            	// if(lph == 0 || lph == ""){
-             //     alert('Please Enter Quantity Value !');
-             //     return false;
-             //  }
-  
-  document.getElementById("rows").value=rid;
-  //totalSum();	
-  
-              currentCell = 0;
-               if(pri_id!="")
-       {
-  
-      	clear();
-        //alert(pd);
-        var indexcell=0;
-        var row = table.insertRow(-1);
-        rw = rw+0;
-     //cell 0st
-  
-      var cell=cell+indexcell;		
-   	cell = row.insertCell(0);
-  	//cell.style.width=".20%";
-  	cell.align="center"
-    	cell.innerHTML=rid;
-  
-  
-      //cell 1st item name
-               indexcell=Number(indexcell+1);		
-               var cell=cell+indexcell;	
-  
-               cell = row.insertCell(indexcell);
-      //cell.style.width = "11%";
-      cell.align = "center";
-  
-  //============================item text ============================
-  
-      var prd = document.createElement("input");
-  	prd.type="text";
-  	prd.border ="0";
-  	prd.value=pd;
-  	prd.setAttribute("class", "form-control");	
-  	prd.name='pd[]';//
-  	prd.id='pd'+rid;//
-  	prd.readOnly = true;
-  	prd.style="text-align:center";  
-  	//	prd.style.width="100%";
-  	prd.style.border="hidden"; 
-  	cell.appendChild(prd);
-      var priidid = document.createElement("input");
-  	priidid.type="hidden";
-  	priidid.border ="0";
-  	priidid.value=pri_id;	
-  	priidid.name='main_id[]';//
-  	priidid.id='main_id'+rid;//
-  	priidid.readOnly = true;
-  	priidid.style="text-align:center";  
-  	//	priidid.style.width="100%";
-  	priidid.style.border="hidden"; 
-  	cell.appendChild(priidid);
-  			
-  			
-  // 				var unitt = document.createElement("input");
-  // 				unitt.type="hidden";
-  // 				unitt.border ="0";
-  // 				unitt.value=unit;	
-  // 				unitt.name='unit[]';//
-  // 				unitt.id='unit'+rid;//
-  // 				unitt.readOnly = true;
-  // 				unitt.style="text-align:center";  
-  // //	unitt.style.width="100%";
-  // 				unitt.style.border="hidden"; 
-  // 				cell.appendChild(unitt);
-  	
-  		// ends here
-  
-  
-  //#################cell 2nd starts here####################//
-  
-       indexcell = Number(indexcell+1);		
-                       var cell  = cell+indexcell;
-                          cell      = row.insertCell(indexcell);
-                  //cell.style.width="3%";
-                 //cell.style.display="none";
-              cell.align="center"
-              var price = document.createElement("input");
-  			price.type         = "text";
-  			price.setAttribute("class", "form-control");
-  			price.border       = "0";
-  			price.value        = priceVal;	    
-  			price.name         ='price[]';
-  			price.id           ='price'+rid;
-  			price.readOnly     = true;
-  			price.style        = "text-align:center";
-  		    price.style.border = "hidden"; 
-  			cell.appendChild(price);
-  
-                
-  			// indexcell = Number(indexcell+1);		
-  			// var cell  = cell+indexcell;
-  		 //        cell  = row.insertCell(indexcell);
-  			// 			cell.style.width="3%";
-  			// 			cell.align="center"
-  			// 			var salepr = document.createElement("input");
-  			// 						salepr.type="text";
-  			// 						salepr.border ="0";
-  			// 						salepr.value=lph;	    
-  			// 						salepr.name ='qty[]';
-  			// 						salepr.id='qty'+rid;
-  			// 						salepr.readOnly = true;
-  			// 						salepr.style="text-align:center";
-  			// 					//	salepr.style.width="100%";
-  			// 						salepr.style.border="hidden"; 
-  			// 						cell.appendChild(salepr);
-  						
-  
-  
-  			indexcell=Number(indexcell+1);		
-  	        var cell=cell+indexcell;
-  	        //var imageloc="/mr_bajaj/";
-  	        var cell = row.insertCell(indexcell);
-  			//cell.style.width="3%";
-  			cell.align="center";
-  			
-  
-  				
-  	            var edt = document.createElement("button");
-  					edt.type ="button";
-  					edt.setAttribute("class", "btn btn-xs btn-black");
-  					edt.name ='ed';
-  					edt.style="margin-right: 10px;";
-  					edt.id='ed'+rid;
-  					edt.innerHTML='<i class="icon-pencil"> </i>';
-  					edt.onclick= function() { editselectrow(edt.id,edt); };
-  					cell.appendChild(edt);
-  
-    
-  
-  		        var delt =document.createElement("button");
-  		        	delt.type ="button";
-  					delt.setAttribute("class", "btn btn-xs btn-black");
-  					delt.innerHTML='<i class="icon-trash"> </i>';
-  					delt.name ='dlt';
-  					delt.id='dlt'+rid;
-  					delt.onclick= function() { deleteselectrow(delt.id,delt); };
-  				    cell.appendChild(delt);
-                
-                    $("#style-3-y").addClass("scrollbar-y");
-  
-  }
-  else
-  {
-   alert('***Please Select PRODUCT ***');
-   document.getElementById("prd").focus();
-    }
-  
-  }
-  
-  function clear()
-  {
-  document.getElementById("priceVal").value       = "";     // enter quantity
-  document.getElementById("prd").value       = "";
-  document.getElementById("pri_id").value    = "";
-  document.getElementById("prd").focus();	
-  }
-  
-  ////////////////////////////////// starts delete code ////////////////////////////////
   
   function getVendor()
   {
@@ -782,6 +394,40 @@
   	});
    }
   
+
+  function addconsignee()
+  {
+  
+    var value        =  0;
+    var entity       =  $('#entity').val();
+    
+    //alert(entity) ;
+
+    if(entity != null)
+    {
+      
+      var x        = document.getElementById("entity").selectedIndex;
+      var y        = document.getElementById("entity").options;
+      var indexVal =  y[x].text;
+      $('#entity option:selected').remove();
+      
+      $('#consigneeTable').append('<tr class="'+'row_'+value+'"><td><input  type ="hidden" class="form-control" name="entity[]" value="'+entity+'"><input   type ="text" readonly class="form-control"  value="'+indexVal+'"></td><td><i class="fa fa-trash  fa-3x" style="font-size:20px;" id="quotationdel_shape" attrVal="'+entity+'" val="'+indexVal+'" aria-hidden="true"></i></td></tr>');
+      
+      //amazonEntity();
+      $("#entity").val("");
+      $("#select2-entity-container").text("--select--");
+
+    }
+    else
+    {
+      
+      alert('Please Select Consignee');
+      //$('#entity').focus();
+
+    }
+    
+  
+  }
   
   function downloadCSV(csv, filename) {
       var csvFile;

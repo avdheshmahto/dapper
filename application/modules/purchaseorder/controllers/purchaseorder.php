@@ -528,40 +528,7 @@ class purchaseorder extends my_controller
         
     }
     
-    
-    /*public function sales_order_list()
-    {
-    $info=array();
-    
-    $res = $this -> db
-    -> select('*')
-    -> where('status','A')
-    -> get('tbl_sales_order_hdr');
-    
-    $i='0';
-    
-    foreach($res->result() as $row)
-    {
-    
-    $compQuery = $this -> db
-    -> select('*')
-    -> where('contact_id',$row->vendor_id)
-    -> get('tbl_contact_m');
-    $compRow = $compQuery->row();
-    
-    $info[$i]['1']=$row->salesid;
-    $info[$i]['2']=$row->invoice_date;
-    $info[$i]['3']=$compRow->first_name;
-    $info[$i]['4']=$row->grand_total;
-    $info[$i]['5']=$row->due_date;            
-    $info[$i]['16']=$compRow->contact_id;    
-    $i++;
-    
-    }
-    return $info;
-    
-    }*/
-    
+   
     
     public function insertPurchaseOrder()
     {

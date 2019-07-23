@@ -58,9 +58,7 @@
             </tr>
           </thead>
           <tbody>
-            <?php
-              // $hdr=$this->db->query("select * from tbl_grn_return_hdr where po_no='".$_GET['pid']."'");
-              // $getHdr=$hdr->row();
+            <?php             
               
               $poquery=$this->db->query("select * from tbl_grn_return_dtl where po_no='$pid' ");
               foreach($poquery->result() as $getPo)

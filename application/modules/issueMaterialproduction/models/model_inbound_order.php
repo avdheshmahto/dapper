@@ -18,17 +18,13 @@ class model_inbound_order extends CI_Model
             
             
             if ($get['request_no'] != "") {
-                /* $contactQuery = $this->db->query("select * from tbl_purchase_order_hdr where purchase_no like '%".$get['po_no']."%' ");
-                $contactVal   = $contactQuery->row();
-                $contactVal   = $contactVal->purchaseid; */
+               
                 $qry .= " AND request_no LIKE '%" . $get['request_no'] . "%'";
             }
             
             if ($get['date'] != "")
                 $qry .= " AND grn_date = '" . $get['date'] . "' ";
-            
-            /*if($get['invoice_no'] != "")
-            $qry .= " AND invoice_no = '".$get['invoice_no']."'";*/
+                        
             
             if ($get['grn_no'] != "")
                 $qry .= " AND grn_no = '" . $get['grn_no'] . "'";
@@ -120,8 +116,7 @@ class model_inbound_order extends CI_Model
     
     function getmatrials($id)
     {
-        //echo "select * from tbl_quotation_purchase_order_dtl where purchaseid = $id ";
-        // "select * from tbl_quotation_purchase_order_dtl where purchaseid = $id ";
+       
         $query = $this->db->query("select * from tbl_quotation_purchase_order_dtl where purchaseid = $id ");
         return $result = $query->result();
         

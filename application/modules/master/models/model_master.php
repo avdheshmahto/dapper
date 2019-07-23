@@ -373,10 +373,7 @@ class model_master extends CI_Model
                 <input  type ="hidden" class="form-control" name="entity[]" value="<?= $fetch_protype->contact_id; ?>">
                 <input  type ="text" class="form-control"  value="<?= $fetch_protype->first_name; ?>">
             </td>
-            <!-- <td>
-                <input  type ="hidden" class="form-control" value = "<?= $entityIdimplode; ?>" name="entity_code[]">
-                <input  type ="text" class="form-control" value="<?= $entityimplode; ?>">
-            </td> -->
+            
             <td>
                 <i class="fa fa-trash  fa-2x" id="quotationdel" style="font-size:20px;" attrVal="<?= $fetch_protype->contact_id; ?>" aria-hidden="true"></i>
             </td>

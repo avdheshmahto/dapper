@@ -95,9 +95,7 @@
                   <th style="display:none">Invoice Type</th>
                   <th>Date</th>
                   <th>Customer Name</th>
-                  <!--  <th>Due Date</th> -->
-                  <!--  <th>Status</th> -->
-                  <!--    <th>Grand Total</th> -->
+                 
                   <th>Action</th>
                 </tr>
               </thead>
@@ -107,9 +105,7 @@
                     <td><input name="lot_no"  type="text"  class="search_box form-control input-sm" style="width:100px;"  value="" /></td>
                     <td><input name="date"  type="date"  class="search_box form-control input-sm"  value="" /></td>
                     <td><input name="cust_name"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-                    <!-- <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td><input name="grand_total"  type="text"  class="search_box form-control input-sm"  value="" /></td> -->
+                   
                     <td><button type="submit" class="btn btn-sm" name="filter" value="filter"><span>Search</span></button></td>
                   </tr>
                 </form>
@@ -127,57 +123,7 @@
                     $sqlgroup=$this->db->query("select * from tbl_contact_m where contact_id='$sales->contactid'");
                     $res1 = $sqlgroup->row();
                     echo $res1->first_name;?></th>
-                  <!-- <th>
-                    <?php 
-                      $idt=$sales->invoice_date;
-                      $date = new DateTime("$idt");
-                      $fdate=$date->format("Y-m-d");
-                      $dt=$sales->due_date;
-                      if($dt!=''){
-                      echo $idate= date('Y-m-d', strtotime($fdate. " + $dt days"));
-                      }else{
-                      echo $fdate;
-                      }
-                      ?>
-                    </th> -->
-                  <!-- <th><?php 
-                    $cdate = date("Y-m-d");
-                    if($dt!=''){
-                    $idate= date('Y-m-d', strtotime($fdate. " + $dt days"));
-                    }else{
-                    $idate=$fdate;
-                    }
-                    $theRequestMadeDateTime = strtotime($idate);
-                    $theCurrentDateTime = strtotime($cdate);
-                    $theDifferenceInSeconds = 600 - ($theCurrentDateTime - $theRequestMadeDateTime);
-                    $minutesLeft = (floor ($theDifferenceInSeconds / (60*60*24)));
-                    if($cdate<$idate)
-                    {
-                    ?>
-                    <samp style="color:#2c96dd">
-                    <?php
-                      echo $minutesLeft." days due";
-                      ?>
-                    </samp>
-                    <?php
-                      }elseif($cdate>$idate){
-                      ?>
-                    <samp style="color:#ef6f08">
-                    <?php
-                      echo abs($minutesLeft)." days over due";
-                      
-                      ?>
-                    </samp>
-                    <?php }else
-                      {
-                      ?>
-                    <samp style="color:#ef6f08">
-                    <?php
-                      echo " Today's due";
-                      }
-                      ?>
-                    </samp></th> -->
-                  <!-- <th><?=$sales->grand_total;?></th> -->
+                 
                   <th>
                     <?php
                       $purchaseOrderQuery = $this->db->query("select *from tbl_inbound_log where po_no='$sales->purchaseid'");

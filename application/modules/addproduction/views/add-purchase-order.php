@@ -1,13 +1,11 @@
 <?php
-  $this->load->view("header.php");
-  
-  
-  ?>
+  $this->load->view("header.php");  
+?>
 <form id="f1" name="f1" method="POST" action="insertPurchaseOrder" onSubmit="return checkKeyPressed(a)">
   <!-- Main content -->
-  <script src="http://cloud.tinymce.com/stable/tinymce.min.js?apiKey=42epwf1jarbwose89sqt3dztyfu7961g4cs5xoib4kordvbd"></script>
-  <script>tinymce.init({ selector:'#tem' });</script>
+ 
   <div class="main-content">
+  
   <ol class="breadcrumb breadcrumb-2">
     <li><a href="<?=base_url();?>master/Item/dashboar"><i class="fa fa-home"></i>Dashboard</a></li>
     <li><a href="#">Lot Order</a></li>
@@ -16,17 +14,18 @@
       <a class="btn btn-sm" href="<?=base_url();?>addproduction/manage_purchase_order">Manage Lot Order</a>
     </div>
   </ol>
+
   <div class="row">
     <div class="col-lg-12">
       <div class="heading">
         <h4 class="panel-title"><strong>Add Lot Order</strong></h4>
         <div class="panel-body">
           <div class="table-responsive-">
-            <table class="table table-striped table-bordered table-hover" >
+            <table class="table table-striped table-bordered table-hover">
               <thead>
                 <tr>
                   <th>Lot No.</th>
-                  <th><input type="text" name="lot_no" style="width:100px;"  class="form-control"  required <?php if(@$_GET['view']!=''){ ?> disabled="disabled" <?php }?>></th>
+                  <th><input type="text" name="lot_no" style="width:100%;"  class="form-control"  required <?php if(@$_GET['view']!=''){ ?> disabled="disabled" <?php }?>></th>
                   <th>
                     <p style="display:none">Po. No.</p>
                   </th>
@@ -55,7 +54,7 @@
                 <tr>
                   <th style="display:none1">Date</th>
                   <th>
-                    <input type="date"  class="form-control" style="width:170px;" required name="date" value="<?php echo $detail->invoice_date;?>" />
+                    <input type="date"  class="form-control" style="width:100%;" required name="date" value="<?php echo $detail->invoice_date;?>" />
                   </th>
                   <th  style="display:none1">Set Priority</th>
                   <th>
@@ -194,7 +193,6 @@
                   <th><input type="text"  class="form-control"  name="partshipment"  /></th>
                   <td>Forwarder</td>
                   <th><input type="text"  class="form-control"  name="forwarder"  /></th>
-                  </th>
                 </tr>
               </thead>
             </table>
@@ -230,7 +228,7 @@
                         <img  style="display:none" src="<?php echo base_url();?>/assets/images/search11.png"  onClick="openpopup('<?=base_url();?>SalesOrder/all_product_function',1200,500,'view',<?=$sales[$i]['1'];?>)" />
                       </div>
                     </div>
-                    <div id="prdsrch" style="color:black;padding-left:0px; width:30%; height:110px; max-height:110px;overflow-x:auto;overflow-y:auto;padding-bottom:5px;padding-top:0px; position:absolute;">
+                    <div id="prdsrch" style="color:black;padding-left:0px; width:26%; height:150px; max-height:110px;overflow-x:auto;overflow-y:auto;padding-bottom:5px;padding-top:0px; position:absolute;">
                       <?php
                         //include("getproduct.php");
                         $this->load->view('getproduct');
@@ -328,10 +326,14 @@
               </table>
             </div>
           </div>
+
+
+              <!--//////////ADDING TEST/////////-->
           <input type="hidden" name="rows" id="rows">
-          <!--//////////ADDING TEST/////////-->
           <input type="hidden" name="spid" id="spid" value="d1"/>
           <input type="hidden" name="ef" id="ef" value="0" />
+
+
           <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover" >
               <tbody>
@@ -363,6 +365,8 @@
       </div>
     </div>
   </div>
+</div>
+
   <script>
     //add item into showling list
     window.addEventListener("keydown", checkKeyPressed, false);
@@ -394,79 +398,7 @@
     }
     }
     }
-    
-    /*document.getElementById("qn").onkeyup = function (e) {
-    var entr =(e.keyCode);
-    if(entr==13){
-    
-    document.getElementById("lph").focus();
-    }
-    }*/
-    
-    
-    
-    // document.getElementById("qn").onkeyup = function (e) {
-    // var entr =(e.keyCode);
-    // if(entr==13){
-    	
-    // var qty_stock=document.getElementById("qty_stock").value;
-    // //var reorder=document.getElementById("reorder").value;
-    
-    
-    // var rate=document.getElementById("lph").value;
-    // var qnt=document.getElementById("qn").value;
-    // var gstTotal=document.getElementById("gstTotal").value;
-    // var total=(Number(rate)*Number(qnt));
-    
-    // var net_total=(Number(rate)*Number(qnt)+Number(gstTotal));
-    // document.getElementById("tot").value=total;
-    // document.getElementById("nettot").value=net_total;
-    // document.getElementById("discount").focus();
-    // }
-    // }
-    
-    // document.getElementById("discount").onkeyup = function (e) {
-    // var entr =(e.keyCode);
-    // if(entr==13){
-    
-    // var toT=document.getElementById("tot").value;
-    
-    // var igst=document.getElementById("igst").value;
-    // var cgst=document.getElementById("cgst").value;
-    // var gstTotal=document.getElementById("gstTotal").value;
-    // var DisS=document.getElementById("discount").value;
-    
-    // var disPer=(Number(toT)*Number(DisS))/100;
-    
-    
-    
-    // var totAftDis=Number(toT)-Number(disPer);
-    // //var gstDis=Number(totAftDis)*Number(igst)/100;
-    // if(Number(igst!=''))
-    // {
-    // var aftGstPer=Number(totAftDis)*Number(igst)/100;
-    // }
-    // else
-    // {
-    	
-    // 	var aftGstPer=Number(totAftDis)*Number(cgst)*2/100;
-    // }
-    // var afterGstTot=Number(totAftDis)+Number(aftGstPer);
-    
-    // //var Ftot=Number(afterGstTot)+Number(aftGstPer);
-    
-    // document.getElementById("disAmt").value=disPer;
-    
-    // document.getElementById("gstTotal").value=aftGstPer
-    // ;
-    // document.getElementById("tot").value=toT;
-    // document.getElementById("nettot").value=afterGstTot.toFixed(2);
-    // document.getElementById("disAmt").focus();
-    // }
-    // }
-    
-    
-    
+        
     document.getElementById("qn").onchange = function (e) {
     var entr  = (e.keyCode);
     
@@ -821,18 +753,6 @@
     							cell.appendChild(salepr);
     					
     
-    	
-    	
-    	
-    	
-    	
-    	
-    		
-    		
-    		
-    		
-    		
-    		
     		
     		
     		//===================================start 4th cell================================
@@ -881,13 +801,7 @@
     							cell.appendChild(disAmtt);
     		//===============================close 5th cell=================================
     		
-    		
-    
-    
-    
-    
-    
-    
+    	
     
     //===================================start 5th cell================================
     		indexcell=Number(indexcell+1);		
@@ -1027,15 +941,6 @@
     						
     		
     
-    
-    
-    
-    		
-    		
-    	
-    	
-    			
-    	
     	
     									
     		//============================================start 7th cell================================	
@@ -1146,11 +1051,7 @@
     		
     		
     }
-    
-    
-    
-    
-    
+
     
     ////////////////////////////////// starts edit code ////////////////////////////////
     
@@ -1416,11 +1317,7 @@
     total_igst_cal=total_igst-igst;	
     document.getElementById("total_igst").value=total_igst_cal;
     
-    
-    
-    
-    
-    
+   
     
     total_tax_igst_amt_cal=total_tax_igst_amt-gstTotal;	
     document.getElementById("total_tax_igst_amt").value=total_tax_igst_amt_cal;
@@ -1466,15 +1363,7 @@
     }
     // ##### ends ###########
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+   
        }
     
     // ###### starts service charge calculation ##########//
@@ -1515,14 +1404,7 @@
     document.getElementById("grand_total").value=totalGrossCal.toFixed(2);
     }
     // ##### ends ###########
-    
-      
-      
-      
-      
-      
-      
-      
+  
       
     function duplicate_po_check(v)
     		  {
@@ -1637,7 +1519,9 @@
     }
           
   </script>
+
 </form>
+
 <?php
   $this->load->view("footer.php");
-  ?>
+?>

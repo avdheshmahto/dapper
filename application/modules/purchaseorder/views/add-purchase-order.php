@@ -1,23 +1,8 @@
 <?php
   $this->load->view("header.php");
-  /*$tableName='tbl_contact_m';
-  $location='manage_contact';
-  		
-  		$userQuery = $this -> db
-             -> select('*')
-  		   -> where('contact_id',$_GET['id'])
-  		   -> or_where('contact_id',$_GET['view'])
-             -> get('tbl_contact_m');
-  		  $branchFetch = $userQuery->row();
-  $quryinv=$this->db->query("select *from tbl_sales_order_hdr");
-  $getInv=$quryinv->row();*/
-  
-  ?>
+?>
 <form id="f1" name="f1" method="POST" action="insertPurchaseOrder" onSubmit="return checkKeyPressed(a)">
-  <!-- Main content -->
-  <script src="http://cloud.tinymce.com/stable/tinymce.min.js?apiKey=42epwf1jarbwose89sqt3dztyfu7961g4cs5xoib4kordvbd"></script>
-  <script>tinymce.init({ selector:'#tem' });</script>
-  <div class="main-content">
+<div class="main-content">
   <ol class="breadcrumb breadcrumb-2">
     <li><a href="<?=base_url();?>master/Item/dashboar"><i class="fa fa-home"></i>Dashboard</a></li>
     <li><a href="#">Production Planning</a></li>
@@ -307,6 +292,8 @@
       </div>
     </div>
   </div>
+</div>
+
   <script>
     //add item into showling list
     window.addEventListener("keydown", checkKeyPressed, false);
@@ -340,10 +327,7 @@
     }
     }
     
-    
-    
-    
-    
+  
     
     document.getElementById("qn_pc").onkeydown = function (e) {
     var entr =(e.keyCode);
@@ -701,15 +685,6 @@
     	
     	
     	
-    	
-    	
-    	
-    
-    	
-    	
-    	
-    	
-    	
     		//==============================close 2nd cell =========================================
     
     		
@@ -737,23 +712,13 @@
     							cell.appendChild(qn_pcC);
     					
     		
-    		
-    	
-    	
-    								
+    						
     		//======================================close 3rd cell========================================		
     		
     		
     		
-    		
-    		
-    		
-    		
-    		
     		//======================================close 3rd cell========================================
-    		
-    		
-    		
+    	
     		
     		indexcell=Number(indexcell+1);		
     	var cell=cell+indexcell;
@@ -772,25 +737,8 @@
     							or_qnN.style.border="hidden"; 
     							cell.appendChild(or_qnN);
     					
-    		
-    		
-    	
-    	
-    								
+    						
     		//======================================close 3rd cell========================================		
-    		
-    		
-    		
-    		
-    		
-    		
-    		
-    		
-    		
-    		
-    		
-    		
-    		
     		
     		
     		//#################cell 3rd starts here####################//					
@@ -814,11 +762,6 @@
     	
     	
     	
-    	
-    	
-    		
-    		
-    		
     		
     		indexcell=Number(indexcell+1);		
     	var cell=cell+indexcell;
@@ -837,9 +780,6 @@
     							salepr.style.border="hidden"; 
     							cell.appendChild(salepr);
     					
-    		
-    		
-    		
     		
     		//===================================start 4th cell================================
     		indexcell=Number(indexcell+1);		
@@ -886,13 +826,6 @@
     		//===============================close 5th cell=================================
     		
     		
-    
-    
-    
-    
-    
-    
-    
     //===================================start 5th cell================================
     		indexcell=Number(indexcell+1);		
     		var cell=cell+indexcell;		
@@ -959,11 +892,7 @@
     							igstt.style.border="hidden"; 
     							cell.appendChild(igstt);
     		//===============================close 5th cell=================================
-    		
     
-    
-    
-    		
     //===================================start 5th cell================================
     		indexcell=Number(indexcell+1);		
     		var cell=cell+indexcell;		
@@ -986,18 +915,6 @@
     							cell.appendChild(gstTotalt);
     		//===============================close 5th cell=================================
     
-    
-    
-    
-    
-    
-    
-    		
-    		
-    		
-    		
-    			
-    	
     				
     		//===================================start 6th cell================================
     		indexcell=Number(indexcell+1);		
@@ -1121,10 +1038,6 @@
     		
     		
     }
-    
-    
-    
-    
     
     
     ////////////////////////////////// starts edit code ////////////////////////////////
@@ -1406,14 +1319,6 @@
     // ##### ends ###########
     
     
-    
-    
-    
-    
-    
-    
-    
-    
        }
     
     // ###### starts service charge calculation ##########//
@@ -1455,13 +1360,6 @@
     }
     // ##### ends ###########
     
-      
-      
-      
-      
-      
-      
-      
       
     function duplicate_po_check(v)
     		  {
@@ -1586,6 +1484,7 @@
           
   </script>
 </form>
+
 <?php
   $this->load->view("footer.php");
-  ?>
+?>

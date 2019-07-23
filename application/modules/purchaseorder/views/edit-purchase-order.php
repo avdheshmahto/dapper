@@ -1,4 +1,5 @@
 <?php
+
   $this->load->view("header.php");
   $id=$_GET['id'];
   
@@ -7,7 +8,9 @@
   	$fetchq=$query->row();
   }
   
-  ?>
+?>
+
+
 <form id="f1" name="f1" method="POST" action="updatePurchaseOrder" onSubmit="return checkKeyPressed(a)">
   <!-- Main content -->
   <div class="main-content">
@@ -217,16 +220,16 @@
                 <td style="width:3%; display:none1;">
                   <div align="center"><u>Discount Amt</u></div>
                 </td>
-                <td style="width:3%;display:none;"">
+                <td style="width:3%;display:none;">
                   <div align="center"><u>CGST</u></div>
                 </td>
-                <td style="width:3%;display:none;"">
+                <td style="width:3%;display:none;">
                   <div align="center"><u>SGST</u></div>
                 </td>
-                <td style="width:3%;display:none;"">
+                <td style="width:3%;display:none;">
                   <div align="center"><u>IGST</u></div>
                 </td>
-                <td style="width:3%;display:none;"">
+                <td style="width:3%;display:none;">
                   <div align="center"><u>GST TOTAL</u></div>
                 </td>
                 <td style="width:3%;">
@@ -301,10 +304,13 @@
               </table>
             </div>
           </div>
-          <input type="hidden" name="rows" id="rows" value="<?php echo $row;?>">
+
+
           <!--//////////ADDING TEST/////////-->
+          <input type="hidden" name="rows" id="rows" value="<?php echo $row;?>">
           <input type="hidden" name="spid" id="spid" value="d1"/>
           <input type="hidden" name="ef" id="ef" value="0" />
+          
           <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover" <?php if($_GET['view']!=''){?> oncontextmenu='return false;' onkeydown='return false;' onmousedown='return false;' <?php }?> >
               <tbody>
@@ -382,6 +388,9 @@
       </div>
     </div>
   </div>
+</div>
+
+
   <script>
     //add item into showling list
     window.addEventListener("keydown", checkKeyPressed, false);
@@ -531,11 +540,6 @@
     	alert('No Item To Save..');	
     }
     }
-    
-    
-    
-    
-    
     
     ////////////////////////////////// ######################## starts edit code ############################## ////////////////////////////////
     
@@ -746,23 +750,15 @@
     
     total_gst_tax_amt_cal=total_gst_tax_amt-gstTotal;
     
-    
-    
-    
-    
-    			
-    			
+    		
     
     document.getElementById("total_gst_tax_amt").value=total_gst_tax_amt_cal;
-    
     
     
     document.getElementById("total_dis").value=total_dis_cal;
     document.getElementById("total_dis_amt").value=total_dis_amt_cal;
     
     
-    
-    			
     			document.getElementById("sub_total").value=sub_total_cal.toFixed(2);
     			document.getElementById("grand_total").value=grand_total_cal.toFixed(2);
      
@@ -823,8 +819,6 @@
     			 
     			  
     }  
-    
-    
     
     //////////////////////////////////////////////////////////////
     
@@ -951,11 +945,6 @@
     							cell.appendChild(salepr);
     					
     
-    	
-    	
-    	
-    	
-    	
     		//==============================close 2nd cell =========================================
     		
     		//#################cell 3rd starts here####################//					
@@ -978,12 +967,6 @@
     							cell.appendChild(qtty);
     								
     		//======================================close 3rd cell========================================
-    		
-    		
-    		
-    		
-    		
-    		
     		
     		
     		
@@ -1125,10 +1108,6 @@
     		//===============================close 5th cell=================================
     
     		
-    		
-    		
-    			
-    	
     				
     		//===================================start 6th cell================================
     		indexcell=Number(indexcell+1);		
@@ -1364,12 +1343,6 @@
     
     }
     // ##### ends ###########
-    
-    
-    
-    
-    
-    
     
     
     
