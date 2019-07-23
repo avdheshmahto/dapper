@@ -53,19 +53,7 @@ class ProductCategory extends my_controller
         $this->load->model('Model_admin_login');
         
         
-        
-        /*$mid1= $this->input->post('mid1');
-        //echo $mid1;die;
-        $midd1= $this->input->post('midd1');
-        $midd2= $midd1-1;
-        if($midd2==1){
-        $mid= $midd2;
-        }else if($mid1==''){
-        $mid= $this->input->post('mid');
-        }else{
-        $mid= $this->input->post('mid1');
-        }
-        */
+
         if ($id == '') {
             $data = array(
                 
@@ -115,25 +103,7 @@ class ProductCategory extends my_controller
             
             redirect('/master/ProductCategory/manage_itemctg');
             
-            /*if($midd1==2){
-             */
-            
-            /*}
-            else if($mid==1){
-            $this->Model_admin_login->insert_user($table_name,$dataall);
-            redirect('/master/ProductCategory/manage_itemctg');
-            }
-            else{
-            $this->Model_admin_login->insert_user($table_name,$dataall);
-            $lastid=$this->db->insert_id();
-            $this->fillselect($prodcatg_name,$lastid,'contact_id_copy');
-            echo "<script type='text/javascript'>";
-            echo "window.close();";
-            //echo "window.opener.location.reload();";
-            echo "</script>";
-            
-            }
-            */
+          
         }
         
     }
@@ -195,16 +165,7 @@ class ProductCategory extends my_controller
             $url         = site_url('/master/ProductCategory/manage_itemctg?');
             $sgmnt       = "4";
             $showEntries = 10;
-            //$totalData   = $this->model_master->count_all($table_name,1,$this->input->get());
-            //$showEntries= $_GET['entries']?$_GET['entries']:'12';
             
-            // if($_GET['entries']!=""){
-            //    $showEntries = $_GET['entries'];
-            //    $url   = site_url('/master/ProductCategory/manage_itemctg?entries='.$_GET['entries']);
-            // }
-            //    $pagination = $this->ciPagination($url,$totalData,$sgmnt,$showEntries);
-            
-            //////Pagination end ///
             
             $result           = $this->model_master->tree_all();
             $data1['alldata'] = $result;
@@ -213,10 +174,7 @@ class ProductCategory extends my_controller
             if ($result != "") {
                 $data1['result'] = $this->changeTreeFormat($result);
             }
-            /*if($this->input->post('submit') == "delete"){
-            $result = $this->model_master->get_child_data($this->input->post('id'));
-            $result_delete = $this->model_master->delete_data($this->input->post('id'),$result);
-            }*/
+           
             $data1['dataConfig']        = array(
                 'total' => $totalData,
                 'perPage' => $pagination['per_page'],
@@ -302,22 +260,6 @@ class ProductCategory extends my_controller
             $data1['result']  = "";
             $data1["getEdit"] = "";
             
-            ////Pagination start ///
-            
-            //$url   = site_url('/master/ProductCategory/manage_itemctg?');
-            // $sgmnt = "4";
-            // $showEntries = 10;
-            // $totalData   = $this->model_master->count_all($table_name,1,$this->input->get());
-            //$showEntries= $_GET['entries']?$_GET['entries']:'12';
-            
-            // if($_GET['entries']!=""){
-            //    $showEntries = $_GET['entries'];
-            //    $url   = site_url('/master/ProductCategory/manage_itemctg?entries='.$_GET['entries']);
-            // }
-            // $pagination = $this->ciPagination($url,$totalData,$sgmnt,$showEntries);
-            
-            //////Pagination end ///
-            
             $result           = $this->model_master->tree_all();
             $data1['alldata'] = $result;
             $itemsByReference = array();
@@ -325,11 +267,7 @@ class ProductCategory extends my_controller
             if ($result != "") {
                 $data1['result'] = $this->changeTreeFormat($result);
             }
-            /*if($this->input->post('submit') == "delete"){
-            $result = $this->model_master->get_child_data($this->input->post('id'));
-            $result_delete = $this->model_master->delete_data($this->input->post('id'),$result);
-            }*/
-            // $data1['dataConfig']        = array('total'=>$totalData,'perPage'=>$pagination['per_page'],'page'=>$pagination['page']);
+            
             $data1['categorySelectbox'] = $this->model_master->categorySelectbox();
             // $data1['pagination']        = $this->pagination->create_links();
             if ($this->input->get('filter') == 'filter') ////filter start ////

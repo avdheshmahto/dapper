@@ -36,14 +36,10 @@
 <!--Dashboard Js-->
 <script src="<?=base_url();?>assets/js/dashboard.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
-<!-- Select2-->
-<!-- <script src="<?php echo base_url();?>plugins/select2/js/select2.full.min.js"></script>
-  <script src="<?php echo base_url();?>plugins/select2/js/select2-script.js"></script> -->
 <script type="text/javascript" src="<?php echo base_url();?>assets/dropdown-customer/semantic.js"></script>
 <link type="text/css" href="<?php echo base_url();?>assets/dropdown-customer/semantic.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="<?=base_url();?>js/jquery.ztree.core.js"></script>
-<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.js"></script>
 <script type="text/javascript">
@@ -77,9 +73,7 @@
   
   
   }
-  /* $(".delbutton11").click(function(){
-  alert('sdfsdfcvzxcvzxcv');
-  });*/
+
   function mapcategory(ths,id,name,code){
   // alert(name);
   
@@ -565,15 +559,6 @@
   $('#productname').val(editVal.productname);
   $('#unit').val(editVal.usageunit);    
   $('#opening_stock').val(editVal.opening_stock);    
-  
-  // $('#scope').val(editVal.scope_doc).prop('selected', true);
-  //$('#industry').val(editVal.industry).prop('selected', true);
-  /* var valArr  = editVal.color; 
-  if(valArr != null)
-  {
-  var dataarray=valArr.split(",");
-  }*/
-  //$('#color').val(dataarray);
   $('#percentage').val(editVal.percentage);
   $('#size').val(editVal.pro_size);
   $('#thickness').val(editVal.thickness);
@@ -595,9 +580,6 @@
   $('#packing').val(editVal.packing);
   $('#qty_box').val(editVal.qty_box);
   
-  
-  
-  
   getEntityRow(editVal.Product_id);
   
   getEntityRowOfPartCode(editVal.Product_id);
@@ -609,11 +591,6 @@
   
   $('#subcategory').val(editVal.subcategory).prop('selected', true);
   $('#scrap_id').val(editVal.scrap_id).prop('selected', true);
-  /*if(editVal.scope_doc != ""){
-  $('#image').attr('href',image_url+editVal.scope_doc);
-  $('#image').attr('title',editVal.scope_doc);
-  }*/
-  
   
   if(button_property == 'view'){
   
@@ -845,15 +822,7 @@
   }
   
   $(document).delegate("#quotationdel","click",function(){
-  
-  // var attrSelectValue = $(this).attr('attrVal');
-  // $('select#entity').find('option').each(function() {
-  // if($(this).val() == attrSelectValue){
-  //   alert($(this).val());
-  //   $(this).css("visibility", "visible");
-  // }
-  // });
-
+ 
   var mproductname = $(this).attr('mproductname');
   var mproductid = $(this).attr('mproductid');
   var usunit = $(this).attr('uom');
@@ -881,7 +850,6 @@
   myObject.price = priceQuot;
   var myString = JSON.stringify(myObject);    
   
-  // $('#quotationProductmapValue').empty().append("<input type ='text' id ='proQuotation' name='quotationMapedValue[]' value='"+myString+"'>");
   $('#QuotationMap').val(myString);
   $("#QuotationMapForm")[0].reset();
   $('#quotationTable').empty();
@@ -988,42 +956,13 @@
      }
   return false;
   }
-  
-  /*$('.email.dropdown').dropdown();
-  
-  $('.emails.form').form({
-      fields: {
-          email: {
-              identifier: 'country',
-              rules: [
-                  {
-                      type   : 'empty',
-                      prompt : 'Please select or add at least one to email address'
-                  }
-              ]
-          }
-      }
-  });
-  */
+ 
   
   function inputdisable(){
      $('#formId')[0].reset(); 
   }
   
-  /*function editRow(ths){
-     var value  =  $('#'+ths).attr("arrt");
-     var cat_id =  $('#'+ths).attr("cat_id");
-     var type =  $('#'+ths).attr("typeid");
-     var grade =  $('#'+ths).attr("grade");
-     //alert(cat_id);
-      $('#selectCategory').val(cat_id).prop('selected', true);
-      $('#category').val(value);
-      $('#type').val(type).prop('selected', true);
-      $('#grade').val(grade).prop('selected', true);
-      $('#target').attr("submit_value","edit");
-      $('#editvalue').val(ths);
-  }
-  */
+ 
   
   function editRowCategory(ths,thisvalue,typee){  
     
@@ -1189,46 +1128,6 @@
     });
   
   
-  
-  // function selectList(ths){
-  //  var data =  $(ths).attr('jsvalue');
-  //    if(data !== undefined)
-  //      var data = JSON.parse(data);
-  //   $('#productList').css('display','none');
-  //   $('#quotation').val(data.name);
-  //   $('#qid').val(data.id);
-  // }
-  
-  /*function ajexShowTree(){
-    ur = "<?=base_url('master/ProductCategory/ajexShowTree');?>";
-    $.ajax({url: ur,success:function(data){
-        $(".treeAncor").attr(arr,data);
-          var setting = { };
-          var title   =  $("#content_wrap").attr('arr');
-          var da      = JSON.parse(title);
-          var zNodes  = da;
-          var curMenu = null, zTree_Menu = null;
-          var setting = {
-            view:{
-              showLine: false,
-              showIcon: false,
-              selectedMulti: false,
-              dblClickExpand: false,
-              addDiyDom: addDiyDom
-             },
-            data: {
-              simpleData: {
-                enable: true
-              }
-            },
-            callback: {
-              beforeClick: beforeClick
-            }
-          };
-  
-      }
-    });
-  }*/
   
 </script>
 </body>
@@ -1593,47 +1492,7 @@
   });
 </script>
 <!-- ends here this javascript code is for purchase delete -->
-<script>
-  function getXMLHTTP() { //fuction to return the xml http object
-  
-  var xmlhttp=false;
-  
-  try{
-  
-  xmlhttp=new XMLHttpRequest();
-  
-  }
-  
-  catch(e) {
-  
-  try{
-  
-  xmlhttp= new ActiveXObject("Microsoft.XMLHTTP");
-  
-  }
-  
-  catch(e){
-  
-  try{
-  
-  xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-  
-  }
-  
-  catch(e1){
-  
-  xmlhttp=false;
-  
-  }
-  
-  }
-  
-  }
-  
-  return xmlhttp;
-  
-  }
-</script>
+
 <!-----------------drop down select start here------------->
 <script type="text/javascript" src="<?=base_url();?>assets/dropdown-customer/mock.js"></script>
 <link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/dropdown-customer/jquery.dropdown.css">
@@ -1873,47 +1732,6 @@
   
 </script> 
 <script>
-  function getXMLHTTP() { //fuction to return the xml http object
-  
-  var xmlhttp=false;
-  
-  try{
-  
-  xmlhttp=new XMLHttpRequest();
-  
-  }
-  
-  catch(e) {
-  
-  try{
-  
-  xmlhttp= new ActiveXObject("Microsoft.XMLHTTP");
-  
-  }
-  
-  catch(e){
-  
-  try{
-  
-  xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-  
-  }
-  
-  catch(e1){
-  
-  xmlhttp=false;
-  
-  }
-  
-  }
-  
-  }
-  
-  return xmlhttp;
-  
-  }
-  
-  
   
   //manage page search script//
   
@@ -1951,16 +1769,7 @@
   }
   
   // ends
-  
-  //unitForm
-  
-  
-  
-  
-  
-  
-  
-  
+    
   //---------------unit conversion Form---------------------------
   
     $("#unitForm").validate({
