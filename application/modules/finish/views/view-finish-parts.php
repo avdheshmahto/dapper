@@ -14,10 +14,7 @@
                   </tr>
                </thead>
                <?php
-                  //if($dt['part'] != ""){
-                                            
-                  				  
-                   // echo "select *from tbl_machine where machine_name ='".$dt['itemid']."'";
+                  
                   
                     $mQuery=$this->db->query("select *from tbl_machine where code ='$id'");
                     foreach($mQuery->result() as $getM){
@@ -82,14 +79,7 @@
          </div>
       </div>
    </div>
-   <!--scrollbar-y close-->		
-   <!-- <div style="width:100%; background:#dddddd; padding-left:0px; color:#000000; border:2px solid "> -->
-   <!-- <div style="width:100%; background:white;   color:#000000;  max-height:170px; overflow-x:auto;overflow-y:auto;" id="m">
-      <table id="invoice"  style="width:100%;background:white;margin-bottom:0px;margin-top:0px;min-height:30px;" title="Invoice" class="table table-bordered blockContainer lineItemTable ui-sortable"  >
-      
-      <tr></tr>
-      </table> -->
-   <!-- </div> -->
+   
 </div>
 <div class="modal-footer">
    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>

@@ -16,18 +16,17 @@ $queryProductShape=$this->db->query("select *from tbl_shape_part_mapping where p
 $cnt=$queryProductShape->num_rows();
 $i=1;
 foreach($queryProductShape->result() as $getProductShape){
-//echo "select sum(qty) as partQty from tbl_production_order_transfer_another_module where production_id='$production_id' and shape_id='$id' and part_id='$getProductShape->part_id' and module_name='Finish'";
 
 $jobQuery=$this->db->query("select sum(qty) as partQty from tbl_production_order_transfer_another_module where productid='$getProductShape->part_id' and module_name='Finish'");
 
-//$jobQuery=$this->db->query("select sum(qty) as partQty from tbl_job_work_log where production_id='$production_id' and shape_id='$id' and part_id='$getProductShape->part_id' and order_type='Kora Order'");
+
 $getJob=$jobQuery->row();
 $getJob->partQty;
 	
 $queryProduct=$this->db->query("select *from tbl_product_stock where Product_id='$getProductShape->part_id'");
 $getProduct=$queryProduct->row();
 
-//echo "select SUM(qty) as qty,productid from tbl_production_order_transfer_another_module where lot_no='$production_id' and productid='$getProductShape->part_id' and module_name='Finish'";
+
 
 $queryTotRem=$this->db->query("select SUM(qty) as qty,productid from tbl_production_order_transfer_another_module where lot_no='$production_id' and productid='$getProductShape->part_id' and module_name='Finish'");
 $getTotRem=$queryTotRem->row();
@@ -43,7 +42,7 @@ $getGrnQty=$queryGrn->row();
 </td>
 <td>
 <?php
-//echo "select *from tbl_quotation_purchase_order_hdr where lot_no='$production_id' ";
+
 $fgHdrQuery=$this->db->query("select *from tbl_quotation_purchase_order_hdr where lot_no='$production_id' ");
 $getfgHdr=$fgHdrQuery->row();
 ?>
