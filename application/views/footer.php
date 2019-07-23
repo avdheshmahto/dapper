@@ -743,79 +743,6 @@
   
   //-----------------------------------------------=
   
-  function addconsignee(){
-  var value        =  0;
-  var entity       =  $('#entity').val();
-  // var entity_code  =  $('#entity_code').val();
-  
-  
-  if(entity == ""){
-  alert('Please Part Name');
-  $('#entity').focus();
-  return false;
-  }
-  
-  // if(entity_code == ""){
-  //  alert('Please Select Location code');
-  //  $('#entity_code').focus();
-  //  return false;
-  // }
-  
-  
-  
-  // alert(indexVal);
-  // alert(entity);
-  // var entityCodeValuearr = [];
-  // var entityCodeTextarr  = [];
-  // $('select#entity_code').find('option:selected').each(function() {
-  //  entityCodeValue =  $(this).val();
-  //  entityCodeText  =  $(this).text();
-  //  entityCodeValuearr.push(entityCodeValue);
-  //  entityCodeTextarr.push(entityCodeText);
-  // });
-  
-  // var entityCodeCommaValue = entityCodeValuearr.join(",");
-  // var entityCodeComma      = entityCodeTextarr.join(",");
-  
-  //alert($("#entity_code option:selected").index());
-  //alert($("select[name='entity_code'] option:selected").index());
-  var x        = document.getElementById("entity").selectedIndex;
-  var y        = document.getElementById("entity").options;
-  var indexVal =  y[x].text;
-  $('#entity option:selected').remove();
-  
-  $('#consigneeTable').append('<tr class="'+'row_'+value+'"><td><input  type ="hidden" class="form-control" name="entity[]" value="'+entity+'"><input   type ="text" readonly class="form-control"  value="'+indexVal+'"></td><td><i class="fa fa-trash  fa-3x" style="font-size:20px;" id="quotationdel" attrVal="'+entity+'" aria-hidden="true"></i></td></tr>');
-  
-  amazonEntity();
-  //$('#entity option:selected').remove();  
-  }
-  
-  function amazonEntity(){
-  
-  
-  $("select#entity").prop('selectedIndex', 0);
-  var selectedentity = document.getElementsByName('entity[]'); 
-  // alert(selectedentity);
-  var selectboxes = [];
-  for(var i=0; i < selectedentity.length; i++){
-  
-  if(selectedentity[i] != ""){
-  selectboxes.push(selectedentity[i].value);
-  }
-  }
-  
-  $('select#entity').find('option').each(function() {
-  // alert($(this).val());
-  if(selectboxes.includes($(this).val()) == true){
-  // // alert(arrayloc.includes(checkboxes[i].value));
-  // checkboxes[i].checked = true;
-  //  alert($(this).val());
-  $(this).css("visibility", "hidden");
-  }
-  });
-  
-  $("#entity_code").empty().append('<option value="">--Select--</option>').fadeIn();
-  }
   
   
   function loadFile(ths) {
@@ -918,19 +845,23 @@
   }
   
   $(document).delegate("#quotationdel","click",function(){
-  var attrSelectValue = $(this).attr('attrVal');
-  $('select#entity').find('option').each(function() {
-  if($(this).val() == attrSelectValue){
-    //alert($(this).val());
-    $(this).css("visibility", "visible");
-  }
-  });
+  
+  // var attrSelectValue = $(this).attr('attrVal');
+  // $('select#entity').find('option').each(function() {
+  // if($(this).val() == attrSelectValue){
+  //   alert($(this).val());
+  //   $(this).css("visibility", "visible");
+  // }
+  // });
+
   var mproductname = $(this).attr('mproductname');
   var mproductid = $(this).attr('mproductid');
+  var usunit = $(this).attr('uom');
   
   $(this).parent().parent().remove();
-  $("#prodetails").append('<option value="'+mproductid+'">'+mproductname+'</option>'); 
+  $("#prodetails").append('<option value="'+mproductid+'^'+mproductname+'^'+usunit+'">'+mproductname+'</option>'); 
   });
+
   
   $(document).delegate("#QuotationMap","click",function(){
   var quoId     = [];
@@ -1387,6 +1318,7 @@
     $("#consigneeTable").empty();
     showconsigneemap(thsVal = "");
   });
+
   //-----------------Entries-------------------
   
   $("#entries").change(function()
@@ -2140,56 +2072,31 @@
   
   
   //-----------------------------------------------=
-  
-  function addconsigneeShape(){
-     var value        =  0;
-     var entityShape       =  $('#entityShape').val();
-     // var entity_code  =  $('#entity_code').val();
-  
-  
-     if(entityShape == ""){
-      alert('Please Shape Name');
-      $('#entityShape').focus();
-      return false;
-     }
-     
-     // if(entity_code == ""){
-     //  alert('Please Select Location code');
-     //  $('#entity_code').focus();
-     //  return false;
-     // }
-  
-  
-    
-     // alert(indexVal);
-     // alert(entity);
-     // var entityCodeValuearr = [];
-     // var entityCodeTextarr  = [];
-     // $('select#entity_code').find('option:selected').each(function() {
-     //  entityCodeValue =  $(this).val();
-     //  entityCodeText  =  $(this).text();
-     //  entityCodeValuearr.push(entityCodeValue);
-     //  entityCodeTextarr.push(entityCodeText);
-     // });
-  
-     // var entityCodeCommaValue = entityCodeValuearr.join(",");
-     // var entityCodeComma      = entityCodeTextarr.join(",");
-  
-     //alert($("#entity_code option:selected").index());
-     //alert($("select[name='entity_code'] option:selected").index());
-    var x        = document.getElementById("entityShape").selectedIndex;
-      var y        = document.getElementById("entityShape").options;
-      var indexVal =  y[x].text;
-     $('#entityShape option:selected').remove();
-     
-     $('#consigneeTableShape').append('<tr class="'+'row_'+value+'"><td><input  type ="hidden" class="form-control" name="entityShape[]" value="'+entityShape+'"><input   type ="text" readonly class="form-control"  value="'+indexVal+'"></td><td><i class="fa fa-trash  fa-3x" style="font-size:20px;" id="quotationdel" attrVal="'+entityShape+'" aria-hidden="true"></i></td></tr>');
-  
-    amazonEntity();
-  //$('#entity option:selected').remove();  
-   }
-  
-  
+
+
+
+$(document).delegate("#quotationdel_shape","click",function(){
+
+  var a = $(this).attr('attrVal');
+  var b = $(this).attr('val');
+  //alert(b);
+  $(this).parent().parent().remove();  
+  $("#entity").append('<option value="'+a+'">'+b+'</option>'); 
+  //alert(b);
+  });
+
+
+$(document).delegate("#quotationdel_fg","click",function(){
+
+  var a = $(this).attr('attrVal');
+  var b = $(this).attr('val');
+  //alert(b);
+  $(this).parent().parent().remove();  
+  $("#entityShape").append('<option value="'+a+'">'+b+'</option>'); 
+  //alert(b);
+  });
+
 </script>
 <?php
   $this->load->view("javascriptPage.php");
-  ?>
+?>
