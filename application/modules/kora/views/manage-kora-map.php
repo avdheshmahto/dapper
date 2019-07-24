@@ -24,12 +24,12 @@
 <script>
   function getPart(v)
   {
-  	
+  	var select_id=document.getElementById("select_id").value;
   	var ur = '<?=base_url();?>kora/getPart';
   	$.ajax({
   	type: "POST",
   	url: ur,
-  	data: {'shape':v,'production_id':'<?=$_GET['id'];?>'},
+  	data: {'shape':v,'production_id':'<?=$_GET['id'];?>','shapeName':select_id},
   	success: function(data){
       // console.log(data);
       $("#getPartView").empty().append(data).fadeIn();
@@ -444,6 +444,26 @@
                             ?>
                             <a title="Job Work" href="<?=base_url();?>kora/manage_kora_jobwork_map_details?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
                             <button class="btn btn-default" onclick="viewWorkOrder(<?=$fetch_list->id;?>);" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
+                            <?php
+$pri_coll   = 'job_order_no';
+$table_namee = 'tbl_work_order';
+                   
+$poquery=$this->db->query("select *from tbl_production_order_log where order_no='$fetch_list->job_order_no' and grn_type='Kora Order'");
+$cntData=$poquery->num_rows();					   
+					   if($cntData>0){
+						   
+					  
+					   ?>
+                        <button class="btn btn-default" onclick="return confirm('Please Delete Child Data First');" type="button"><i class="icon-trash"></i></button>
+                       <?php
+					   }
+					   else{
+					   ?>
+                      
+                  
+                           <button class="btn btn-default delbuttonOrder" id="<?=$fetch_list->job_order_no ?>" type="button"><i class="icon-trash"></i></button>
+                          
+                           <?php }?>
                             <a target="_blank" href="<?=base_url();?>kora/print_challan?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>	
                           </td>
                         </tr>
@@ -845,21 +865,15 @@
               <input type="hidden" name="production_id" id="production_id" value="<?=$_GET['id'];?>" />
               <label class="col-sm-2 control-label">Select:</label> 
               <div class="col-sm-4">
-                <select class="form-control" name="type" id="select_id" required>
+                <select class="form-control" name="type" id="select_id" onchange="checkQtyVal();" required>
                   <option value="">--Select--</option>
                   <option value="Shape">Shape Complete</option>
                   <option value="ShapePart">Shape in Parts</option>
                 </select>
               </div>
-              <label class="col-sm-2 control-label">Qty:</label> 
+              <label class="col-sm-2 control-label" >Shape:</label> 
               <div class="col-sm-4"> 
-                <input name="shape_qty" type="text" value="" id="fillQty" onchange="qtyFill(this.value);" class="form-control" > 
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label">Shape:</label> 
-              <div class="col-sm-4">
-                <select class="form-control" name="shape" id="shape" onchange="getPart(this.value);">
+               <select class="form-control" name="shape" id="shape" onchange="getPart(this.value);">
                   <option value="">--Select--</option>
                   <?php
                     $queryProductShape=$this->db->query("select distinct(machine_name) from tbl_machine where code in($getP)");
@@ -872,7 +886,13 @@
                   <?php }?>
                 </select>
               </div>
-              <label class="col-sm-6 control-label">
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" id="qtyn" style="display:none">Qty:</label> 
+              <div class="col-sm-4">
+                 <input name="shape_qty" type="text" value="" id="fillQty" style="display:none" onchange="qtyFill(this.value);" class="form-control" > 
+              </div>
+              <label class="col-sm-12 control-label">
                 <div class="table-responsive" id="getPartView">
                 </div>
               </label>
@@ -2136,12 +2156,42 @@
   	});
   }
   
+  function checkQtyVal()
+  {
   
-  /*
-  window.onbeforeunload = function (e) {
-  // Your logic to prepare for 'Stay on this Page' goes here 
+  var shapePart=document.getElementById("select_id").value;	
+  if(shapePart=='Shape')
+  {
+  	
+  	document.getElementById("fillQty").style.display = "block";
+  	document.getElementById("qtyn").style.display = "block";
+	document.getElementById("shape").value = "";
+	document.getElementById("fillQty").value = "";
+  	$('#getPartView').empty();
+	
+  	for(i=1;i<=cntVal;i++)
+  	{
   
-      return "Please click 'Stay on this Page' and we will give you candy";
-  };
-  */
+  	document.getElementById("entQty"+i).readOnly = true;
+  	}
+  
+  }
+  else
+  {
+  document.getElementById("fillQty").style.display = "none";	
+  document.getElementById("shape").value = "";	
+  document.getElementById("qtyn").style.display = "none";	
+ 
+  	$('#getPartView').empty();
+  
+  
+  for(i=1;i<=10;i++)
+  	{
+  	
+  	document.getElementById("entQty"+i).value = "";
+  
+  	}
+  }
+  
+  }
 </script>

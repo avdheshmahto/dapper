@@ -68,6 +68,9 @@
                   		####### ends ########
                   		
                   		
+						$serialquery=$this->db->query("select *from tbl_product_serial where product_id='$fetch_list->Product_id' and location_id='2'");
+					   $getSerialData=$serialquery->row();
+						
                   		$productUOMQuery=$this->db->query("select *from tbl_master_data where serial_number='$getPo->usageunit'");
                   		$getProductUOM=$productUOMQuery->row();
                   		####### ends ########
@@ -108,7 +111,7 @@
                     
                     
                     ?>
-                  <th><?php echo $getQty->qty;?></th>
+                  <th><?php echo $getSerialData->quantity;?></th>
                   <!-- <th class="bs-example">
                     <?php if($view!=''){ ?>
                     <button class="btn btn-default" property="view" arrt= '<?=json_encode($fetch_list);?>' onclick ="editItem(this);" type="button" data-toggle="modal" data-target="#modal-0" data-backdrop='static' data-keyboard='false'> <i class="fa fa-eye"></i></button>

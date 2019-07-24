@@ -10,6 +10,7 @@
         <div class="panel-body">
           <div class="form-group">
             <div class="col-sm-6">
+             <input type="hidden" name="storage_location" value="1" />
               <input type="hidden" name="grn_type" value="<?=$getOrder->order_type;?>" />
               <input type="hidden" name="job_order_id" value="<?=$getOrder->id;?>" />
               <input type="hidden" name="vendor_id" value="<?=$getOrder->vendor_id;?>" />

@@ -40,7 +40,7 @@
                     </div>
                     <div class="col-sm-6" id="invoiceId" >
                       <label for="po_order">Challan Date.:</label>
-                      <input type="text" name="challan_date"  class="form-control" value=""  required />
+                      <input type="date" name="challan_date"  class="form-control" value=""  required />
                     </div>
                    
                   </div>

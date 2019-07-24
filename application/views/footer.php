@@ -1373,7 +1373,7 @@
      url: "delete_data",
      data: info,
      success: function(){
-      
+     
      }
    });
   
@@ -1478,6 +1478,7 @@
            url: "delete_purchase_order_data",
            data: info,
            success: function(){
+			  
             }
            });
       $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast")
@@ -1492,6 +1493,42 @@
   });
 </script>
 <!-- ends here this javascript code is for purchase delete -->
+
+
+<!-- starts here this javascript code is for  order delete -->
+<script type="text/javascript">
+  $(function() {
+  $(".delbuttonOrder").click(function(){
+    //Save the link in a variable called element
+    var element = $(this);
+    //Find the id of the link that was clicked
+    var del_id = element.attr("id");
+    //Built a url to send
+    var info = 'id=' + del_id;
+	
+   if(confirm("Are you sure you want to delete ?"))
+        {
+         $.ajax({
+           type: "GET",
+           url: "delete_order_data",
+           data: info,
+           success: function(){
+			   //alert(data);
+            }
+           });
+      $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast")
+      .animate({ opacity: "hide" }, "slow");
+  
+   }
+  
+  return false;
+  
+  });
+  
+  });
+</script>
+<!-- ends here this javascript code is for purchase delete -->
+
 
 <!-----------------drop down select start here------------->
 <script type="text/javascript" src="<?=base_url();?>assets/dropdown-customer/mock.js"></script>

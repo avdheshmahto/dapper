@@ -114,6 +114,9 @@
                   
                    foreach($result as $fetch_list)
                    {
+					 
+					   $serialquery=$this->db->query("select *from tbl_product_serial where product_id='$fetch_list->Product_id' and location_id='1'");
+					   $getSerialData=$serialquery->row();
                   ?>
                 <tr  class="gradeC record" data-row-id="<?php echo $fetch_list->Product_id; ?>">
                   <?php
@@ -145,13 +148,13 @@
                     <th><?=$fetch_list->thickness;?></th>
                     <th><?=$fetch_list->grade_code;?></th> -->
                   <?php
-                    //echo "select *from tbl_issuematrial_dtl where productid='$fetch_list->Product_id'";
+                   
                     $issueMat=$this->db->query("select *from tbl_issuematrial_dtl where productid='$fetch_list->Product_id'");
                     $getIssueMat=$issueMat->row();
                     
                     
                     ?>
-                  <th><?=$getIssueMat->receive_qty;?></th>
+                  <th><?=$getSerialData->quantity;?></th>
                   <!-- <th class="bs-example">
                     <?php if($view!=''){ ?>
                     <button class="btn btn-default" property="view" arrt= '<?=json_encode($fetch_list);?>' onclick ="editItem(this);" type="button" data-toggle="modal" data-target="#modal-0" data-backdrop='static' data-keyboard='false'> <i class="fa fa-eye"></i></button>

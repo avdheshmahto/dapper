@@ -516,10 +516,28 @@
                           </td>
                           <td><?=$fetch_list->date;?></td>
                           <td>Pending</td>
-                          <td><?php $pri_col='id';
-                            $table_name='tbl_schedule_triggering';
-                            ?>
+                          <td>
                             <button class="btn btn-default" onclick="viewWorkOrder(<?=$fetch_list->id;?>);" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>
+<?php
+$pri_coll   = 'job_order_no';
+$table_namee = 'tbl_work_order';
+                   
+$poquery=$this->db->query("select *from tbl_issuematrial_hdr where po_no='".$_GET['id']."'");
+$cntData=$poquery->num_rows();					   
+					   if($cntData>0){
+						   
+					  
+					   ?>
+                        <button class="btn btn-default" onclick="return confirm('Please Delete Child Data First');" type="button"><i class="icon-trash"></i></button>
+                       <?php
+					   }
+					   else{
+					   ?>
+                      
+                  
+                           <button class="btn btn-default delbuttonOrder" id="<?=$fetch_list->job_order_no ?>" type="button"><i class="icon-trash"></i></button>
+                          
+                           <?php }?>
                             <a target="_blank" href="<?=base_url();?>productionModule/print_challan?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
                           </td>
                         </tr>

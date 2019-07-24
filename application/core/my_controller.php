@@ -751,6 +751,18 @@ function delete_cutting_data()
 //================================Close delete purchase order ============== 
 
 
+
+//================================*Start delete  order ============== 
+ function delete_order_data() 
+ {
+	
+			
+		$this->db->query("delete from tbl_job_work where job_order_no='".$_GET['id']."'");
+  
+}
+//================================Close delete  order ============== 
+
+
 public function forgotPassword()
 {
 	

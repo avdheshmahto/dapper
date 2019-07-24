@@ -1154,15 +1154,15 @@ public function print_grn_challan()
 }
 
 
-public function po_stock_in($receive_qty,$productid)
+public function po_stock_in($receive_qty,$productid,$storage_location)
 {
 	
 	
-		$selectQuery = "select * from tbl_product_serial where product_id='$productid' and location_id='1'";
+		$selectQuery = "select * from tbl_product_serial where product_id='$productid' and location_id='$storage_location'";
 		$selectQuery1=$this->db->query($selectQuery);
 		$num= $selectQuery1->num_rows();
 		if($num>0){
-		$this->db->query("update tbl_product_serial set quantity=quantity+'$receive_qty',location_id='1' where product_id='$productid' and location_id='1' ");
+		$this->db->query("update tbl_product_serial set quantity=quantity+'$receive_qty',location_id='$storage_location' where product_id='$productid' and location_id='1' ");
 					}else{
 							$comp_id = $this->session->userdata('comp_id');
 							$divn_id = $this->session->userdata('divn_id');
@@ -1171,10 +1171,10 @@ public function po_stock_in($receive_qty,$productid)
 							$maker_date= date('y-m-d');
 							$author_date= date('y-m-d');
 		
-							$this->db->query("insert into tbl_product_serial set quantity='$receive_qty',location_id='1',product_id='$productid',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id',brnh_id='$brnh_id',maker_date='$maker_date',author_date='$author_date'");
+							$this->db->query("insert into tbl_product_serial set quantity='$receive_qty',location_id='$storage_location',product_id='$productid',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id',brnh_id='$brnh_id',maker_date='$maker_date',author_date='$author_date'");
 							
 							
-							$this->db->query("insert into tbl_product_serial_log set quantity='$receive_qty',location_id='1',product_id='$productid',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id',brnh_id='$brnh_id',maker_date='$maker_date',author_date='$author_date'");
+							$this->db->query("insert into tbl_product_serial_log set quantity='$receive_qty',location_id='$storage_location',product_id='$productid',comp_id='$comp_id',divn_id='$divn_id',zone_id='$zone_id',brnh_id='$brnh_id',maker_date='$maker_date',author_date='$author_date'");
 							
 		}
 
@@ -1416,7 +1416,7 @@ if($grn_type=='rm_receive')
 
 
 			  
-	  		  $this->po_stock_in($qty[$i],$productid[$i]);	
+	  		  $this->po_stock_in($qty[$i],$productid[$i],$storage_location);	
 
 	  	
 		 }

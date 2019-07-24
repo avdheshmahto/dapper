@@ -80,6 +80,7 @@
                   $i=1;
                   foreach($result as $sales)
                     {
+						
                     
                     ?>
                 <tr class="gradeC record">

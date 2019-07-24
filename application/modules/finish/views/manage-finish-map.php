@@ -363,7 +363,28 @@
                           <td><?php $pri_col='id';
                             $table_name='tbl_schedule_triggering';
                             ?>
-                            <button class="btn btn-default" onclick="viewWorkOrder(<?=$fetch_list->id;?>);" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>      
+                            <button class="btn btn-default" onclick="viewWorkOrder(<?=$fetch_list->id;?>);" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>     
+                            
+                              <?php
+$pri_coll   = 'job_order_no';
+$table_namee = 'tbl_work_order';
+                   
+$poquery=$this->db->query("select *from tbl_production_order_log where order_no='$fetch_list->job_order_no' and grn_type='Finish Order'");
+$cntData=$poquery->num_rows();					   
+					   if($cntData>0){
+						   
+					  
+					   ?>
+                        <button class="btn btn-default" onclick="return confirm('Please Delete Child Data First');" type="button"><i class="icon-trash"></i></button>
+                       <?php
+					   }
+					   else{
+					   ?>
+                      
+                  
+                           <button class="btn btn-default delbuttonOrder" id="<?=$fetch_list->job_order_no ?>" type="button"><i class="icon-trash"></i></button>
+                          
+                           <?php }?> 
                             <a target="_blank" href="<?=base_url();?>productionModule/print_challan?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>	
                           </td>
                         </tr>
@@ -741,7 +762,7 @@
                   <?php }?>
                 </select>
               </div>
-              <label class="col-sm-6 control-label">
+              <label class="col-sm-12 control-label">
                 <div class="table-responsive" id="getPartView"></div>
               </label>
               <div class="col-sm-12">
