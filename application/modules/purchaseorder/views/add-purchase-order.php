@@ -1,6 +1,7 @@
 <?php
   $this->load->view("header.php");
 ?>
+
 <form id="f1" name="f1" method="POST" action="insertPurchaseOrder" onSubmit="return checkKeyPressed(a)">
 <div class="main-content">
   <ol class="breadcrumb breadcrumb-2">
@@ -125,9 +126,8 @@
                     <div id="prdsrch" style="color:black;padding-left:0px; width:30%; height:110px; max-height:110px;overflow-x:auto;overflow-y:auto;padding-bottom:5px;padding-top:0px; position:absolute;">
                       <?php
                         //include("getproduct.php");
-                        $this->load->view('getproduct');
-                        
-                        ?>
+                        $this->load->view('getproduct');                        
+                      ?>
                     </div>
                   </th>
                   <th style="display:none;">
@@ -142,7 +142,7 @@
                     <input type="text" step="any" id="or_qn" min="1" style="width:70px;"   class="form-control">
                   </th>
                   <th>
-                    <input type="number" id="qn" min="1" style="width:90px;"   class="form-control">
+                    <input type="number" id="qn" min="1" style="width:90px;"   class="form-control" readonly="">
                   </th>
                   <th>
                     <b style="display:none" id="lpr"></b>
@@ -298,253 +298,245 @@
     //add item into showling list
     window.addEventListener("keydown", checkKeyPressed, false);
     //funtion to select product
-    function checkKeyPressed(e) {
-    var s=e.keyCode;
+    function checkKeyPressed(e) 
+    {
     
-    var ppp=document.getElementById("prd").value;
-    var sspp=document.getElementById("spid").value;//
-    var ef=document.getElementById("ef").value;
-    		ef=Number(ef);
-    		
-    var countids=document.getElementById("countid").value;
+      var s=e.keyCode;    
+      var ppp=document.getElementById("prd").value;
+      var sspp=document.getElementById("spid").value;//
+      var ef=document.getElementById("ef").value;
+      	ef=Number(ef);
+      var countids=document.getElementById("countid").value;
     
-    //if(countids==''){
-    //countids=1;
-    //}
+      if(countids=='')
+      {
+        countids=1;
+      }
     
     for(n=1;n<=countids;n++)
     {
-    
-    
-    document.getElementById("tyd"+n).onkeyup  = function (e) {
-    var entr =(e.keyCode);
-    if(entr==13){
-    	
-    document.getElementById("qn_pc").focus();
-    document.getElementById("prdsrch").innerHTML=" ";
-    
-    }
-    }
-    }
-    
-  
-    
-    document.getElementById("qn_pc").onkeydown = function (e) {
-    var entr =(e.keyCode);
-    
-    
-    if(entr==13){
-    
-    
-    document.getElementById("or_qn").focus();
-    }
+        
+        document.getElementById("tyd"+n).onkeyup  = function (e) 
+        {
+          var entr =(e.keyCode);
+          if(entr==13)
+          {          
+            document.getElementById("qn_pc").focus();
+            document.getElementById("prdsrch").innerHTML=" ";          
+          }
+        }
     }
     
     
-    
-    document.getElementById("or_qn").onkeydown = function (e) {
-    var entr =(e.keyCode);
-    var varUnit=document.getElementById("usunit").value;
-    if(varUnit=='Circle'){
-    var qn_pc=document.getElementById("qn_pc").value;
-    var qn=document.getElementById("or_qn").value;
-    var tot=Number(qn_pc)*Number(qn);
-    
-    document.getElementById("qn").value=tot.toFixed(3);
+    document.getElementById("qn_pc").onkeydown = function (e) 
+    {    
+      var entr =(e.keyCode);        
+      if(entr==13)
+      {        
+        document.getElementById("or_qn").focus();
+      }
     }
-    else
+            
+    document.getElementById("or_qn").onkeydown = function (e) 
     {
+      var entr =(e.keyCode);
+      var varUnit=document.getElementById("usunit").value;
+      if(varUnit=='Circle')
+      {
+        var qn_pc=document.getElementById("qn_pc").value;
+        var qn=document.getElementById("or_qn").value;
+        var tot=Number(qn_pc)*Number(qn);      
+        document.getElementById("qn").value=tot.toFixed(3);
+      }
+      else
+      {
     	
-    var varqn=document.getElementById("qn_pc").value;
-    var Varor_qn=document.getElementById("or_qn").value;
-    
-    var Varor_qn=document.getElementById("or_qn").value;
-    	document.getElementById("qn").value=varqn;	
+        var varqn=document.getElementById("qn_pc").value;
+        var Varor_qn=document.getElementById("or_qn").value;      
+        var Varor_qn=document.getElementById("or_qn").value;
+      	document.getElementById("qn").value=varqn;	
+      }
+      
+      if(entr==13)
+      {    
+        document.getElementById("qn").focus();
+      }
     }
-    if(entr==13){
-    
-    
-    document.getElementById("qn").focus();
-    }
-    }
-    
-    
-    
-    document.getElementById("qn").onkeydown = function (e) {
-    var entr =(e.keyCode);
-    if(entr==13){
-    
-    document.getElementById("lph").focus();
-    }
-    }
-    
-    
-    
-    document.getElementById("lph").onkeydown = function (e) {
-    var entr =(e.keyCode);
-    var qty_stock=document.getElementById("qty_stock").value;
-    //var reorder=document.getElementById("reorder").value;
-    
-    
-    var rate=document.getElementById("lph").value;
-    var qnt=document.getElementById("qn").value;
-    var gstTotal=document.getElementById("gstTotal").value;
-    var total=(Number(rate)*Number(qnt));
-    
-    var net_total=(Number(rate)*Number(qnt)+Number(gstTotal));
-    document.getElementById("tot").value=total;
-    document.getElementById("nettot").value=net_total;
-    
-    if(entr==13){
-    	
-    document.getElementById("discount").focus();
-    }
-    }
-    
-    document.getElementById("discount").onkeyup = function (e) {
-    var entr =(e.keyCode);
-    var toT=document.getElementById("tot").value;
-    
-    var igst=document.getElementById("igst").value;
-    var cgst=document.getElementById("cgst").value;
-    var gstTotal=document.getElementById("gstTotal").value;
-    var DisS=document.getElementById("discount").value;
-    
-    var disPer=(Number(toT)*Number(DisS))/100;
-    
-    
-    
-    var totAftDis=Number(toT)-Number(disPer);
-    //var gstDis=Number(totAftDis)*Number(igst)/100;
-    if(Number(igst!=''))
+            
+    document.getElementById("qn").onkeydown = function (e) 
     {
-    var aftGstPer=Number(totAftDis)*Number(igst)/100;
+      
+      var entr =(e.keyCode);
+      if(entr==13)
+      {    
+        document.getElementById("lph").focus();
+      }
     }
-    else
+        
+    
+    document.getElementById("lph").onkeydown = function (e) 
     {
-    	
-    	var aftGstPer=Number(totAftDis)*Number(cgst)*2/100;
+    
+      var entr =(e.keyCode);
+      var qty_stock=document.getElementById("qty_stock").value;
+      //var reorder=document.getElementById("reorder").value;
+      
+      var rate=document.getElementById("lph").value;
+      var qnt=document.getElementById("qn").value;
+      var gstTotal=document.getElementById("gstTotal").value;
+      var total=(Number(rate)*Number(qnt));
+      
+      var net_total=(Number(rate)*Number(qnt)+Number(gstTotal));
+      document.getElementById("tot").value=total;
+      document.getElementById("nettot").value=net_total;
+    
+      if(entr==13)
+      {      
+        document.getElementById("discount").focus();
+      }
+    
     }
-    var afterGstTot=Number(totAftDis)+Number(aftGstPer);
     
-    //var Ftot=Number(afterGstTot)+Number(aftGstPer);
+    document.getElementById("discount").onkeyup = function (e) 
+    {
     
-    document.getElementById("disAmt").value=disPer;
+      var entr =(e.keyCode);
+      var toT=document.getElementById("tot").value;      
+      var igst=document.getElementById("igst").value;
+      var cgst=document.getElementById("cgst").value;
+      var gstTotal=document.getElementById("gstTotal").value;
+      var DisS=document.getElementById("discount").value;
+      var disPer=(Number(toT)*Number(DisS))/100;    
+      var totAftDis=Number(toT)-Number(disPer);
+      //var gstDis=Number(totAftDis)*Number(igst)/100;
+
+      if(Number(igst!=''))
+      {
+        var aftGstPer=Number(totAftDis)*Number(igst)/100;
+      }
+      else
+      {      	
+      	var aftGstPer=Number(totAftDis)*Number(cgst)*2/100;
+      }
+
+      var afterGstTot=Number(totAftDis)+Number(aftGstPer);      
+      //var Ftot=Number(afterGstTot)+Number(aftGstPer);
     
-    document.getElementById("gstTotal").value=aftGstPer
-    ;
-    document.getElementById("tot").value=toT;
-    document.getElementById("nettot").value=afterGstTot.toFixed(2);
-    if(entr==13){
-    
-    
-    document.getElementById("disAmt").focus();
+      document.getElementById("disAmt").value=disPer;    
+      document.getElementById("gstTotal").value=aftGstPer;
+      document.getElementById("tot").value=toT;
+      document.getElementById("nettot").value=afterGstTot.toFixed(2);
+
+      if(entr==13)
+      {    
+        document.getElementById("disAmt").focus();
+      }
     }
-    }
-    
-    
-    
+          
     document.getElementById("disAmt").onkeyup = function (e) {
     var entr =(e.keyCode);
-    if(document.getElementById("disAmt").value=="" && entr==08){
     
-    }
+    // if(document.getElementById("disAmt").value=="" && entr==08)
+    // {
+    
+    // }
        if (e.keyCode == "13")
     	 {
     	
-    	 e.preventDefault();
+    	   e.preventDefault();
          e.stopPropagation();
     	
-    	  if(ppp!=='' || ef==1)
+    	 if(ppp!=='' || ef==1)
     	 {
     
-    	
     			adda();	  	
     			
+      		var ddid=document.getElementById("spid").value;
+      		var ddi=document.getElementById(ddid);
+      		ddi.id="d";
     		
-    			
-    		
-    		var ddid=document.getElementById("spid").value;
-    		var ddi=document.getElementById(ddid);
-    		ddi.id="d";
-    		
-    			}
-    	       else
-    			{
-    	   alert("Enter Correct Product");
-    			}
-    		return false;
+    	 }
+       else
+       {
+          alert("Enter Correct Product");
         }
-    	}
+    		return false;
+      }
     }
+  }
+  
     /////////////////////////////////////////////
     
     function fsv(v)
     {
-    var rc=document.getElementById("rows").value;
+  
+      var rc=document.getElementById("rows").value;
     
-    if(rc!=0)
-    {
-    v.type="submit";
-    }
-    else
-    {
-    	alert('No Item To Save..');	
-    }
+      if(rc!=0)
+      {
+        v.type="submit";
+      }
+      else
+      {
+    	  alert('No Item To Save..');	
+      }
+   
     }
     
     
-    function getdata()
-    		  {
+      function getdata()
+    	{
     		  
-    		 currentCell = 0;
-    		 var product1=document.getElementById("prd").value;	 
-    		 var product=product1;
-    		 	
-    			 var conatctId=document.getElementById("contact_id_copy").value;
-    			 
-    			 var invoice_type=document.getElementById("invoice_type").value;
+    		currentCell = 0;
+    		var product1=document.getElementById("prd").value;	 
+    		var product=product1;    		 	
+    		var conatctId=document.getElementById("contact_id_copy").value;
+    		var invoice_type=document.getElementById("invoice_type").value;
+
     		if(conatctId=='')
     		{
-    		alert('Plase Select Contact First');
-    		document.getElementById("contact_id_copy").focus();
+      		alert('Plase Select Contact First');
+      		document.getElementById("contact_id_copy").focus();
     		}	
     		if(invoice_type=='')
     		{
-    		alert('Plase Select Invoice Type');
-    		document.getElementById("invoice_type").focus();
+      		alert('Plase Select Invoice Type');
+      		document.getElementById("invoice_type").focus();
     		}
     		
     		
     		    
-    		    if(xobj)
-    			 {
-    			 var obj=document.getElementById("prdsrch");
+    		  if(xobj)
+    			{
+    			 
+           var obj=document.getElementById("prdsrch");
     			
     			 xobj.open("GET","getproduct?con="+product+"&con_id="+conatctId+"&invoice_type="+invoice_type,true);
     			 xobj.onreadystatechange=function()
-    			  {
-    			  if(xobj.readyState==4 && xobj.status==200)
+    			 {
+    			  
+             if(xobj.readyState==4 && xobj.status==200)
     			   {
     			    obj.innerHTML=xobj.responseText;
     			   }
-    			  }
     			 }
-    			 xobj.send(null);
-    		  }
+    			}
+    			xobj.send(null);
+    		}
       
     ////////////////////////////////////////////////////
     
-     function slr(){
+     function slr()
+     {
+    
     		var table = document.getElementById('invoice');
-            var rowCount = table.rows.length;
-    		  for(var i=1;i<rowCount;i++)
-    		  {    
-                  table.rows[i].cells[0].innerHTML=i;
-    		  }
-    			 
-    			  
-    }  
+        var rowCount = table.rows.length;
+    		for(var i=1;i<rowCount;i++)
+  		  {    
+          table.rows[i].cells[0].innerHTML=i;
+  		  }
+    			     			  
+     }  
     
     
     
@@ -552,71 +544,63 @@
     
     
     
-         var rw=0;
+          var rw=0;
     	 
-     function adda()
+          function adda()
     		  { 
-    		 
-    		  		 
-    
-    				var qn=document.getElementById("qn").value;
-    				var unit=document.getElementById("usunit").value;
-    				var lph=document.getElementById("lph").value;
-    				var dis=document.getElementById("discount").value;	
-    				var disAmount=document.getElementById("disAmt").value;		
-    		       
-    			   var cgst=document.getElementById("cgst").value;		
-    			   var igst=document.getElementById("igst").value;		
-    			   var sgst=document.getElementById("sgst").value;		
-    			   var gstTotal=document.getElementById("gstTotal").value;
-    			    var qty_stock=document.getElementById("qty_stock").value;
-    
-    				  
-    			     var qn_pc=document.getElementById("qn_pc").value;
-    				 var or_qn=document.getElementById("or_qn").value;
-    				
-    			    var tot=document.getElementById("tot").value;
-    				var nettot=document.getElementById("nettot").value;
-    			  	
-    			
-    				
-    				//default
-    				var rows=document.getElementById("rows").value;
-    				var pri_id=document.getElementById("pri_id").value;
-    				var pd=document.getElementById("prd").value;
-    		   	   var table = document.getElementById("invoice");
-    					var rid =Number(rows)+1;
-    					document.getElementById("rows").value=rid;
-    					
-    						
-    							totalSum();	
-    							//serviceChargeCal();
-    							//grossDiscountCal();				
-                 				clear();
-    				
-    					 currentCell = 0;
-    	if(pd!="" && qn!=0)
-    					{
-    				     var indexcell=0;
-    								var row = table.insertRow(-1);
-    						rw=rw+0;
-    						
-    						//cell 0st
-    	 var cell=cell+indexcell;		
-     	 cell = row.insertCell(0);
-    	 cell.style.width=".20%";
-    	 cell.align="center"
-    	cell.innerHTML=rid;
-    				
-    				
-    				//cell 1st item name
-    	indexcell=Number(indexcell+1);		
-    	var cell=cell+indexcell;	
-    			
-    	    cell = row.insertCell(indexcell);
-    				cell.style.width="11%";
-    				cell.align="center";
-    				
+    		     		  
+            var qn=document.getElementById("qn").value;
+            var unit=document.getElementById("usunit").value;
+            var lph=document.getElementById("lph").value;
+            var dis=document.getElementById("discount").value;	
+            var disAmount=document.getElementById("disAmt").value;		
+            var cgst=document.getElementById("cgst").value;		
+            var igst=document.getElementById("igst").value;		
+            var sgst=document.getElementById("sgst").value;		
+            var gstTotal=document.getElementById("gstTotal").value;
+            var qty_stock=document.getElementById("qty_stock").value;
+            var qn_pc=document.getElementById("qn_pc").value;
+            var or_qn=document.getElementById("or_qn").value;
+            var tot=document.getElementById("tot").value;
+            var nettot=document.getElementById("nettot").value;
+            //default
+            var rows=document.getElementById("rows").value;
+            var pri_id=document.getElementById("pri_id").value;
+            var pd=document.getElementById("prd").value;
+            var table = document.getElementById("invoice");
+            var rid =Number(rows)+1;
+            document.getElementById("rows").value=rid;
+	
+
+            totalSum();	
+            //serviceChargeCal();
+            //grossDiscountCal();				
+            clear();
+  				
+            currentCell = 0;
+            if(pd!="" && qn!=0)
+            {
+             
+              var indexcell=0;
+              var row = table.insertRow(-1);
+              rw=rw+0;
+
+                  //cell 0st
+          	 var cell=cell+indexcell;		
+           	 cell = row.insertCell(0);
+          	 cell.style.width=".20%";
+          	 cell.align="center"
+           	 cell.innerHTML=rid;
+          				
+          				
+          				//cell 1st item name
+          	indexcell=Number(indexcell+1);		
+          	var cell=cell+indexcell;	
+          			
+          	    cell = row.insertCell(indexcell);
+          				cell.style.width="11%";
+          				cell.align="center";
+          				
     				
     				
     				
@@ -994,24 +978,21 @@
     			}
     			else
     			{
+
     			if(qn==0)
-    				{
-    					alert('***Quantity Can not be Zero ***');
-    					
-    					
-    				}
-    				else
-    				{
-    				
-    			alert('***Please Select PRODUCT ***');
-    			
-    			}
-    			}
+          {
+            alert('***Quantity Can not be Zero ***');
+          }
+          else
+          {
+            alert('***Please Select PRODUCT ***');
+          }
+  }
     
     function clear()
     {
     
-    // this finction is use for clear data after adding invoice
+        // this function is use for clear data after adding invoice
     		document.getElementById("prd").value='';
     		document.getElementById("usunit").value='';
     		document.getElementById("lph").value='';
@@ -1021,22 +1002,17 @@
     		document.getElementById("tot").value='';
     		document.getElementById("nettot").value='';
     		document.getElementById("qn").value='';
-    		document.getElementById("pri_id").value='';
-    		
+    		document.getElementById("pri_id").value='';    		
     		document.getElementById("igst").value='';
     		document.getElementById("cgst").value='';
     		document.getElementById("sgst").value='';
     		document.getElementById("gstTotal").value='';
     		document.getElementById("qty_stock").value='';
     		document.getElementById("qn_pc").value='';
-    		document.getElementById("or_qn").value='';
-    		
-    		
-    		document.getElementById("prdsrch").innerHTML='';
-    		
+    		document.getElementById("or_qn").value='';    		    		
+    		document.getElementById("prdsrch").innerHTML='';    		
     		document.getElementById("prd").focus();	
-    		
-    		
+    		    		
     }
     
     
@@ -1044,62 +1020,60 @@
     
     
     function editselectrow(d,r) //modify dyanamicly created rows or product detail
-     {
+    {
      
-    var regex = /(\d+)/g;
-    nn= d.match(regex)
-    id=nn;
-    if(document.getElementById("prd").value!=''){
-    document.getElementById("qn").focus();
-    alert("Product already in edit Mode");
-    return false;
-    }
+      var regex = /(\d+)/g;
+      nn= d.match(regex)
+      id=nn;
+      if(document.getElementById("prd").value!='')
+      {
+        document.getElementById("qn").focus();
+        alert("Product already in edit Mode");
+        return false;
+      }
     
     
-    // ####### starts ##############//
-    var pd=document.getElementById("pd"+id).value;
-    
-    		var unit=document.getElementById("unit"+id).value;
-    		var qn=document.getElementById("qnty"+id).value;
-    		var lph=document.getElementById("lph"+id).value;
-    		var discount=document.getElementById("dis"+id).value;
-    		var disAmt=document.getElementById("disAmount"+id).value;
-    		var tot=document.getElementById("tot"+id).value;
-    		var nettot=document.getElementById("nettot"+id).value;
-    		var igst=document.getElementById("igst"+id).value;
-    		var cgst=document.getElementById("cgst"+id).value;
-    		var sgst=document.getElementById("sgst"+id).value;
-    		var gstTotal=document.getElementById("gstTotal"+id).value;
-    		var qty_stock=document.getElementById("qty_stock"+id).value;
-    		
-    		var pri_id=document.getElementById("main_id"+id).value;
-    // ####### ends ##############//
-    
-    // ####### starts ##############//
-    document.getElementById("pri_id").value=pri_id;
-    document.getElementById("qn").focus();
-    document.getElementById("prd").value=pd;
-    document.getElementById("usunit").value=unit;
-    document.getElementById("qn").value=qn;
-    document.getElementById("lpr").innerHTML=lph;
-    document.getElementById("lph").value=lph;
-    document.getElementById("discount").value=discount;
-    document.getElementById("disAmt").value=disAmt;
-    document.getElementById("tot").value=tot;
-    document.getElementById("nettot").value=nettot;
-    
-    document.getElementById("igst").value=igst;
-    document.getElementById("cgst").value=cgst;
-    document.getElementById("sgst").value=sgst;
-    document.getElementById("gstTotal").value=gstTotal;
-    document.getElementById("qty_stock").value=qty_stock;
-    
-    
-    // ####### ends ##############//
-    editDeleteCalculation();
-    
+        // ####### starts ##############//
+        var pd=document.getElementById("pd"+id).value;
+        var unit=document.getElementById("unit"+id).value;
+        var qn=document.getElementById("qnty"+id).value;
+        var lph=document.getElementById("lph"+id).value;
+        var discount=document.getElementById("dis"+id).value;
+        var disAmt=document.getElementById("disAmount"+id).value;
+        var tot=document.getElementById("tot"+id).value;
+        var nettot=document.getElementById("nettot"+id).value;
+        var igst=document.getElementById("igst"+id).value;
+        var cgst=document.getElementById("cgst"+id).value;
+        var sgst=document.getElementById("sgst"+id).value;
+        var gstTotal=document.getElementById("gstTotal"+id).value;
+        var qty_stock=document.getElementById("qty_stock"+id).value;
+        var pri_id=document.getElementById("main_id"+id).value;
+        // ####### ends ##############//
+
+        // ####### starts ##############//
+        document.getElementById("pri_id").value=pri_id;
+        document.getElementById("qn").focus();
+        document.getElementById("prd").value=pd;
+        document.getElementById("usunit").value=unit;
+        document.getElementById("qn").value=qn;
+        document.getElementById("lpr").innerHTML=lph;
+        document.getElementById("lph").value=lph;
+        document.getElementById("discount").value=discount;
+        document.getElementById("disAmt").value=disAmt;
+        document.getElementById("tot").value=tot;
+        document.getElementById("nettot").value=nettot;
+        document.getElementById("igst").value=igst;
+        document.getElementById("cgst").value=cgst;
+        document.getElementById("sgst").value=sgst;
+        document.getElementById("gstTotal").value=gstTotal;
+        document.getElementById("qty_stock").value=qty_stock;
+
+
+        // ####### ends ##############//
+        editDeleteCalculation();
+
         var i = r.parentNode.parentNode.rowIndex;
-    	document.getElementById("invoice").deleteRow(i);
+        document.getElementById("invoice").deleteRow(i);
     }
     
     ////////////////////////////////// ends edit code ////////////////////////////////
@@ -1109,21 +1083,20 @@
     
     ////////////////////////////////// starts delete code ////////////////////////////////
     
-    function deleteselectrow(d,r) //delete dyanamicly created rows or product detail
-     {
-     
-    var regex = /(\d+)/g;
+    function deleteselectrow(d,r) 
+    {
     
-    nn= d.match(regex)
-    	id=nn;
-    	if(document.getElementById("prd").value!=''){
-     		document.getElementById("qn").focus();
-         alert("Product already in edit Mode");
-    return false;
-    }
-    
-    
-    
+      //delete dyanamicly created rows or product detail 
+      var regex = /(\d+)/g;
+
+      nn= d.match(regex)
+      id=nn;
+      if(document.getElementById("prd").value!='')
+      {
+        document.getElementById("qn").focus();
+        alert("Product already in edit Mode");
+        return false;
+      }
     
     		var pd=document.getElementById("pd"+id).value;
     		var unit=document.getElementById("unit"+id).value;
@@ -1132,54 +1105,50 @@
     		var discount=document.getElementById("dis"+id).value;
     		var disAmt=document.getElementById("disAmount"+id).value;
     		var tot=document.getElementById("tot"+id).value;
-    		var nettot=document.getElementById("nettot"+id).value;
-    		
+    		var nettot=document.getElementById("nettot"+id).value;    		
     		var pri_id=document.getElementById("main_id"+id).value;
     		var igst=document.getElementById("igst"+id).value;
     		var cgst=document.getElementById("cgst"+id).value;
     		var sgst=document.getElementById("sgst"+id).value;
-    		var gstTotal=document.getElementById("gstTotal"+id).value;
-    		
-    		
+    		var gstTotal=document.getElementById("gstTotal"+id).value;    		
+    	  var i = r.parentNode.parentNode.rowIndex;
+        var cnf = confirm('Are You Sure..??? you want to Delete line no1.'+(id));
     
-    	    var i = r.parentNode.parentNode.rowIndex;
-         var cnf = confirm('Are You Sure..??? you want to Delete line no1.'+(id));
-    if (cnf== true)
-     {
-     document.getElementById("invoice").deleteRow(i);
-      slr();
-      
-     editDeleteCalculation();
-    	//serviceChargeCal();	
-    	//grossDiscountCal();
-    	}
+        if (cnf== true)
+        {
+          document.getElementById("invoice").deleteRow(i);
+          slr();
+          editDeleteCalculation();
+        	//serviceChargeCal();	
+        	//grossDiscountCal();
+    	  }
     	
-    	}
+    }
+    
     ////////////////////////////////// ends delete code ////////////////////////////////
     
     
-    function totalSum(){
-    
-    
-    var tot=document.getElementById("tot").value;
-    var subb=document.getElementById("sub_total").value;
-    var gt=document.getElementById("grand_total").value;
-    var totDisPer=document.getElementById("total_dis").value;
-    var discount=document.getElementById("discount").value;
-    var disAmt=document.getElementById("disAmt").value;
-    var total_dis_amt=document.getElementById("total_dis_amt").value;
-    var total_igst=document.getElementById("total_igst").value;
-    var total_tax_igst_amt=document.getElementById("total_tax_igst_amt").value;
-    var igst=document.getElementById("igst").value;
-    var cgst=document.getElementById("cgst").value;
-    var sgst=document.getElementById("sgst").value;
-    var total_sgst=document.getElementById("total_sgst").value;
-    var gstTotal=document.getElementById("gstTotal").value;
-    var total_tax_sgst_amt=document.getElementById("total_tax_sgst_amt").value;
-    var total_tax_cgst_amt=document.getElementById("total_tax_cgst_amt").value;
-    
-    var total_cgst=document.getElementById("total_cgst").value;
-    var total_gst_tax_amt=document.getElementById("total_gst_tax_amt").value;
+    function totalSum()
+    {
+        
+      var tot=document.getElementById("tot").value;
+      var subb=document.getElementById("sub_total").value;
+      var gt=document.getElementById("grand_total").value;
+      var totDisPer=document.getElementById("total_dis").value;
+      var discount=document.getElementById("discount").value;
+      var disAmt=document.getElementById("disAmt").value;
+      var total_dis_amt=document.getElementById("total_dis_amt").value;
+      var total_igst=document.getElementById("total_igst").value;
+      var total_tax_igst_amt=document.getElementById("total_tax_igst_amt").value;
+      var igst=document.getElementById("igst").value;
+      var cgst=document.getElementById("cgst").value;
+      var sgst=document.getElementById("sgst").value;
+      var total_sgst=document.getElementById("total_sgst").value;
+      var gstTotal=document.getElementById("gstTotal").value;
+      var total_tax_sgst_amt=document.getElementById("total_tax_sgst_amt").value;
+      var total_tax_cgst_amt=document.getElementById("total_tax_cgst_amt").value; 
+      var total_cgst=document.getElementById("total_cgst").value;
+      var total_gst_tax_amt=document.getElementById("total_gst_tax_amt").value;
     
     
     			var tol=(Number(nettot));
@@ -1201,41 +1170,31 @@
     			document.getElementById("total_dis_amt").value=SdisTot.toFixed(2);
     			
     			if(Number(igst!=''))
-    			{
-    				
-    			document.getElementById("total_igst").value=SigstPer;
-    			document.getElementById("total_tax_igst_amt").value=SigstAmt.toFixed(2);
+    			{    				
+      			document.getElementById("total_igst").value=SigstPer;
+      			document.getElementById("total_tax_igst_amt").value=SigstAmt.toFixed(2);
     			}
     			
     			if(Number(sgst!=''))
     			{
     				
     				var SsgstPer=Number(sgst)+Number(total_sgst);
-    				var sgstT=Number(tot)*Number(sgst)/100;
-    				
+    				var sgstT=Number(tot)*Number(sgst)/100;    			
     				var SsgstAmt=Number(gstTotal/2)+Number(total_tax_sgst_amt);
-    				
-    				
-    			document.getElementById("total_sgst").value=SsgstPer;
-    			document.getElementById("total_cgst").value=SsgstPer;
-    			document.getElementById("total_tax_sgst_amt").value=SigstAmt.toFixed(2)/2;
-    
-    document.getElementById("total_tax_cgst_amt").value=SsgstAmt.toFixed(2);
-    			
-    document.getElementById("total_tax_sgst_amt").value=SsgstAmt.toFixed(2);
-    			
+    				    				
+      			document.getElementById("total_sgst").value=SsgstPer;
+      			document.getElementById("total_cgst").value=SsgstPer;
+      			document.getElementById("total_tax_sgst_amt").value=SigstAmt.toFixed(2)/2;
+            document.getElementById("total_tax_cgst_amt").value=SsgstAmt.toFixed(2);   
+            document.getElementById("total_tax_sgst_amt").value=SsgstAmt.toFixed(2);    			
     			
     			}
     
     
-    var TotGST=Number(total_gst_tax_amt)+Number(gstTotal);
+        var TotGST=Number(total_gst_tax_amt)+Number(gstTotal);
+  			document.getElementById("total_gst_tax_amt").value=TotGST.toFixed(2);
     
-    			document.getElementById("total_gst_tax_amt").value=TotGST.toFixed(2);
-    		
-    		
-    			
-    
-    }
+  }
     
     
     
@@ -1244,210 +1203,189 @@
     function editDeleteCalculation()
     {
     	
-    var sub_total=document.getElementById("sub_total").value;
-    var grand_total=document.getElementById("grand_total").value;
-    var total_gst_tax_amt=document.getElementById("total_gst_tax_amt").value;
-    var total_tax_cgst_amt=document.getElementById("total_tax_cgst_amt").value;
+      var sub_total=document.getElementById("sub_total").value;
+      var grand_total=document.getElementById("grand_total").value;
+      var total_gst_tax_amt=document.getElementById("total_gst_tax_amt").value;
+      var total_tax_cgst_amt=document.getElementById("total_tax_cgst_amt").value;
+      var total_cgst=document.getElementById("total_cgst").value;
+      var total_sgst=document.getElementById("total_sgst").value;
+      var total_igst=document.getElementById("total_igst").value;
+      var total_tax_cgst_amt=document.getElementById("total_tax_cgst_amt").value;
+      var total_tax_sgst_amt=document.getElementById("total_tax_sgst_amt").value;
+      var total_tax_igst_amt=document.getElementById("total_tax_igst_amt").value;
     
-    var total_cgst=document.getElementById("total_cgst").value;
-    var total_sgst=document.getElementById("total_sgst").value;
-    var total_igst=document.getElementById("total_igst").value;
+      if(Number(total_igst)!='')
+      {
+      
+        total_igst_cal=total_igst-igst;	
+        document.getElementById("total_igst").value=total_igst_cal;
+         
+        total_tax_igst_amt_cal=total_tax_igst_amt-gstTotal;	
+        document.getElementById("total_tax_igst_amt").value=total_tax_igst_amt_cal
+      }
+      else
+      {
+      
+        total_cgst_cal=total_cgst-cgst;
+        total_sgst_cal=total_sgst-sgst;
+        total_tax_cgst_amt_cal=total_tax_cgst_amt-gstTotal/2;
+        total_tax_sgst_amt_cal=total_tax_sgst_amt-gstTotal/2;
+        
+        document.getElementById("total_cgst").value=total_cgst_cal;
+        document.getElementById("total_sgst").value=total_sgst_cal;
+        document.getElementById("total_tax_cgst_amt").value=total_tax_cgst_amt_cal;
+        document.getElementById("total_tax_sgst_amt").value=total_tax_sgst_amt_cal;
+      
+      }
     
-    var total_tax_cgst_amt=document.getElementById("total_tax_cgst_amt").value;
+        sub_total_cal=sub_total-tot;
+        grand_total_cal=grand_total-nettot;
+        
+        total_dis_cal=total_dis-discount;
+        total_dis_amt_cal=total_dis_amt-disAmt;
+        
+        total_gst_tax_amt_cal=total_gst_tax_amt-gstTotal;
+        
     
-    var total_tax_sgst_amt=document.getElementById("total_tax_sgst_amt").value;
-    
-    var total_tax_igst_amt=document.getElementById("total_tax_igst_amt").value;
-    
-    
-    
-    
-    if(Number(total_igst)!='')
-    {
-    
-    total_igst_cal=total_igst-igst;	
-    document.getElementById("total_igst").value=total_igst_cal;
-    
-    
-    
-    
-    
-    
-    
-    total_tax_igst_amt_cal=total_tax_igst_amt-gstTotal;	
-    document.getElementById("total_tax_igst_amt").value=total_tax_igst_amt_cal;
-    
-    
-    
-    }
-    else
-    {
-    total_cgst_cal=total_cgst-cgst;
-    total_sgst_cal=total_sgst-sgst;
-    total_tax_cgst_amt_cal=total_tax_cgst_amt-gstTotal/2;
-    total_tax_sgst_amt_cal=total_tax_sgst_amt-gstTotal/2;
-    
-    document.getElementById("total_cgst").value=total_cgst_cal;
-    document.getElementById("total_sgst").value=total_sgst_cal;
-    document.getElementById("total_tax_cgst_amt").value=total_tax_cgst_amt_cal;
-    document.getElementById("total_tax_sgst_amt").value=total_tax_sgst_amt_cal;
-    
-    }
-    
-    sub_total_cal=sub_total-tot;
-    grand_total_cal=grand_total-nettot;
-    
-    total_dis_cal=total_dis-discount;
-    total_dis_amt_cal=total_dis_amt-disAmt;
-    
-    total_gst_tax_amt_cal=total_gst_tax_amt-gstTotal;
-    
-    
-    
-    
-    document.getElementById("sub_total").value=sub_total_cal.toFixed(2);
-    document.getElementById("grand_total").value=grand_total_cal.toFixed(2);
-    
-    document.getElementById("total_gst_tax_amt").value=total_gst_tax_amt_cal;
-    
-    
-    
-    document.getElementById("total_dis").value=total_dis_cal;
-    document.getElementById("total_dis_amt").value=total_dis_amt_cal;
+        document.getElementById("sub_total").value=sub_total_cal.toFixed(2);
+        document.getElementById("grand_total").value=grand_total_cal.toFixed(2);
+        document.getElementById("total_gst_tax_amt").value=total_gst_tax_amt_cal;
+        document.getElementById("total_dis").value=total_dis_cal;
+        document.getElementById("total_dis_amt").value=total_dis_amt_cal;
     
     }
     // ##### ends ###########
-    
-    
-       }
+  }
     
     // ###### starts service charge calculation ##########//
     function serviceChargeCal()
     {
     
-    var sub_total=document.getElementById("sub_total").value;
-    var service_charge=document.getElementById("service_charge").value;
+      var sub_total=document.getElementById("sub_total").value;
+      var service_charge=document.getElementById("service_charge").value;
+      
+      service_total_per=Number(sub_total)*Number(service_charge)/100;
+      service_total_cal=Number(sub_total)+Number(service_total_per);
+      
+      document.getElementById("service_charge_total").value=service_total_per.toFixed(2);
+      document.getElementById("grand_total").value=service_total_cal.toFixed(2);
+      return service_total_cal.toFixed(2);
     
-    service_total_per=Number(sub_total)*Number(service_charge)/100;
-    service_total_cal=Number(sub_total)+Number(service_total_per);
-    
-    document.getElementById("service_charge_total").value=service_total_per.toFixed(2);
-    document.getElementById("grand_total").value=service_total_cal.toFixed(2);
-    return service_total_cal.toFixed(2);
     }
-    // ##### ends ###########
+      // ##### ends ###########
       
     
     // ###### starts gross discount calculation ##########//
     function grossDiscountCal()
     {
     
-    var serviceTotl=serviceChargeCal();
+      var serviceTotl=serviceChargeCal();
+      
+      var gross_discount_per=document.getElementById("gross_discount_per").value;
+      var gross_discount_total=document.getElementById("gross_discount_total").value;
+      var grand_total=document.getElementById("grand_total").value;
+      
+      
+      service_total_per=Number(serviceTotl)*Number(service_charge)/100;
+      service_total_cal=Number(sub_total)+Number(service_total_per);
+      
+      var totalGross=Number(serviceTotl)*Number(gross_discount_per)/100;
+      var totalGrossCal=Number(grand_total)-Number(totalGross);
+      
+      document.getElementById("gross_discount_total").value=totalGross.toFixed(2);
+      document.getElementById("grand_total").value=totalGrossCal.toFixed(2);
     
-    var gross_discount_per=document.getElementById("gross_discount_per").value;
-    var gross_discount_total=document.getElementById("gross_discount_total").value;
-    var grand_total=document.getElementById("grand_total").value;
-    
-    
-    service_total_per=Number(serviceTotl)*Number(service_charge)/100;
-    service_total_cal=Number(sub_total)+Number(service_total_per);
-    
-    var totalGross=Number(serviceTotl)*Number(gross_discount_per)/100;
-    var totalGrossCal=Number(grand_total)-Number(totalGross);
-    
-    document.getElementById("gross_discount_total").value=totalGross.toFixed(2);
-    document.getElementById("grand_total").value=totalGrossCal.toFixed(2);
     }
     // ##### ends ###########
     
       
     function duplicate_po_check(v)
-    		  {
-    		  	 
-    		 var po_id=document.getElementById("po_id").value=v;	 
-    		   
-    		    if(xobj)
-    			 {
-    			 alert();			
-    			 xobj.open("GET","duplicate_po_check?po_id="+po_id,true);
-    			 xobj.onreadystatechange=function()
-    			  {
-    			  if(xobj.readyState==4 && xobj.status==200)
-    			   {
-    			    obj.innerHTML=xobj.responseText;
-    				alert(xobj.responseText);
-    			   }
-    			  }
-    			 }
-    			 xobj.send(null);
-    		  }
-      
-      
-      
-      function duplicate_po_check(v){
-    
-    		var strURL="duplicate_po_check?po_id="+v;
-    
-    		var req = getXMLHTTP();
-    
-    		if (req) {
-    
-    			req.onreadystatechange = function() {
-    
-    				if (req.readyState == 4) {
-    
-    					if (req.status == 200) {
-    
-    					//var price=mtr*ext_per;
-    					if(req.responseText=='False')
-    					{
-    					alert("Duplicate Purchase Order Id. Please choose anoother Id");	
-    					document.getElementById("sv1").disabled = true;
-    
-    					
-    					}
-    					else
-    					{
-    						document.getElementById("sv1").disabled = false;
-    					}
-    					
-    					
-    					//	document.getElementById('rack_id').innerHTML=req.responseText;
-    
-    					} else {
-    
-    						alert("There was a problem while using XMLHTTP:\n" + req.statusText);
-    
-    					}
-    
-    				}				
-    
-    			}			
-    
-    			req.open("GET", strURL, true);
-    
-    			req.send(null);
-    
-    		}
+	  {
+	  	 
+	   var po_id=document.getElementById("po_id").value=v;	 
+	   
+	   if(xobj)
+		 {
+  		 alert();			
+  		 xobj.open("GET","duplicate_po_check?po_id="+po_id,true);
+  		 xobj.onreadystatechange=function()
+  		  {
+  		  if(xobj.readyState==4 && xobj.status==200)
+  		   {
+  		    obj.innerHTML=xobj.responseText;
+  			alert(xobj.responseText);
+  		   }
+  		  }
+  		 }
+		 xobj.send(null);
+	  
     }
+      
+      
+      
+    function duplicate_po_check(v)
+    {
+  
+  		var strURL="duplicate_po_check?po_id="+v;
+  
+  		var req = getXMLHTTP();
+  
+  		if (req) {
+  
+  			req.onreadystatechange = function() {
+  
+  				if (req.readyState == 4) {
+  
+  					if (req.status == 200) {
+  
+  					//var price=mtr*ext_per;
+  					if(req.responseText=='False')
+  					{
+  					alert("Duplicate Purchase Order Id. Please choose anoother Id");	
+  					document.getElementById("sv1").disabled = true;
+  
+  					
+  					}
+  					else
+  					{
+  						document.getElementById("sv1").disabled = false;
+  					}
+  					
+  					
+  					//	document.getElementById('rack_id').innerHTML=req.responseText;
+  
+  					} else {
+  
+  						alert("There was a problem while using XMLHTTP:\n" + req.statusText);
+  
+  					}
+  
+  				}				
+  
+  			}			
+  
+  			req.open("GET", strURL, true);
+  
+  			req.send(null);
+  
+  		}
+  }
     
     
     function freight_check(checked)
     {
     
-    var freight_data=document.getElementById("freight").value;	
-    
-    var g_t=	document.getElementById("grand_total").value;
-    	
-    var chk=document.getElementById("chk");
-    
-    if(freight_data=='')
-    {
-    alert("Please enter freight amount first");	
-    document.getElementById("chk").checked='';
-    return false;
-    }
-    
+      var freight_data=document.getElementById("freight").value;	    
+      var g_t=	document.getElementById("grand_total").value;    	
+      var chk=document.getElementById("chk");
+      
+      if(freight_data=='')
+      {
+        alert("Please enter freight amount first");	
+        document.getElementById("chk").checked='';
+        return false;
+      }
+      
       
       if(chk.checked)
       {
@@ -1455,34 +1393,26 @@
     	  var frightGst=Number(freight_data)*18/100;
     	  var freightGstTot=Number(freight_data)+Number(frightGst);
     	  
-    var tot_gt=Number(freightGstTot)+Number(g_t);
-    document.getElementById("grand_total").value=tot_gt;
+        var tot_gt=Number(freightGstTot)+Number(g_t);
+        document.getElementById("grand_total").value=tot_gt;
     
       }
-    else
-    
-    
-    {
+      else
+      {
     	
-    var freight_data=document.getElementById("freight").value;	
-    
-    
-      var frightGst=Number(freight_data)*18/100;
-    	  var freightGstTot=Number(freight_data)+Number(frightGst);
-    	  
-    var g_t=	document.getElementById("grand_total").value;
-    
-    var tot_gt=Number(g_t)-Number(freightGstTot);
-    document.getElementById("grand_total").value=tot_gt;
-    	
-    	
-    	
-    }
-    
-    	
-    }
+        var freight_data=document.getElementById("freight").value;	
+        var frightGst=Number(freight_data)*18/100;
+        var freightGstTot=Number(freight_data)+Number(frightGst);
+        var g_t=	document.getElementById("grand_total").value;
+        var tot_gt=Number(g_t)-Number(freightGstTot);
+        document.getElementById("grand_total").value=tot_gt;
+	
+      }
+        	
+  }
           
   </script>
+
 </form>
 
 <?php

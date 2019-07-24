@@ -6,13 +6,14 @@
   $contactStateQuery=$this->db->query("select *from tbl_contact_m where contact_id='".$_GET['con_id']."'");
   $getContactState=$contactStateQuery->row();
   $getContactState->state_id;
-  ?>
-<!DOCTYPE html>
+?>
+
 <html lang="en">
   <head>
     <script>
-      var x = document.getElementsByClassName("prds");
-         function ChangeCurrentCell() {
+        var x = document.getElementsByClassName("prds");
+         function ChangeCurrentCell() 
+         {
       
          }
       
@@ -20,228 +21,196 @@
       
          $(document).keydown(function(e){
       
-             if (e.keyCode == 37) { 
+             if (e.keyCode == 37) 
+             { 
       
-                currentCell--;
+                currentCell--;      
+      	        alert(currentCell);
       
-      	   alert(currentCell);
-      
-               // ChangeCurrentCell();
+                // ChangeCurrentCell();
       
                 return false;
       
              }
       
              if (e.keyCode == 39)
-      
-      	 { 
+      	     { 
       
                 currentCell++;
-      
-              //  ChangeCurrentCell();
-      
+                //  ChangeCurrentCell();
                 return false;
-      
+             
              }
       
       
-             if (e.keyCode == 38)
+            if (e.keyCode == 38)      
+      	    { 
+      	     
+              if(currentCell>0)
+            	{
+                
+                currentCell--;
+                //alert(currentCell);
+                x[currentCell].focus();
+                x[currentCell].select();
       
-      	 { 
+            	}
       
+            	else          
+            	{
+            
+            	  var mx = document.getElementById("ttsp").value;
+             	  currentCell=mx;
+          
+              	x[currentCell].focus();          
+                x[currentCell].select();
+            
+            	  currentCell--;
+            
+            	  //alert("Last...");
+            
+            	}
+        
+        	   //  alert(currentCell);
+
+              return false;
       
-      	 if(currentCell>0)
-      
-      	{
-      
-      	currentCell--;
-      
-      	//alert(currentCell);
-      
-      	 x[currentCell].focus();
-      
-              x[currentCell].select();
-      
-      	}
-      
-      	else
-      
-      	{
-      
-      	var mx = document.getElementById("ttsp").value;
-      
-      	currentCell=mx;
-      
-      
-      	 x[currentCell].focus();
-      
-              x[currentCell].select();
-      
-      	 currentCell--;
-      
-      	 //alert("Last...");
-      
-      	}
-      
-      	//  alert(currentCell);
-      
-                   return false;
-      
-             }
+            }
       
       	
-             if (e.keyCode == 40) 
+          if (e.keyCode == 40) 
+          { 
       
-      	{ 
-      
-      	var mx = document.getElementById("ttsp").value;
-      
-      
-      	if(currentCell<mx)
-      
-      	{
-      
-      	 x[currentCell].focus();
-      
+      	    var mx = document.getElementById("ttsp").value;
+
+          	if(currentCell<mx)
+          
+          	{
+          
+              x[currentCell].focus();
+
               x[currentCell].select();
-      
-      	currentCell++;
-      
-      	 e.preventDefault();
-      
-      	 e.stopPropagation();
-      
-      	e.returnValue = false;
-      
-      //Window.focus()
-      
-      	 //break; 
-      
-      	//alert(currentCell);
-      
-      	}
-      
-      	else
-      
-      	{
-      
-      	currentCell=0;
-      
-      	 x[currentCell].focus();
-      
+
+              currentCell++;
+
+              e.preventDefault();
+
+              e.stopPropagation();
+
+              e.returnValue = false;
+
+              //Window.focus()
+
+              //break; 
+
+              //alert(currentCell);
+          
+          	}      
+            else
+            {
+
+              currentCell=0;
+
+              x[currentCell].focus();
+
               x[currentCell].select();
+
+              //alert('rowCount'); 		          
+
+              document.getElementById('prdsrch').scrollTop =0;
+
+            }
+
+          }
       
-      			//alert('rowCount'); 		          
-      
-      document.getElementById('prdsrch').scrollTop =0;
-      
-      	}
-      
-      	}
-      
-          });
+    });
       
       
-      var xobj;
+        var xobj;
       
         //modern browers
       
-        if(window.XMLHttpRequest)
-      
-         {
-      
-        xobj=new XMLHttpRequest();
-      
+        if(window.XMLHttpRequest)      
+        {      
+          xobj=new XMLHttpRequest();      
         }
         //for ie
       
-         else if(window.ActiveXObject)
-      
-         {
+        else if(window.ActiveXObject)    
+        {
           xobj=new ActiveXObject("Microsoft.XMLHTTP");
       	}
       
-      	else
-      
-      	{
-      
-        alert("Your broweser doesnot support ajax");
-      
-      	  }
+      	else      
+      	{      
+          alert("Your broweser doesnot support ajax");      
+      	}
               
       
       
-      	  function abc(pt,pr,tid,q,u,igst,quantity,reorder,per,p,packing){
-      		 
-      		 
-      		 var qnTT=Number(quantity);
-      		 
-      	  				//document.getElementById("reorder").value=reorder;
-      					document.getElementById("qty_stock").value=qnTT.toFixed(2);
-      					var pid=pt.split("^");
-      	  				var pids=pid[1];
+      	  function abc(pt,pr,tid,q,u,igst,quantity,reorder,per,p,packing)
+          {
+      		       		
+      		    var qnTT=Number(quantity);      		 
+      	  		//document.getElementById("reorder").value=reorder;
+      				document.getElementById("qty_stock").value=qnTT.toFixed(2);
+      				var pid=pt.split("^");
+      	  		var pids=pid[1];
       					
-      					
-      					
-      					var igstt=igst.split("^");
-      					
-      					
-      					var igstF=igstt[1];
+      				var igstt=igst.split("^");      					      					
+      				var igstF=igstt[1];
       					
       					if(igst=='NON_TAX')
       					{
-      					document.getElementById("nettot").value=pr;
+      					 document.getElementById("nettot").value=pr;
       					}
       					else
       					{
       					
-      					if(igstF=='igst')
+        					if(igstF=='igst')
+        					{
+        						
+          					var calTot=Number(igstt[0])*Number(pr)/100;
+          					document.getElementById("gstTotal").value=calTot;
+          					var finalTot=Number(calTot)+Number(pr);          					
+          					document.getElementById("igst").value=igstt[0];
+          				}
+
+        					if(igstF=='cgst')
+            			{
+                    var calTot=Number(igstt[0])*Number(pr)/100;
+                    document.getElementById("gstTotal").value=calTot;
+                    var finalTot=Number(calTot)+Number(pr);
+                    //alert(igstF);
+                    var cgst=igstt[0]/2;
+                    document.getElementById("cgst").value=cgst;
+                    document.getElementById("sgst").value=cgst;
+            			}
+        				}
+
+                document.getElementById("pri_id").value=p;
+                document.getElementById("prd").value=pt;
+                document.getElementById("per_crt_qn").value=packing;
+                document.getElementById("qn").value=1;
+                document.getElementById("prd").value=pt;
+                document.getElementById("lpr").innerHTML=per;
+                document.getElementById("lph").value=per;
+                document.getElementById("spid").value=tid;
+                document.getElementById("usunit").value=u;
+                document.getElementById("tot").value=pr;
+
+        				if(igst=='NON_TAX')
       					{
-      					
-      						
-      					var calTot=Number(igstt[0])*Number(pr)/100;
-      					document.getElementById("gstTotal").value=calTot;
-      					var finalTot=Number(calTot)+Number(pr);
-      					
-      						
-      						document.getElementById("igst").value=igstt[0];
-      					}
-      					if(igstF=='cgst')
-      					{
-      										var calTot=Number(igstt[0])*Number(pr)/100;
-      										
-      										document.getElementById("gstTotal").value=calTot;
-      					var finalTot=Number(calTot)+Number(pr);
-      
-      					//alert(igstF);
-      					var cgst=igstt[0]/2;
-      					
-      					document.getElementById("cgst").value=cgst;
-      					document.getElementById("sgst").value=cgst;
-      					}
-      					}
-      				document.getElementById("pri_id").value=p;
-      			   document.getElementById("prd").value=pt;
-      				document.getElementById("per_crt_qn").value=packing;
-      				document.getElementById("qn").value=1;
-      				;
-      				document.getElementById("prd").value=pt;
-      				document.getElementById("lpr").innerHTML=per;
-      				document.getElementById("lph").value=per;
-      				document.getElementById("spid").value=tid;
-      				document.getElementById("usunit").value=u;
-      				
-      				document.getElementById("tot").value=pr;
-      				if(igst=='NON_TAX')
-      					{
-      					document.getElementById("nettot").value=pr;
+         					document.getElementById("nettot").value=pr;
       					}
       					else
       					{
-      				document.getElementById("nettot").value=finalTot;
+          				document.getElementById("nettot").value=finalTot;
       					}
-      			   // document.getElementById("quantity").value=q;					
-      				//document.getElementById("abqt").value=q;
+      		
+          	  document.getElementById("qn").value='';
+              document.getElementById("ord_qty").value='';					
+      				document.getElementById("priceT").value='';
       				
       	  }
       
@@ -289,8 +258,6 @@
       
       
       
-      
-      
       $product_det1 = $this->db->query("Select * from tbl_master_data where serial_number= '$arr->usageunit'");
       
       $prod_Details1 = $product_det1->row();
@@ -311,13 +278,9 @@
     <input type="text" id="ty<?php echo $id;?>"  class="prds form-control" value="<?php echo $arr->sku_no.'' ?>" name="<?php echo $id;?>"
       onFocus="abc(this.value,'<?php echo $arr->unitprice_purchase; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>','<?php echo $igst; ?>','<?php echo $arr->quantity; ?>','<?php echo $arr->min_re_level; ?>','<?php echo $arr->percentage;?>','<?php echo $arr->Product_id; ?>','<?php echo $arr->packing; ?>')"
       onClick="abc(this.value,'<?php echo $arr->unitprice_purchase; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>','<?php echo $igst; ?>','<?php echo $arr->quantity; ?>','<?php echo $arr->min_re_level; ?>','<?php echo $arr->percentage;?>','<?php echo $arr->Product_id; ?>','<?php echo $arr->packing; ?>')" style="width:240px;border:1px solid;" tabindex="-1"  readonly >
-    <?php
-      }
-      
-      }
-      
-      
-      ?>
+    
+    <?php  }  }  ?>
+
     <input type="hidden" value="<?php echo $i;?>" id="ttsp" >
     <input type="hidden" id="countid" value="<?php echo $countid;?>">
   </body>

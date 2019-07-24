@@ -76,14 +76,10 @@ class Masterdata extends my_controller
         if ($id != '') {
             
             $this->Model_admin_login->update_user($pri_col, $table_name, $id, $dataall);
-            //$this->session->set_flashdata('flash_msg', 'Record Update Successfully.');
-            //redirect('/admin/masterdata/manage_master_data');
             echo "2";
         } else {
             
             $this->Model_admin_login->insert_user($table_name, $dataall);
-            //$this->session->set_flashdata('flash_msg', 'Record Added Successfully.');
-            //redirect('/admin/masterdata/manage_master_data');
             echo "1";
         }
         
