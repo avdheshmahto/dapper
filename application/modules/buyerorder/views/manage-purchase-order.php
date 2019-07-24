@@ -31,7 +31,7 @@
       <li><a href="#">Lot Order</a></li>
       <li class="active"><strong>Manage Lot Order</strong></li>
       <div class="pull-right">
-        <a class="btn btn-sm" href="<?=base_url();?>addproduction/add_purchase_order"><i class="fa fa-plus"></i>Add Lot Order</a>
+        <a class="btn btn-sm" href="<?=base_url();?>buyerorder/add_purchase_order"><i class="fa fa-plus"></i>Add Lot Order</a>
       </div>
     </ol>
     <?php
@@ -55,7 +55,7 @@
           <div class="dataTables_length" id="DataTables_Table_0_length"  style="margin: 15px 0px -30px 15px;">
             <label>
               Show
-              <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" id="entries" url="<?=base_url('/addproduction/manage_purchase_order').'?purchaseid='.$_GET['purchaseid'].'&date='.$_GET['date'].'&cust_name='.$_GET['cust_name'].'&grand_total='.$_GET['grand_total'].'&filter='.$_GET['filter'];?>" class="form-control input-sm">
+              <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" id="entries" url="<?=base_url('/buyerorder/manage_purchase_order').'?purchaseid='.$_GET['purchaseid'].'&date='.$_GET['date'].'&cust_name='.$_GET['cust_name'].'&grand_total='.$_GET['grand_total'].'&filter='.$_GET['filter'];?>" class="form-control input-sm">
                 <option value="10">10</option>
                 <option value="25"  <?=$entries=='25'?'selected':'';?>  >25</option>
                 <option value="50"  <?=$entries=='50'?'selected':'';?>  >50</option>
@@ -131,22 +131,22 @@
                       if($countPO>0 && $countPO<0)
                       {
                       ?>
-                    <button class="btn btn-default" onClick="openpopup('<?=base_url();?>addproduction/edit_purchase_order_1',1400,600,'view',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="fa fa-eye"></i></button>
-                    <a style="display:none" href="<?=base_url();?>addproduction/print_invoice?id=<?=$sales->purchaseid;?>" class="btn btn-default" target="blank"><i class="glyphicon glyphicon-print"></i></a>
+                    <button class="btn btn-default" onClick="openpopup('<?=base_url();?>buyerorder/edit_purchase_order_1',1400,600,'view',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="fa fa-eye"></i></button>
+                    <a style="display:none" href="<?=base_url();?>buyerorder/print_invoice?id=<?=$sales->purchaseid;?>" class="btn btn-default" target="blank"><i class="glyphicon glyphicon-print"></i></a>
                     <button class="btn btn-xs btn-black" data-toggle="modal" data-target="#modal-0" type="button"><i class="icon-pencil"></i></button>
                     <?php
                       }
                       else
                       {
                       ?>
-                    <button class="btn btn-default" onClick="openpopup('<?=base_url();?>addproduction/edit_purchase_order_1',1400,600,'view',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-eye"></i></button>
-                    <button class="btn btn-default" onClick="openpopup('<?=base_url();?>addproduction/edit_purchase_order_1',1400,600,'id',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-pencil"></i></button>
+                    <button class="btn btn-default" onClick="openpopup('<?=base_url();?>buyerorder/edit_purchase_order_1',1400,600,'view',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-eye"></i></button>
+                    <button class="btn btn-default" onClick="openpopup('<?=base_url();?>buyerorder/edit_purchase_order_1',1400,600,'id',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-pencil"></i></button>
                     <?php
                       $pri_col    = 'purchaseid';
                       $table_name = 'tbl_quotation_purchase_order_hdr';
                       ?>
                     <button class="btn btn-default delbuttonPurchase" id="<?=$sales->purchaseid."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button>
-                    <a  href="<?=base_url();?>addproduction/print_invoice?id=<?=$sales->purchaseid;?>" class="btn btn-default" target="blank"><i class="glyphicon glyphicon-print"></i></a>
+                    <a  href="<?=base_url();?>buyerorder/print_invoice?id=<?=$sales->purchaseid;?>" class="btn btn-default" target="blank"><i class="glyphicon glyphicon-print"></i></a>
                     <button style="display:none" class="btn btn-xs btn-black" data-toggle="modal" data-target="#modal-0" onclick="getspharemap(<?=$sales->purchaseid;?>);" type="button"><i class="icon-eye"></i></button>
                     <?php }?>
                   </th>

@@ -341,10 +341,7 @@
   
   }
   
-  //******************************************************************************************************************************************************************************************************************************************************************************************************
-  
-  //*********************************************************************************************************************************************************************************************************************************************************************************************************
-</script>
+  //******************************************************************
 <script>
   function addpricemapPoOrder(){
   
@@ -375,9 +372,7 @@
   	var pa_co=part_c;
   	var myString = JSON.stringify(myObject);    
   	
-  	 // $('#quotationProductmapValue').empty().append("<input type ='text' id ='proQuotation' name='quotationMapedValue[]' value='"+myString+"'>");
-        //$('#QuotationMap').val(myString);
-  	  
+  	
   	  
   	   $('#quotationTablePO').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
       
@@ -415,9 +410,7 @@
   	var pa_co=part_c;
   	var myString = JSON.stringify(myObject);    
   	
-  	 // $('#quotationProductmapValue').empty().append("<input type ='text' id ='proQuotation' name='quotationMapedValue[]' value='"+myString+"'>");
-        //$('#QuotationMap').val(myString);
-  	  
+  	
   	  
   	   $('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
       
@@ -629,10 +622,7 @@
                               $poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$getPo->inboundid'");
                               $getQty=$poquery->row();
                               
-                              // tbl_receive_matrial_grn_log query
-                              
-                              
-                              //echo "select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->inboundid'";
+                             
                               
                               $poquerygrnLog=$this->db->query("select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->po_no'");
                               $getQtygrnLog=$poquerygrnLog->row();
@@ -665,7 +655,7 @@
                               ?>
                           </th>
                           <th>
-                            <?php /*?><button class="btn btn-default" onclick="viewPurchaseOrder(<?=$getPo->purchaseid;?>);" data-toggle="modal" data-target="#modal-6" type="button" ><i class="fa fa-eye"></i></button><?php */?>
+                            
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewRawRequest(<?=$getPo->inboundid;?>);" data-toggle="modal" data-target="#modal-rawRequest" type="button" ><i class="fa fa-eye"></i></button>
                             <a href="<?=base_url();?>productionModule/manage_jobwork_map_rm_details?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
@@ -683,9 +673,7 @@
                           <td>&nbsp;</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
+                  
                     </table>
                   </div>
                 </div>
@@ -737,9 +725,7 @@
                           <td>&nbsp;</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
+                      
                     </table>
                   </div>
                 </div>
@@ -767,12 +753,7 @@
                           <?php
                             $poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$getPo->inboundid'");
                             $getQty=$poquery->row();
-                            
-                            // tbl_receive_matrial_grn_log query
-                            
-                            
-                            //echo "select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->inboundid'";
-                            
+                           
                             $poquerygrnLog=$this->db->query("select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->po_no'");
                             $getQtygrnLog=$poquerygrnLog->row();
                             
@@ -796,7 +777,7 @@
                               ?>
                           </th>
                           <th>
-                            <?php /*?><button class="btn btn-default" onclick="viewPurchaseOrder(<?=$getPo->purchaseid;?>);" data-toggle="modal" data-target="#modal-6" type="button" ><i class="fa fa-eye"></i></button><?php */?>
+                            
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewChecking('<?=$getPo->check_no;?>');" data-toggle="modal" data-target="#modal-checking" type="button" ><i class="fa fa-eye"></i></button>
                             <a style="display:none" href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
@@ -814,9 +795,7 @@
                           <td>&nbsp;</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
+                      
                     </table>
                   </div>
                 </div>
@@ -844,11 +823,7 @@
                           <?php
                             $poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$getPo->inboundid'");
                             $getQty=$poquery->row();
-                            
-                            // tbl_receive_matrial_grn_log query
-                            
-                            
-                            //echo "select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->inboundid'";
+                           
                             
                             $poquerygrnLog=$this->db->query("select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->po_no'");
                             $getQtygrnLog=$poquerygrnLog->row();
@@ -873,7 +848,7 @@
                               ?>
                           </th>
                           <th>
-                            <?php /*?><button class="btn btn-default" onclick="viewPurchaseOrder(<?=$getPo->purchaseid;?>);" data-toggle="modal" data-target="#modal-6" type="button" ><i class="fa fa-eye"></i></button><?php */?>
+                            
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewRawRequest('<?=$getPo->check_no;?>');" data-toggle="modal" data-target="#modal-rawRequest" type="button" ><i class="fa fa-eye"></i></button>
                             <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
@@ -888,9 +863,7 @@
                           <td>&nbsp;</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
+                     
                     </table>
                   </div>
                 </div>
@@ -919,10 +892,7 @@
                             $poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$getPo->inboundid'");
                             $getQty=$poquery->row();
                             
-                            // tbl_receive_matrial_grn_log query
                             
-                            
-                            //echo "select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->inboundid'";
                             
                             $poquerygrnLog=$this->db->query("select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->po_no'");
                             $getQtygrnLog=$poquerygrnLog->row();
@@ -947,7 +917,7 @@
                               ?>
                           </th>
                           <th>
-                            <?php /*?><button class="btn btn-default" onclick="viewPurchaseOrder(<?=$getPo->purchaseid;?>);" data-toggle="modal" data-target="#modal-6" type="button" ><i class="fa fa-eye"></i></button><?php */?>
+                            
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewRepairOrder('<?=$getPo->repair_no;?>');" data-toggle="modal" data-target="#modal-view_order_repair" type="button" ><i class="fa fa-eye"></i></button>
                             <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>&check_no=<?=$getPo->check_no;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
@@ -962,9 +932,7 @@
                           <td>&nbsp;</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
+                      
                     </table>
                   </div>
                 </div>
@@ -1043,39 +1011,7 @@
   	}
   }
   
-  // function saveData()
-  // {
-  // 	  var code= document.getElementById("code").value;
-  // 	  var machine_name= document.getElementById("machine_name").value;
-  // 	  var machine_des= document.getElementById("machine_des").value;
-  // 	  var capacity= document.getElementById("capacity").value;
-   
-  // 	  if(code=='')
-  // 	  {
-  // 	   document.getElementById("codemsg").innerHTML = "Please Enter Code";
-  // 	   return false;
-  // 	  }
-  // 	 var xhttp = new XMLHttpRequest();
-  // 	 xhttp.open("GET", "insert_machine?code="+code+"&machine_name="+machine_name+"&machine_des="+machine_des+"&capacity="+capacity, false);
-  // 	 xhttp.send();
-  
-  // 	 $("#modal-0 .close").click();	   
-  // 	 document.getElementById("loadData").innerHTML = xhttp.responseText;
-  // 	 document.getElementById("code").value='';
-  // }
-  
-  
-  
-    
-</SCRIPT>
-<script>
-  /*$(document).ready(function() {
-    $.ajaxSetup({ cache: false }); // This part addresses an IE bug.  without it, IE will only load the first number and will never refresh
-    setInterval(function() {
-      //$('#getDataTable').load('get_machine');
-    }, 3000); // the "3000" 
-  });
-  */
+
 </script>
 <style>
   .c-error .c-validation{ 
@@ -1324,10 +1260,7 @@
               ?>
             <div style="display:none">
               <div class="col-sm-4">
-                <!--<label class="control-label">Product Name:</label> 
-                  <input type="text" class="form-control input-sm" value="" id="mproductname" onkeyup="getdatarowmatrial(this.value);" autocomplete="off"> 
-                  <ul style="position: absolute;z-index: 999999;top: 50px; width: 179%; margin-left: -39px;" id="productListData">
-                  </ul> -->
+                
                 <input type="hidden" class="form-control input-sm" value="" id="mproductname"> 
                 <input type="hidden"  class="form-control" value="" id="mproductid" >
                 <label class="control-label">Raw Material:</label> <br>
@@ -1401,7 +1334,6 @@
               </div>
               <div class="col-sm-4">
                 <label class="control-label">Usage Unit:</label> 
-                <!-- <input type="text" class="form-control input-sm" value="" > -->
                 <select name="unit"  class="form-control" id="muom" disabled>
                   <option value="" >----Select Unit----</option>
                   <?php 
@@ -1941,13 +1873,5 @@
   }
   
   
-  
-  
-  /*
-  window.onbeforeunload = function (e) {
-  // Your logic to prepare for 'Stay on this Page' goes here 
-  
-      return "Please click 'Stay on this Page' and we will give you candy";
-  };
-  */
+
 </script>

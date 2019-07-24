@@ -79,9 +79,7 @@
   
   }
   
-  //******************************************************************************************************************************************************************************************************************************************************************************************************
-  
-  //*********************************************************************************************************************************************************************************************************************************************************************************************************
+  //***********************************************
   
   
   //starts order repair  query
@@ -539,33 +537,17 @@ $cntData=$poquery->num_rows();
                             		  $keyvalue1 = $compQuery1->row();
                             echo $keyvalue1->keyvalue;		  
                             ?></th>
-                          <!-- <th><?=$fetch_list->pro_size;?></th>
-                            <th><?=$fetch_list->thickness;?></th>
-                            <th><?=$fetch_list->grade_code;?></th> -->
+                         
                           <?php
                             $queryQty=$this->db->query("select SUM(qty) as qty from tbl_production_order_transfer_another_module where module_name='Finish' and lot_no='".$_GET['id']."' and  productid='$getPo->Product_id'");
                             $getQty=$queryQty->row();
                             ?>
                           <th><?php echo $getQty->qty;?></th>
-                          <!-- <th class="bs-example">
-                            <?php if($view!=''){ ?>
-                            <button class="btn btn-default" property="view" arrt= '<?=json_encode($fetch_list);?>' onclick ="editItem(this);" type="button" data-toggle="modal" data-target="#modal-0" data-backdrop='static' data-keyboard='false'> <i class="fa fa-eye"></i></button>
-                            <?php } if($edit!=''){ ?>
-                            <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#modal-0" arrt= '<?=json_encode($fetch_list);?>' onclick="editItem(this)"><i class="icon-pencil"></i></button>
-                            <?php }
-                              $pri_col='Product_id';
-                              $table_name='tbl_product_stock';
-                              ?>
-                            <button class="btn btn-default delbutton" id="<?php echo $fetch_list->Product_id."^".$table_name."^".$pri_col ; ?>" type="button">
-                             <i class="icon-trash"></i></button>		
-                            <?php ?>
-                            </th> -->
+                         
                         </tr>
                         <?php }?>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
+                      
                     </table>
                   </div>
                 </div>
@@ -1872,13 +1854,6 @@ $cntData=$poquery->num_rows();
   
   
   
-  
-  
-  
-  
-  
-  
-  
   //starts order receive  query
   
   function submitProductionOrderReceive() {
@@ -1947,13 +1922,7 @@ $cntData=$poquery->num_rows();
   }
   
   
-  /*
-  window.onbeforeunload = function (e) {
-  // Your logic to prepare for 'Stay on this Page' goes here 
-  
-      return "Please click 'Stay on this Page' and we will give you candy";
-  };
-  */
+
   
   function getFinishGoods()
   {

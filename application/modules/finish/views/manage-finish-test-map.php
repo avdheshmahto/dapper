@@ -329,11 +329,7 @@
                     <div class="col-xs-6 col-sm-6 col-md-6">
                       <h4>Date</h4>
                       <div class="form-group">
-                        <?php 
-                          /*$queryType=$this->db->query("select *from tbl_facilities where id='$getsched->m_type'");
-                          $getType=$queryType->row();
-                          */
-                          ?>
+                        
                         <input type="text" name="" value="<?=$getsched->maker_date;?>" class="form-control" readonly>
                       </div>
                     </div>
@@ -455,10 +451,7 @@
                             $poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$getPo->inboundid'");
                             $getQty=$poquery->row();
                             
-                            // tbl_receive_matrial_grn_log query
                             
-                            
-                            //echo "select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->inboundid'";
                             
                             $poquerygrnLog=$this->db->query("select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->po_no'");
                             $getQtygrnLog=$poquerygrnLog->row();
@@ -569,36 +562,17 @@
                             		  $keyvalue1 = $compQuery1->row();
                             echo $keyvalue1->keyvalue;		  
                             ?></th>
-                          <!-- <th><?=$fetch_list->pro_size;?></th>
-                            <th><?=$fetch_list->thickness;?></th>
-                            <th><?=$fetch_list->grade_code;?></th> -->
+                          
                           <?php
                             $queryQty=$this->db->query("select SUM(qty) as qty from tbl_production_order_transfer_another_module where module_name='Finish' and lot_no='".$_GET['id']."' and  productid='$getPo->Product_id'");
                             $getQty=$queryQty->row();
                             ?>
                           <th><?php echo $getQty->qty;?></th>
-                          <!-- <th class="bs-example">
-                            <?php if($view!=''){ ?>
-                            <button class="btn btn-default" property="view" arrt= '<?=json_encode($fetch_list);?>' onclick ="editItem(this);" type="button" data-toggle="modal" data-target="#modal-0" data-backdrop='static' data-keyboard='false'> <i class="fa fa-eye"></i></button>
-                            
-                            <?php } if($edit!=''){ ?>
-                            <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#modal-0" arrt= '<?=json_encode($fetch_list);?>' onclick="editItem(this)"><i class="icon-pencil"></i></button>
-                            
-                            <?php }
-                              $pri_col='Product_id';
-                              $table_name='tbl_product_stock';
-                              ?>
-                            <button class="btn btn-default delbutton" id="<?php echo $fetch_list->Product_id."^".$table_name."^".$pri_col ; ?>" type="button">
-                             <i class="icon-trash"></i></button>		
-                            <?php ?>
-                             
-                            </th> -->
+                          
                         </tr>
                         <?php }?>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
+                      
                     </table>
                   </div>
                 </div>
@@ -1072,10 +1046,7 @@
               </div>
             </div>
             <div class="col-sm-4">
-              <!--<label class="control-label">Product Name:</label> 
-                <input type="text" class="form-control input-sm" value="" id="mproductname" onkeyup="getdatarowmatrial(this.value);" autocomplete="off"> 
-                <ul style="position: absolute;z-index: 999999;top: 50px; width: 179%; margin-left: -39px;" id="productListData">
-                </ul> -->
+             
               <input type="hidden" class="form-control input-sm" value="" id="mproductname"> 
               <input type="hidden"  class="form-control" value="" id="mproductid" >
               <label class="control-label">Raw Material:</label> <br>

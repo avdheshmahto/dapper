@@ -501,129 +501,125 @@
 
 
   <script>
+
     //add item into showling list
     window.addEventListener("keydown", checkKeyPressed, false);
     //funtion to select product
-    function checkKeyPressed(e) {
-    var s=e.keyCode;
-    
-    var ppp=document.getElementById("prd").value;
-    var sspp=document.getElementById("spid").value;//
-    var ef=document.getElementById("ef").value;
-    		ef=Number(ef);
-    		
-    var countids=document.getElementById("countid").value;
-    
-    //if(countids==''){
-    //countids=1;
-    //}
-    
-    for(n=1;n<=countids;n++)
+    function checkKeyPressed(e) 
     {
     
-    document.getElementById("tyd"+n).onkeyup  = function (e) {
-    var entr =(e.keyCode);
-    if(entr==13){
-    document.getElementById("qn").focus();
-    document.getElementById("prdsrch").innerHTML=" ";
+      var s=e.keyCode;    
+      var ppp=document.getElementById("prd").value;
+      var sspp=document.getElementById("spid").value;//
+      var ef=document.getElementById("ef").value;
+    		ef=Number(ef);
+    		
+      var countids=document.getElementById("countid").value;
     
-    }
-    }
-    }
+      if(countids=='')
+      {
+        countids=1;
+      }
     
-    /*document.getElementById("qn").onkeyup = function (e) {
-    var entr =(e.keyCode);
-    if(entr==13){
+      for(n=1;n<=countids;n++)
+      {
+      
+        document.getElementById("tyd"+n).onkeyup  = function (e) 
+        {
+        
+          var entr =(e.keyCode);
+          if(entr==13)
+          {
+          
+            document.getElementById("qn").focus();
+            document.getElementById("prdsrch").innerHTML=" ";
+        
+          }
+        }
+      }
     
-    document.getElementById("lph").focus();
-    }
-    }*/
+      /*document.getElementById("qn").onkeyup = function (e) {
+      var entr =(e.keyCode);
+      if(entr==13){
+      
+      document.getElementById("lph").focus();
+      }
+      }*/
+        
+      document.getElementById("qn").onchange = function (e) 
+      {
     
+        var entr  = (e.keyCode);
+        var rate  = document.getElementById("lph").value;
+        var per_crt_qn  = document.getElementById("per_crt_qn").value;
+        var ord_qty  = document.getElementById("ord_qty").value;
+        var qnt   = document.getElementById("qn").value;    
+        var totalQty=Number(qnt)*Number(per_crt_qn);        
+        //document.getElementById("qn").value=totalQty;
+        var total = Number(qnt)*Number(rate)/100;
+        //alert(total);
+        var tott=Number(total)+Number(qnt);
+        var totalPackingCrt=Number(qnt)/Number(per_crt_qn);
+
+        document.getElementById("tot").value = Math.round(tott);
+        document.getElementById("ord_qty").value = Math.round(totalPackingCrt);
+        document.getElementById("priceT").focus();}
+        document.getElementById("priceT").onchange = function (e) {
+
+        var entr  = (e.keyCode);
+        var total_qty=document.getElementById("qn").value;
+        var priceT=document.getElementById("priceT").value;
+        var total=Number(total_qty)*Number(priceT);
+
+        document.getElementById("nettot").value=total;
+        document.getElementById("nettot").focus();
     
-    document.getElementById("qn").onchange = function (e) {
-    var entr  = (e.keyCode);
+        // if(document.getElementById("priceT").value=="" && entr==08)
+        // {
     
-    
-    var rate  = document.getElementById("lph").value;
-    var per_crt_qn  = document.getElementById("per_crt_qn").value;
-    var ord_qty  = document.getElementById("ord_qty").value;
-    var qnt   = document.getElementById("qn").value;
-    
-    var totalQty=Number(qnt)*Number(per_crt_qn);
-    
-    //document.getElementById("qn").value=totalQty;
-    
-    
-    
-    var total = Number(qnt)*Number(rate)/100;
-    //alert(total);
-    var tott=Number(total)+Number(qnt);
-    
-    var totalPackingCrt=Number(qnt)/Number(per_crt_qn);
-    
-    document.getElementById("tot").value = Math.round(tott);
-    
-    document.getElementById("ord_qty").value = Math.round(totalPackingCrt);
-    
-    document.getElementById("priceT").focus();}
-    
-    
-    
-    document.getElementById("priceT").onchange = function (e) {
-    var entr  = (e.keyCode);
-    
-    var total_qty=document.getElementById("qn").value;
-    var priceT=document.getElementById("priceT").value;
-    
-    var total=Number(total_qty)*Number(priceT);
-    document.getElementById("nettot").value=total;
-    document.getElementById("nettot").focus();
-    
-    if(document.getElementById("priceT").value=="" && entr==08){
-    
-    }
+        // }
+      
        if (e.keyCode == "13")
     	 {
     	
-    	 e.preventDefault();
+    	   e.preventDefault();
          e.stopPropagation();
-    	
-    	  if(ppp!=='' || ef==1)
-    	 {
-    
-    	
-    			adda();	  	
-    			
-    		
-    			
-    		
-    		var ddid=document.getElementById("spid").value;
-    		var ddi=document.getElementById(ddid);
-    		ddi.id="d";
-    		
-    			}
-    	       else
+      	
+      	  if(ppp!=='' || ef==1)
+      	  {
+      
+      			adda();	  	
+      			
+      	   	var ddid=document.getElementById("spid").value;
+      		  var ddi=document.getElementById(ddid);
+      		  ddi.id="d";
+      		
+      		}
+    	    else
     			{
-    	   alert("Enter Correct Product");
+    	       alert("Enter Correct Product");
     			}
-    		return false;
-        }
-    	}
+    		  return false;
+       }
     }
+  }
+
     /////////////////////////////////////////////
     
     function fsv(v)
     {
-    var rc=document.getElementById("rows").value;
+
+      var rc=document.getElementById("rows").value;
     
-    if(rc!=0)
-    {
-    v.type="submit";
-    }
-    else
-    {
-    	alert('No Item To Save..');	
-    }
+      if(rc!=0)
+      {
+        v.type="submit";
+      }
+      else
+      {
+    	 alert('No Item To Save..');	
+      }
+    
     }
     
     
@@ -636,16 +632,20 @@
     
     function editselectrow(d,r) 
     {
+    
     	var regex = /(\d+)/g;
     	nn= d.match(regex)
     	id=nn;
-    		if(document.getElementById("prd").value!=''){
+    
+    	if(document.getElementById("prd").value!='')
+      {
     			document.getElementById("qn").focus();
     			alert("Product already in edit Mode");
     			return false;
-    		}
-            // ####### starts ##############//
-            var pd=document.getElementById("pd"+id).value;
+    	}
+  
+        // ####### starts ##############//
+        var pd=document.getElementById("pd"+id).value;
     		var ord_qty=document.getElementById("ord_qty"+id).value;
     		var per_crt_qn=document.getElementById("per_crt_qn"+id).value;
     		var priceT=document.getElementById("priceT"+id).value;
@@ -660,8 +660,6 @@
     		var cgst=document.getElementById("cgst"+id).value;
     		var sgst=document.getElementById("sgst"+id).value;
     		var gstTotal=document.getElementById("gstTotal"+id).value;
-    		
-    		
     		var pri_id=document.getElementById("main_id"+id).value;
     		// ####### ends ##############//
     
@@ -681,14 +679,14 @@
     		document.getElementById("tot").value=tot;
     		document.getElementById("nettot").value=nettot;
     
-            var i      = r.parentNode.parentNode.rowIndex;
+        var i      = r.parentNode.parentNode.rowIndex;
     		document.getElementById("invoice").deleteRow(i);
     
     		var rowVal = document.getElementById("rows").value;
-    	    document.getElementById("rows").value = Number(rowVal)-1;
+    	  document.getElementById("rows").value = Number(rowVal)-1;
     
     		sumAllQuantity1();
-            sumAlltotalPrice1();
+        sumAlltotalPrice1();
     
     }
     
@@ -699,160 +697,168 @@
     
     function deleteselectrow(d,r) //
     {
+    
     		var regex = /(\d+)/g;
     		nn= d.match(regex)
     		id=nn;
-    		if(document.getElementById("prd").value!=''){
+    
+    		if(document.getElementById("prd").value!='')
+        {
      			document.getElementById("qn").focus();
-         		alert("Product already in edit Mode");
+         	alert("Product already in edit Mode");
     			return false;
     		}
-            var i   = r.parentNode.parentNode.rowIndex;
-    	    var cnf = confirm('Are You Sure..??? you want to Delete line no1.'+(id));
-    		if (cnf== true)
+          
+        var i   = r.parentNode.parentNode.rowIndex;
+    	  var cnf = confirm('Are You Sure..??? you want to Delete line no1.'+(id));
+    		
+        if (cnf== true)
      		{
-     			document.getElementById("invoice").deleteRow(i);
+     		
+        	document.getElementById("invoice").deleteRow(i);
      			var rowVal = document.getElementById("rows").value;
-    	        document.getElementById("rows").value = Number(rowVal)-1;
+    	    document.getElementById("rows").value = Number(rowVal)-1;
     
      			 sumAllQuantity1();
-                 sumAlltotalPrice1();
-       		}
-    }
+           sumAlltotalPrice1();
+       	
+        }
     
-                               /////////////////// ends delete code ///////////////////////////
+  }
+    
+        /////////////////// ends delete code ///////////////////////////
     
     
-    function sumAllQuantity1(){
+    function sumAllQuantity1()
+    {
+    
        var inps = document.getElementsByName('qty[]');
        var totalVal = 0;
-       for (var i = 0; i <inps.length; i++) {
-    	 var inp=inps[i];
-    	 totalVal  = Number(totalVal)+Number(inp.value);
-    	}
+       for (var i = 0; i <inps.length; i++) 
+       {
+    	   var inp=inps[i];
+    	   totalVal  = Number(totalVal)+Number(inp.value);
+    	 }
+       
        document.getElementById('qty_total').value = totalVal;
+    
     }
     
-    function sumAlltotalPrice1(){
+    function sumAlltotalPrice1()
+    {
+    
        var inps = document.getElementsByName('tot[]');
        var totalVal = 0;
-        for (var i = 0; i <inps.length; i++) {
-    	 var inp=inps[i];
-    	 totalVal  = Number(totalVal)+Number(inp.value);
-    	}
+       for (var i = 0; i <inps.length; i++) 
+       {
+    	   var inp=inps[i];
+    	   totalVal  = Number(totalVal)+Number(inp.value);
+    	 }
     	
     	document.getElementById('sub_total').value = totalVal;
+    
     }
     
     
     function getdata()
-    		  {
+    {
     		  
-    		 currentCell = 0;
-    		 document.getElementById("pri_id").value = "";
-    		 var product1=document.getElementById("prd").value;	 
-    		 var product=product1;
-    		
-    		    
-    		    if(xobj)
-    			 {
-    			 var obj=document.getElementById("prdsrch");
-    			
-    			 xobj.open("GET","getproduct?con="+product,true);
-    			 xobj.onreadystatechange=function()
-    			  {
-    			  if(xobj.readyState==4 && xobj.status==200)
-    			   {
-    			    obj.innerHTML=xobj.responseText;
-    			   }
-    			  }
-    			 }
-    			 xobj.send(null);
-    		  }
-      
+  		 currentCell = 0;
+  		 document.getElementById("pri_id").value = "";
+  		 var product1=document.getElementById("prd").value;	 
+  		 var product=product1;
+  		
+  		  if(xobj)
+  			{
+  			
+         var obj=document.getElementById("prdsrch");  			
+  			 xobj.open("GET","getproduct?con="+product,true);
+  			 xobj.onreadystatechange=function()
+  			 {
+  			   if(xobj.readyState==4 && xobj.status==200)
+  			   {
+  			    obj.innerHTML=xobj.responseText;
+  			   }
+  			  }
+  			}
+  		xobj.send(null);
+    }
+  
     ////////////////////////////////////////////////////
     
-     function slr(){
+     function slr()
+     {
+    
     		var table = document.getElementById('invoice');
-            var rowCount = table.rows.length;
-    		  for(var i=1;i<rowCount;i++)
-    		  {    
-                  table.rows[i].cells[0].innerHTML=i;
-    		  }
-      }  
+        var rowCount = table.rows.length;
+  		  for(var i=1;i<rowCount;i++)
+  		  {    
+           table.rows[i].cells[0].innerHTML=i;
+  		  }
+      
+     }  
     
-    
-    
+ 
     //////////////////////////////////////////////////////////////
-    
-    
-    
-         var rw=0;
+   
+          var rw=0;
     	 
-     function adda()
+          function adda()
     		  { 
     		 
-    		  		 
-    
     				var qn=document.getElementById("qn").value;
     				var unit=document.getElementById("usunit").value;
     				var lph=document.getElementById("lph").value;
     				var ord_qty=document.getElementById("ord_qty").value;
     				var per_crt_qn=document.getElementById("per_crt_qn").value;
-    				var priceT=document.getElementById("priceT").value;
-    				
+    				var priceT=document.getElementById("priceT").value;    				
     				var dis=document.getElementById("discount").value;	
     				var disAmount=document.getElementById("disAmt").value;		
-    		        var tot=document.getElementById("tot").value;
+    		    var tot=document.getElementById("tot").value;
     				var nettot=document.getElementById("nettot").value;
-    			  	
-    			   var cgst=document.getElementById("cgst").value;		
-    			   var igst=document.getElementById("igst").value;		
-    			   var sgst=document.getElementById("sgst").value;		
-    			   var gstTotal=document.getElementById("gstTotal").value;
-    				
-    				//default
-    				var rows=document.getElementById("rows").value;
-    				var pri_id=document.getElementById("pri_id").value;
-    				var pd=document.getElementById("prd").value;
-    		   	   var table = document.getElementById("invoice");
-    					var rid =Number(rows)+1;
-    					document.getElementById("rows").value=rid;
-    					
-    						
-    							totalSum();	
-    							//serviceChargeCal();
-    							//grossDiscountCal();				
-                 				clear();
-    				
-    					 currentCell = 0;
-    	if(pd!="" && qn!=0 && pri_id != "")
+    			  var cgst=document.getElementById("cgst").value;		
+            var igst=document.getElementById("igst").value;		
+            var sgst=document.getElementById("sgst").value;		
+            var gstTotal=document.getElementById("gstTotal").value;
+            //default
+            var rows=document.getElementById("rows").value;
+            var pri_id=document.getElementById("pri_id").value;
+            var pd=document.getElementById("prd").value;
+            var table = document.getElementById("invoice");
+            var rid =Number(rows)+1;
+
+            document.getElementById("rows").value=rid;
+
+            totalSum();	
+            //serviceChargeCal();
+            //grossDiscountCal();				
+            clear();
+
+    					currentCell = 0;
+    	        if(pd!="" && qn!=0 && pri_id != "")
     					{
     				     var indexcell=0;
-    								var row = table.insertRow(-1);
-    						rw=rw+0;
+    						 var row = table.insertRow(-1);
+    						 rw=rw+0;
     						
     						//cell 0st
-    	 var cell=cell+indexcell;		
-     	 cell = row.insertCell(0);
-    	 cell.style.width=".20%";
-    	 cell.align="center"
-    	cell.innerHTML=rid;
-    				
-    				
-    				//cell 1st item name
-    	indexcell=Number(indexcell+1);		
-    	var cell=cell+indexcell;	
-    			
-    	    cell = row.insertCell(indexcell);
-    				cell.style.width="11%";
-    				cell.align="center";
-    				
-    				
-    				
+                var cell=cell+indexcell;		
+                cell = row.insertCell(0);
+                cell.style.width=".20%";
+                cell.align="center"
+                cell.innerHTML=rid;
+    				    				
+              				//cell 1st item name
+              	indexcell=Number(indexcell+1);		
+              	var cell=cell+indexcell;	
+              			
+              	    cell = row.insertCell(indexcell);
+              				cell.style.width="11%";
+              				cell.align="center";
     				
     				//============================item text ============================
-    				var prd = document.createElement("input");
+    			
+          	var prd = document.createElement("input");
     							prd.type="text";
     							prd.border ="0";
     							prd.value=pd;	
@@ -863,7 +869,8 @@
     							prd.style.width="100%";
     							prd.style.border="hidden"; 
     							cell.appendChild(prd);
-    				var priidid = document.createElement("input");
+    				
+            var priidid = document.createElement("input");
     							priidid.type="hidden";
     							priidid.border ="0";
     							priidid.value=pri_id;	
@@ -876,7 +883,7 @@
     							cell.appendChild(priidid);
     							
     							
-    							var unitt = document.createElement("input");
+    				var unitt = document.createElement("input");
     							unitt.type="hidden";
     							unitt.border ="0";
     							unitt.value=unit;	
@@ -1027,10 +1034,7 @@
     							cell.appendChild(disAmtt);
     		//===============================close 5th cell=================================
     		
-    		
-    		
-    
-    
+
     //===================================start 5th cell================================
     		indexcell=Number(indexcell+1);		
     		var cell=cell+indexcell;		
@@ -1097,10 +1101,7 @@
     							cell.style.display="none";
     							cell.appendChild(igstt);
     		//===============================close 5th cell=================================
-    		
-    
-    
-    
+   
     		
     //===================================start 5th cell================================
     		indexcell=Number(indexcell+1);		
@@ -1124,8 +1125,6 @@
     							cell.appendChild(gstTotalt);
     		//===============================close 5th cell=================================
     
-    		
-    		
     				
     		//===================================start 6th cell================================
     		indexcell=Number(indexcell+1);		
@@ -1170,11 +1169,8 @@
     							//cell.style.display = "none";
     							cell.appendChild(priceTT);
     		//===============================close 5th cell=================================
-    						
-    		
     
-    
-    									
+
     		//============================================start 7th cell================================	
     	indexcell=Number(indexcell+1);		
     	var cell=cell+indexcell;	
@@ -1198,6 +1194,7 @@
     											
     		//======================================close net price====================================							
     		//cell 3st
+    
     	indexcell=Number(indexcell+1);		
     	var cell=cell+indexcell;
     	var imageloc="/mr_bajaj/";
@@ -1234,34 +1231,30 @@
     			else
     			{
     			if(qn==0)
-    				{
-    					alert('***Quantity Can not be Zero ***');
-    					
-    					
-    				}else if(pri_id != ""){
-                       alert('***Please Select Correct Product ***');
-    				}
-    				else
-    				{
-    				
-    			alert('***Please Select PRODUCT ***');
-    			
-    			}
-    	}
+          {
+            alert('***Quantity Can not be Zero ***');
+          }
+          else if(pri_id != "")
+          {
+            alert('***Please Select Correct Product ***');
+          }
+          else
+          {
+            alert('***Please Select PRODUCT ***');
+          }
+      }
     
     
     function clear()
     {
     
-    // this finction is use for clear data after adding invoice
+        // this function is use for clear data after adding invoice
     		document.getElementById("prd").value='';
     		document.getElementById("usunit").value='';
     		document.getElementById("lph").value='';
     		document.getElementById("ord_qty").value='';
     		document.getElementById("per_crt_qn").value='';
-    		document.getElementById("priceT").value='';
-    		
-    		
+    		document.getElementById("priceT").value='';    		
     		document.getElementById("lpr").innerHTML ='';
     		document.getElementById("discount").value='';
     		document.getElementById("disAmt").value='';
@@ -1279,140 +1272,124 @@
     }
     
     
-    function totalSum(){
+    function totalSum()
+    {
     
-    var tot=document.getElementById("tot").value;
-    var subb=document.getElementById("sub_total").value;
-    var gt=document.getElementById("grand_total").value;
-    var totDisPer=document.getElementById("total_dis").value;
-    var discount=document.getElementById("discount").value;
-    var disAmt=document.getElementById("disAmt").value;
-    var total_dis_amt=document.getElementById("total_dis_amt").value;
-    var total_igst=document.getElementById("total_igst").value;
-    var total_tax_igst_amt=document.getElementById("total_tax_igst_amt").value;
-    var igst=document.getElementById("igst").value;
-    var cgst=document.getElementById("cgst").value;
-    var sgst=document.getElementById("sgst").value;
-    var total_sgst=document.getElementById("total_sgst").value;
-    var gstTotal=document.getElementById("gstTotal").value;
-    var total_tax_sgst_amt=document.getElementById("total_tax_sgst_amt").value;
-    var total_tax_cgst_amt=document.getElementById("total_tax_cgst_amt").value;
+      var tot=document.getElementById("tot").value;
+      var subb=document.getElementById("sub_total").value;
+      var gt=document.getElementById("grand_total").value;
+      var totDisPer=document.getElementById("total_dis").value;
+      var discount=document.getElementById("discount").value;
+      var disAmt=document.getElementById("disAmt").value;
+      var total_dis_amt=document.getElementById("total_dis_amt").value;
+      var total_igst=document.getElementById("total_igst").value;
+      var total_tax_igst_amt=document.getElementById("total_tax_igst_amt").value;
+      var igst=document.getElementById("igst").value;
+      var cgst=document.getElementById("cgst").value;
+      var sgst=document.getElementById("sgst").value;
+      var total_sgst=document.getElementById("total_sgst").value;
+      var gstTotal=document.getElementById("gstTotal").value;
+      var total_tax_sgst_amt=document.getElementById("total_tax_sgst_amt").value;
+      var total_tax_cgst_amt=document.getElementById("total_tax_cgst_amt").value;
+      var total_cgst=document.getElementById("total_cgst").value;
+      var total_gst_tax_amt=document.getElementById("total_gst_tax_amt").value;
+      
     
-    var total_cgst=document.getElementById("total_cgst").value;
-    var total_gst_tax_amt=document.getElementById("total_gst_tax_amt").value;
-    
-    
-    			var tol=(Number(nettot));
-    			
-    			var total=Number(nettot)+Number(gt);
-    			
-    			var Stotal=Number(tot)+Number(subb);
-    			var Sdis=Number(totDisPer)+Number(discount);
-    			var SdisTot=Number(total_dis_amt)+Number(disAmt);
-    			var SigstPer=Number(total_igst)+Number(igst);
-    			var SigstAmt=Number(gstTotal)+Number(total_tax_igst_amt);
-    			document.getElementById("grand_total").value=total.toFixed(2);	
-    			document.getElementById("sub_total").value=Stotal.toFixed(2);
-    			
-    			document.getElementById("total_dis").value=Sdis;
-    			document.getElementById("total_dis_amt").value=SdisTot.toFixed(2);
-    			
-    			if(Number(igst!=''))
-    			{
-    				
-    			document.getElementById("total_igst").value=SigstPer;
-    			document.getElementById("total_tax_igst_amt").value=SigstAmt.toFixed(2);
-    			}
-    			
-    			if(Number(sgst!=''))
-    			{
-    				
-    				var SsgstPer=Number(sgst)+Number(total_sgst);
-    				var sgstT=Number(tot)*Number(sgst)/100;
-    				
-    				var SsgstAmt=Number(sgstT)+Number(total_tax_sgst_amt);
-    				
-    			document.getElementById("total_sgst").value=SsgstPer;
-    			document.getElementById("total_cgst").value=SsgstPer;
-    			document.getElementById("total_tax_sgst_amt").value=SsgstAmt.toFixed(2);
-                document.getElementById("total_tax_cgst_amt").value=SsgstAmt.toFixed(2);
-    			
-    			
-    			}
-                var TotGST=Number(total_gst_tax_amt)+Number(gstTotal);
-                document.getElementById("total_gst_tax_amt").value=TotGST.toFixed(2);
-    		
-    		
+      var tol=(Number(nettot));
+      var total=Number(nettot)+Number(gt);
+      var Stotal=Number(tot)+Number(subb);
+      var Sdis=Number(totDisPer)+Number(discount);
+      var SdisTot=Number(total_dis_amt)+Number(disAmt);
+      var SigstPer=Number(total_igst)+Number(igst);
+      var SigstAmt=Number(gstTotal)+Number(total_tax_igst_amt);
+
+      document.getElementById("grand_total").value=total.toFixed(2);	
+      document.getElementById("sub_total").value=Stotal.toFixed(2);
+      document.getElementById("total_dis").value=Sdis;
+      document.getElementById("total_dis_amt").value=SdisTot.toFixed(2);
+
+      if(Number(igst!=''))
+      {
+        document.getElementById("total_igst").value=SigstPer;
+        document.getElementById("total_tax_igst_amt").value=SigstAmt.toFixed(2);
+      }
+
+      if(Number(sgst!=''))
+      {
+
+        var SsgstPer=Number(sgst)+Number(total_sgst);
+        var sgstT=Number(tot)*Number(sgst)/100;
+        var SsgstAmt=Number(sgstT)+Number(total_tax_sgst_amt);
+
+        document.getElementById("total_sgst").value=SsgstPer;
+        document.getElementById("total_cgst").value=SsgstPer;
+        document.getElementById("total_tax_sgst_amt").value=SsgstAmt.toFixed(2);
+        document.getElementById("total_tax_cgst_amt").value=SsgstAmt.toFixed(2);
+
+      }
+       
+      var TotGST=Number(total_gst_tax_amt)+Number(gstTotal);
+      document.getElementById("total_gst_tax_amt").value=TotGST.toFixed(2);
+	    		
     }
-    
-    
-    
     
     
     // ###### starts when item we edit or delete ##########//
     function editDeleteCalculation()
     {
     	
-    var sub_total=document.getElementById("sub_total").value;
-    var total_cgst=document.getElementById("total_cgst").value;
-    var cgst=document.getElementById("cgst").value;
-    var gstTotal=document.getElementById("gstTotal").value;
-    var total_gst_tax_amt=document.getElementById("total_gst_tax_amt").value;
-    var total_tax_cgst_amt=document.getElementById("total_tax_cgst_amt").value;
+      var sub_total=document.getElementById("sub_total").value;
+      var total_cgst=document.getElementById("total_cgst").value;
+      var cgst=document.getElementById("cgst").value;
+      var gstTotal=document.getElementById("gstTotal").value;
+      var total_gst_tax_amt=document.getElementById("total_gst_tax_amt").value;
+      var total_tax_cgst_amt=document.getElementById("total_tax_cgst_amt").value;
+      
+      total_cgst_cal=total_cgst-cgst;
+      total_sgst_cal=total_sgst-sgst;
+      total_igst_cal=total_igst-igst;
+      sub_total_cal=sub_total-tot;
+      
+      
+      total_tax_cgst_amt_cal=total_tax_cgst_amt-gstTotal;
+      total_tax_sgst_amt_cal=total_tax_sgst_amt-gstTotal;
+      total_dis_cal=total_dis-discount;
+      total_dis_amt_cal=total_dis_amt-disAmt;
+      
+      total_gst_tax_amt_cal=total_gst_tax_amt-gstTotal;
     
     
-    
-    total_cgst_cal=total_cgst-cgst;
-    total_sgst_cal=total_sgst-sgst;
-    total_igst_cal=total_igst-igst;
-    sub_total_cal=sub_total-tot;
-    
-    
-    total_tax_cgst_amt_cal=total_tax_cgst_amt-gstTotal;
-    total_tax_sgst_amt_cal=total_tax_sgst_amt-gstTotal;
-    total_dis_cal=total_dis-discount;
-    total_dis_amt_cal=total_dis_amt-disAmt;
-    
-    total_gst_tax_amt_cal=total_gst_tax_amt-gstTotal;
-    
-    
-    
-    
-    document.getElementById("sub_total").value=sub_total_cal.toFixed(2);
-    document.getElementById("grand_total").value=sub_total_cal.toFixed(2);
-    document.getElementById("total_cgst").value=total_cgst_cal;
-    document.getElementById("total_sgst").value=total_sgst_cal;
-    document.getElementById("total_igst").value=total_igst_cal;
-    document.getElementById("total_tax_cgst_amt").value=total_tax_cgst_amt_cal;
-    document.getElementById("total_tax_sgst_amt").value=total_tax_sgst_amt_cal;
-    
-    document.getElementById("total_gst_tax_amt").value=total_gst_tax_amt_cal;
-    
-    
-    
-    document.getElementById("total_dis").value=total_dis_cal;
-    document.getElementById("total_dis_amt").value=total_dis_amt_cal;
+      document.getElementById("sub_total").value=sub_total_cal.toFixed(2);
+      document.getElementById("grand_total").value=sub_total_cal.toFixed(2);
+      document.getElementById("total_cgst").value=total_cgst_cal;
+      document.getElementById("total_sgst").value=total_sgst_cal;
+      document.getElementById("total_igst").value=total_igst_cal;
+      document.getElementById("total_tax_cgst_amt").value=total_tax_cgst_amt_cal;
+      document.getElementById("total_tax_sgst_amt").value=total_tax_sgst_amt_cal;
+      document.getElementById("total_gst_tax_amt").value=total_gst_tax_amt_cal;
+      document.getElementById("total_dis").value=total_dis_cal;
+      document.getElementById("total_dis_amt").value=total_dis_amt_cal;
     
     }
+    
     // ##### ends ###########
-    
-   
-    
-       }
+ 
+  }
     
     // ###### starts service charge calculation ##########//
     function serviceChargeCal()
     {
     
-    var sub_total=document.getElementById("sub_total").value;
-    var service_charge=document.getElementById("service_charge").value;
+      var sub_total=document.getElementById("sub_total").value;
+      var service_charge=document.getElementById("service_charge").value;
+      
+      service_total_per=Number(sub_total)*Number(service_charge)/100;
+      service_total_cal=Number(sub_total)+Number(service_total_per);
+      
+      document.getElementById("service_charge_total").value=service_total_per.toFixed(2);
+      document.getElementById("grand_total").value=service_total_cal.toFixed(2);
+      return service_total_cal.toFixed(2);
     
-    service_total_per=Number(sub_total)*Number(service_charge)/100;
-    service_total_cal=Number(sub_total)+Number(service_total_per);
-    
-    document.getElementById("service_charge_total").value=service_total_per.toFixed(2);
-    document.getElementById("grand_total").value=service_total_cal.toFixed(2);
-    return service_total_cal.toFixed(2);
     }
     // ##### ends ###########
       
@@ -1421,21 +1398,22 @@
     function grossDiscountCal()
     {
     
-    var serviceTotl=serviceChargeCal();
+      var serviceTotl=serviceChargeCal();
+      
+      var gross_discount_per=document.getElementById("gross_discount_per").value;
+      var gross_discount_total=document.getElementById("gross_discount_total").value;
+      var grand_total=document.getElementById("grand_total").value;
+      
+      
+      service_total_per=Number(serviceTotl)*Number(service_charge)/100;
+      service_total_cal=Number(sub_total)+Number(service_total_per);
+      
+      var totalGross=Number(serviceTotl)*Number(gross_discount_per)/100;
+      var totalGrossCal=Number(grand_total)-Number(totalGross);
+      
+      document.getElementById("gross_discount_total").value=totalGross.toFixed(2);
+      document.getElementById("grand_total").value=totalGrossCal.toFixed(2);
     
-    var gross_discount_per=document.getElementById("gross_discount_per").value;
-    var gross_discount_total=document.getElementById("gross_discount_total").value;
-    var grand_total=document.getElementById("grand_total").value;
-    
-    
-    service_total_per=Number(serviceTotl)*Number(service_charge)/100;
-    service_total_cal=Number(sub_total)+Number(service_total_per);
-    
-    var totalGross=Number(serviceTotl)*Number(gross_discount_per)/100;
-    var totalGrossCal=Number(grand_total)-Number(totalGross);
-    
-    document.getElementById("gross_discount_total").value=totalGross.toFixed(2);
-    document.getElementById("grand_total").value=totalGrossCal.toFixed(2);
     }
     // ##### ends ###########
     

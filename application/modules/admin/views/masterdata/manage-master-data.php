@@ -1,6 +1,7 @@
 <?php
   $this->load->view("header.php");
-  ?>
+?>
+
 <!-- Main content -->
 <div class="main-content">
   <div class="panel-default">
@@ -58,15 +59,7 @@
         </div>
       </div>
     </div>
-    <?php
-      if($this->session->flashdata('flash_msg')!='')
-      {
-      ?>
-    <div class="alert alert-success alert-dismissible" role="alert" id="success-alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-      <strong>Well done! &nbsp;<?php echo $this->session->flashdata('flash_msg');?></strong> 
-    </div>
-    <?php }?>	
+    
     <div class="row">
       <div class="col-lg-12">
         <div class="panel-body">
@@ -99,10 +92,7 @@
                   <th><?=$compRow->keyname;?></th>
                   <th><?=$fetch_list->keyvalue;?></th>
                   <th><?=$fetch_list->description;?></th>
-                  <th>
-                    <!--<button class="btn btn-default"  type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="fa fa-eye"></i> </button>
-                      <button class="btn btn-default" href='#updateMaster'  type="button" data-toggle="modal" data-a="<?php echo $fetch_list->serial_number;?>" > <i class="icon-pencil"></i></button>
-                      -->
+                  <th>                    
                     <?php if($view!=''){ ?>
                     <button class="btn btn-default" property="view" arrt= '<?=json_encode($fetch_list);?>' onclick="editMaster(this);" type="button" data-toggle="modal" data-target="#modal-0" data-backdrop='static' data-keyboard='false'> <i class="fa fa-eye"></i></button>
                     <?php } if($edit!=''){ ?>
@@ -126,25 +116,7 @@
     </div>
   </div>
 </div>
+
 <?php
   $this->load->view("footer.php");
-  ?>
-<script>
-  /*function target1(v)
-  {
-  	if(v=='view'){
-  	  $('.target_text').html('View Master Data');
-  	  $(' #param_id').attr('disabled', 'true');
-  	  $(' #description').attr("disabled", true);
-  	  $(' #keyvalue').attr("disabled", true);
-  	   $(' #save').hide();	
-  	}else{
-  	  $('.target_text').html('Update Master Data');
-  	  $('#param_id').attr("disabled", false);
-  	  $('#description').attr("disabled", false);
-  	  $('#keyvalue').attr("disabled", false);
-  	  $(' #save').show();
-  	}
-  				
-  }*/
-</script>
+?>

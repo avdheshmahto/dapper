@@ -471,27 +471,11 @@
                             $getQty=$queryQty->row();
                             ?>
                           <th><?php echo $getQty->qty;?></th>
-                          <!-- <th class="bs-example">
-                            <?php if($view!=''){ ?>
-                            <button class="btn btn-default" property="view" arrt= '<?=json_encode($fetch_list);?>' onclick ="editItem(this);" type="button" data-toggle="modal" data-target="#modal-0" data-backdrop='static' data-keyboard='false'> <i class="fa fa-eye"></i></button>
-                            
-                            <?php } if($edit!=''){ ?>
-                            <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#modal-0" arrt= '<?=json_encode($fetch_list);?>' onclick="editItem(this)"><i class="icon-pencil"></i></button>
-                            
-                            <?php }
-                              $pri_col='Product_id';
-                              $table_name='tbl_product_stock';
-                              ?>
-                            <button class="btn btn-default delbutton" id="<?php echo $fetch_list->Product_id."^".$table_name."^".$pri_col ; ?>" type="button">
-                             <i class="icon-trash"></i></button>		
-                            <?php ?>
-                            </th> -->
+                          
                         </tr>
                         <?php }?>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
+                      
                     </table>
                   </div>
                 </div>

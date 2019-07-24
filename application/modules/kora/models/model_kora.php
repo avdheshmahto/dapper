@@ -5,7 +5,7 @@ class model_kora extends CI_Model
     function getkora($last, $strat)
     {
         
-        $query = $this->db->query("select * from tbl_production_order_transfer_another_module where status='A'    group by lot_no desc limit $strat,$last ");
+        $query = $this->db->query("select * from tbl_production_order_transfer_another_module where status='A' group by lot_no desc limit $strat,$last ");
         return $result = $query->result();
     }
     
@@ -13,7 +13,7 @@ class model_kora extends CI_Model
     {
         
         
-        $qry = "select * from tbl_production_order_log where status = 'A'";
+        $qry = "select * from tbl_production_order_transfer_another_module where status = 'A'";
         
         if (sizeof($get) > 0) {
             
@@ -43,7 +43,7 @@ class model_kora extends CI_Model
     
     function count_kora($tableName, $status = 0, $get)
     {
-        $qry = "select count(*) as countval from tbl_production_order_log where status='A'";
+        $qry = "select count(*) as countval from tbl_production_order_transfer_another_module where status='A'";
         
         if (sizeof($get) > 0) {
             
@@ -66,6 +66,8 @@ class model_kora extends CI_Model
             if ($get['qty'] != "")
                 $qry .= " AND qty = '" . $get['qty'] . "'";
         }
+            
+        $qry .= "group by lot_no desc";
         
         $query = $this->db->query($qry, array(
             $status

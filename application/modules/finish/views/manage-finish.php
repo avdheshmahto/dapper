@@ -157,20 +157,6 @@
      alert(rest);*/
    }
   
-  /*var inps    = document.getElementsByName('qty[]');
-  var inptval = 0;
-  for (var i = 0; i <inps.length; i++) {
-       var inp=inps[i];
-       //alert("qty["+i+"].value="+inp.value);
-       inptval = Number(inptval)+ Number(inp.value);
-       //alert(inptval);
-  }
-  alert(rest)
-  alert(inptval);	
-  if(Number(rest)>=Number(inptval)){
-       	document.getElementById("error1").style.display= "none";
-          document.getElementById("sv1").disabled = false;
-  }*/
   
   if(Number(rest)>=Number(qty11)){
   document.getElementById("error"+ID).style.display= "none";
