@@ -1,6 +1,6 @@
 <?php
   $this->load->view("header.php");
-  echo "select *from tbl_job_work where id='".$_GET['id']."' ";
+  //echo "select *from tbl_job_work where id='".$_GET['id']."' ";
   $scheQuery=$this->db->query("select *from tbl_job_work where id='".$_GET['id']."' ");
   $getsched=$scheQuery->row();
   
@@ -23,17 +23,23 @@
 <script>
   function qtyVal(d)
   {
+
+    //alert(d);
   var zz=document.getElementById(d).id;
   var myarra = zz.split("qty");
   var asx= myarra[1];
   //alert(asx);
   var entQty=document.getElementById("qty"+asx).value;	
-  var remQty=document.getElementById("rem_qty"+asx).value;	
+  var remQty=document.getElementById("rem_qtys"+asx).value;	
+
+  //alert(remQty);
+
   if(Number(remQty)<Number(entQty))	
   {
-  alert("Enter Qty should be less then remaining Qty");
+    alert("Enter Qty should be less then remaining Qty");
   	document.getElementById("qty"+asx).focus();	
   	document.getElementById("add_req").disabled = true;
+    document.getElementById("qty"+asx).value=''; 
   	
   	return false;
   }
@@ -768,7 +774,7 @@
               <div class="panel panel-default___">
                 <div class="panel-heading" style="background-color: #F5F5F5; color:#fff; border-color:#DDDDDD;">
                   <h3 class="panel-title" style="float: initial;"><span style="color:#000;">Order Details:-</span><?=$getsched->inboundid;?>
-                    <a href="<?=base_url();?>productionModule/manage_scrap_job_work?id=<?=$getsched->production_id;?>" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
+                    <a href="<?=base_url();?>productionModule/manage_scrap_job_work?vendor_id=<?=$getsched->vendor_id;?>&scrap_id=<?=$_GET['scrap_id'];?> " class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
                   </h3>
                 </div>
                 <div class="panel-body" style="padding:15px 0px;">
@@ -1051,7 +1057,7 @@
   
   
   function qtyValidation(v)
-  
+  {
   
   	var zz=document.getElementById(v).id;
   	
