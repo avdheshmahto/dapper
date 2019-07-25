@@ -115,7 +115,7 @@
             <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" />
             <td><?php echo $reci_qty=$getProduct->qty-$getInboundGRNLog->rec_qty;?></td>
             <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
-            <td><input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
+            <td><input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="number" min="0" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
           </tr>
           <?php 
             $i++;
