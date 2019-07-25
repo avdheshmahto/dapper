@@ -115,12 +115,12 @@
             <input type="hidden" min="0" name="ord_qty[]" value="<?=$getProduct->qty;?>" class="form-control">
             <input type="hidden" min="0" name="rm_qty[]" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" class="form-control">
             <td><?=$getProduct->qty;?></td>
-            <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" />
+            <input type="hidden"  arrt="scrap_qty" id="remQty<?=$i;?>" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" />
             <td><?php echo $reci_qty=$getProduct->qty-$getInboundGRNLog->rec_qty;?></td>
             <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
-            <td><input name="transfer_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
-            <td><input name="repair_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
-            <td><input name="scrap_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> />
+            <td><input name="transfer_qty[]" id="transfer_qty<?=$i;?>" arrt="transfer_qty" onkeyup="checkQtyVal(this)" type="number" min="0" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
+            <td><input name="repair_qty[]"  id="repair_qty<?=$i;?>" arrt="repair_qty" onkeyup="checkQtyVal(this)" type="number" min="0"  class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
+            <td><input name="scrap_qty[]" arrt="scrap_qty" id="scrap_qty<?=$i;?>" onkeyup="checkQtyVal(this)" type="number" min="0"  class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> />
             
            <input name="test_qty[]" type="hidden"    class="form-control" /> 
             </td>

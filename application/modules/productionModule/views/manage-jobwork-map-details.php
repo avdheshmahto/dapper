@@ -2122,6 +2122,46 @@
   
   }
   }
+  
+  
+  
+  
+  // start checking qty validation
+  
+  function checkQtyVal(d)
+  {
+  var zz= $(d).attr('id');
+  var rowValue = $(d).attr('arrt');
+  var myarra = zz.split(rowValue);
+  var asx= myarra[1];
+  var transfer_qty=document.getElementById("transfer_qty"+asx).value;	
+  var repair_qty=document.getElementById("repair_qty"+asx).value;	
+  var scrap_qty=document.getElementById("scrap_qty"+asx).value;	
+  
+  var remQty=document.getElementById("remQty"+asx).value;	
+  var sumQty=Number(transfer_qty)+Number(repair_qty)+Number(scrap_qty);
+
+  if(Number(remQty)<Number(sumQty))	
+  {
+  alert("Enter Qty should be less then remaining Qty");
+  	document.getElementById(rowValue+asx).focus();	
+		
+  	
+	document.getElementById("add_req").disabled = true;
+  	
+  	return false;
+  }
+  else
+  {
+  document.getElementById("add_req").disabled = false;
+  
+  }
+  }
+  
+  //ends
+  
+  
+  
 </script>
 <script>
   function selectListdata(ths){

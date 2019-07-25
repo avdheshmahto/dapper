@@ -67,21 +67,43 @@
   function qtyFill(v)
   {
   
-  var cntV=document.getElementById("cntVal").value;
   
+  var cntV=document.getElementById("cntVal").value;
+  var fillQty=document.getElementById("fillQty").value;
+  var remQ=[];
   for(i=1;i<=cntV;i++)
   {
-  	var weight=document.getElementById("weight"+i).value;
+	var remQty=document.getElementById("remQty"+i).value;
+  	remQ.push(remQty);
+	
+  }
+  	
+	minVal=Math.min(...remQ);
+	
+	if(fillQty<minVal)
+	{
+		
+	for(i=1;i<=cntV;i++)
+ 	{
+	var weight=document.getElementById("weight"+i).value;
 	var weightTotal=Number(weight)*Number(v);
 	document.getElementById("total_weight"+i).value=weightTotal;
   	document.getElementById("entQty"+i).value=v;
-		
-  	if(v=='ShapePart')
+	if(v=='ShapePart')
 	{
 		document.getElementById("total_weight"+i).value="";
 	}
   }
-  	
+	}
+	else
+	{
+	alert("Enter Qty must be less then remaining qty");	
+	for(i=1;i<=cntV;i++)
+ 	{
+	document.getElementById("total_weight"+i).value="";
+	document.getElementById("entQty"+i).value="";
+	}
+	}
   }
   
   
@@ -2270,7 +2292,11 @@ $cntData=$poquery->num_rows();
   	for(i=1;i<=cntVal;i++)
   	{
   
+  
   	document.getElementById("entQty"+i).readOnly = true;
+	
+	
+
   	}
   
   }

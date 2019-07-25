@@ -111,13 +111,13 @@
               	$getInboundGRN=$inbountLogGRNQuery->row();
               
               	?>
-            <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->receive_qty-$getProduct->remaining_qty;?>" />
+            <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$rmRR=$getProduct->order_qty-$getProduct->rem_order_qty;?>" />
             <td><?php echo $rmRR=$getProduct->order_qty-$getProduct->rem_order_qty;?></td>
             <td><?php echo $rmR=$getProduct->receive_qty-$getProduct->remaining_qty;?></td>
             <td>
               <p id="qtyInStcok<?=$i;?>"><?=$getProductStock->quantity;?></p>
             </td>
-            <td><input name="order_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)"  type="number" min="0" class="form-control"  /> 
+            <td><input name="order_qty[]" id="qty<?=$i;?>" onkeyup="qtyVal(this.id)"  type="number" min="0" class="form-control"  /> 
             <td><input name="qty[]"  type="number" step="any" min="0"  id="qty<?=$i;?>" onchange="qtyVal(this.id)"  class="form-control" <?php if($$rmR=='0'){?> readonly="readonly" <?php }?> />
             </td>
           </tr>
