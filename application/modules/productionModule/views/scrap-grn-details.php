@@ -130,7 +130,7 @@
               
               ?>
             <td id="rem_qty<?=$i;?>">
-              <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProductPart->qty*$getProduct->qty-$getProductRemainingQty->qty;?>" />
+              <input type="hidden" id="rem_qtys<?=$i;?>" value="<?=$getProductPart->qty*$getProduct->qty-$getProductRemainingQty->qty;?>" />
               <?=$getProductPart->qty*$getProduct->qty-$getProductRemainingQty->qty;?>
             </td>
             <td style="display:none"><?=$getProductSerialStock->quantity;?></td>

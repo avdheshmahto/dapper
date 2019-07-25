@@ -386,7 +386,7 @@
               <div class="panel panel-default____">
                 <div class="panel-heading" style="background-color: #F5F5F5; color:#fff; border-color:#DDDDDD;">
                   <h3 class="panel-title" style="float: initial;"><span style="color:#000;">Scrap Details:-</span><?=$getsched->inboundid;?>
-                    <a href="<?=base_url();?>productionModule/raw_material_scrap" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
+                    <a href="<?=base_url();?>productionModule/raw_material_scrap?vendor_id=<?=$_GET['vendor_id'];?>&Search=Search" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
                   </h3>
                 </div>
               </div>

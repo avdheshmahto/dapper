@@ -20,359 +20,7 @@
   min-width: 256px !important;
   }
 </style>
-<script>
-  function getPart(v)
-  {
-  	
-  	var ur = '<?=base_url();?>productionModule/getPart';
-  	$.ajax({
-  	type: "POST",
-  	url: ur,
-  	data: {'shape':v,'production_id':<?=$_GET['id'];?>},
-  	success: function(data){
-      // console.log(data);
-      $("#getPartView").empty().append(data).fadeIn();
-  	// $("#btn").prop('disabled', false);
-      }
-      });
-  }
-  
-  
-  
-  
-  
-  function getPartPo(v)
-  {
-  	
-  	var ur = '<?=base_url();?>productionModule/getPartPo';
-  	$.ajax({
-  	type: "POST",
-  	url: ur,
-  	data: {'shape':v,'production_id':<?=$_GET['id'];?>},
-  	success: function(data){
-      // console.log(data);
-      $("#getPartPoView").empty().append(data).fadeIn();
-  	// $("#btn").prop('disabled', false);
-      }
-      });
-  }
-  
-  
-  function qtyFill(v)
-  {
-  	
-  var cntV=document.getElementById("cntVal").value;
-  
-  for(i=1;i<=cntV;i++)
-  {
-  	
-  	document.getElementById("entQty"+i).value=v;
-  	
-  }
-  	
-  }
-  
-  
-  function qtyFillPO(v)
-  {
-  
-  var cntV=document.getElementById("cntVal").value;
-  
-  for(i=1;i<=cntV;i++)
-  {
-  	
-  	document.getElementById("entQty"+i).value=v;
-  	
-  }
-  
-  }
-  
-  //******************************************************************************************************************************************************************************************************************************************************************************************************
-  
-  //*********************************************************************************************************************************************************************************************************************************************************************************************************
-  
-  
-  //starts order repair  query
-  
-  function submitorderTransferToModule() {
-             
-    var form_data = new FormData(document.getElementById("myProduction_order_transfer_to_module"));
-    form_data.append("label", "WEBUPLOAD");
-  
-    $.ajax({
-        url: "productionModule/productionOrderTransferToModule",
-        type: "POST",
-        data: form_data,
-        processData: false,  // tell jQuery not to process the data
-        contentType: false   // tell jQuery not to set contentType
-    }).done(function( data ) {
-  	//alert(data);
-  	
-  	
-  	  if(data == 1 || data == 2){
-  		
-                        if(data == 1)
-  					    
-                          var msg = "Data Successfully Add !";
-                        else
-                          var msg = "Data Successfully Updated !";
-  						$("#OrderTransferToModuleresultarea").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
-                         $("#modal-order-repair").click();
-                         $("#OrderTransferToModuleresultarea").text(" "); 
-                         $('#myProduction_order_transfer_to_module')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
-  					   
-                         //$("#id").val("");
-       
-                      }, 1000);
-                    }else{
-                      $("#OrderTransferToModuleresultarea").text(data);
-  					
-                   }
-  				// ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
-   
-  	 
-      console.log(data);
-      //Perform ANy action after successfuly post data
-         
-    });
-    return false;     
-  }
-  // ends
-  
-</script>
-<script>
-  function addpricemapPoOrder(){
-  
-  	var shapeid =  $('#shapePO').val();
-  	var shapeVal     =  $("#shapePO option:selected").text();   
-  	var part=$('#part').val();
-  	var PartId     = [];
-  	var qtyy	= []; 
-  	var part_c	=[];
-  	j=0;i=0;k=0;
-  	
-  	$('input[name="part[]"]').each(function(){
-  	PartId[i++]  = $(this).val();
-  	});
-  
-  	$('input[name="qty[]"]').each(function(){
-  	qtyy[j++]  = $(this).val();
-  	});
-  
-  	$('input[name="part_code[]"]').each(function(){
-  	part_c[k++]  = $(this).val();
-  	});
-        
-  	var myObject  = new Object();
-      // myObject.productId = $('#quotationPro').val();
-  	var pa=myObject.part = PartId;
-  	var qt=qtyy;
-  	var pa_co=part_c;
-  	var myString = JSON.stringify(myObject);    
-  	
-  	 // $('#quotationProductmapValue').empty().append("<input type ='text' id ='proQuotation' name='quotationMapedValue[]' value='"+myString+"'>");
-        //$('#QuotationMap').val(myString);
-  	  
-  	  
-  	   $('#quotationTablePO').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
-      
-  	$("#shapePO").val("");
-  	$("#getPartPoView").text("");
-    }
-  
-  
-  function addpricemap(){
-  
-  	var shapeid =  $('#shape').val();
-  	var shapeVal     =  $("#shape option:selected").text();   
-  	var part=$('#part').val();
-  	var weight=$('#weight').val();
-  	var total_weight=$('#total_weight').val();
-  	var rate=$('#rate').val();
-  	var total_rm_rate=$('#total_rm_rate').val();
-  	var labour_rate=$('#labour_rate').val();
-  	var total_labour_rate=$('#total_labour_rate').val();
-  	var total_cost=$('#total_cost').val();
-  	var PartId     = [];
-  	var qtyy	= []; 
-  	var part_c	=[];
-  	var rate_c	=[];
-  	var weight_c	=[];
-  	var total_weight_c	=[];
-  	var total_rm_rate_c	=[];
-  	var labour_rate_c	=[];
-  	var total_labour_rate_c	=[];
-  	var total_cost_c	=[];
-  	
-  	
-  
-  	j=0;i=0;k=0;m=0;n=0,o=0,p=0,q=0,r=0,a=0;
-  	
-  	$('input[name="part[]"]').each(function(){
-  	PartId[i++]  = $(this).val();
-  	});
-  
-  	$('input[name="qty[]"]').each(function(){
-  	qtyy[j++]  = $(this).val();
-  	});
-  
-  	$('input[name="part_code[]"]').each(function(){
-  	part_c[k++]  = $(this).val();
-  	});
-  
-  	$('input[name="weight[]"]').each(function(){
-  	weight_c[m++]  = $(this).val();
-  	});
-  	$('input[name="total_weight[]"]').each(function(){
-  	total_weight_c[a++]  = $(this).val();
-  	});
-  
-  	$('input[name="rate[]"]').each(function(){
-  	rate_c[n++]  = $(this).val();
-  	});
-  	
-  	$('input[name="total_rm_rate[]"]').each(function(){
-  	total_rm_rate_c[o++]  = $(this).val();
-  	});
-  	
-  	$('input[name="labour_rate[]"]').each(function(){
-  	labour_rate_c[p++]  = $(this).val();
-  	});
-  	
-  	$('input[name="total_labour_rate[]"]').each(function(){
-  	total_labour_rate_c[q++]  = $(this).val();
-  	});
-  	
-  	$('input[name="total_cost[]"]').each(function(){
-  	total_cost_c[r++]  = $(this).val();
-  	});
-  	
-        
-  	var myObject  = new Object();
-      // myObject.productId = $('#quotationPro').val();
-  	var pa=myObject.part = PartId;
-  	var qt=qtyy;
-  	var pa_co=part_c;
-  	var weight_co=weight_c;
-  	var rate_co=rate_c;
-  	var total_rm_rate_co=total_rm_rate_c;
-  	var labour_rate_co=labour_rate_c;
-  	var total_labour_rate_co=total_labour_rate_c;
-  	var total_cost_co=total_cost_c;
-  	
-  	
-  	var myString = JSON.stringify(myObject);    
-  	
-  	 // $('#quotationProductmapValue').empty().append("<input type ='text' id ='proQuotation' name='quotationMapedValue[]' value='"+myString+"'>");
-        //$('#QuotationMap').val(myString);
-  	  
-  	  
-  	   $('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><input type ="hidden" name="weight_qty[]" value="'+weight_co+'">'+weight_co+'</td><td><input type ="hidden" name="total_weight[]" value="'+total_weight_c+'">'+total_weight_c+'</td><td><input type ="hidden" name="rate_rs[]" value="'+rate_co+'">'+rate_co+'</td><td><input type ="hidden" name="total_rm_rate_rs[]" value="'+total_rm_rate_co+'">'+total_rm_rate_co+'</td><td><input type ="hidden" name="labour_rate_rs[]" value="'+labour_rate_co+'">'+labour_rate_co+'</td><td><input type ="hidden" name="total_labour_rate[]" value="'+total_labour_rate_co+'">'+total_labour_rate_co+'</td><td><input type ="hidden" name="total_cost[]" value="'+total_cost_co+'">'+total_cost_co+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
-      
-  	$("#shape").val("");
-  	$("#getPartView").text("");
-  
-  
-  
-  
-    }
-    function submitForm() {
-              
-    var form_data = new FormData(document.getElementById("myform"));
-    form_data.append("label", "WEBUPLOAD");
-  
-    $.ajax({
-        url: "productionModule/insert_jobwork",
-        type: "POST",
-        data: form_data,
-        processData: false,  // tell jQuery not to process the data
-        contentType: false   // tell jQuery not to set contentType
-    }).done(function( data ) {
-  	
-  	
-  	
-  	  if(data == 1 || data == 2){
-  		
-                        if(data == 1)
-  					    
-                          var msg = "Data Successfully Add !";
-                        else
-                          var msg = "Data Successfully Updated !";
-  						$("#resultarea").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
-                         $("#modal-2 .close").click();
-                         $("#resultarea").text(" "); 
-                         $('#myform')[0].reset(); 
-  					   $("#quotationTable").text(" "); 
-  					   
-                         $("#id").val("");
-       
-                      }, 1000);
-                    }else{
-                      $("#resultarea").text(data);
-  					
-                   }
-  				 ajex_JobWorkListData(<?=$_GET['id'];?>);
-   
-  	 
-      console.log(data);
-      //Perform ANy action after successfuly post data
-         
-    });
-    return false;     
-  }
-  
-  
-  
-  function Order_transfer(viewId){
-  
-  var order_type=document.getElementById("order_type").innerHTML;
-  var lot_no=document.getElementById("lot_no").innerHTML;
-  
-   	$.ajax({   
-  		    type: "POST",  
-  			url: "order_transfer",  
-  			cache:false,  
-  			data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},  
-  			success: function(data)  
-  			{  
-  			  
-  			 $("#orderTransfer").empty().append(data).fadeIn();
-  			//referesh table
-  			}   
-  	});
-  
-   }
-  
-  function viewWorkOrder(v){
-  	
-  var pro=v;
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("GET", "productionModule/view_work_order?ID="+pro, false);
-  xhttp.send();
-   document.getElementById("viewWork").innerHTML = xhttp.responseText;
-  }
-  
-  function ajex_JobWorkListData(production_id){
-  
-    ur = "<?=base_url('productionModule/getWorkOrder');?>";
-      $.ajax({
-        url: ur,
-        data: { 'id' : production_id },
-        type: "POST",
-        success: function(data){
-          //alert(data);
-          //alert("jkhkjh"+type);
-          //$("#listingData").hide();
-          $("#listingData").empty().append(data).fadeIn();
-                
-       }
-      });
-  }
-  
-</script>
+
 <!-- Main content -->
 <div class="main-content">
   <div class="panel-body panel panel-default">
@@ -383,10 +31,10 @@
             <div class="col-xs-12 col-sm-12">
               <div class="panel panel-default____">
                 <div class="panel-heading" style="background-color: #F5F5F5; color:#fff; border-color:#DDDDDD;">
-                  <h3 class="panel-title" style="float: initial;"><span style="color:#000;">Raw Material Order:-</span><?=$getsched->inboundid;?>
+                  <h3 class="panel-title" style="float: initial;"><span style="color:#000;">Raw Material Order : -</span><?=$getsched->inboundid;?>
                   </h3>
                 </div>
-                <form method="post">
+                <form method="get">
                   <div class="panel-body" style="padding:15px 0px;">
                     <div class="row">
                       <div class="col-xs-6 col-sm-6 col-md-6">
@@ -437,15 +85,13 @@
                       </thead>
                       <tbody>
                         <?php
-                          @extract($_POST);
+                          @extract($_GET);
                           if($Search!='')
                           {
-                          
-                          					$qry = "select *from tbl_product_stock where type='13'";
-                          	//$qry = "select *from tbl_job_work where order_type='Purchase Order'";				
-                          					
-                          					 
-                          						$queryData=$this->db->query($qry); 
+                
+                					  $qry = "select *from tbl_product_stock where type='13'";
+                						$queryData=$this->db->query($qry); 
+
                           	$i=1;		 
                             foreach($queryData->result() as $fetch_list)
                             {
@@ -453,12 +99,10 @@
                           	  $getUnit=$unitQuery->row();
                            
                           
-                           
-                            
                           ?>
                         <tr class="gradeX odd" role="row">
                           <td class="size-60 text-center sorting_1"><?=$i;?></td>
-                          <td><a href="productionModule/manage_scrap_job_work?scrap_id=<?=$fetch_list->Product_id;?> && vendor_id=<?=$_POST['vendor_id'];?>"><?=$fetch_list->sku_no;?></a>
+                          <td><a href="productionModule/manage_scrap_job_work?scrap_id=<?=$fetch_list->Product_id;?>&vendor_id=<?=$_GET['vendor_id'];?>"><?=$fetch_list->sku_no;?></a>
                           <td><?=$fetch_list->productname;?>
                             <input type="hidden"  name="productid[]" value="<?=$getProduct->productid;?>" class="form-control">
                           </td>
@@ -477,10 +121,7 @@
                           
                           }}
                           ?>
-                      </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
+                      </tbody>                      
                     </table>
                   </div>
                 </div>
@@ -498,134 +139,10 @@
 <!--main-content close-->
 <?php
   $this->load->view("footer.php");
-  ?>
-<SCRIPT language="javascript">
-  function addRow(tableID) {
-  
-  	var table = document.getElementById(tableID);
-  
-  	var rowCount = table.rows.length;
-  	var row = table.insertRow(rowCount);
-  
-  var cell1 = row.insertCell(0);
-  	var element1 = document.createElement("input");
-  	element1.type = "checkbox";
-  	element1.name="chkbox[]";
-  	cell1.appendChild(element1);
-  	
-  var cell2 = row.insertCell(1);
-  	var element2 = document.createElement("select");
-  	element2.name = "spare_id[]";
-  	element2.className="form-control";
-  	element2.style.width="250px";
-  	var option1 = document.createElement("option");
-  	option1.innerHTML = "--Select--";
-    option1.value = "";
-    element2.appendChild(option1, null);
-  <?php
-    $contactQuery=$this->db->query("select *from tbl_product_stock where status='A'");
-    foreach($contactQuery->result() as $getContact){
-    ?>
-  
-    var option2 = document.createElement("option");
-    option2.innerHTML = "<?=$getContact->productname;?>";
-    option2.value = "<?=$getContact->Product_id;?>";
-    element2.appendChild(option2, null);
-    
-  <?php }?>
-  	cell2.appendChild(element2);
-  	
-  
-  }
-  
-  
-  
-  function deleteRow(tableID) {
-  	try {
-  	var table = document.getElementById(tableID);
-  	var rowCount = table.rows.length;
-  
-  	for(var i=0; i<rowCount; i++) {
-  		var row = table.rows[i];
-  		var chkbox = row.cells[0].childNodes[0];
-  		if(null != chkbox && true == chkbox.checked) {
-  			table.deleteRow(i);
-  			rowCount--;
-  			i--;
-  		}
-  
-  
-  	}
-  	}catch(e) {
-  		alert(e);
-  	}
-  }
-  
-  // function saveData()
-  // {
-  // 	  var code= document.getElementById("code").value;
-  // 	  var machine_name= document.getElementById("machine_name").value;
-  // 	  var machine_des= document.getElementById("machine_des").value;
-  // 	  var capacity= document.getElementById("capacity").value;
-   
-  // 	  if(code=='')
-  // 	  {
-  // 	   document.getElementById("codemsg").innerHTML = "Please Enter Code";
-  // 	   return false;
-  // 	  }
-  // 	 var xhttp = new XMLHttpRequest();
-  // 	 xhttp.open("GET", "insert_machine?code="+code+"&machine_name="+machine_name+"&machine_des="+machine_des+"&capacity="+capacity, false);
-  // 	 xhttp.send();
-  
-  // 	 $("#modal-0 .close").click();	   
-  // 	 document.getElementById("loadData").innerHTML = xhttp.responseText;
-  // 	 document.getElementById("code").value='';
-  // }
-  
-  
-  
-    
-</SCRIPT>
-<script>
-  /*$(document).ready(function() {
-    $.ajaxSetup({ cache: false }); // This part addresses an IE bug.  without it, IE will only load the first number and will never refresh
-    setInterval(function() {
-      //$('#getDataTable').load('get_machine');
-    }, 3000); // the "3000" 
-  });
-  */
-</script>
-<style>
-  .c-error .c-validation{ 
-  background: #c51244 !important;
-  padding: 10px !important;
-  border-radius: 0 !important;
-  position: relative; 
-  display: inline-block !important;
-  box-shadow: 1px 1px 1px #aaaaaa;
-  margin-top: 10px;
-  }
-  .c-error  .c-validation:before{ 
-  content: ''; 
-  width: 0; 
-  height: 0; 
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #c51244;
-  position: absolute; 
-  top: -10px; 
-  }
-  .c-label:after{
-  color: #c51244 !important;
-  }
-  .c-error input, .c-error select, .c-error .c-choice-option{ 
-  background: #fff0f4; 
-  color: #c51244;
-  }
-  .c-error input, .c-error select{ 
-  border: 1px solid #c51244 !important; 
-  }
-</style>
+?>
+
+
+
 <!-- view production Starts here -->
 <div id="modal-3" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg">
@@ -1343,18 +860,6 @@
   		}   
   	});
   }
-  
-  
-  
-  
-  
-  /*
-  window.onbeforeunload = function (e) {
-  // Your logic to prepare for 'Stay on this Page' goes here 
-  
-      return "Please click 'Stay on this Page' and we will give you candy";
-  };
-  */
   
   
 </script>
