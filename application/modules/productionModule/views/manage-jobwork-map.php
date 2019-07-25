@@ -75,12 +75,19 @@
 	var weightTotal=Number(weight)*Number(v);
 	document.getElementById("total_weight"+i).value=weightTotal;
   	document.getElementById("entQty"+i).value=v;
+	
+	var lowest = 0;
+ 	for (var i = 1; i <cntV; i++) {
+  	if (cntV[i] < cntV[lowest]) lowest = i;
+ 	}
+ 	
+	
   	if(v=='ShapePart')
 	{
 		document.getElementById("total_weight"+i).value="";
 	}
   }
-  	
+  	alert( lowest);
   }
   
   
@@ -283,6 +290,8 @@
   	   $('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><input type ="hidden" name="weight_qty[]" value="'+weight_co+'">'+weight_co+'</td><td><input type ="hidden" name="total_weight[]" value="'+total_weight_c+'">'+total_weight_c+'</td><td><input type ="hidden" name="rate_rs[]" value="'+rate_co+'">'+rate_co+'</td><td><input type ="hidden" name="total_rm_rate_rs[]" value="'+total_rm_rate_co+'">'+total_rm_rate_co+'</td><td><input type ="hidden" name="labour_rate_rs[]" value="'+labour_rate_co+'">'+labour_rate_co+'</td><td><input type ="hidden" name="total_labour_rate[]" value="'+total_labour_rate_co+'">'+total_labour_rate_co+'</td><td><input type ="hidden" name="total_cost[]" value="'+total_cost_co+'">'+total_cost_co+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
       
   	$("#shape").val("");
+	$("#fillQty").val("");
+	$("#select_id").val("");
   	$("#getPartView").text("");
   
   
@@ -942,7 +951,7 @@ $cntData=$poquery->num_rows();
               </label>
               <div class="col-sm-12">
                 <br />
-                <div class="modal-header">
+                <div class="modal-header table-responsive">
                   <table class="table table-bordered table-hover" >
                     <tbody>
                       <tr class="gradeA">
@@ -968,7 +977,7 @@ $cntData=$poquery->num_rows();
                            $uom        = $this->db->query("select * from tbl_master_data where serial_number = '".$dt['unit']."'");
                            $rowmatrialuom = $uom->row();
                         ?>
-                      <tr>
+                      <tr >
                         <td><input type ="hidden" name="prodcId[]" value="<?=$dt['rowmatial'];?>"><?=$rowmatrial->productname;?></td>
                         <td><input type ="hidden" name="mproPrice[]" value="<?=$dt['qty'];?>"><?=$dt['qty'];?></td>
                         <td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td>
@@ -1145,6 +1154,7 @@ $cntData=$poquery->num_rows();
           <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_order_receive" action="#" 
             onsubmit="return submitProductionOrderReceive();"method="POST">
             <div class="row" id="orderDetails">
+           
             </div>
           </form>
         </div>

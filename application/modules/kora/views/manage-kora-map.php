@@ -220,6 +220,8 @@
   	   $('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
       
   	$("#shape").val("");
+	$("#fillQty").val("");
+	$("#select_id").val("");
   	$("#getPartView").text("");
   
   
@@ -898,7 +900,7 @@ $cntData=$poquery->num_rows();
               </label>
               <div class="col-sm-12">
                 <br />
-                <div class="modal-header">
+                <div class="modal-header table-responsive">
                   <table class="table table-bordered table-hover" >
                     <tbody>
                       <tr class="gradeA">

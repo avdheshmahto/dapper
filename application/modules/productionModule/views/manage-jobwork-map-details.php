@@ -35,7 +35,7 @@
         processData: false,  // tell jQuery not to process the data
         contentType: false   // tell jQuery not to set contentType
     }).done(function( data ) {
-  	alert(data);
+  //	alert(data);
   	
   	
   	  if(data == 1 || data == 2){
@@ -203,7 +203,7 @@
     }).done(function( data ) {
   	
   	
-  	
+  	alert(data);
   	  if(data == 1 || data == 2){
   		
                         if(data == 1)
@@ -927,7 +927,7 @@
                               ?>
                           </th>
                           <th>
-                            <?php /*?><button class="btn btn-default" onclick="viewPurchaseOrder(<?=$getPo->purchaseid;?>);" data-toggle="modal" data-target="#modal-6" type="button" ><i class="fa fa-eye"></i></button><?php */?>
+                         
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button title="View RM request" class="btn btn-default" onclick="viewRawRequest(<?=$getPo->inboundid;?>);" data-toggle="modal" data-target="#modal-rawRequest" type="button" ><i class="fa fa-eye"></i></button>
                             <button title="View RM Receive Log" class="btn btn-default" onclick="viewChallanLog('<?=$getPo->inboundid;?>^<?=$getPo->po_no;?>');" data-toggle="modal" data-target="#modal-ChallanLog" type="button" ><i class="fa fa-eye"></i></button>
@@ -996,10 +996,22 @@
                           </td>
                           <td><?=$fetch_list->grn_no;?></td>
                           <td><?=$fetch_list->grn_date;?></td>
-                          <td><?php $pri_col='id';
-                            $table_name='tbl_schedule_triggering';
-                            ?>
+                          <td>
                             <a href="#" title="GRN VIEW" data-toggle="modal" data-target="#model-view-production-log" onclick="view_production_log('<?=$fetch_list->grn_no;?>,<?=$fetch_list->order_no;?>');"><i class="fa fa-eye"></i></a>&nbsp;
+                            
+                         
+                      <?php
+                       $poquery=$this->db->query("select *  from tbl_production_order_check where status='A' and order_no='$fetch_list->order_no'");
+                         $cntData=$poquery->num_rows();
+						 
+                          if($cntData>0)
+						  {
+                          ?>
+                       <button class="btn btn-default" onclick="return confirm('Please Delete Child Data First');" type="button"><i class="icon-trash"></i></button>
+                          <?php }else{?>
+                          <button class="btn btn-default delbuttonOrderGrn" id="<?=$fetch_list->grn_no ?>" type="button"><i class="icon-trash"></i></button>
+                          <?php }?>
+                         
                             <a target="_blank" href="<?=base_url();?>productionModule/print_challan_grn?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
                           </td>
                         </tr>
@@ -1075,6 +1087,12 @@
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewChecking('<?=$getPo->check_no;?>');" data-toggle="modal" data-target="#modal-checking" type="button" ><i class="fa fa-eye"></i></button>
                             <a style="display:none" href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
+                            
+             
+                  
+                           <button class="btn btn-default delbuttonOrderCheck" id="<?=$getPo->check_no; ?>" type="button"><i class="icon-trash"></i></button>
+                          
+                          
                             <a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
                           </th>
                         </tr>
@@ -1289,8 +1307,16 @@
                          
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewScrap('<?=$getPo->check_no;?>');" data-toggle="modal" data-target="#modal-viewScrap" type="button" ><i class="fa fa-eye"></i></button>
-                            <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
-                            <a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
+                 
+                 
+                 
+                           <button class="btn btn-default delbuttonOrderScrap" id="<?=$getPo->check_no; ?>" type="button"><i class="icon-trash"></i></button>       
+                            
+                            
+                            
+                       
+                            
+                            <a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->check_no;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
                           </th>
                           <?php }?>
                         <tr class="gradeU">
@@ -1363,6 +1389,8 @@
                           
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewRepairOrder('<?=$getPo->repair_no;?>');" data-toggle="modal" data-target="#modal-view_order_repair" type="button" ><i class="fa fa-eye"></i></button>
+                            
+                               <button class="btn btn-default delbuttonOrderRepair" id="<?=$getPo->repair_no; ?>" type="button"><i class="icon-trash"></i></button>
                             <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>&check_no=<?=$getPo->check_no;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
                             <a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
                           </th>
@@ -1382,78 +1410,7 @@
                   </div>
                 </div>
               </div>
-              <div class="tab-pane" id="Transfer">
-                <div class="panel-body">
-                  <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover dataTables-example1"  id="listingAjexRequestRM">
-                      <thead>
-                        <tr>
-                          <th style="width:150px;">Transfer No.</th>
-                          <th>Date</th>
-                          <th style="display:none">Status</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php
-                          $poquery=$this->db->query("select *  from tbl_production_order_check where status='i' and job_order_id='".$_GET['id']."' and transfer_qty!='' group by check_no");
-                          foreach($poquery->result() as $getPo){
-                          ?>
-                        <tr class="gradeC record">
-                          <th><?=$getPo->check_no;?></th>
-                          <th><?=$getPo->check_date;?></th>
-                          <?php
-                            $poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$getPo->inboundid'");
-                            $getQty=$poquery->row();
-                            
-                          
-                            
-                            $poquerygrnLog=$this->db->query("select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->po_no'");
-                            $getQtygrnLog=$poquerygrnLog->row();
-                            
-                            
-                            ?>
-                          <th style="display:none">
-                            <?php
-                              if($getQty->qty==$getQtygrnLog->qty)
-                              {
-                              	echo "Completed";
-                              }
-                              elseif($getQty->qty<$getQtygrnLog->qty)
-                              {
-                              	echo "Partial Completed";
-                              }
-                              else
-                              {
-                              	echo "Pending";
-                              }
-                              
-                              ?>
-                          </th>
-                          <th>
-                           
-                            <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
-                            <button class="btn btn-default" onclick="viewRawRequest('<?=$getPo->check_no;?>');" data-toggle="modal" data-target="#modal-rawRequest" type="button" ><i class="fa fa-eye"></i></button>
-                            <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
-                            <a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
-                          </th>
-                        </tr>
-                        <?php }?>
-                        <tr class="gradeU">
-                          <td>
-                            <button style="display:none1" type="button" class="btn btn-default modalMapSpare" onclick="Order_transfer('<?=$getsched->job_order_no;?>');" data-toggle="modal" data-target="#modal-order-transfer"><img src="<?=base_url();?>assets/images/plus.png" /></button>
-                          </td>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                        </tr>
-                      </tbody>
-                      <tfoot>
-                 
-                      </tfoot>
-                    </table>
-                  </div>
-                </div>
-              </div>
+              
             </div>
           </div>
           <!--tabs-container close-->
@@ -2143,7 +2100,7 @@
   
   function qtyVal(d)
   {
-  alert();
+
   var zz=document.getElementById(d).id;
   var myarra = zz.split("qty");
   var asx= myarra[1];

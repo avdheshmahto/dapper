@@ -1,6 +1,6 @@
 <?php
   $this->load->view("header.php");
-  
+  echo "select *from tbl_job_work where id='".$_GET['id']."' ";
   $scheQuery=$this->db->query("select *from tbl_job_work where id='".$_GET['id']."' ");
   $getsched=$scheQuery->row();
   

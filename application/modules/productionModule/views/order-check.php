@@ -120,7 +120,10 @@
             <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
             <td><input name="transfer_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
             <td><input name="repair_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
-            <td><input name="scrap_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
+            <td><input name="scrap_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> />
+            
+           <input name="test_qty[]" type="hidden"    class="form-control" /> 
+            </td>
             <td><input name="name[]"   type="text" class="form-control" /></td>
           </tr>
           <?php 
@@ -130,14 +133,7 @@
       </div>
     </div>
   </div>
-  <!--scrollbar-y close-->		
-  <!-- <div style="width:100%; background:#dddddd; padding-left:0px; color:#000000; border:2px solid "> -->
-  <!-- <div style="width:100%; background:white;   color:#000000;  max-height:170px; overflow-x:auto;overflow-y:auto;" id="m">
-    <table id="invoice"  style="width:100%;background:white;margin-bottom:0px;margin-top:0px;min-height:30px;" title="Invoice" class="table table-bordered blockContainer lineItemTable ui-sortable"  >
-    
-    <tr></tr>
-    </table> -->
-  <!-- </div> -->
+ 
 </div>
 <div class="modal-footer">
   <input type="submit" class="btn btn-sm" id="add_req" value="Save">

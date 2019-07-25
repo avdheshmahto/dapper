@@ -758,9 +758,74 @@ function delete_cutting_data()
 	
 			
 		$this->db->query("delete from tbl_job_work where job_order_no='".$_GET['id']."'");
+		$this->db->query("delete from tbl_job_work_log where job_order_no='".$_GET['id']."'");
+
+		
   
 }
 //================================Close delete  order ============== 
+
+
+//================================*Start delete  order ============== 
+ function delete_order_data_grn() 
+ {
+	
+			
+		$this->db->query("delete from tbl_production_order_log where grn_no='".$_GET['id']."'");
+		
+		
+  
+}
+//================================Close delete  order ============== 
+
+
+
+//================================*Start delete  check order ============== 
+ function delete_order_data_check() 
+ {
+	
+			
+		$this->db->query("delete from tbl_production_order_check where check_no='".$_GET['id']."'");
+		
+		
+  
+}
+//================================Close delete  check order ============== 
+
+
+//================================*Start delete  repair order ============== 
+ function delete_order_data_repair() 
+ {
+	
+			
+		$this->db->query("delete from tbl_production_order_repair where repair_no='".$_GET['id']."'");
+
+
+		
+		
+		
+  
+}
+//================================Close delete  repair order ============== 
+
+
+
+//================================*Start delete  repair order ============== 
+ function delete_order_data_scrap() 
+ {
+	
+			
+		$this->db->query("delete from tbl_production_order_check where check_no='".$_GET['id']."'");
+
+
+		
+		
+		
+  
+}
+//================================Close delete  repair order ============== 
+
+
 
 
 public function forgotPassword()

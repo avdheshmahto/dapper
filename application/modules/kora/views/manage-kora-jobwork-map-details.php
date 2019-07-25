@@ -778,6 +778,18 @@
                             $table_name='tbl_schedule_triggering';
                             ?>
                             <a href="#" title="GRN VIEW" data-toggle="modal" data-target="#model-view-production-log" onclick="view_production_log('<?=$fetch_list->grn_no;?>,<?=$fetch_list->order_no;?>');"><i class="fa fa-eye"></i></a>&nbsp;
+                            
+                            <?php
+                       $poquery=$this->db->query("select *  from tbl_production_order_check where status='A' and order_no='$fetch_list->order_no'");
+                         $cntData=$poquery->num_rows();
+						 
+                          if($cntData>0)
+						  {
+                          ?>
+                       <button class="btn btn-default" onclick="return confirm('Please Delete Child Data First');" type="button"><i class="icon-trash"></i></button>
+                          <?php }else{?>
+                          <button class="btn btn-default delbuttonOrderGrn" id="<?=$fetch_list->grn_no ?>" type="button"><i class="icon-trash"></i></button>
+                          <?php }?>
                             <a target="_blank" href="<?=base_url();?>kora/print_grn_challan?id=<?=$fetch_list->grn_no;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
                           </td>
                         </tr>
@@ -857,6 +869,7 @@
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewChecking('<?=$getPo->check_no;?>');" data-toggle="modal" data-target="#modal-checking" type="button" ><i class="fa fa-eye"></i></button>
                             <a style="display:none" href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
+                               <button class="btn btn-default delbuttonOrderCheck" id="<?=$getPo->check_no; ?>" type="button"><i class="icon-trash"></i></button>
                             <a target="_blank" href="<?=base_url();?>kora/print_check_challan?id=<?=$getPo->check_no;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
                           </th>
                         </tr>
@@ -933,6 +946,8 @@
                             <?php /*?><button class="btn btn-default" onclick="viewPurchaseOrder(<?=$getPo->purchaseid;?>);" data-toggle="modal" data-target="#modal-6" type="button" ><i class="fa fa-eye"></i></button><?php */?>
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewScrap('<?=$getPo->check_no;?>');" data-toggle="modal" data-target="#modal-viewScrap" type="button" ><i class="fa fa-eye"></i></button>
+                            
+                           <button class="btn btn-default delbuttonOrderScrap" id="<?=$getPo->check_no; ?>" type="button"><i class="icon-trash"></i></button>   
                             <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
                             <a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
                           </th>
@@ -1007,6 +1022,7 @@
                             <?php /*?><button class="btn btn-default" onclick="viewPurchaseOrder(<?=$getPo->purchaseid;?>);" data-toggle="modal" data-target="#modal-6" type="button" ><i class="fa fa-eye"></i></button><?php */?>
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewRepairOrder('<?=$getPo->repair_no;?>');" data-toggle="modal" data-target="#modal-view_order_repair" type="button" ><i class="fa fa-eye"></i></button>
+                             <button class="btn btn-default delbuttonOrderRepair" id="<?=$getPo->repair_no; ?>" type="button"><i class="icon-trash"></i></button>
                             <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>&check_no=<?=$getPo->check_no;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
                             <a target="_blank" href="<?=base_url();?>kora/print_repair_challan?id=<?=$getPo->repair_no;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
                           </th>

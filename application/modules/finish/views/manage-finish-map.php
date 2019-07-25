@@ -699,20 +699,14 @@ $cntData=$poquery->num_rows();
               <input type="hidden" name="production_id" id="production_id" value="<?=$_GET['id'];?>" />
               <label class="col-sm-2 control-label">Select:</label> 
               <div class="col-sm-4">
-                <select class="form-control" name="type" id="select_id" required>
+                <select class="form-control" name="type" id="select_id" onchange="checkQtyVal();" required>
                   <option value="">--Select--</option>
                   <option value="Shape">Shape Complete</option>
                   <option value="ShapePart">Shape in Parts</option>
                 </select>
               </div>
-              <label class="col-sm-2 control-label">Qty:</label> 
-              <div class="col-sm-4"> 
-                <input name="shape_qty" type="text" value="" id="fillQty" onchange="qtyFill(this.value);" class="form-control" > 
-              </div>
-            </div>
-            <div class="form-group">
               <label class="col-sm-2 control-label">Shape:</label> 
-              <div class="col-sm-4">
+              <div class="col-sm-4"> 
                 <select class="form-control" name="shape" id="shape" onchange="getPart(this.value);">
                   <option value="">--Select--</option>
                   <?php
@@ -725,6 +719,14 @@ $cntData=$poquery->num_rows();
                   <option value="<?=$getProduct->Product_id;?>"><?=$getProduct->sku_no;?></option>
                   <?php }?>
                 </select>
+                
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" >Qty:</label> 
+              <div class="col-sm-4">
+              <input name="shape_qty" type="text" value="" id="fillQty" onchange="qtyFill(this.value);" class="form-control" > 
+                 
               </div>
               <label class="col-sm-2 control-label">Finish Goods:</label> 
               <div class="col-sm-4">
@@ -749,7 +751,7 @@ $cntData=$poquery->num_rows();
               </label>
               <div class="col-sm-12">
                 <br />
-                <div class="modal-header">
+                <div class="modal-header table-responsive">
                   <table class="table table-bordered table-hover" >
                     <tbody>
                       <tr class="gradeA">
@@ -1937,5 +1939,43 @@ $cntData=$poquery->num_rows();
   
   }
   	
+  }
+   function checkQtyVal()
+  {
+  
+  var shapePart=document.getElementById("select_id").value;	
+  if(shapePart=='Shape')
+  {
+  	
+  	document.getElementById("fillQty").style.display = "block";
+  	document.getElementById("qtyn").style.display = "block";
+	document.getElementById("shape").value = "";
+	document.getElementById("fillQty").value = "";
+  	$('#getPartView').empty();
+	
+  	for(i=1;i<=cntVal;i++)
+  	{
+  
+  	document.getElementById("entQty"+i).readOnly = true;
+  	}
+  
+  }
+  else
+  {
+  document.getElementById("fillQty").style.display = "none";	
+  document.getElementById("shape").value = "";	
+  document.getElementById("qtyn").style.display = "none";	
+ 
+  	$('#getPartView').empty();
+  
+  
+  for(i=1;i<=10;i++)
+  	{
+  	
+  	document.getElementById("entQty"+i).value = "";
+  
+  	}
+  }
+  
   }
 </script>

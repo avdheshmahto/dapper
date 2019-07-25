@@ -1142,8 +1142,8 @@
     var formid =  $('#formreset').attr('formid');
     $(formid)[0].reset();
     $("#getPartView").empty();
-    
-    $(".hiddenField").val('');
+	$("#quotationTable").empty();
+	$(".hiddenField").val('');
     
     
     <?php 
@@ -1527,7 +1527,158 @@
   
   });
 </script>
-<!-- ends here this javascript code is for purchase delete -->
+<!-- ends here this javascript code is for order delete -->
+
+
+
+
+
+
+<!-- starts here this javascript code is for  grn order delete -->
+<script type="text/javascript">
+  $(function() {
+  $(".delbuttonOrderGrn").click(function(){
+    //Save the link in a variable called element
+    var element = $(this);
+    //Find the id of the link that was clicked
+    var del_id = element.attr("id");
+    //Built a url to send
+    var info = 'id=' + del_id;
+	
+   if(confirm("Are you sure you want to delete ?"))
+        {
+         $.ajax({
+           type: "GET",
+           url: "delete_order_data_grn",
+           data: info,
+           success: function(){
+			   //alert(data);
+            }
+           });
+      $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast")
+      .animate({ opacity: "hide" }, "slow");
+  
+   }
+  
+  return false;
+  
+  });
+  
+  });
+</script>
+<!-- ends here this javascript code is for grn delete -->
+
+
+
+
+<!-- starts here this javascript code is for  check order delete -->
+<script type="text/javascript">
+  $(function() {
+  $(".delbuttonOrderCheck").click(function(){
+    //Save the link in a variable called element
+    var element = $(this);
+    //Find the id of the link that was clicked
+    var del_id = element.attr("id");
+    //Built a url to send
+    var info = 'id=' + del_id;
+	
+   if(confirm("Are you sure you want to delete ?"))
+        {
+         $.ajax({
+           type: "GET",
+           url: "delete_order_data_check",
+           data: info,
+           success: function(){
+			   //alert(data);
+            }
+           });
+      $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast")
+      .animate({ opacity: "hide" }, "slow");
+  
+   }
+  
+  return false;
+  
+  });
+  
+  });
+</script>
+<!-- ends here this javascript code is for check delete -->
+
+
+
+
+<!-- starts here this javascript code is for  repair order delete -->
+<script type="text/javascript">
+  $(function() {
+  $(".delbuttonOrderRepair").click(function(){
+    //Save the link in a variable called element
+    var element = $(this);
+    //Find the id of the link that was clicked
+    var del_id = element.attr("id");
+    //Built a url to send
+    var info = 'id=' + del_id;
+	
+   if(confirm("Are you sure you want to delete ?"))
+        {
+         $.ajax({
+           type: "GET",
+           url: "delete_order_data_repair",
+           data: info,
+           success: function(){
+			   //alert(data);
+            }
+           });
+      $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast")
+      .animate({ opacity: "hide" }, "slow");
+  
+   }
+  
+  return false;
+  
+  });
+  
+  });
+</script>
+<!-- ends here this javascript code is for repair delete -->
+
+
+
+
+<!-- starts here this javascript code is for  scrap order delete -->
+<script type="text/javascript">
+  $(function() {
+  $(".delbuttonOrderScrap").click(function(){
+    //Save the link in a variable called element
+    var element = $(this);
+    //Find the id of the link that was clicked
+    var del_id = element.attr("id");
+    //Built a url to send
+    var info = 'id=' + del_id;
+	
+   if(confirm("Are you sure you want to delete ?"))
+        {
+         $.ajax({
+           type: "GET",
+           url: "delete_order_data_scrap",
+           data: info,
+           success: function(){
+			   //alert(data);
+            }
+           });
+      $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast")
+      .animate({ opacity: "hide" }, "slow");
+  
+   }
+  
+  return false;
+  
+  });
+  
+  });
+</script>
+<!-- ends here this javascript code is for scrap delete -->
+
 
 
 <!-----------------drop down select start here------------->

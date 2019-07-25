@@ -1509,7 +1509,8 @@ public function productionOrderCheck()
 	$table_name ='tbl_production_order_check';
 	$table_name_available='tbl_production_available_order';
 	$this->load->model('Model_admin_login');
-	$rows=count($transfer_qty);
+	$rows=count($productid);
+
     for($i=0; $i<$rows; $i++)
 		{
 		if($transfer_qty[$i]!='' or $repair_qty[$i]!='' or $scrap_qty[$i]!='' or $test_qty[$i]!=''){
@@ -1534,6 +1535,8 @@ public function productionOrderCheck()
 				'zone_id'		=> $this->session->userdata('zone_id'),
 				'brnh_id'		=> $this->session->userdata('brnh_id')
 				);
+
+
 				 $this->Model_admin_login->insert_user($table_name,$data_dtl);
 				 if($transfer_qty[$i]!='')
 				 {
