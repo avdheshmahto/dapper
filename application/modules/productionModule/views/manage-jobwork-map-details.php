@@ -1981,7 +1981,7 @@
   
   
   function qtyValidation(v)
-  
+  {
   
   	var zz=document.getElementById(v).id;
   	
@@ -2100,6 +2100,7 @@
   
   function qtyVal(d)
   {
+	 
 
   var zz=document.getElementById(d).id;
   var myarra = zz.split("qty");

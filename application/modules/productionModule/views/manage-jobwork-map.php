@@ -75,19 +75,13 @@
 	var weightTotal=Number(weight)*Number(v);
 	document.getElementById("total_weight"+i).value=weightTotal;
   	document.getElementById("entQty"+i).value=v;
-	
-	var lowest = 0;
- 	for (var i = 1; i <cntV; i++) {
-  	if (cntV[i] < cntV[lowest]) lowest = i;
- 	}
- 	
-	
+		
   	if(v=='ShapePart')
 	{
 		document.getElementById("total_weight"+i).value="";
 	}
   }
-  	alert( lowest);
+  	
   }
   
   
@@ -2138,7 +2132,7 @@ $cntData=$poquery->num_rows();
   
   function qtyVal(d)
   {
-  	
+  
   var zz=document.getElementById(d).id;
   var myarra = zz.split("qty");
   var asx= myarra[1];
