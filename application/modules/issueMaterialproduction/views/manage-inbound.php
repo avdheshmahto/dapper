@@ -98,7 +98,7 @@
                   <?php
                     $poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$sales->inboundid'");
                     $getQt=$poquery->row();
-                    echo $getQt->qty;
+                    echo (round($getQt->qty,3));
                     ?>
                 </td>
                 <td>

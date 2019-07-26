@@ -4,11 +4,15 @@
   $scheQuery=$this->db->query("select *from tbl_job_work where id='".$_GET['id']."' ");
   $getsched=$scheQuery->row();
   
+ 
+   $scheQueryJob=$this->db->query("select *from tbl_job_work where job_order_no='$getsched->job_order_no' ");
+  $getschedJob=$scheQueryJob->row();
   
-  $input = $getsched->qty;
+ 
+  $input = $getschedJob->qty;
   $res = explode(',',$input);
-  $sumRm= array_sum($res);
-  $sumRmShape=$getsched->shape_qty;
+   $sumRm= array_sum($res);
+  $sumRmShape=$getschedJob->shape_qty;
   
   
   ?>
@@ -901,7 +905,7 @@
                               
                               
                               ?>
-                            <?=$getQty->qty;?>
+                            <?php echo (round($getQty->qty,3));?>
                           </th>
                           <th>
                             <?php
@@ -1902,7 +1906,7 @@
           </tbody>
           <tbody id="quotationTable1">
             <?php
-              // echo "select SUM(EPrice) as RMSUM,EPrice,rowmatial,SUM(qty) as sumqty from tbl_part_price_mapping where part_id in ($dataPartt) group by rowmatial ";
+            
                      $contQuery=$this->db->query("select SUM(EPrice) as RMSUM,EPrice,rowmatial,SUM(qty) as sumqty from tbl_part_price_mapping where part_id in ($dataPartt) group by rowmatial ");
                         foreach($contQuery->result() as $dt)
                         {
@@ -1925,11 +1929,11 @@
                 <?=$sku;?>
                 <?php 
                   if($getsched->type=='Shape'){
-                   $ordQ=$sumRmShape;
+                $ordQ=$sumRm;
                   }
                   else
                   {
-                   $ordQ=$sumRm;
+                $ordQ=$sumRm;
                   }
                   
                   ?>
@@ -1938,9 +1942,9 @@
               <td><input type="hidden" name="order_qty[]" value="<?php echo $ordQ;?>" />
                 <?=$ordQ;?>
               </td>
-              <td><?php echo round($dt->RMSUM,3);?></td>
+              <td><?php echo (round($dt->RMSUM,3));?></td>
               <input type="hidden" name="mproPrice[]" value="<?php echo round($dt->RMSUM*$ordQ,3);?>" />
-              <td><?php echo round($dt->RMSUM*$ordQ,3);?></td>
+              <td><?php echo (round($dt->RMSUM*$ordQ,3));?></td>
             </tr>
             <?php }?>
           </tbody>
