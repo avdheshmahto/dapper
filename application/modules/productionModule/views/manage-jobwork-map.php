@@ -546,8 +546,8 @@
 <?php
 $pri_coll   = 'job_order_no';
 $table_namee = 'tbl_work_order';
-                   
-$poquery=$this->db->query("select *from tbl_issuematrial_hdr where po_no='".$_GET['id']."'");
+                 
+$poquery=$this->db->query("select *from tbl_issuematrial_hdr where job_order_no='$fetch_list->job_order_no'");
 $cntData=$poquery->num_rows();					   
 					   if($cntData>0){
 						   

@@ -505,19 +505,22 @@
     		}
     		
     		
-    		    
+    		      var prdId            =  getvalues();
+				 
     		  if(xobj)
     			{
     			 
            var obj=document.getElementById("prdsrch");
     			
-    			 xobj.open("GET","getproduct?con="+product+"&con_id="+conatctId+"&invoice_type="+invoice_type,true);
+    			 xobj.open("GET","getproduct?con="+product+"&con_id="+conatctId+"&invoice_type="+invoice_type+"&commonProduct="+prdId,true);
+				 
     			 xobj.onreadystatechange=function()
     			 {
     			  
              if(xobj.readyState==4 && xobj.status==200)
     			   {
     			    obj.innerHTML=xobj.responseText;
+					
     			   }
     			 }
     			}
@@ -1410,7 +1413,19 @@
       }
         	
   }
-          
+        function getvalues(){
+		
+    var inps  = document.getElementsByName('main_id[]');
+	
+    var myarr = [];
+	    for (var i = 0; i <inps.length; i++) {
+	      var inp = inps[i];
+	      //alert("main_id["+i+"].value="+inp.value);
+	      myarr.push(inp.value);
+	    }
+       var webcamval = myarr;
+    return webcamval.join(",");
+}    
   </script>
 
 </form>

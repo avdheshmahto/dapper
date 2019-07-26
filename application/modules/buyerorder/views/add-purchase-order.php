@@ -500,11 +500,12 @@
     		 var product1=document.getElementById("prd").value;	 
     		 var product=product1;
     		
-    		
+    		  var prdId            =  getvalues();
+			
     		 if(xobj)
     			{
     			 var obj=document.getElementById("prdsrch");
-    			 xobj.open("GET","getproduct?con="+product,true);
+    			 xobj.open("GET","getproduct?con="+product+"&commonProduct="+prdId,true);
     			 xobj.onreadystatechange=function()
     			  {
     			  if(xobj.readyState==4 && xobj.status==200)
@@ -1492,7 +1493,20 @@
         	
     }
 
-          
+    function getvalues(){
+		
+    var inps  = document.getElementsByName('main_id[]');
+	
+    var myarr = [];
+	    for (var i = 0; i <inps.length; i++) {
+	      var inp = inps[i];
+	      //alert("main_id["+i+"].value="+inp.value);
+	      myarr.push(inp.value);
+	    }
+       var webcamval = myarr;
+    return webcamval.join(",");
+}
+      
   </script>
 
 </form>

@@ -3,6 +3,7 @@
   $con2=explode("^",$con1);
   $con3=$con2[0];
   $Productctg_id=$con2[1];
+  $prdIdd= $_GET['commonProduct'];
   $contactStateQuery=$this->db->query("select *from tbl_contact_m where contact_id='".$_GET['con_id']."'");
   $getContactState=$contactStateQuery->row();
   $getContactState->state_id;
@@ -219,10 +220,15 @@
     <?php
       if($con1!="")
       {
-      
-      
-       $sel=$this->db->query("select * from tbl_product_stock where type='13' and  sku_no like '%$con1%'");
-      
+       if($prdIdd != ""){
+     
+       $sel=$this->db->query("select * from tbl_product_stock where type='13' and  sku_no like '%$con1%' and Product_id NOT IN($prdIdd)");
+	   }
+	   else
+	   {
+		  
+		   $sel=$this->db->query("select * from tbl_product_stock where type='13' and  sku_no like '%$con1%'");
+	   }
       
        $i=0;
       
