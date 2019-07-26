@@ -94,7 +94,7 @@
         processData: false,  // tell jQuery not to process the data
         contentType: false   // tell jQuery not to set contentType
     }).done(function( data ) {
-  	alert(data);
+  	//alert(data);
   	
   	
   	  if(data == 1 || data == 2){
@@ -207,7 +207,7 @@
     }).done(function( data ) {
   	
   	
-  	alert(data);
+  	//alert(data);
   	  if(data == 1 || data == 2){
   		
                         if(data == 1)

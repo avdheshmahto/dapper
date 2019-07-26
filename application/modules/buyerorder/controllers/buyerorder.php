@@ -358,7 +358,7 @@ class buyerorder extends my_controller
         }
         
         //$this->software_log_insert($lastHdrId,$vendor_id,$grand_total,'Purchase Order added');
-        $rediectInvoice = "addproduction/manage_purchase_order";
+        $rediectInvoice = "buyerorder/manage_purchase_order";
         
         redirect($rediectInvoice);
         

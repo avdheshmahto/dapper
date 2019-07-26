@@ -111,7 +111,7 @@
                       
                       ?>
                     <td><?=$getProduct->order_qty;?></td>
-                    <td><?=$getProduct->receive_qty;?></td>
+                    <td><?php echo round($getProduct->receive_qty,3);?></td>
                     <?php
                       $inbountLogQuery=$this->db->query("select SUM(D.receive_qty) as rec_qty from tbl_issuematrial_dtl D,tbl_issuematrial_hdr H where D.inboundrhdr = H.inboundid AND D.productid='$getProduct->productid' AND H.po_no='$getHdr->po_no'");
                       	$getInbound=$inbountLogQuery->row();
@@ -122,7 +122,7 @@
                       	?>
                     <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->receive_qty-$getProduct->remaining_qty;?>" />
                     <td style="display:none"><?php echo $rmRR=$getProduct->order_qty-$getProduct->rem_order_qty;?></td>
-                    <td style="display:none"><?php echo $rmR=$getProduct->receive_qty-$getProduct->remaining_qty;?></td>
+                    <td style="display:none"><?php echo $rmR=round($getProduct->receive_qty-$getProduct->remaining_qty,3);?></td>
                   </tr>
                   <?php 
                     $ordQtyTot=$ordQtyTot+$getProduct->receive_qty;

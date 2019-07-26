@@ -65,7 +65,7 @@
                         foreach($setQuery->result() as $getSet){
                         
                         ?>
-                      <option value="<?=$getSet->serail_number?>"><?=$getSet->keyvalue?></option>
+                      <option value="<?=$getSet->serial_number?>"><?=$getSet->keyvalue?></option>
                       <?php }?>
                     </select>
                   </th>

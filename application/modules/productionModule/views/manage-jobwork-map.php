@@ -11,7 +11,7 @@
   	$pId[]=$getDtl->productid;
   }
   
-  @$getP=implode(",",$pId);
+ @$getP=implode(",",$pId);
   
   ?>
 <style type="text/css">

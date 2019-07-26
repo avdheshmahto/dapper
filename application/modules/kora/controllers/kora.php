@@ -185,6 +185,7 @@ class kora extends my_controller
     public function insert_jobwork()
     {
         
+       
         @extract($_POST);
         $table_name = 'tbl_job_work';
         $cnt        = count($shapeId);
@@ -239,7 +240,7 @@ class kora extends my_controller
                     'shape_qty' => $shape_qty,
                     'module_name' => 'Kora'
                 );
-                
+               
                 $sesio = array(
                     'comp_id' => $this->session->userdata('comp_id'),
                     'zone_id' => $this->session->userdata('zone_id'),

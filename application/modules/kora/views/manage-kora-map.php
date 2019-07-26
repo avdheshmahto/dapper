@@ -2,6 +2,7 @@
   $this->load->view("header.php");
   $scheQuery=$this->db->query("select *from tbl_production_order_transfer_another_module where lot_no='".$_GET['id']."'");
   $getsched=$scheQuery->row();
+   $getsched->job_order_id;
   
   
   $dtlQuery=$this->db->query("select *from tbl_quotation_purchase_order_dtl where purchaseid='$getsched->job_order_id'");
@@ -10,7 +11,7 @@
   	$pId[]=$getDtl->productid;
   }
   
-  @$getP=implode(",",$pId);
+   @$getP=implode(",",$pId);
   
   ?>
 <style type="text/css">
@@ -221,7 +222,7 @@
       
   	$("#shape").val("");
 	$("#fillQty").val("");
-	$("#select_id").val("");
+	//$("#select_id").val("");
   	$("#getPartView").text("");
   
   
@@ -229,7 +230,7 @@
   
     }
     function submitForm() {
-              
+            
     var form_data = new FormData(document.getElementById("myform"));
     form_data.append("label", "WEBUPLOAD");
   
@@ -242,7 +243,7 @@
     }).done(function( data ) {
   	
   	
-  	
+  
   	  if(data == 1 || data == 2){
   		
                         if(data == 1)
