@@ -307,7 +307,7 @@
       
   	$("#shape").val("");
 	$("#fillQty").val("");
-	$("#select_id").val("");
+	
   	$("#getPartView").text("");
   
   
