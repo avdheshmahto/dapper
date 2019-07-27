@@ -1,21 +1,20 @@
 <?php
   $this->load->view("header.php");
-  
+
   $scheQuery=$this->db->query("select *from tbl_job_work where id='".$_GET['id']."' ");
   $getsched=$scheQuery->row();
-  
- 
-   $scheQueryJob=$this->db->query("select *from tbl_job_work where job_order_no='$getsched->job_order_no' ");
+
+
+  $scheQueryJob=$this->db->query("select *from tbl_job_work where job_order_no='$getsched->job_order_no' ");
   $getschedJob=$scheQueryJob->row();
-  
- 
+
+
   $input = $getschedJob->qty;
   $res = explode(',',$input);
-   $sumRm= array_sum($res);
+  $sumRm= array_sum($res);
   $sumRmShape=$getschedJob->shape_qty;
-  
-  
-  ?>
+    
+?>
 <style type="text/css">
   .select2-container--open {
   z-index: 99999999 !important;
@@ -75,11 +74,6 @@
   // ends
   
   
-  
-  
-  
-  
-  
   //starts purchase return  query
   
   function SubmitmyProduction_RM_return() {
@@ -118,7 +112,7 @@
                       $("#OrderRepairresultarea").text(data);
   					
                    }
-  				// ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
+  				ajex_RmReturnListData(<?=$_GET['id'];?>);
    
   	 
       console.log(data);
@@ -170,7 +164,7 @@
                       $("#OrderRepairresultarea").text(data);
   					
                    }
-  				// ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
+  				 ajex_OrderRepairListData(<?=$_GET['id'];?>);
    
   	 
       console.log(data);
@@ -180,13 +174,6 @@
     return false;     
   }
   // ends
-  
-  
-  
-  
-  
-  
-  
   
   
   
@@ -239,8 +226,6 @@
     return false;     
   }
   // ends
-  
-  
   
   
   
@@ -318,7 +303,6 @@
   
   
   
-  
   function purchase_return(viewId){
   
   var order_type=document.getElementById("order_type").innerHTML;
@@ -339,7 +323,6 @@
   	});
   
    }
-  
   
   
   
@@ -388,7 +371,6 @@
   	});
   
    }
-  
   
   
   
@@ -583,9 +565,7 @@
   
   }
   
-  //******************************************************************************************************************************************************************************************************************************************************************************************************
-  
-  //*********************************************************************************************************************************************************************************************************************************************************************************************************
+  //****************************************************************************************************************
 </script>
 <script>
   function addpricemapPoOrder(){
@@ -617,9 +597,6 @@
   	var pa_co=part_c;
   	var myString = JSON.stringify(myObject);    
   	
-  	 // $('#quotationProductmapValue').empty().append("<input type ='text' id ='proQuotation' name='quotationMapedValue[]' value='"+myString+"'>");
-        //$('#QuotationMap').val(myString);
-  	  
   	  
   	   $('#quotationTablePO').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
       
@@ -657,9 +634,6 @@
   	var pa_co=part_c;
   	var myString = JSON.stringify(myObject);    
   	
-  	 // $('#quotationProductmapValue').empty().append("<input type ='text' id ='proQuotation' name='quotationMapedValue[]' value='"+myString+"'>");
-        //$('#QuotationMap').val(myString);
-  	  
   	  
   	   $('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
       
@@ -895,10 +869,6 @@
                               $poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$getPo->inboundid'");
                               $getQty=$poquery->row();
                               
-                              // tbl_receive_matrial_grn_log query
-                              
-                              
-                              //echo "select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->inboundid'";
                               
                               $poquerygrnLog=$this->db->query("select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->po_no'");
                               $getQtygrnLog=$poquerygrnLog->row();
@@ -962,9 +932,7 @@
                           <td>&nbsp;</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
+                    
                     </table>
                   </div>
                 </div>
@@ -1191,7 +1159,7 @@
               <div class="tab-pane" id="RMReturn">
                 <div class="panel-body">
                   <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover dataTables-example1"  id="listingCheckingGrnData">
+                    <table class="table table-striped table-bordered table-hover dataTables-example1"  id="listingRMreturnData">
                       <thead>
                         <tr>
                           <th style="width:150px;">RM Return No.</th>
@@ -1331,9 +1299,7 @@
                           <td>&nbsp;</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                    
-                      </tfoot>
+
                     </table>
                   </div>
                 </div>
@@ -1341,7 +1307,7 @@
               <div class="tab-pane" id="returnOrder">
                 <div class="panel-body">
                   <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover dataTables-example1"  id="listingAjexRequestRM">
+                    <table class="table table-striped table-bordered table-hover dataTables-example1"  id="listingAjexRepair">
                       <thead>
                         <tr>
                           <th style="width:150px;">Repair No.</th>
@@ -1362,10 +1328,6 @@
                             $poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$getPo->inboundid'");
                             $getQty=$poquery->row();
                             
-                            // tbl_receive_matrial_grn_log query
-                            
-                            
-                            //echo "select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->inboundid'";
                             
                             $poquerygrnLog=$this->db->query("select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->po_no'");
                             $getQtygrnLog=$poquerygrnLog->row();
@@ -1905,7 +1867,7 @@
             </tr>
           </tbody>
           <tbody id="quotationTable1">
-            <?php
+              <?php
             
                      $contQuery=$this->db->query("select SUM(EPrice) as RMSUM,EPrice,rowmatial,SUM(qty) as sumqty from tbl_part_price_mapping where part_id in ($dataPartt) group by rowmatial ");
                         foreach($contQuery->result() as $dt)
@@ -2290,6 +2252,24 @@
        }
       });
   }
+
+
+function ajex_RmReturnListData(production_id){
+  
+    ur = "<?=base_url('productionModule/getRmReturn');?>";
+      $.ajax({
+        url: ur,
+        data: { 'id' : production_id },
+        type: "POST",
+        success: function(data){
+         // alert(data);
+          //alert("jkhkjh"+type);
+          //$("#listingData").hide();
+          $("#listingRMreturnData").empty().append(data).fadeIn();
+                
+       }
+      });
+  }  
   
   
   function ajex_Order_Grn_Data(production_id){
@@ -2328,7 +2308,22 @@
   }
   
   
+  function ajex_OrderRepairListData(production_id){
   
+    ur = "<?=base_url('productionModule/ajexRequestRepair');?>";
+      $.ajax({
+        url: ur,
+        data: { 'id' : production_id },
+        type: "POST",
+        success: function(data){
+         // alert(data);
+          //alert("jkhkjh"+type);
+          //$("#listingData").hide();
+          $("#listingAjexRepair").empty().append(data).fadeIn();
+                
+       }
+      });
+  }  
   
   
   

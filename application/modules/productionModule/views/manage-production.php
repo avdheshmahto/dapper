@@ -86,17 +86,8 @@
                 </form>
                 <?php
                   $i=1;
-                  foreach($result as $sales)
-                    {
-                    
-                    /*
-                  $sum=0;
-                  $queryfetch11=$this->db->query("select * from tbl_issuematrial_hdr where status='A'");	
-                  foreach($queryfetch11->result() as $fetchqrow11){
-                  	$sum+=$fetchqrow11->qty;
-                  }
-                  */
-                    ?>
+                  foreach($result as $sales) {                                      
+                ?>
                 <tr class="gradeC record">
                   <th><a href="<?=base_url();?>productionModule/manage_jobwork_map?id=<?=$sales->purchaseid;?>"><?=$sales->lot_no;?></a></th>
                   <th><?=$sales->maker_date;?></th>
@@ -242,9 +233,5 @@
        }
      });
    }
-   
-   
-   
-  
-  
+     
 </script>

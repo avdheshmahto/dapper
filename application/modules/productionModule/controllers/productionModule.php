@@ -783,6 +783,13 @@ public function getPurchaseRawOrder()
 	$this->load->view("getPurchaseRawOrder",$data);
 }
 
+public function getRmReturn()
+{
+	@extract($_POST);
+	$data=array('id' => $id);
+	$this->load->view("getRMreturnPage",$data);
+}
+
 
 public function view_work_order()
 {
@@ -790,7 +797,7 @@ public function view_work_order()
 	$this->load->view("view_work_order",$data);
 }
 
-function item_Stock(){
+function view_Stock(){
 
    if($this->session->userdata('is_logged_in'))
 	{
@@ -1616,6 +1623,14 @@ public function ajexRequestRM()
 	$data=array('id' => $id,
 	);
 	$this->load->view("getRequestRM",$data);
+}
+
+public function ajexRequestRepair()
+{
+	@extract($_POST);
+	$data=array('id' => $id,
+	);
+	$this->load->view("getRequestRepair",$data);
 }
 
 

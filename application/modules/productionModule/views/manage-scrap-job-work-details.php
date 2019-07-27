@@ -1,6 +1,6 @@
 <?php
   $this->load->view("header.php");
-  //echo "select *from tbl_job_work where id='".$_GET['id']."' ";
+  
   $scheQuery=$this->db->query("select *from tbl_job_work where id='".$_GET['id']."' ");
   $getsched=$scheQuery->row();
   
@@ -206,16 +206,7 @@
     return false;     
   }
   // ends
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+      
   
   //starts order check  query
   
@@ -265,9 +256,6 @@
     return false;     
   }
   // ends
-  
-  
-  
   
   
   
@@ -343,8 +331,6 @@
   
   
   
-  
-  
   function purchase_return(viewId){
   
   var order_type=document.getElementById("order_type").innerHTML;
@@ -365,8 +351,6 @@
   	});
   
    }
-  
-  
   
   
   
@@ -393,8 +377,6 @@
   
   
   
-  
-  
   function Order(viewId){
   
   var scrapData = viewId.split("^");
@@ -418,9 +400,6 @@
   	});
   
    }
-  
-  
-  
   
   
   
@@ -537,6 +516,7 @@
   	});
   }
   
+
   function getPart(v)
   {
   	
@@ -552,8 +532,6 @@
       }
       });
   }
-  
-  
   
   
   
@@ -603,9 +581,7 @@
   
   }
   
-  //******************************************************************************************************************************************************************************************************************************************************************************************************
-  
-  //*********************************************************************************************************************************************************************************************************************************************************************************************************
+  //******************************************************************************************************************************
 </script>
 <script>
   function addpricemapPoOrder(){
@@ -676,10 +652,7 @@
   	var qt=qtyy;
   	var pa_co=part_c;
   	var myString = JSON.stringify(myObject);    
-  	
-  	 // $('#quotationProductmapValue').empty().append("<input type ='text' id ='proQuotation' name='quotationMapedValue[]' value='"+myString+"'>");
-        //$('#QuotationMap').val(myString);
-  	  
+  	  	   	  
   	  
   	   $('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
       
@@ -869,9 +842,7 @@
                           <td>&nbsp;</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
+
                     </table>
                   </div>
                 </div>
