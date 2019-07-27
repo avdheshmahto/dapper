@@ -406,6 +406,7 @@
                               $getProcess=$processquery->row();
                               // ends
                               ?>
+                              <p style="display:none" id="order_type"><?=$fetch_list->process;?></p>
                             <a href="#" onclick="assemble_grn('<?=$getProduct->Product_id;?>','<?=$_GET['id'];?>');" data-toggle="modal" data-target="#modal-3"><?=$getProduct->sku_no;?>&nbsp;<?=$getProduct->productname;?></a>
                           </td>
                           <td><?=$getProcess->keyvalue;?></td>

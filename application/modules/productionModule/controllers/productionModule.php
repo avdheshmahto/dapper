@@ -564,7 +564,6 @@ $this->load->view("getpartPoCode",$data);
 
 public function insert_jobwork()
 {
-	
 @extract($_POST);
 $table_name='tbl_job_work';
 $cnt=count($shapeId);

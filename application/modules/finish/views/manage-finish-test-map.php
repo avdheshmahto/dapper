@@ -404,6 +404,7 @@
                               // ends
                               ?>
                             <?=$getProduct->sku_no;?>&nbsp;<?=$getProduct->productname;?>
+                            <p style="display:none" id="order_type"><?=$fetch_list->process;?></p>
                             <button style="display:none" type="button" class="btn btn-default modalMapSpare" onclick="Order('<?=$fetch_list->job_order_no;?>');" data-toggle="modal" data-target="#modal-order"><?=$fetch_list->order_type;?></button>
                           </td>
                           <td><?=$fetch_list->order_no;?></td>

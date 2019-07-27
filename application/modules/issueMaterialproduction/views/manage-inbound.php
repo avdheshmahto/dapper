@@ -31,7 +31,7 @@
           <div class="col-sm-5" style="margin: 0px -3px -15px 0px;">
             <label>
               Show 
-              <select   name="DataTables_Table_0_length" url="<?=base_url();?>inbound/manage_inbound?<?='po_no='.$_GET['po_no'].'&date='.$_GET['date'].'&grn_no='.$_GET['grn_no'].'&filter='.$_GET['filter'];?>" id="entries" class="form-control" style="width: 65px;">
+              <select   name="DataTables_Table_0_length" url="<?=base_url();?>issueMaterialproduction/inbound/manage_inbound?<?='po_no='.$_GET['po_no'].'&date='.$_GET['date'].'&grn_no='.$_GET['grn_no'].'&filter='.$_GET['filter'];?>" id="entries" class="form-control" style="width: 65px;">
                 <option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
                 <option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
                 <option value="50" <?=$entries=='50'?'selected':'';?>>50</option>

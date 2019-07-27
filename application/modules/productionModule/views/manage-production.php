@@ -1,11 +1,5 @@
 <?php
   $this->load->view("header.php");	
-  require_once(APPPATH.'core/my_controller.php');
-  $obj=new my_controller();
-  $CI =& get_instance();
-  $table_name='tbl_product_stock';
-  $pri_id='Product_id';
-  $field_name='productname';
   
   $entries = "";
   if($this->input->get('entries')!="")
@@ -37,7 +31,7 @@
           <div class="dataTables_length" id="DataTables_Table_0_length">
             <label>
               Show
-              <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" id="entries"  url="<?=base_url('production/manage_production');?>" class="form-control input-sm">
+              <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" id="entries"  url="<?=base_url('productionModule/manage_production?');?>" class="form-control input-sm">
                 <option value="10">10</option>
                 <option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
                 <option value="50" <?=$entries=='50'?'selected':'';?>>50</option>

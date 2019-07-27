@@ -157,11 +157,12 @@
   
   function Order(viewId){
   
+  //alert();
   var order_type=document.getElementById("order_type").innerHTML;
   var lot_no=document.getElementById("lot_no").innerHTML;
   
    	$.ajax({   
-  		    type: "POST",  
+  		  type: "POST",  
   			url: "order_details",  
   			cache:false,  
   			data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},  
@@ -342,7 +343,7 @@
   }
   
   //******************************************************************
-<script>
+
   function addpricemapPoOrder(){
   
   	var shapeid =  $('#shapePO').val();
