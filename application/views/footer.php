@@ -1141,11 +1141,18 @@
       //var url = "<?=base_url()?>"+'assets/images/no_image.png';
     var formid =  $('#formreset').attr('formid');
     $(formid)[0].reset();
+    
+    $("#partTable").empty();
+    $("#consigneeTable").empty();
+    $("#consigneeTableShape").empty();
+    //$("#consigneeTable").empty();
+
     $("#getPartView").empty();
-	$("#quotationTable").empty();
-	$(".hiddenField").val('');
+	  $("#quotationTable").empty();
+	  $(".hiddenField").val('');
     
-    
+    showconsigneemap(thsVal = "");
+
     <?php 
     if($_GET['con_type']=='4'){
     ?>
@@ -1210,12 +1217,12 @@
     ?>
        $('.top_title').html('Add Accessories');
        <?php }?>
+
       $(formid+" :input").prop("disabled", false);
       $("#button").css("display", "block");
       //CKEDITOR.instances['tem'].setData("");
       //$('#image').attr('src',url);
-    $("#consigneeTable").empty();
-    showconsigneemap(thsVal = "");
+    
   });
 
   //-----------------Entries-------------------
