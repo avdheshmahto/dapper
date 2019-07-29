@@ -85,7 +85,7 @@
               	{}else{
               
               ?>	
-          <li <?php if($mod_fetch2->function_group==$GP){  ?> <?php if($mod_fetch3->function_url==$page1 or $mod_fetch3->function_url==$page2){?> class="active" <?php }?> <?php }?>><a href="<?php echo base_url();?><?php echo $mod_fetch3->function_url; ?>"><span class="title"><?php echo $mod_fetch3->function_name; ?></span></a></li>
+          <li <?php //if($mod_fetch2->function_group==$GP){  ?> <?php if($mod_fetch3->function_url==$page1 or $mod_fetch3->function_url==$page2){?> class="active" <?php }?> <?php //}?>><a href="<?php echo base_url();?><?php echo $mod_fetch3->function_url; ?>"><span class="title"><?php echo $mod_fetch3->function_name; ?></span></a></li>
           <?php 
             } }
             //echo "</ul>";
