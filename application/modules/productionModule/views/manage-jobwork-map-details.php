@@ -1,11 +1,11 @@
 <?php
   $this->load->view("header.php");
 
-  $scheQuery=$this->db->query("select *from tbl_job_work where id='".$_GET['id']."' ");
+  $scheQuery=$this->db->query("select * from tbl_job_work where id='".$_GET['id']."' ");
   $getsched=$scheQuery->row();
 
 
-  $scheQueryJob=$this->db->query("select *from tbl_job_work where job_order_no='$getsched->job_order_no' ");
+  $scheQueryJob=$this->db->query("select * from tbl_job_work where job_order_no='$getsched->job_order_no' ");
   $getschedJob=$scheQueryJob->row();
 
 
@@ -1869,22 +1869,21 @@
           <tbody id="quotationTable1">
               <?php
             
-                     $contQuery=$this->db->query("select SUM(EPrice) as RMSUM,EPrice,rowmatial,SUM(qty) as sumqty from tbl_part_price_mapping where part_id in ($dataPartt) group by rowmatial ");
-                        foreach($contQuery->result() as $dt)
-                        {
+                $contQuery=$this->db->query("select SUM(EPrice) as RMSUM,EPrice,rowmatial,SUM(qty) as sumqty from tbl_part_price_mapping where part_id in ($dataPartt) group by rowmatial ");
+                foreach($contQuery->result() as $dt)
+                {
                 $productNameQuery=$this->db->query("select *from tbl_product_stock where Product_id='$dt->rowmatial'");
                 $getProduct=$productNameQuery->row();
                 
-                           $prodId   = $getProduct->Product_id;
-               $sku   = $getProduct->sku_no;
-                           $prodName = $getProduct->productname;
-                           $uom      = $getProduct->usageunit;
+                $prodId   = $getProduct->Product_id;
+                $sku   = $getProduct->sku_no;
+                $prodName = $getProduct->productname;
+                $uom      = $getProduct->usageunit;
                
                
-               
-               	  $uomQuery=$this->db->query("select *from tbl_master_data where serial_number='$uom'");
-                $getUOM=$uomQuery->row();
-                        ?>
+            $uomQuery=$this->db->query("select *from tbl_master_data where serial_number='$uom'");
+            $getUOM=$uomQuery->row();
+            ?>
             <tr>
               <td>
                 <input type="hidden" name="prodcId[]" value="<?=$prodId;?>" />
@@ -1898,11 +1897,35 @@
                 $ordQ=$sumRm;
                   }
                   
+                  $list_partId=array();
+                  $ptId=$this->db->query("select * from tbl_part_price_mapping where rowmatial='$dt->rowmatial'");
+                  $count=$ptId->num_rows();
+                  foreach ($ptId->result() as $getPt) {
+                    $partJobId=$getPt->part_id;
+                    if($partJobId !='')
+                    {
+                      array_push($list_partId, $partJobId);
+                    }
+
+                    if($count > 0)
+                    {
+                      $valPartId=implode(",", $list_partId);
+                    }
+                    else
+                    {
+                      $valPartId="99999";
+                    }
+
+                    $joLog=$this->db->query("select SUM(qty) as rmQtySUm from tbl_job_work_log where lot_no='$getsched->lot_no' AND part_id IN ($valPartId) " );
+                    $getJoLogData=$joLog->row();
+
+                  }
+
                   ?>
               </td>
               <td><?=$getUOM->keyvalue;?></td>
-              <td><input type="hidden" name="order_qty[]" value="<?php echo $ordQ;?>" />
-                <?=$ordQ;?>
+              <td><input type="hidden" name="order_qty[]" value="<?php echo $getJoLogData->rmQtySUm; //$ordQ;?>" />
+                <?php echo $getJoLogData->rmQtySUm; //$ordQ;?>
               </td>
               <td><?php echo (round($dt->RMSUM,3));?></td>
               <input type="hidden" name="mproPrice[]" value="<?php echo round($dt->RMSUM*$ordQ,3);?>" />
