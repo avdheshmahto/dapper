@@ -87,7 +87,8 @@
  	{
 	var weight=document.getElementById("weight"+i).value;
 	var weightTotal=Number(weight)*Number(v);
-	document.getElementById("total_weight"+i).value=weightTotal;
+  var xyz = Number(weightTotal).toFixed(3);
+	document.getElementById("total_weight"+i).value=xyz;
   	document.getElementById("entQty"+i).value=v;
 	if(v=='ShapePart')
 	{
@@ -1870,9 +1871,10 @@ $cntData=$poquery->num_rows();
   var total_weight=document.getElementById("total_weight"+asx).value;	
   var rate=document.getElementById("rate"+asx).value;	
   
-  totalRMRate=Number(total_weight)*Number(rate);
-  document.getElementById("total_rm_rate"+asx).value=totalRMRate;
-  document.getElementById("total_cost"+asx).value=totalRMRate;
+  var totalRMRate=Number(total_weight)*Number(rate);
+  var t = Number(totalRMRate).toFixed(3);
+  document.getElementById("total_rm_rate"+asx).value=t;
+  document.getElementById("total_cost"+asx).value=t;
   
   
   }
@@ -1887,12 +1889,14 @@ $cntData=$poquery->num_rows();
   var total_weight=document.getElementById("total_weight"+asx).value;	
   var labour_rate=document.getElementById("labour_rate"+asx).value;	
   
-  totalRMRate=Number(total_weight)*Number(labour_rate);
-  document.getElementById("total_labour_rate"+asx).value=totalRMRate;
+  var totalRMRate=Number(total_weight)*Number(labour_rate);
+  var y = Number(totalRMRate).toFixed(3);
+  document.getElementById("total_labour_rate"+asx).value=y;
   
   var total_cost=document.getElementById("total_cost"+asx).value;
+  var x = Number(total_cost).toFixed(3);
   
-  document.getElementById("total_cost"+asx).value=Number(totalRMRate)+Number(total_cost);
+  document.getElementById("total_cost"+asx).value=Number(y)+Number(x);
   
   }
   
