@@ -70,7 +70,8 @@
                   </thead>
                   <?php
                     
-                    	$productQuery=$this->db->query("select productid,inboundrhdr,receive_qty,remaining_qty,order_qty,rem_order_qty from tbl_issuematrial_dtl where inboundrhdr='$id' group by productid");
+                    	//$productQuery=$this->db->query("select productid,inboundrhdr,receive_qty,remaining_qty,order_qty,rem_order_qty from tbl_issuematrial_dtl where inboundrhdr='$id' group by productid");
+                  $productQuery=$this->db->query("select * from tbl_issuematrial_dtl where inboundrhdr='$id' ");
                     	$i=1;
                     	foreach($productQuery->result() as $getProduct){
                     	####### get product #######
@@ -93,19 +94,19 @@
                     <?php
                      
                       
-                      $poLogQuery=$this->db->query("select D.qty as po_qty,SUM(M.qty) as mqty from tbl_quotation_purchase_order_dtl D,tbl_part_price_mapping M,tbl_machine MM where MM.machine_name = D.productid AND MM.id = M.machine_id AND D.purchaseid='$getHdr->po_no' and M.rowmatial='$getProduct->productid' AND M.type ='part'");
-                      $getPoQty=$poLogQuery->row();
+                      // $poLogQuery=$this->db->query("select D.qty as po_qty,SUM(M.qty) as mqty from tbl_quotation_purchase_order_dtl D,tbl_part_price_mapping M,tbl_machine MM where MM.machine_name = D.productid AND MM.id = M.machine_id AND D.purchaseid='$getHdr->po_no' and M.rowmatial='$getProduct->productid' AND M.type ='part'");
+                      // $getPoQty=$poLogQuery->row();
                       
                       
                       ?>
                     <td><?=$getProduct->order_qty;?></td>
                     <td><?php echo round($getProduct->receive_qty,3);?></td>
                     <?php
-                      $inbountLogQuery=$this->db->query("select SUM(D.receive_qty) as rec_qty from tbl_issuematrial_dtl D,tbl_issuematrial_hdr H where D.inboundrhdr = H.inboundid AND D.productid='$getProduct->productid' AND H.po_no='$getHdr->po_no'");
-                      	$getInbound=$inbountLogQuery->row();
+                      // $inbountLogQuery=$this->db->query("select SUM(D.receive_qty) as rec_qty from tbl_issuematrial_dtl D,tbl_issuematrial_hdr H where D.inboundrhdr = H.inboundid AND D.productid='$getProduct->productid' AND H.po_no='$getHdr->po_no'");
+                      // 	$getInbound=$inbountLogQuery->row();
                       
-                            $inbountLogGRNQuery=$this->db->query("select SUM(receive_qty) as rec_qty from tbl_issuematrial_dtl where productid='$getProduct->productid' AND inboundrhdr = '$id'");
-                      	$getInboundGRN=$inbountLogGRNQuery->row();
+                      //       $inbountLogGRNQuery=$this->db->query("select SUM(receive_qty) as rec_qty from tbl_issuematrial_dtl where productid='$getProduct->productid' AND inboundrhdr = '$id'");
+                      // 	$getInboundGRN=$inbountLogGRNQuery->row();
                       
                       	?>
                     <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->receive_qty-$getProduct->remaining_qty;?>" />
