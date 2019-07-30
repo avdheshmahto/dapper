@@ -564,77 +564,82 @@ $this->load->view("getpartPoCode",$data);
 
 public function insert_jobwork()
 {
-@extract($_POST);
-$table_name='tbl_job_work';
-$cnt=count($shapeId);
-for($i=0;$i<$cnt;$i++){
+		
+		@extract($_POST);
+		$table_name='tbl_job_work';
+		$cnt=count($shapeId);
+		for($i=0;$i<$cnt;$i++){
 
-$data=array(
-'vendor_id' => $vendor_id,	
-'job_order_no' => $job_order_no,
-'lot_no' => $lot_number,
-'order_type' => $order_type,
-'date' => $date,
-'shape_id' => $shapeId[$i],
-'part_id' => $part_c[$i],
-'qty' => $qtyy[$i],
-'weight' => $weight_qty[$i],
-'total_weight' => $total_weight[$i],
-'rate' => $rate_rs[$i],
-'total_rm_rate_rs' => $total_rm_rate_rs[$i],
-'labour_rate_co' => $labour_rate_rs[$i],
-'total_labour_rate' => $total_labour_rate[$i],
-'total_cost' => $total_cost[$i],
-'production_id' => $production_id,
-'type' => $type,
-'shape_qty' => $shape_qty
-);
+		$data=array(
+				'vendor_id' => $vendor_id,	
+				'job_order_no' => $job_order_no,
+				'lot_no' => $lot_number,
+				'order_type' => $order_type,
+				'date' => $date,
+				'shape_id' => $shapeId[$i],
+				'part_id' => $part_c[$i],
+				'qty' => $qtyy[$i],
+				'weight' => $weight_qty[$i],
+				'total_weight' => $total_weight[$i],
+				'rate' => $rate_rs[$i],
+				'total_rm_rate_rs' => $total_rm_rate_rs[$i],
+				'labour_rate_co' => $labour_rate_rs[$i],
+				'total_labour_rate' => $total_labour_rate[$i],
+				'total_cost' => $total_cost[$i],
+				'production_id' => $production_id,
+				'type' => $type,
+				'shape_qty' => $shape_qty
+		);
 
-$sesio = array(
+		$sesio = array(
 					'comp_id' => $this->session->userdata('comp_id'),
 					'zone_id' => $this->session->userdata('zone_id'),
 					'maker_date'=> date('y-m-d'),
 					'author_date'=> date('y-m-d')
 				);
 
-//print_r($data);die;
-$dataall = array_merge($data,$sesio);
-$this->Model_admin_login->insert_user($table_name,$dataall);
-$dataP=explode(",",$part_c[$i]);
-$dataQ=explode(",",$qtyy[$i]);
-$dataW=explode(",",$weight_qty[$i]);
-$dataR=explode(",",$rate_rs[$i]);
-$total_weightR=explode(",",$total_weight[$i]);
-$total_rm_rate_rsR=explode(",",$total_rm_rate_rs[$i]);
-$labour_rate_coR=explode(",",$labour_rate_rs[$i]);
-$total_labour_rateR=explode(",",$total_labour_rate[$i]);
-$total_costR=explode(",",$total_cost[$i]);
+			//print_r($data);die;
+			$dataall = array_merge($data,$sesio);
+			$this->Model_admin_login->insert_user($table_name,$dataall);
+			$dataP=explode(",",$part_c[$i]);
+			$dataQ=explode(",",$qtyy[$i]);
+			$dataW=explode(",",$weight_qty[$i]);
+			$dataR=explode(",",$rate_rs[$i]);
+			$total_weightR=explode(",",$total_weight[$i]);
+			$total_rm_rate_rsR=explode(",",$total_rm_rate_rs[$i]);
+			$labour_rate_coR=explode(",",$labour_rate_rs[$i]);
+			$total_labour_rateR=explode(",",$total_labour_rate[$i]);
+			$total_costR=explode(",",$total_cost[$i]);
 
-$cntP=count($dataP);
+			$cntP=count($dataP);
 
-for($j=0;$j<$cntP;$j++)
-{
-$data=array(
-'vendor_id' => $vendor_id,	
-'date' => $date,
-'job_order_no' => $job_order_no,
-'lot_no' => $lot_number,
-'order_type' => $order_type,
-'shape_id' => $shapeId[$i],
-'part_id' => $dataP[$j],
-'qty' => $dataQ[$j],
-'weight' => $dataW[$j],
-'rate' => $dataR[$j],
-'total_weight' => $total_weightR[$j],
-'total_rm_rate_rs' => $total_rm_rate_rsR[$j],
-'labour_rate_co' => $labour_rate_coR[$j],
-'total_labour_rate' => $total_labour_rateR[$j],
-'total_cost' => $total_costR[$j],
-'production_id' => $production_id,
-'type' => $type,
-'shape_qty' => $shape_qty
-);
-$sesio = array(
+			for($j=0;$j<$cntP;$j++)
+			{
+
+				if($dataQ[$j] != '') {
+				$data=array(
+
+					'vendor_id' => $vendor_id,	
+					'date' => $date,
+					'job_order_no' => $job_order_no,
+					'lot_no' => $lot_number,
+					'order_type' => $order_type,
+					'shape_id' => $shapeId[$i],
+					'part_id' => $dataP[$j],
+					'qty' => $dataQ[$j],
+					'weight' => $dataW[$j],
+					'rate' => $dataR[$j],
+					'total_weight' => $total_weightR[$j],
+					'total_rm_rate_rs' => $total_rm_rate_rsR[$j],
+					'labour_rate_co' => $labour_rate_coR[$j],
+					'total_labour_rate' => $total_labour_rateR[$j],
+					'total_cost' => $total_costR[$j],
+					'production_id' => $production_id,
+					'type' => $type,
+					'shape_qty' => $shape_qty
+				);
+			
+			$sesio = array(
 					'comp_id' => $this->session->userdata('comp_id'),
 					'zone_id' => $this->session->userdata('zone_id'),
 		
@@ -642,10 +647,11 @@ $sesio = array(
 					'author_date'=> date('y-m-d')
 				);
 
-$dataall = array_merge($data,$sesio);
-$this->Model_admin_login->insert_user(tbl_job_work_log,$dataall);
+	$dataall = array_merge($data,$sesio);
+	$this->Model_admin_login->insert_user(tbl_job_work_log,$dataall);
 
-}
+	}
+  }
 }
 echo "1";
 

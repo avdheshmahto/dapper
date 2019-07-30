@@ -1883,21 +1883,8 @@
                
             $uomQuery=$this->db->query("select *from tbl_master_data where serial_number='$uom'");
             $getUOM=$uomQuery->row();
-            ?>
-            <tr>
-              <td>
-                <input type="hidden" name="prodcId[]" value="<?=$prodId;?>" />
-                <?=$sku;?>
-                <?php 
-                  if($getsched->type=='Shape'){
-                $ordQ=$sumRm;
-                  }
-                  else
-                  {
-                $ordQ=$sumRm;
-                  }
-                  
-                  $list_partId=array();
+
+            $list_partId=array();
                   $ptId=$this->db->query("select * from tbl_part_price_mapping where rowmatial='$dt->rowmatial'");
                   $count=$ptId->num_rows();
                   foreach ($ptId->result() as $getPt) {
@@ -1916,22 +1903,36 @@
                       $valPartId="99999";
                     }
 
-                    $joLog=$this->db->query("select SUM(qty) as rmQtySUm from tbl_job_work_log where lot_no='$getsched->lot_no' AND part_id IN ($valPartId) " );
+                    $joLog=$this->db->query("select SUM(qty) as rmQtySUm from tbl_job_work_log where lot_no='$getsched->lot_no' AND job_order_no='$getsched->job_order_no' AND part_id IN ($valPartId) " );
                     $getJoLogData=$joLog->row();
 
                   }
-
+              if($getJoLogData->rmQtySUm != ''){
+            ?>
+            <tr>
+              <td>
+                <input type="hidden" name="prodcId[]" value="<?=$prodId;?>" />
+                <?=$sku;?>
+                <?php 
+                  if($getsched->type=='Shape'){
+                $ordQ=$sumRm;
+                  }
+                  else
+                  {
+                $ordQ=$sumRm;
+                  }
+                                    
                   ?>
               </td>
               <td><?=$getUOM->keyvalue;?></td>
               <td><input type="hidden" name="order_qty[]" value="<?php echo $getJoLogData->rmQtySUm; //$ordQ;?>" />
-                <?php echo $getJoLogData->rmQtySUm; //$ordQ;?>
+                <?php echo  $getJoLogData->rmQtySUm; //$ordQ; ?>
               </td>
               <td><?php echo (round($dt->RMSUM,3));?></td>
-              <input type="hidden" name="mproPrice[]" value="<?php echo round($dt->RMSUM*$ordQ,3);?>" />
-              <td><?php echo (round($dt->RMSUM*$ordQ,3));?></td>
+              <input type="hidden" name="mproPrice[]" value="<?php echo round($dt->RMSUM*$getJoLogData->rmQtySUm,3);?>" />
+              <td><?php echo (round($dt->RMSUM*$getJoLogData->rmQtySUm,3));?></td>
             </tr>
-            <?php }?>
+            <?php } }?>
           </tbody>
         </table>
         <div class="modal-footer" id="button" style="display: block;">
