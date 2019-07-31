@@ -1,5 +1,5 @@
 <?php
-  $queryData=$this->db->query("select *from tbl_job_work where id='$id'");
+  $queryData=$this->db->query("select * from tbl_job_work where id='$id'");
   $getData=$queryData->row();
   
   ?>
@@ -23,8 +23,9 @@
     <div class="col-sm-4"> 
       <input name="date" type="date" value="<?=$getData->date;?>" class="form-control" id="thickness" readonly> 
     </div>
-  </div>
-  <div class="form-group">
+  </div> 
+
+  <div class="form-group" style="margin-top: 50px;">
     <div class="col-sm-12">
       <div class="modal-header">
         <br>
@@ -45,7 +46,7 @@
               <th>Part Name & code</th>
               <?php }?>
               <th>Order Qty</th>
-              <th>Net Weight</th>
+              <th>Cast Weight</th>
               <th>Total Weight</th>
               <th>RM Rate Per Kg</th>
               <th>Total RM Amount</th>
@@ -57,104 +58,37 @@
           <tbody id="quotationTable">
             <?php 
             $j=0;
-            $selectQuery=$this->db->query("select *from tbl_job_work where id='$id'");
+            $selectQuery=$this->db->query("select * from tbl_job_work_log where lot_no='$getData->lot_no' AND job_order_no='$getData->job_order_no' AND shape_id='$getData->shape_id' ");
+            $count=$selectQuery->num_rows();
             foreach ($selectQuery->result() as  $dt) {
             $shapeQuery=$this->db->query("select * from tbl_product_stock where Product_id='$dt->shape_id'");
             $getShape=$shapeQuery->row();
-
-            $joQty=explode(",",$dt->qty);            
-              //echo $imp[$i]."<br>";
               
             ?>
-            <tr <?php if( $joQty[$j++] == '' ) { ?> style="display: none;" <?php } ?> >
-              <?php
-                print_r($joQty);
-                if($getData->type=='Shape')
-                {
-                ?>
-              <td><?=$getShape->productname;?>&nbsp;<?=$getShape->sku_no;?></td>
-              <?php }?>	
-              <?php
-                if($getData->type=='ShapePart')
-                {
-                ?>
+            <tr>
+              <?php if($getData->type=='Shape' && $j == 0 ) { ?>
+                <td rowspan="<?=$count?>"><?=$getShape->productname;?>&nbsp;<?=$getShape->sku_no;?></td>
+              <?php } ?> 
+              
+              <?php if($getData->type=='ShapePart') { ?>
               <td>
                 <?php
-                  $productQ=$this->db->query("select *from tbl_product_stock where Product_id in ($dt->part_id)");
-                  foreach($productQ->result() as $getPQ){
-                  ?>
-                <?=$getPQ->productname."&nbsp;".$getPQ->sku_no."<br>";
-                  }
-                  				?>
+                  $productQ=$this->db->query("select *from tbl_product_stock where Product_id = '$dt->part_id' ");
+                  $getPQ=$productQ->row();
+                  echo $getPQ->productname."&nbsp;".$getPQ->sku_no; ?>
               </td>
-              <?php }?>
-              <td>
-                <?php
-                  $imp=explode(",",$dt->qty);
-                  for($i=0;$i<count($imp);$i++)
-                  {
-                  	echo $imp[$i]."<br>";
-                  }
-                  ?>
-              </td>
-              <td><?php
-                $wt=explode(",",$dt->weight);
-                for($i=0;$i<count($wt);$i++)
-                {
-                echo $wt[$i]."<br>";
-                }
-                
-                ?></td>
-              <td><?php
-                $totalWt=explode(",",$dt->total_weight);
-                for($i=0;$i<count($totalWt);$i++)
-                {
-                echo $totalWt[$i]."<br>";
-                }
-                
-                ?></td>
-              <td><?php
-                $rmRatePerKg=explode(",",$dt->rate);
-                for($i=0;$i<count($rmRatePerKg);$i++)
-                {
-                echo $rmRatePerKg[$i]."<br>";
-                }
-                
-                ?></td>
-              <td><?php
-                $totalRmAmount=explode(",",$dt->total_rm_rate_rs);
-                for($i=0;$i<count($totalRmAmount);$i++)
-                {
-                echo $totalRmAmount[$i]."<br>";
-                }
-                
-                ?></td>
-              <td><?php
-                $labourRatePerKg=explode(",",$dt->labour_rate_co);
-                for($i=0;$i<count($labourRatePerKg);$i++)
-                {
-                echo $labourRatePerKg[$i]."<br>";
-                }
-                
-                ?></td>
-              <td><?php
-                $totalLabourRate=explode(",",$dt->total_labour_rate);
-                for($i=0;$i<count($totalLabourRate);$i++)
-                {
-                echo $totalLabourRate[$i]."<br>";
-                }
-                
-                ?></td>
-              <td><?php
-                $totalCost=explode(",",$dt->total_cost);
-                for($i=0;$i<count($totalCost);$i++)
-                {
-                echo $totalCost[$i]."<br>";
-                }
-                
-                ?></td>
+              <?php } ?>
+
+              <td><?php echo $dt->qty; ?></td>
+              <td><?php echo $dt->weight; ?></td>
+              <td><?php echo $dt->total_weight; ?></td>
+              <td><?php echo $dt->rate; ?></td>
+              <td><?php echo $dt->total_rm_rate_rs; ?></td>
+              <td><?php echo $dt->labour_rate_co; ?></td>
+              <td><?php echo $dt->total_labour_rate; ?></td>
+              <td><?php echo $dt->total_cost; ?></td>
             </tr>
-            <?php  } ?>
+            <?php  $j++; } ?>
           </tbody>
         </table>
       </div>
