@@ -29,7 +29,7 @@
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="15%"><strong>Challan No. :</strong></td>
-                <td width="55%"><?=$getHdr->id;?></td>
+                <td width="55%"><?=$getHdr->id." (".$getHdr->job_order_no.")";?></td>
                 <td width="18%"><strong>Vendor Name:</strong></td>
                 <td width="12%"><?=$getVendor->first_name;?></td>
               </tr>

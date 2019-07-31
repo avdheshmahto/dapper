@@ -8,7 +8,7 @@
   }
   
   
-  echo @$getHdrId=implode(",",$hdrPo);
+  @$getHdrId=implode(",",$hdrPo);
   
   if($getHdrId!=''){
   	$getHdrIdd=$getHdrId;
