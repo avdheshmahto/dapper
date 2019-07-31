@@ -3,8 +3,7 @@
   $getData=$queryData->row();
   
   ?>
-<form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_purchase" action="#" 
-  onsubmit="return submitProductionPurchase();"method="POST">
+
 <div class="modal-body">
   <div class="form-group">
     <label class="col-sm-2 control-label">Vendor:</label> 
@@ -57,14 +56,19 @@
           </tbody>
           <tbody id="quotationTable">
             <?php 
-              $selectQuery=$this->db->query("select *from tbl_job_work where id='$id'");
-                         foreach ($selectQuery->result() as  $dt) {
-              	  $shapeQuery=$this->db->query("select *from tbl_product_stock where Product_id='$dt->shape_id'");
-              	  $getShape=$shapeQuery->row();
-                            
-                       ?>
-            <tr>
+            $j=0;
+            $selectQuery=$this->db->query("select *from tbl_job_work where id='$id'");
+            foreach ($selectQuery->result() as  $dt) {
+            $shapeQuery=$this->db->query("select * from tbl_product_stock where Product_id='$dt->shape_id'");
+            $getShape=$shapeQuery->row();
+
+            $joQty=explode(",",$dt->qty);            
+              //echo $imp[$i]."<br>";
+              
+            ?>
+            <tr <?php if( $joQty[$j++] == '' ) { ?> style="display: none;" <?php } ?> >
               <?php
+                print_r($joQty);
                 if($getData->type=='Shape')
                 {
                 ?>
@@ -150,8 +154,7 @@
                 
                 ?></td>
             </tr>
-            <?php 
-              } ?>
+            <?php  } ?>
           </tbody>
         </table>
       </div>
