@@ -4,19 +4,19 @@
   foreach($hdrQuery->result() as $getHdrQ)
   
   {
-  	$hdrPo[]=$getHdrQ->inboundid;
+    $hdrPo[]=$getHdrQ->inboundid;
   }
   
   
   @$getHdrId=implode(",",$hdrPo);
   
   if($getHdrId!=''){
-  	$getHdrIdd=$getHdrId;
-  	
+    $getHdrIdd=$getHdrId;
+    
   }
   else
   {
-  	$getHdrIdd='0';
+    $getHdrIdd='0';
   }
   
   $getHdr=$hdrQuery->row();
@@ -34,9 +34,6 @@
             <li><a href="" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></a></li>
           </ul>
         </div>
-        <?php
-          //		foreach($hdrQuery->result() as $getHdr){
-          		?>
         <div class="panel-body">
           <div class="row">
             <div class="col-lg-12">
@@ -57,7 +54,6 @@
                       <label for="po_order">Date.:</label>
                       <input type="text" name="invoice_no"  class="form-control" value="<?=$getHdr->date;?>" readonly="readonly" required />
                     </div>
-                    
                   </div>
                 </div>
               </div>
@@ -71,8 +67,8 @@
                 <table class="table table-striped table-bordered table-hover " >
                   <thead>
                     <tr>
-                      <th class="tdcenter"> Sl No</th>
-                      <th class="tdcenter"> Challan No</th>
+                      <th class="tdcenter">Sl No</th>
+                      <th class="tdcenter">Challan No</th>
                       <th class="tdcenter">Item Number & Description</th>
                       <th class="tdcenter">UOM</th>
                       <th class="tdcenter">Issue Qty</th>
@@ -98,37 +94,27 @@
                     ?>
                   <tr class="gradeX odd" role="row">
                     <td class="size-60 text-center sorting_1"><?=$i;?></td>
-                    <td><?=$getHdr->challan_no;?></td>
-                    <td><?=$getProductStock->sku_no;?>
+                    <td class="tdcenter"><?php 
+                      $hdrQuery=$this->db->query("select * from tbl_receive_matrial_hdr where inboundid='$getProduct->inboundrhdr'");
+                      $getChno=$hdrQuery->row();
+                      echo $getChno->challan_no;?>                      
+                    </td>
+                    <td class="tdcenter"><?=$getProductStock->sku_no;?>
                       <input type="hidden"  name="productid[]" value="<?=$getProduct->productid;?>" class="form-control">
                     </td>
-                    <td><?=$getProductUOM->keyvalue;?></td>
-                    <?php
-                      
-                      $poLogQuery=$this->db->query("select D.qty as po_qty,SUM(M.qty) as mqty from tbl_quotation_purchase_order_dtl D,tbl_part_price_mapping M,tbl_machine MM where MM.machine_name = D.productid AND MM.id = M.machine_id AND D.purchaseid='$getHdr->po_no' and M.rowmatial='$getProduct->productid' AND M.type ='part'");
-                      $getPoQty=$poLogQuery->row();
-                      
-                      
-                      ?>
-                    <td><?=$getProduct->order_qty;?></td>
-                    <td><?php echo round($getProduct->receive_qty,3);?></td>
-                    <?php
-                      $inbountLogQuery=$this->db->query("select SUM(D.receive_qty) as rec_qty from tbl_issuematrial_dtl D,tbl_issuematrial_hdr H where D.inboundrhdr = H.inboundid AND D.productid='$getProduct->productid' AND H.po_no='$getHdr->po_no'");
-                      	$getInbound=$inbountLogQuery->row();
-                      
-                            $inbountLogGRNQuery=$this->db->query("select SUM(receive_qty) as rec_qty from tbl_issuematrial_dtl where productid='$getProduct->productid' AND inboundrhdr = '$id'");
-                      	$getInboundGRN=$inbountLogGRNQuery->row();
-                      
-                      	?>
+                    <td class="tdcenter"><?=$getProductUOM->keyvalue;?></td>
+                    <td class="tdcenter"><?=$getProduct->order_qty;?></td>
+                    <td class="tdcenter"><?php echo round($getProduct->receive_qty,3);?></td>
                     <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->receive_qty-$getProduct->remaining_qty;?>" />
                     <td style="display:none"><?php echo $rmRR=$getProduct->order_qty-$getProduct->rem_order_qty;?></td>
                     <td style="display:none"><?php echo $rmR=round($getProduct->receive_qty-$getProduct->remaining_qty,3);?></td>
                   </tr>
                   <?php 
                     $ordQtyTot=$ordQtyTot+$getProduct->receive_qty;
-                    			$remQtyTot=$remQtyTot+$getProduct->remaining_qty;
-                      $i++;
-                    }?>
+                    
+                    $remQtyTot=$remQtyTot+$getProduct->remaining_qty;
+                    $i++;
+                    } ?>
                   <input type="hidden" name="qrd_qtyT" id="qrd_qtyT"  value="<?=$ordQtyTot;?>" />
                   <input type="hidden" id="remQyT" value="<?=$remQtyTot;?>" />
                   <input type="hidden" name="totToCom" id="totTocomp" />
@@ -136,20 +122,6 @@
               </div>
             </div>
           </div>
-         
-        </div>
-        <?php //}?>
-        <input type="hidden" name="rows" id="rows">
-        <!--//////////ADDING TEST/////////-->
-        <input type="hidden" name="spid" id="spid" value="d1"/>
-        <input type="hidden" name="ef" id="ef" value="0" />
-        <div class="table-responsive">
-          <table class="table table-striped table-bordered table-hover" >
-            <tbody>
-              
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
       <div class ="pull-right" id="saveDiv" >
