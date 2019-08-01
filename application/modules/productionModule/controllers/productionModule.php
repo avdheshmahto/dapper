@@ -1434,6 +1434,7 @@ if($grn_type=='rm_receive')
 	  	
 		 }
 	 }
+	 
 	 echo "1";
 }
 

@@ -977,7 +977,7 @@
                          $cntData=$poquery->num_rows();
 						 
                           if($cntData>0)
-						  {
+						              {
                           ?>
                        <button class="btn btn-default" onclick="return confirm('Please Delete Child Data First');" type="button"><i class="icon-trash"></i></button>
                           <?php }else{?>
@@ -993,7 +993,7 @@
                           <td>
                             <p style="display:none" id="lot_no"><?=$_GET['id'];?></p>
                             <p style="display:none" id="order_type"><?=$getsched->order_type;?></p>
-                            <button style="display:none1" type="button" class="btn btn-default modalMapSpare" onclick="Order('<?=$getsched->job_order_no;?>');" data-toggle="modal" data-target="#modal-order"><img src="<?=base_url();?>assets/images/plus.png" /></button>
+                            <button style="display:none1" type="button" class="btn btn-default" onclick="Order('<?=$getsched->id;?>');" data-toggle="modal" data-target="#modal-order"><img src="<?=base_url();?>assets/images/plus.png" /></button>
                           </td>
                           <td>&nbsp;</td>
                           <td>&nbsp;</td>
@@ -1870,7 +1870,7 @@
               <?php
             
                 //$contQuery=$this->db->query("select SUM(EPrice) as RMSUM,EPrice,rowmatial,SUM(qty) as sumqty from tbl_part_price_mapping where part_id in ($dataPartt) group by rowmatial ");
-              $contQuery=$this->db->query("select * from tbl_job_work_log where lot_no='$getsched->lot_no' AND job_order_no='$getsched->job_order_no'");
+              $contQuery=$this->db->query("select * from tbl_job_work_log where lot_no='$getsched->lot_no' AND job_order_no='$getsched->job_order_no' AND shape_id='$getsched->shape_id' ");
                 foreach($contQuery->result() as $dt)
                 {
 
@@ -1956,21 +1956,22 @@
   	
   	document.getElementById("validationCheck").value=rec_qty;
   
-  if(rec_qty)
-  {
-  
-  	if(Number(rec_qty)==0)
-  	{
-  		
-  		alert("Qty must be grater than 0");
-  		document.getElementById("sv1").disabled = true;
-  		return false;
-  	}
-  	
-  }
+    if(rec_qty)
+    {
+    
+    	if(Number(rec_qty)==0)
+    	{
+    		
+    		alert("Qty must be grater than 0");
+    		document.getElementById("sv1").disabled = true;
+    		return false;
+    	}
+    	
+    }
+
   	if(Number(rem_qty)<Number(rec_qty))
   	{
-  		alert("Enter Qty must be less then enter qty");
+  		alert("Enter qty must be less than remaining qty");
   		document.getElementById("sv1").disabled = true;
   		
   		
@@ -2063,26 +2064,31 @@
   function qtyVal(d)
   {
 	 
+    var zz=document.getElementById(d).id;
+    var myarra = zz.split("qty");
+    var asx= myarra[1];
+    //alert(asx);
+    var entQty=document.getElementById("qty"+asx).value;	
+    var remQty=document.getElementById("rem_qty"+asx).value;	
+    var netWgt=document.getElementById("ideal_total_weight"+asx).value;
+    var tWgt=Number(entQty) * Number(netWgt);
+    if(Number(remQty)<Number(entQty))	
+    {
 
-  var zz=document.getElementById(d).id;
-  var myarra = zz.split("qty");
-  var asx= myarra[1];
-  //alert(asx);
-  var entQty=document.getElementById("qty"+asx).value;	
-  var remQty=document.getElementById("rem_qty"+asx).value;	
-  if(Number(remQty)<Number(entQty))	
-  {
-  alert("Enter Qty should be less then remaining Qty");
-  	document.getElementById("qty"+asx).focus();	
-  	document.getElementById("add_req").disabled = true;
-  	
-  	return false;
-  }
-  else
-  {
-  document.getElementById("add_req").disabled = false;
-  
-  }
+      alert("Enter Qty should be less than remaining Qty");
+    	document.getElementById("qty"+asx).focus();	
+    	document.getElementById("add_req").disabled = true;
+    	
+    	return false;
+    }
+    else
+    {
+
+      document.getElementById("add_req").disabled = false;
+      document.getElementById("total_weight"+asx).value=tWgt;
+    
+    }
+
   }
   
   
@@ -2373,7 +2379,7 @@ function ajex_RmReturnListData(production_id){
   
   var totalWeight=Number(total_weight)/Number(qty);
   var tolerance_percentage=document.getElementById("tolerance_percentage"+asx).value;
-  document.getElementById("weight"+asx).value=totalWeight;
+  document.getElementById("weight"+asx).value=totalWeight.toFixed(3);;
   var netweightCal=document.getElementById("net_weight_cal"+asx).value;
   var netWeightToatl=Number(ideal_total_weight)*Number(qty);
   
