@@ -628,7 +628,7 @@ class purchaseorder extends my_controller
         }
         //$this->paymentAmount($grand_total,$vendor_id,$lastHdrId,$id);    
         //$this->paymentAmountInsert($grand_total,$vendor_id,$lastHdrId,$id);    
-        $this->updateTermAndCondition($lastHdrId, $vendor_id, $grand_total, $date);
+        //$this->updateTermAndCondition($lastHdrId, $vendor_id, $grand_total, $date);
         $this->software_log_insert($lastHdrId, $vendor_id, $grand_total, 'Purchase Order added');
         
         $rediectInvoice = "purchaseorder/purchaseorder/manage_purchase_order";

@@ -77,35 +77,19 @@
                     <?php } ?>
                   </select>
                 </div>
-                <label class="col-sm-2 control-label"> *Sub Category: </label> 
+               <label class="col-sm-2 control-label" > *<?php if($_GET['p_type']=='13'){?>RM Code<?php } elseif($_GET['p_type']=='32'){?>Part Code <?php } elseif($_GET['p_type']=='33'){ echo "Shape Code";} elseif($_GET['p_type']=='35'){ echo "Accessories Code";} elseif($_GET['p_type']=='34'){ echo "Packaging Material Code";} elseif($_GET['p_type']=='50'){ echo "Scrap Codde";} else{ echo "Item Code";}?> </label> 
                 <div class="col-sm-4">
-                  <select name="subcategory" class="form-control" id="subcategory">
-                    <option value=""> ----Select---- </option>
-                    <?php 
-                      //	$sqlgroup11=$this->db->query("select * from tbl_prodcatg_m where status='B'");
-                      //	foreach ($sqlgroup11->result() as $fetchgroup11){						
-                      ?>					
-                    <option value="<?php //echo $fetchgroup11->product_Catid; ?>"><?php //echo $fetchgroup11->categoryName ; ?></option>
-                    <?php //} ?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" > *<?php if($_GET['p_type']=='13'){?>RM Code<?php } elseif($_GET['p_type']=='32'){?>Part Code <?php } elseif($_GET['p_type']=='33'){ echo "Shape Code";} elseif($_GET['p_type']=='35'){ echo "Accessories Code";} elseif($_GET['p_type']=='34'){ echo "Packaging Material Code";} elseif($_GET['p_type']=='50'){ echo "Scrap Codde";} else{ echo "Item Code";}?> </label> 
-                <div class="col-sm-4">
-                  <div id="subcategory1" style="display:none"></div>
-                  <div >
                     <input type="hidden" class="hiddenField" id="Product_id"   name="Product_id" value="" />
                     <input type="text" class="form-control" name="sku_no" value=""  id="sku_no"> 
-                  </div>
                 </div>
+              </div>
+
+              <div class="form-group">
                 <label class="col-sm-2 control-label">*<?php if($_GET['p_type']=='13'){?>Raw Material Name<?php } elseif($_GET['p_type']=='32'){?>Part Name <?php } elseif($_GET['p_type']=='33'){ echo "Shape Name";} elseif($_GET['p_type']=='35'){ echo "Accessories Name";} elseif($_GET['p_type']=='34'){ echo "Packaging Material Name";} elseif($_GET['p_type']=='50'){ echo "Scrap Name";} else{ echo "Finish Goods";}?>:</label> 
                 <div class="col-sm-4"> 
                   <input name="productname"  type="text" value="" class="form-control" id="productname" > 
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label"> *Usage Unit: </label> 
+                  <label class="col-sm-2 control-label"> *Usage Unit: </label> 
                 <div class="col-sm-4">
                   <select name="unit"  class="form-control" id="unit">
                     <option value="" >----Select Unit----</option>
@@ -118,12 +102,18 @@
                     <?php } ?>
                   </select>
                 </div>
+              </div>
+
+              <div class="form-group">
                 <label class="col-sm-2 control-label">Qty/Box</label> 
                 <div class="col-sm-4"> 
                   <input type="text" name="qty_box" id="qty_box" class="form-control" />
                 </div>
+                <label class="col-sm-2 control-label">Circle Weight</label> 
+                <div class="col-sm-4" id="regid">  <input type="text" name="circle_weight" id="circle_weight" class="form-control"  /></div>
               </div>
-              <div class="form-group">
+
+              <div class="form-group" style="display: none;">
                 <label class="col-sm-2 control-label">Size:</label> 
                 <div class="col-sm-4">
                   <input name="size"  type="text" value="" class="form-control" id = "size"  > 
@@ -133,7 +123,8 @@
                   <input name="thickness"  type="text" value="" class="form-control" id="thickness" > 
                 </div>
               </div>
-              <div class="form-group">
+
+              <div class="form-group" style="display: none;">
                 <label class="col-sm-2 control-label">Sale Price</label> 
                 <div class="col-sm-4"> 
                   <input style="display:none;" type="text" name="grade_code" id="grade_code" class="form-control"/>
@@ -144,7 +135,8 @@
                   <input type="number" step="any" name="unitprice_purchase" value="" id="unitprice_purchase" class="form-control" >
                 </div>
               </div>
-              <div class="form-group">
+
+              <div class="form-group" style="display: none;">
                 <label class="col-sm-2 control-label">GST Tax:</label> 
                 <div class="col-sm-4" id="regid"> 
                   <input type="number" step="any" name="gst_tax" value="" id="gst_tax" class="form-control" >
@@ -154,14 +146,8 @@
                   <input type="text" step="any" name="hsn_code" value="" id="hsn_code" class="form-control" >
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">&nbsp;</label> 
-                <div class="col-sm-4" id="regid"> 
-                  &nbsp;
-                </div>
-                <label class="col-sm-2 control-label">Circle Weight</label> 
-                <div class="col-sm-4" id="regid">  <input type="text" name="circle_weight" id="circle_weight" class="form-control"  /></div>
-              </div>
+
+              <?php if($_GET['p_type']=='14'){?>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Cartoon Length:</label> 
                 <div class="col-sm-4" id="regid"> 
@@ -177,32 +163,36 @@
                 <div class="col-sm-4" id="regid"> 
                   <input type="text"  name="ctn_height" onchange="cbmCalculation();" value="" id="ctn_height" class="form-control" >
                 </div>
-                <label class="col-sm-2 control-label">MST:</label> 
-                <div class="col-sm-4" id="regid"> 
-                  <input type="text"  name="mst" value="" id="mst" class="form-control" >
-                </div>
-              </div>
-              <div class="form-group">
                 <label class="col-sm-2 control-label">CBM:</label> 
                 <div class="col-sm-4" id="regid"> 
                   <input type="text"  name="cbm" value="" id="cbm" class="form-control" readonly="readonly" >
+                </div>                
+              </div>
+            <?php } ?>
+
+              <div class="form-group" style="display: none;">
+                <label class="col-sm-2 control-label">MST:</label> 
+                <div class="col-sm-4" id="regid"> 
+                  <input type="text"  name="mst" value="" id="mst" class="form-control" >
                 </div>
                 <label class="col-sm-2 control-label">Lead Time:</label> 
                 <div class="col-sm-4" id="regid"> 
                   <input type="text"  name="lead_time" value="" id="lead_time" class="form-control" >
                 </div>
               </div>
+
               <div class="form-group">
-                <label class="col-sm-2 control-label">Percentage:</label> 
+                <label class="col-sm-2 control-label">Additional Percentage:</label> 
                 <div class="col-sm-4" id="regid"> 
                   <input type="number" min="0" max="100"  name="percentage" value="" id="percentage" class="form-control" >
                 </div>
-                <label class="col-sm-2 control-label">Opening Stock</label> 
-                <div class="col-sm-4" > 
-                  <input type="number" min="0" name="opening_stock" id="opening_stock" value="" class="form-control" />
+              <label class="col-sm-2 control-label">Tolerance Percentage:</label> 
+                <div class="col-sm-4" id="regid"> 
+                  <input type="number" name="tolerance_percentage" value="" id="tolerance_percentage" class="form-control" >
                 </div>
               </div>
-              <div class="form-group">
+
+              <div class="form-group" style="display: none;">
                 <label class="col-sm-2 control-label">Cast Weight:</label> 
                 <div class="col-sm-4" id="regid"> 
                   <input type="number" name="cast_weight" id="cast_weight" class="form-control" />
@@ -212,29 +202,25 @@
                   <input type="number" name="net_weight" id="net_weight" class="form-control" />
                 </div>
               </div>
-              <div class="form-group">
+
+              <div class="form-group" style="display: none;">
                 <label class="col-sm-2 control-label">Gross Weight:</label> 
                 <div class="col-sm-4" id="regid"> 
                   <input type="number" name="weight" value="" id="weight" class="form-control" >
                 </div>
-                <label class="col-sm-2 control-label">&nbsp;</label> 
-                <div class="col-sm-4" > 
-                  &nbsp;
+                <label class="col-sm-2 control-label">Opening Stock</label> 
+                <div class="col-sm-4"> 
+                  <input type="number" min="0" name="opening_stock" id="opening_stock" value="" class="form-control" />
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">Tolerance Percentage:</label> 
-                <div class="col-sm-4" id="regid"> 
-                  <input type="number" name="tolerance_percentage" value="" id="tolerance_percentage" class="form-control" >
-                </div>
+
+              <div class="form-group">                
                 <label class="col-sm-2 control-label">Packing Qty</label> 
                 <div class="col-sm-4" > 
                   <input type="number" name="packing" value="" id="packing" class="form-control" >
                 </div>
-              </div>
-              <?php if($_GET['p_type']=='13'){?>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">Scrap Name:</label> 
+              <?php if($_GET['p_type']=='13'){?>                
+              <label class="col-sm-2 control-label">Scrap Name:</label> 
                 <div class="col-sm-4" id="regid">
                   <select name="scrap_id" id="scrap_id" class="form-control" >
                     <option value="">--Select--</option>
@@ -246,17 +232,13 @@
                     <?php }?>
                   </select>
                 </div>
-                <label class="col-sm-2 control-label">&nbsp;</label> 
-                <div class="col-sm-4" > 
-                  &nbsp;
-                </div>
+                <?php }?>                
               </div>
-              <?php }?>
+
             </div>
-            <?php
-              if($_GET['p_type']=='14')
-              {
-              ?>
+
+            
+            <?php if($_GET['p_type']=='14') { ?>
             <div class="form-group" id="consigneeMappingShape" style="padding:10px;" <?php if($_GET['p_type']=='14'){?>
               style="display:none1" <?php } else {?> style="display:none" <?php }?>>
               <div class="col-sm-12" >
@@ -290,6 +272,7 @@
               </div>
             </div>
             <?php }?>
+
             <?php
               if($_GET['p_type']=='33')
               {
