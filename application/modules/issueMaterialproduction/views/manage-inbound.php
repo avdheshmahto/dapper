@@ -326,19 +326,19 @@
   	//alert(asx);
   	var entQty=document.getElementById("qty"+asx).value;	
   	var remQty=document.getElementById("rem_qty"+asx).value;	
-  var qtyInStcok=document.getElementById("qtyInStcok"+asx).innerHTML;
+    var qtyInStcok=document.getElementById("qtyInStcok"+asx).innerHTML;
   
-  var qrd_qtyT=document.getElementById("qrd_qtyT").value;
+    var qrd_qtyT=document.getElementById("qrd_qtyT").value;
   
   	var remQyT=document.getElementById("remQyT").value;
   
   	var sumT=Number(remQyT)+Number(entQty);
   	
-  document.getElementById("totTocomp").value=sumT;
+    document.getElementById("totTocomp").value=sumT;
   
   	if(Number(remQty)<Number(entQty) )	
   	{
-  		alert("Enter Qty should be less then remaining Qty");
+  		alert("Enter Qty should be less than remaining Qty");
   		document.getElementById("qty"+asx).focus();	
   		document.getElementById("add").disabled = true;
   		return false;

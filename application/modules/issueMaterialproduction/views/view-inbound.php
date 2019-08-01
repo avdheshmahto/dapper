@@ -1,6 +1,7 @@
 <?php
   $hdrQuery=$this->db->query("select * from tbl_issuematrial_hdr where inboundid='$id'");
   $getHdr=$hdrQuery->row();
+  //echo $po_id;
   ?>
 <!-- Main content -->
 <div class="main-content">
@@ -9,7 +10,7 @@
     <div class="col-lg-12" id="listingData">
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
-          <h4 class="panel-title">Issue Qty</h4>
+          <h4 class="panel-title">Raw Material Issue</h4>
           <ul class="panel-tool-options">
             <li><a href="" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></a></li>
           </ul>
@@ -24,6 +25,7 @@
                       <label for="po_order">REQUEST ID:</label>
                       <input type="text" class="form-control" readonly="readonly" name="request_no" value="<?=$getHdr->request_no?>" />
                       <input type="hidden" name="req_production_id" value="<?=$po_id;?>" />
+                      <input type="hidden" name="ismHdrid" value="<?=$id;?>" />
                       <select name="po_no" style="display:none"  class="form-control"  disabled="disabled"  required>
                         <?php $sqlPoQuery=$this->db->query("select * from tbl_quotation_purchase_order_hdr where purchaseid='$getHdr->po_no'");
                           $getPO=$sqlPoQuery->row();?>
@@ -56,7 +58,7 @@
                 <table class="table table-striped table-bordered table-hover " >
                   <thead>
                     <tr>
-                      <th class="tdcenter"> Sl No</th>
+                      <th class="tdcenter">Sl No</th>
                       <th class="tdcenter">Item Number & Description</th>
                       <th class="tdcenter">UOM</th>
                       <th class="tdcenter">Ordered Qty</th>
@@ -91,32 +93,18 @@
                       <input type="hidden"  name="productid[]" value="<?=$getProduct->productid;?>" class="form-control">
                     </td>
                     <td><?=$getProductUOM->keyvalue;?></td>
-                    <?php
-                     
-                      
-                      // $poLogQuery=$this->db->query("select D.qty as po_qty,SUM(M.qty) as mqty from tbl_quotation_purchase_order_dtl D,tbl_part_price_mapping M,tbl_machine MM where MM.machine_name = D.productid AND MM.id = M.machine_id AND D.purchaseid='$getHdr->po_no' and M.rowmatial='$getProduct->productid' AND M.type ='part'");
-                      // $getPoQty=$poLogQuery->row();
-                      
-                      
-                      ?>
+        
                     <td><?=$getProduct->order_qty;?></td>
                     <td><?php echo round($getProduct->receive_qty,3);?></td>
-                    <?php
-                      // $inbountLogQuery=$this->db->query("select SUM(D.receive_qty) as rec_qty from tbl_issuematrial_dtl D,tbl_issuematrial_hdr H where D.inboundrhdr = H.inboundid AND D.productid='$getProduct->productid' AND H.po_no='$getHdr->po_no'");
-                      // 	$getInbound=$inbountLogQuery->row();
-                      
-                      //       $inbountLogGRNQuery=$this->db->query("select SUM(receive_qty) as rec_qty from tbl_issuematrial_dtl where productid='$getProduct->productid' AND inboundrhdr = '$id'");
-                      // 	$getInboundGRN=$inbountLogGRNQuery->row();
-                      
-                      	?>
+                    
                     <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->receive_qty-$getProduct->remaining_qty;?>" />
                     <td><?php echo $rmRR=$getProduct->order_qty-$getProduct->rem_order_qty;?></td>
                     <td><?php echo $rmR=round($getProduct->receive_qty-$getProduct->remaining_qty,3);?></td>
                     <td>
                       <p id="qtyInStcok<?=$i;?>"><?=$getProductStock->quantity;?></p>
                     </td>
-                    <td><input name="order_qty[]" id="order_qty<?=$i;?>"  type="text" class="form-control"  /> 
-                    <td><input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control" <?php if($$rmR=='0'){?> readonly="readonly" <?php }?> />
+                    <td><input name="order_qty[]" id="order_qty<?=$i;?>"  type="number" min="0" class="form-control"  /> 
+                    <td><input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="number" min="0" class="form-control" <?php if($$rmR=='0'){?> readonly="readonly" <?php }?> />
                     </td>
                   </tr>
                   <?php 
@@ -133,23 +121,13 @@
           </div>
           
         </div>
-        <input type="hidden" name="rows" id="rows">
-        <!--//////////ADDING TEST/////////-->
-        <input type="hidden" name="spid" id="spid" value="d1"/>
-        <input type="hidden" name="ef" id="ef" value="0" />
-        <div class="table-responsive">
-          <table class="table table-striped table-bordered table-hover" >
-            <tbody>
-              
-              </tr>
-            </tbody>
-          </table>
-        </div>
+       
       </div>
       <div class ="pull-right" id="saveDiv" >
         <input type="submit" class="btn btn-sm" id="add" value="Save">
         &nbsp;<a  class="btn btn-sm"  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Cancel</a>
       </div>
+
     </div>
   </div>
 </div>

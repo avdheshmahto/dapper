@@ -320,6 +320,7 @@ class inbound extends my_controller
             if ($qty[$i] != '') {
                 
                 $data_dtl = array(
+
                     'inboundrhdr' => $lastId,
                     'productid' => $productid[$i],
                     'receive_qty' => $qty[$i],
@@ -333,19 +334,8 @@ class inbound extends my_controller
                 
                 //$this->stock_refill_qty($qty[$i],$main_id[$i]);
                 $this->Model_admin_login->insert_user($table_name_dtl, $data_dtl);
-            }
-            
-            
-        }
-        
-        
-        
-        for ($i = 0; $i < count($qty); $i++) {
-            
-            if ($qty[$i] != '') {
-                
-                
-                $this->db->query("update tbl_issuematrial_dtl set remaining_qty=remaining_qty+'$qty[$i]',rem_order_qty=rem_order_qty+'$order_qty[$i]' where inboundrhdr='$req_production_id'");
+
+                $this->db->query("update tbl_issuematrial_dtl set remaining_qty=remaining_qty+'$qty[$i]',rem_order_qty=rem_order_qty+'$order_qty[$i]' where inboundrhdr='$ismHdrid'");
                 $this->po_stock_in_rem($qty[$i], $productid[$i], $order_qty[$i]);
                 //$this->Model_admin_login->insert_user($table_name_dtl,$data_dtl);        
             }
@@ -373,9 +363,13 @@ class inbound extends my_controller
         $selectQuery  = "select * from tbl_product_serial where product_id='$productid' and location_id='1'";
         $selectQuery1 = $this->db->query($selectQuery);
         $num          = $selectQuery1->num_rows();
-        if ($num > 0) {
+        
+        if ($num > 0) 
+        {
             $this->db->query("update tbl_product_serial set quantity=quantity-'$receive_qty',qn_pc=qn_pc-'$order_qty',location_id='1' where product_id='$productid' and location_id='1' ");
-        } else {
+        } 
+        else 
+        {
             $comp_id     = $this->session->userdata('comp_id');
             $divn_id     = $this->session->userdata('divn_id');
             $zone_id     = $this->session->userdata('zone_id');
