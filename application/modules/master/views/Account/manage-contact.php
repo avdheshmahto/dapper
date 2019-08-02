@@ -17,7 +17,7 @@
       <li><a href="#">Contact</a></li>
       <li class="active"><strong>Manage Contact</strong></li>
       <div class="pull-right">
-        <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#modal-0" formid="#contactForm" id="formreset"><i class="fa fa-plus"></i>Add Contact</button>
+        <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#modal-0" formid="#contactForm" id="formreset"><i class="fa fa-plus"></i><?php if($_GET['con_type']=='6'){ echo "Add Employee";  } elseif($_GET['con_type']=='5'){ echo "Add Vendor";} elseif($_GET['con_type']=='7'){ echo "Add Consignee";} else{ echo "Add Buyer";}?></button>
         <a  class="btn btn-secondary btn-sm delete_all"><i class="fa fa-trash-o"></i> Delete All</a>
       </div>
     </ol>
@@ -26,12 +26,13 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title"><span class="top_title">Add</span>&nbsp;Contact</h4>
+            <input type="hidden" id="contType" value="<?=$_GET['con_type']?>">
+            <h4 class="modal-title"><span class="top_title"></span></h4>
             <div id="resultarea" class="text-center " style="font-size: 15px;color: red;"></div>
           </div>
           <form class="form-horizontal" role="form" id="contactForm" >
             <div class="modal-body overflow">
-              <div class="form-group">
+              <div class="form-group" style="display: none;">
                 <label class="col-sm-2 control-label">&nbsp;</label> 
                 <div class="col-sm-4">
                   <input type="hidden" name="maingroupname" value="<?=$_GET['con_type'];?>" />
@@ -45,16 +46,16 @@
                     <?php } ?>
                   </select>
                 </div>
-                <label class="col-sm-2 control-label">*Name:</label> 
-                <div class="col-sm-4"> 				
-                  <input type="hidden" name="contact_id" id="contact_id" class="hiddenField" value="" />
-                  <input type="text" name="first_name" id="first_name" value=""  class="form-control" >
-                </div>
-              </div>
-              <div class="form-group">
                 <label class="col-sm-2 control-label">Contact Person:</label> 
                 <div class="col-sm-4"> 
                   <input type="text" name="contact_person" id="contact_person" value=""  class="form-control">
+                </div>                  
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">*Name:</label> 
+                <div class="col-sm-4">        
+                  <input type="hidden" name="contact_id" id="contact_id" class="hiddenField" value="" />
+                  <input type="text" name="first_name" id="first_name" value=""  class="form-control" >
                 </div>
                 <label class="col-sm-2 control-label">Email Id:</label> 
                 <div class="col-sm-4"> 
@@ -350,7 +351,8 @@
   });
   
   function showconsigneemap(thsVal){
-    if(thsVal == 4 || <?=$_GET['con_type']=='4';?>){
+    var con_type = $('#contType').val();
+    if(thsVal == 4 || con_type == 4){
       $("#consigneeMapping").show();
       $(".consignee").hide();
     }else if(thsVal == 7){
@@ -373,7 +375,7 @@
                 //alert(data);
                 //console.log(data);
   			  $("#consigneeTable").empty().append(data).fadeIn();
-  			  amazonEntity();
+  			  //amazonEntity();
   			}   
   	    });
       }
