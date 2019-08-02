@@ -56,9 +56,9 @@
           <form class="form-horizontal" role="form" id="ItemForm" >
             <div class="modal-body overflow">
               <div class="form-group">
+                <input type="hidden" name="type" value="<?=$_GET['p_type'];?>" />
                 <label class="col-sm-2 control-label"> *Category</label> 
-                <div class="col-sm-4">
-                  <input type="hidden" name="type" value="<?=$_GET['p_type'];?>" />
+                <div class="col-sm-4">                  
                   <!-- <select name="type1" style="display:none"  class="form-control" id="type" onchange="getCat(this.value);">
                     <option value="">----Select ----</option>
                     <?php 
@@ -68,7 +68,7 @@
                     <option value="<?php //echo $fetch_protype->serial_number;?>" ><?php //echo $fetch_protype->keyvalue; ?></option>
                     <?php //} ?>
                   </select> -->
-                  <select name="category"  class="form-control" onchange="changing(this.value)" id="category">
+                  <select name="category"  class="form-control" onchange1="changing(this.value)" id="category">
                     <option value="">----Select ----</option>
                     <?php 
                       $sqlgroup=$this->db->query("select * from tbl_category where inside_cat = 0 and type='".$_GET['p_type']."'");
@@ -246,7 +246,7 @@
 
               <div class="form-group"> 
                <?php if($_GET['p_type']=='14'){?>                
-                <label class="col-sm-2 control-label">Packing Qty</label> 
+                <label class="col-sm-2 control-label">Case Pack Qty</label> 
                 <div class="col-sm-4" > 
                   <input type="number" name="packing" value="" id="packing" class="form-control" >
                 </div>
@@ -284,6 +284,7 @@
                   <tbody>
                     <tr>
                       <td>
+                        <input type="hidden" id="rowFg" class="form-control">
                         <select  class="select2 form-control" id="entityShape" >
                           <option value="">----Select ----</option>
                           <?php 
@@ -382,17 +383,20 @@
                       <?php } ?>
                     </select>
                   </div>
+
+                  <div class="col-sm-2" > 
+                    <label class="control-label">Cast Weight:</label> 
+                    <input type="number" class="form-control" value="" id="EPrice" >
+                  </div>
+
                   <div class="col-sm-2" > 
                     <label class="control-label">Net Weight:</label> 
-                    <input type="text" class="form-control" value="" id="mPrice" >
+                    <input type="number" class="form-control" value="" id="mPrice" onkeyup="checkWeight();">
                     <input type="hidden" name = "partid" class="form-control" value="" id="partid">
                     <input type="hidden" name = "itemid" class="form-control" value="" id="itemid">
                     <input type="hidden" name = "mapType" class="form-control" value="" id="mapType">
                   </div>
-                  <div class="col-sm-2" > 
-                    <label class="control-label">Cast Weight:</label> 
-                    <input type="text" class="form-control" value="" id="EPrice" >
-                  </div>
+                  
                   <div class="col-sm-2" > 
                     <label class="control-label">Scrap Name:</label> 
                     <select name="scrapname" id="scrapname" class="form-control" disabled>
@@ -406,7 +410,7 @@
                   </select>
                   </div>
                   <div class="col-sm-1" > 
-                    <button  style = "margin-top: 25px;" class="btn btn-default"  type="button" onclick="addpricemap()"><img src="<?=base_url();?>assets/images/plus.png" />
+                    <button  style = "margin-top: 25px;" class="btn btn-default" id="partsMapButton"  type="button" onclick="addpricemap()"><img src="<?=base_url();?>assets/images/plus.png" />
                     </button>
                   </div>
                 </div>
@@ -498,11 +502,11 @@
                   <th>
                     <div style="width:100px;">Usage Unit</div>
                   </th>
-                  <th>
+                  <th style="display: none;">
                     <div style="width:50px;">Size</div>
                   </th>
                   <?php if($_GET['p_type']=='13'){?>
-                  <th >
+                  <th style="display: none;">
                     <div style="width:100px;">Thickness</div>
                   </th>
                   <?php }?>
@@ -524,9 +528,9 @@
                     <td><input name="category"  type="text"  class="search_box form-control input-sm"  value="" /></td>
                     <td><input name="productname"  type="text"  class="search_box form-control input-sm"  value="" /></td>
                     <td><input name="usages_unit"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-                    <td><input name="size" type="text"  class="search_box form-control input-sm"  value="" /></td>
+                    <td style="display: none;"><input name="size" type="text"  class="search_box form-control input-sm"  value="" /></td>
                     <?php if($_GET['p_type']=='13'){?>
-                    <td><input name="thickness" type="text"  class="search_box form-control input-sm"  value="" /></td>
+                    <td style="display: none;"><input name="thickness" type="text"  class="search_box form-control input-sm"  value="" /></td>
                     <?php }?>
                     <td style="display:none;"><input name="gradecode" type="text"  class="search_box form-control input-sm"  value="" /></td>
                     <td><button type="submit" class="btn btn-sm" name="filter" value="filter"><span>Search</span></button></td>
@@ -564,9 +568,9 @@
                     		  $keyvalue1 = $compQuery1->row();
                     echo $keyvalue1->keyvalue;		  
                     ?></th>
-                  <th><?=$fetch_list->pro_size;?></th>
+                  <th style="display: none;"><?=$fetch_list->pro_size;?></th>
                   <?php if($_GET['p_type']=='13'){?>
-                  <th><?=$fetch_list->thickness;?></th>
+                  <th style="display: none;"><?=$fetch_list->thickness;?></th>
                   <?php }?>
                   <th style="display:none;"><?=$fetch_list->grade_code;?></th>
                   <th class="bs-example">
@@ -751,12 +755,12 @@
     var row = $('#rowparts').val();
 
     if(row == 1) {
-      alert("You can not add more than one row!");
+      alert("You can not add more than one raw material !");
     } else if(mproductid != '' && price != '' && Eprice != '' && muom != ''   ) {
 
     	$('#resultarea').text("");
     	$('#prodetails option:selected').remove();
-    	$('#partTable').append('<tr><td><input type ="hidden" name="prodcId[]" value="'+mproductid+'">'+mproductname+'</td><td><input type ="hidden" name="uom[]" value="'+muom+'">'+muomval+'</td><td><input type ="hidden" name="mproPrice[]" value="'+price+'">'+price+'</td><td><input type ="hidden" name="EPrice[]" value="'+Eprice+'">'+Eprice+'</td><td><input type ="hidden" name="scrapname[]" value="'+scrapID+'">'+scrapval+'</td><td><i class="fa fa-trash  fa-2x" mproductid="'+mproductid+'" mproductname="'+mproductname+'" uom="'+muom+'"  id="quotationdel" aria-hidden="true"></i></td></tr>');
+    	$('#partTable').append('<tr><td><input type ="hidden" name="prodcId[]" value="'+mproductid+'">'+mproductname+'</td><td><input type ="hidden" name="uom[]" value="'+muom+'">'+muomval+'</td><td><input type ="hidden" name="mproPrice[]" value="'+price+'">'+price+'</td><td><input type ="hidden" name="EPrice[]" value="'+Eprice+'">'+Eprice+'</td><td><input type ="hidden" name="scrapname[]" value="'+scrapID+'">'+scrapval+'</td><td><i class="fa fa-trash  fa-2x" mproductid="'+mproductid+'" mproductname="'+mproductname+'" uom="'+muom+'" scraps="'+scrapID+'"  id="quotationdel" aria-hidden="true"></i></td></tr>');
 
       $("#rowparts").val(1);
     	
@@ -938,24 +942,32 @@
   
      var value        =  0;
      var entityShape       =  $('#entityShape').val();
-     // var entity_code  =  $('#entity_code').val();
+     var row  =  $('#rowFg').val();
   
   
      if(entityShape == ""){
       alert('Please Select Shape Name');
       $('#entityShape').focus();
-      return false;
-     }    
+      //return false;
+     } else if(row==1) {
+      alert("You can't add more than one shape !");
+     } else {
       
       var x        = document.getElementById("entityShape").selectedIndex;
       var y        = document.getElementById("entityShape").options;
       var indexVal =  y[x].text;
-     $('#entityShape option:selected').remove();
      
-     $('#consigneeTableShape').append('<tr class="'+'row_'+value+'"><td><input  type ="hidden" class="form-control" name="entityShape[]" value="'+entityShape+'"><input   type ="text" readonly class="form-control"  value="'+indexVal+'"></td><td><i class="fa fa-trash  fa-3x" style="font-size:20px;" id="quotationdel_fg" attrVal="'+entityShape+'" val="'+indexVal+'" aria-hidden="true"></i></td></tr>');
-  
+      $('#entityShape option:selected').remove();
+     
+      $('#consigneeTableShape').append('<tr class="'+'row_'+value+'"><td><input  type ="hidden" class="form-control" name="entityShape[]" value="'+entityShape+'"><input   type ="text" readonly class="form-control"  value="'+indexVal+'"></td><td><i class="fa fa-trash  fa-3x" style="font-size:20px;" id="quotationdel_fg" attrVal="'+entityShape+'" val="'+indexVal+'" aria-hidden="true"></i></td></tr>');
+    
+      $("#rowFg").val(1);
+     
+     }
+
     //amazonEntity();
-  //$('#entity option:selected').remove();  
+    //$('#entity option:selected').remove();  
+
    }
 
 
@@ -976,4 +988,22 @@
     }
 
    }
+
+function checkWeight(){
+
+  var cw=$("#EPrice").val();
+  var nw=$("#mPrice").val();
+
+  if(Number(nw) > Number(cw))
+  {
+    alert("Net weight can't be greater than cast weight");
+    $("#partsMapButton").attr("disabled",true);
+  }
+  else
+  {
+    $("#partsMapButton").attr("disabled",false);
+  }
+
+}
+
 </script>
