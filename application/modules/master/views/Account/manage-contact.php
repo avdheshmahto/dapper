@@ -185,7 +185,7 @@
               <?php }?>
             </div>
             <div class="modal-footer" id="button">
-              <input type="submit" class="btn btn-sm" value="Save" />
+              <button type="submit" class="btn btn-sm">Save</button>
               <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -235,7 +235,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="panel-body">
-            <div class="table-responsive">
+            <div class="table-responsive__">
               <table class="table table-striped table-bordered table-hover dataTables-example11" id="tblData" >
                 <thead>
                   <tr id="abc">
