@@ -49,7 +49,8 @@
         <div class="modal-content">
           <div class="modal-header">
             <button  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title"><span class="top_title" ></span></h4>
+            <input type="hidden" id="headerType" value="<?=$_GET['p_type']?>">
+            <h4 class="modal-title"><span class="top_title"></span></h4>
             <div id="resultarea" class="text-center " style="font-size: 15px;color: red;"></div>
           </div>
           <form class="form-horizontal" role="form" id="ItemForm" >
@@ -58,15 +59,15 @@
                 <label class="col-sm-2 control-label"> *Category</label> 
                 <div class="col-sm-4">
                   <input type="hidden" name="type" value="<?=$_GET['p_type'];?>" />
-                  <select name="type1" style="display:none"  class="form-control" id="type" onchange="getCat(this.value);">
+                  <!-- <select name="type1" style="display:none"  class="form-control" id="type" onchange="getCat(this.value);">
                     <option value="">----Select ----</option>
                     <?php 
-                      $sqlprotype=$this->db->query("select * from tbl_master_data where param_id=17");
-                      foreach ($sqlprotype->result() as $fetch_protype){
+                      //$sqlprotype=$this->db->query("select * from tbl_master_data where //param_id=17");
+                      //foreach ($sqlprotype->result() as $fetch_protype){
                       ?>
-                    <option value="<?php echo $fetch_protype->serial_number;?>" ><?php echo $fetch_protype->keyvalue; ?></option>
-                    <?php } ?>
-                  </select>
+                    <option value="<?php //echo $fetch_protype->serial_number;?>" ><?php //echo $fetch_protype->keyvalue; ?></option>
+                    <?php //} ?>
+                  </select> -->
                   <select name="category"  class="form-control" onchange="changing(this.value)" id="category">
                     <option value="">----Select ----</option>
                     <?php 
@@ -79,19 +80,19 @@
                 </div>
                <label class="col-sm-2 control-label" > *<?php if($_GET['p_type']=='13'){?>RM Code<?php } elseif($_GET['p_type']=='32'){?>Part Code <?php } elseif($_GET['p_type']=='33'){ echo "Shape Code";} elseif($_GET['p_type']=='35'){ echo "Accessories Code";} elseif($_GET['p_type']=='34'){ echo "Packaging Material Code";} elseif($_GET['p_type']=='50'){ echo "Scrap Codde";} else{ echo "Item Code";}?> </label> 
                 <div class="col-sm-4">
-                    <input type="hidden" class="hiddenField" id="Product_id"   name="Product_id" value="" />
+                    <input type="hidden" class="hiddenField" id="Product_id" name="Product_id" value="" />
                     <input type="text" class="form-control" name="sku_no" value=""  id="sku_no"> 
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">*<?php if($_GET['p_type']=='13'){?>Raw Material Name<?php } elseif($_GET['p_type']=='32'){?>Part Name <?php } elseif($_GET['p_type']=='33'){ echo "Shape Name";} elseif($_GET['p_type']=='35'){ echo "Accessories Name";} elseif($_GET['p_type']=='34'){ echo "Packaging Material Name";} elseif($_GET['p_type']=='50'){ echo "Scrap Name";} else{ echo "Finish Goods";}?>:</label> 
+                <label class="col-sm-2 control-label">*<?php if($_GET['p_type']=='13'){?>Raw Material Name<?php } elseif($_GET['p_type']=='32'){?>Part Name <?php } elseif($_GET['p_type']=='33'){ echo "Shape Name";} elseif($_GET['p_type']=='35'){ echo "Accessories Name";} elseif($_GET['p_type']=='34'){ echo "Packaging Material Name";} elseif($_GET['p_type']=='50'){ echo "Scrap Name";} else{ echo "Item Name";}?>:</label> 
                 <div class="col-sm-4"> 
                   <input name="productname"  type="text" value="" class="form-control" id="productname" > 
                 </div>
                   <label class="col-sm-2 control-label"> *Usage Unit: </label> 
                 <div class="col-sm-4">
-                  <select name="unit"  class="form-control" id="unit">
+                  <select name="unit"  class="form-control" id="unit" onchange="showBox(this.value);">
                     <option value="" >----Select Unit----</option>
                     <?php 
                       $sqlunit=$this->db->query("select * from tbl_master_data where param_id=16");
@@ -104,13 +105,26 @@
                 </div>
               </div>
 
-              <div class="form-group">
-                <label class="col-sm-2 control-label">Qty/Box</label> 
+              <div class="form-group" id="useSet" style="display: none;">
+                <label class="col-sm-2 control-label">Qty/Set</label> 
                 <div class="col-sm-4"> 
                   <input type="text" name="qty_box" id="qty_box" class="form-control" />
                 </div>
+                <label class="col-sm-2 control-label"></label> 
+                <div class="col-sm-4"> 
+                  &nbsp;
+                </div>
+              </div>
+
+              <div class="form-group" id="userCircle" style="display: none;">
                 <label class="col-sm-2 control-label">Circle Weight</label> 
-                <div class="col-sm-4" id="regid">  <input type="text" name="circle_weight" id="circle_weight" class="form-control"  /></div>
+                <div class="col-sm-4" id="regid">  
+                  <input type="text" name="circle_weight" id="circle_weight" class="form-control"  />
+                </div>
+                <label class="col-sm-2 control-label"></label> 
+                <div class="col-sm-4"> 
+                  &nbsp;
+                </div>                
               </div>
 
               <div class="form-group" style="display: none;">
@@ -181,16 +195,32 @@
                 </div>
               </div>
 
-              <div class="form-group">
+              
+               <?php if($_GET['p_type']=='14') { ?>
+                <div class="form-group">
                 <label class="col-sm-2 control-label">Additional Percentage:</label> 
                 <div class="col-sm-4" id="regid"> 
                   <input type="number" min="0" max="100"  name="percentage" value="" id="percentage" class="form-control" >
                 </div>
+                <label class="col-sm-2 control-label"></label> 
+                <div class="col-sm-4" id="regid"> 
+                  &nbsp;
+                </div>
+              </div>
+              <?php } ?>
+              <?php if($_GET['p_type']=='32') { ?>
+              <div class="form-group">
               <label class="col-sm-2 control-label">Tolerance Percentage:</label> 
                 <div class="col-sm-4" id="regid"> 
                   <input type="number" name="tolerance_percentage" value="" id="tolerance_percentage" class="form-control" >
                 </div>
-              </div>
+                <label class="col-sm-2 control-label"></label> 
+                <div class="col-sm-4" id="regid"> 
+                  &nbsp;
+                </div>
+              </div>                
+              <?php } ?>
+
 
               <div class="form-group" style="display: none;">
                 <label class="col-sm-2 control-label">Cast Weight:</label> 
@@ -214,11 +244,13 @@
                 </div>
               </div>
 
-              <div class="form-group">                
+              <div class="form-group"> 
+               <?php if($_GET['p_type']=='14'){?>                
                 <label class="col-sm-2 control-label">Packing Qty</label> 
                 <div class="col-sm-4" > 
                   <input type="number" name="packing" value="" id="packing" class="form-control" >
                 </div>
+              <?php } ?>
               <?php if($_GET['p_type']=='13'){?>                
               <label class="col-sm-2 control-label">Scrap Name:</label> 
                 <div class="col-sm-4" id="regid">
@@ -318,28 +350,30 @@
               style="display:none1" <?php } else {?> style="display:none" <?php }?>>
               <div class="col-sm-12" >
                 <div class="form-group" id="rawdisp">
-                  <div class="col-sm-4">
+                  <div class="col-sm-3">
                     <input type="hidden" class="form-control input-sm" value="" id="mproductname"> 
+                    <input type="hidden" class="form-control input-sm" id="rowparts"> 
                     <input type="hidden"  class="form-control" value="" id="mproductid" >
                     <label class="control-label">RM Code:</label> <br>
                     <select id="prodetails"  class="select2 form-control" onchange="selectListdata(this);">
                       <option value="" selected disabled> --Select-- </option>
                       <?php
-                        $contQuery=$this->db->query("select productname,Product_id,usageunit,sku_no from tbl_product_stock where type = '13'");
+                        $contQuery=$this->db->query("select * from tbl_product_stock where type = '13'");
                         foreach($contQuery->result() as $dt)
                         	{
                         		$prodId   = $dt->Product_id;
                         		$prodName = $dt->productname;
                         		$uom      = $dt->usageunit;
+                            $scrpId   = $dt->scrap_id;
                         ?>
-                      <option value="<?=$prodId;?>^<?=$dt->sku_no;?>^<?=$uom;?>" ><?=$dt->sku_no;?></option>
+                      <option value="<?=$prodId;?>^<?=$dt->sku_no;?>^<?=$uom;?>^<?=$scrpId;?>" ><?=$dt->sku_no;?></option>
                       <?php } ?>
                     </select>
                   </div>
-                  <div class="col-sm-3">
+                  <div class="col-sm-2">
                     <label class="control-label">Usage Unit:</label> 
                     <select name="unit"  class="form-control" id="muom" disabled>
-                      <option value="" >----Select Unit----</option>
+                      <option value=""></option>
                       <?php 
                         $sqlunit=$this->db->query("select * from tbl_master_data where param_id=16");
                         foreach ($sqlunit->result() as $fetchunit){
@@ -359,6 +393,18 @@
                     <label class="control-label">Cast Weight:</label> 
                     <input type="text" class="form-control" value="" id="EPrice" >
                   </div>
+                  <div class="col-sm-2" > 
+                    <label class="control-label">Scrap Name:</label> 
+                    <select name="scrapname" id="scrapname" class="form-control" disabled>
+                    <option value=""></option>
+                    <?php
+                      $scrapQuery=$this->db->query("select * from tbl_product_stock where type='50'");
+                      foreach($scrapQuery->result() as $getScrap){
+                      ?>
+                    <option value="<?=$getScrap->Product_id?>"><?=$getScrap->productname;?></option>
+                    <?php }?>
+                  </select>
+                  </div>
                   <div class="col-sm-1" > 
                     <button  style = "margin-top: 25px;" class="btn btn-default"  type="button" onclick="addpricemap()"><img src="<?=base_url();?>assets/images/plus.png" />
                     </button>
@@ -372,6 +418,7 @@
                       <th>Usage Unit</th>
                       <th>Net Weight</th>
                       <th>Cast Weight</th>
+                      <th>Scrap Name</th>
                       <th id="partTh">Action</th>
                     </tr>
                   </tbody>
@@ -381,22 +428,14 @@
             </div>
             <?php }?>
             <div class="modal-footer" id="button">
-              <input type="submit" class="btn btn-sm" value="Save">
+              <button type="submit" class="btn btn-sm">Save</button>
               <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
             </div>
           </form>
         </div>
       </div>
     </div>
-    <?php
-      if($this->session->flashdata('flash_msg')!='')
-       {
-      ?>
-    <div class="alert alert-success alert-dismissible" role="alert" id="success-alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
-      <strong>Well done! &nbsp;<?php echo $this->session->flashdata('flash_msg');?></strong> 
-    </div>
-    <?php }?>	
+
     <div id="listingData">
       <div class="row">
         <div class="col-sm-12">
@@ -534,7 +573,7 @@
                     <?php if($view!=''){ ?>
                     <button class="btn btn-default" property="view" arrt= '<?=json_encode($fetch_list);?>' onclick ="editItem(this);" type="button" data-toggle="modal" data-target="#modal-0" data-backdrop='static' data-keyboard='false'> <i class="fa fa-eye"></i></button>
                     <?php } if($edit!=''){ ?>
-                    <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#modal-0" arrt= '<?=json_encode($fetch_list);?>' onclick="editItem(this)"><i class="icon-pencil"></i></button>
+                    <button type="button" property="edit" class="btn btn-default"  data-toggle="modal" data-target="#modal-0" arrt= '<?=json_encode($fetch_list);?>' onclick="editItem(this)"><i class="icon-pencil"></i></button>
                     <?php }
                       $pri_col='Product_id';
                       $table_name='tbl_product_stock';
@@ -681,14 +720,17 @@
   function selectListdata(ths){
   
     	 $("#muom").attr('disabled',false);
+       $("#scrapname").attr('disabled',false);
        $('#productListData').css('display','none');
+
        res = ths.value.split("^");
-      // alert(res[2]);
-       $('#mproductname').val(res[1]);
+       //alert(res[3]);
        $('#mproductid').val(res[0]);
-       // $('').val();
+       $('#mproductname').val(res[1]);
        $("#muom").val(res[2]);
+       $("#scrapname").val(res[3]);
        $("#muom").attr('disabled',true);
+       $("#scrapname").attr('disabled',true);
   
   }
   
@@ -699,19 +741,31 @@
   	var mproductid   =  $('#mproductid').val();
   	var price        =  $('#mPrice').val();
   	var Eprice        =  $('#EPrice').val();
+
   	var muom         =  $('#muom').val();
   	var muomval      =  $("#muom option:selected").text();
 
-    if(mproductid != '' && price != '' && Eprice != '' && muom != ''   ){
+    var scrapID       = $('#scrapname').val();
+    var scrapval      =  $("#scrapname option:selected").text();
+
+    var row = $('#rowparts').val();
+
+    if(row == 1) {
+      alert("You can not add more than one row!");
+    } else if(mproductid != '' && price != '' && Eprice != '' && muom != ''   ) {
 
     	$('#resultarea').text("");
     	$('#prodetails option:selected').remove();
-    	$('#partTable').append('<tr><td><input type ="hidden" name="prodcId[]" value="'+mproductid+'">'+mproductname+'</td><td><input type ="hidden" name="uom[]" value="'+muom+'">'+muomval+'</td><td><input type ="hidden" name="mproPrice[]" value="'+price+'">'+price+'</td><td><input type ="hidden" name="EPrice[]" value="'+Eprice+'">'+Eprice+'</td><td><i class="fa fa-trash  fa-2x" mproductid="'+mproductid+'" mproductname="'+mproductname+'" uom="'+muom+'"  id="quotationdel" aria-hidden="true"></i></td></tr>');
-    	$('#mproductname').val("");
+    	$('#partTable').append('<tr><td><input type ="hidden" name="prodcId[]" value="'+mproductid+'">'+mproductname+'</td><td><input type ="hidden" name="uom[]" value="'+muom+'">'+muomval+'</td><td><input type ="hidden" name="mproPrice[]" value="'+price+'">'+price+'</td><td><input type ="hidden" name="EPrice[]" value="'+Eprice+'">'+Eprice+'</td><td><input type ="hidden" name="scrapname[]" value="'+scrapID+'">'+scrapval+'</td><td><i class="fa fa-trash  fa-2x" mproductid="'+mproductid+'" mproductname="'+mproductname+'" uom="'+muom+'"  id="quotationdel" aria-hidden="true"></i></td></tr>');
+
+      $("#rowparts").val(1);
+    	
+      $('#mproductname').val("");
     	$('#mproductid').val("");
     	$('#mPrice').val("");
     	$('#EPrice').val("");
     	$("#muom").val("");
+      $("#scrapname").val("");
     	$("#prodetails").val("");
       $("#select2-prodetails-container").text("--select--");
 
@@ -902,5 +956,24 @@
   
     //amazonEntity();
   //$('#entity option:selected').remove();  
+   }
+
+
+
+   function showBox(v){
+    //alert(v);
+    if(v==41){
+      $("#userCircle").css("display", "none");      
+      $("#useSet").css("display","block");
+      $("#qty_box").val('');
+    }else if(v==42){
+      $("#userCircle").css("display", "block");
+      $("#useSet").css("display","none");
+      $("#circle_weight").val('');
+    }else{
+      $("#userCircle").css("display", "none");
+      $("#useSet").css("display","none");
+    }
+
    }
 </script>
