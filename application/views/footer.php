@@ -396,9 +396,7 @@
   type: "POST",
   success: function(data){
   
-  // $("#listingDataremove").hide();
-  // $("#listingData").append(data);
-  // $("#listingData").fadeIn();
+
   $("#listingData").empty().append(data).fadeIn();
   
   //console.log(data);
@@ -408,7 +406,8 @@
   }
   
   function editContact(ths) {
-  //console.log('edit ready !');
+
+  console.log('edit ready !');
   
   $('.error').css('display','none');
   var rowValue = $(ths).attr('arrt');
@@ -419,47 +418,64 @@
   
   //alert(editVal.contact_id);
   if(button_property != 'view')
-  $('#contact_id').val(editVal.contact_id);
-  $('#maingroupname').val(editVal.group_name).prop('selected', true);
-  $('#first_name').val(editVal.first_name);
-  $('#contact_person').val(editVal.contact_person);
-  $('#email').val(editVal.email);       
-  $('#mobile').val(editVal.mobile);
-  $('#phone').val(editVal.phone);
-  $('#pan_no').val(editVal.IT_Pan);   
-  $('#gst_no').val(editVal.gst);    
-  $('#address1').val(editVal.address1);   
-  $('#address3').val(editVal.address3);
-  $('#city').val(editVal.city);
+    $('#contact_id').val(editVal.contact_id);
+    $('#maingroupname').val(editVal.group_name).prop('selected', true);
+    $('#first_name').val(editVal.first_name);
+    $('#contact_person').val(editVal.contact_person);
+    $('#email').val(editVal.email);       
+    $('#mobile').val(editVal.mobile);
+    $('#phone').val(editVal.phone);
+    $('#pan_no').val(editVal.IT_Pan);   
+    $('#gst_no').val(editVal.gst);    
+    $('#address1').val(editVal.address1);   
+    $('#address3').val(editVal.address3);
+    $('#city').val(editVal.city);
+    
+    $('#finalDestination').val(editVal.finalDestination);   
+    $('#countryDestination').val(editVal.countryDestination);   
+    $('#portDischarge').val(editVal.portDischarge);
+    $('#norify').val(editVal.norify);
+    
+    $('#state').val(editVal.state_id).prop('selected', true);   
+    //$('#printname').val(editVal.printname);
+    $('#pin_code').val(editVal.pincode);
+    $('#code').val(editVal.code);   
+    
+    getEntityRow(editVal.contact_id);
+    //showconsigneemap(editVal.group_name);
   
-  $('#finalDestination').val(editVal.finalDestination);   
-  $('#countryDestination').val(editVal.countryDestination);   
-  $('#portDischarge').val(editVal.portDischarge);
-  $('#norify').val(editVal.norify);
-  
-  $('#state').val(editVal.state_id).prop('selected', true);   
-  $('#printname').val(editVal.printname);
-  $('#pin_code').val(editVal.pincode);
-  $('#code').val(editVal.code);   
-  
-  getEntityRow(editVal.contact_id);
-  showconsigneemap(editVal.group_name);
-  
+  var cntType=$("#contType").val();
+
   if(button_property == 'view'){
+      
+    if(cntType=='4') {
+         $('.top_title').html('View Buyer')
+      } else if(cntType=='7') {
+         $('.top_title').html('View Consignee');
+      } else if(cntType=='5') {
+         $('.top_title').html('View Vendor');
+      } else if(cntType=='6') {
+         $('.top_title').html('View Employee');
+        }
+
+    $('#button').css('display','none');
+    $("#contactForm :input").prop("disabled", true);
+
+    } else if(button_property == 'edit') {
   
-  $('.top_title').html('View');
-  $('#button').css('display','none');
-  $("#contactForm :input").prop("disabled", true);
-  }else {
-  
-  <?php if($_GET['con_type']=='4'){?>$('.top_title').html('Update Buyer');    <?php }?>
-  
-  <?php if($_GET['con_type']=='7'){?>$('.top_title').html('Update Buyer');    <?php }?>
-  
-  
-  $('#button').css('display','block');
-  $("#contactForm :input").prop("disabled", false);
-  }
+      if(cntType=='4') {
+           $('.top_title').html('Update Buyer')
+        } else if(cntType=='7') {
+           $('.top_title').html('Update Consignee');
+        } else if(cntType=='5') {
+           $('.top_title').html('Update Vendor');
+        } else if(cntType=='6') {
+           $('.top_title').html('Update Employee');
+          }
+      
+      $('#button').css('display','block');
+      $("#contactForm :input").prop("disabled", false);
+    }
   }
   
   //--------------------------------------------Product Form--------------------------------------------------------------
@@ -482,7 +498,6 @@
         url  :  ur, 
         //dataType : 'json', // Notice json here
         data : formData, // serializes the form's elements.
-  //data : $('#contactForm').serialize(), // serializes the form's elements.
         success : function (data) {
           //alert(data); // show response from the php script.
           
@@ -539,150 +554,102 @@
   }
   
   function editItem(ths) {
-  // var image_url = "<?=base_url('assets/scope_document');?>"+'/';
   // console.log('edit ready !');
   $('.error').css('display','none');
   var rowValue = $(ths).attr('arrt');
   var button_property = $(ths).attr('property');
-  //alert(rowValue);
+  //alert(button_property);
   console.log(rowValue);
   if(rowValue !== undefined)
-  var editVal = JSON.parse(rowValue);
+    var editVal = JSON.parse(rowValue);
   
   if(button_property != 'view')
-  $('#Product_id').val(editVal.Product_id);
-  $('#type').val(editVal.type);
-  $('#category').val(editVal.category).prop('selected', true);
-  $('#scrap_id').val(editVal.scrap_id).prop('selected', true);
-  $('#sku_no').val(editVal.sku_no);
-  $('#circle_weight').val(editVal.circle_weight);
-  $('#productname').val(editVal.productname);
-  $('#unit').val(editVal.usageunit);    
-  $('#opening_stock').val(editVal.opening_stock);    
-  $('#percentage').val(editVal.percentage);
-  $('#size').val(editVal.pro_size);
-  $('#thickness').val(editVal.thickness);
-  $('#grade_code').val(editVal.grade_code);
-  $('#unitprice_sale').val(editVal.unitprice_sale);
-  $('#unitprice_purchase').val(editVal.unitprice_purchase);   
-  $('#hsn_code').val(editVal.hsn_code);
-  $('#gst_tax').val(editVal.gst_tax);
-  $('#weight').val(editVal.weight);
-  $('#ctn_lenght').val(editVal.ctn_lenght);
-  $('#ctn_width').val(editVal.ctn_width);
-  $('#ctn_height').val(editVal.ctn_height);
-  $('#mst').val(editVal.mst);
-  $('#cbm').val(editVal.cbm);
-  $('#lead_time').val(editVal.lead_time);
-  $('#net_weight').val(editVal.net_weight);
-  $('#cast_weight').val(editVal.cast_weight);
-  $('#tolerance_percentage').val(editVal.tolerance_percentage);
-  $('#packing').val(editVal.packing);
-  $('#qty_box').val(editVal.qty_box);
+    $('#Product_id').val(editVal.Product_id);
+    $('#type').val(editVal.type);
+    $('#category').val(editVal.category).prop('selected', true);
+    $('#scrap_id').val(editVal.scrap_id).prop('selected', true);
+    $('#sku_no').val(editVal.sku_no);
+    $('#circle_weight').val(editVal.circle_weight);
+    $('#productname').val(editVal.productname);
+    $('#unit').val(editVal.usageunit);    
+    $('#opening_stock').val(editVal.opening_stock);    
+    $('#percentage').val(editVal.percentage);
+    $('#size').val(editVal.pro_size);
+    $('#thickness').val(editVal.thickness);
+    $('#grade_code').val(editVal.grade_code);
+    $('#unitprice_sale').val(editVal.unitprice_sale);
+    $('#unitprice_purchase').val(editVal.unitprice_purchase);   
+    $('#hsn_code').val(editVal.hsn_code);
+    $('#gst_tax').val(editVal.gst_tax);
+    $('#weight').val(editVal.weight);
+    $('#ctn_lenght').val(editVal.ctn_lenght);
+    $('#ctn_width').val(editVal.ctn_width);
+    $('#ctn_height').val(editVal.ctn_height);
+    $('#mst').val(editVal.mst);
+    $('#cbm').val(editVal.cbm);
+    $('#lead_time').val(editVal.lead_time);
+    $('#net_weight').val(editVal.net_weight);
+    $('#cast_weight').val(editVal.cast_weight);
+    $('#tolerance_percentage').val(editVal.tolerance_percentage);
+    $('#packing').val(editVal.packing);
+    $('#qty_box').val(editVal.qty_box);
+    
+    getEntityRow(editVal.Product_id);
+    
+    getEntityRowOfPartCode(editVal.Product_id);
+    
+    getEntityRowOfShape(editVal.Product_id);
+    
+    // if(editVal.category != "")
+    //   changing(editVal.category);
+    
+    //$('#subcategory').val(editVal.subcategory).prop('selected', true);
+    $('#scrap_id').val(editVal.scrap_id).prop('selected', true);
   
-  getEntityRow(editVal.Product_id);
-  
-  getEntityRowOfPartCode(editVal.Product_id);
-  
-  getEntityRowOfShape(editVal.Product_id);
-  
-  if(editVal.category != "")
-  changing(editVal.category);
-  
-  $('#subcategory').val(editVal.subcategory).prop('selected', true);
-  $('#scrap_id').val(editVal.scrap_id).prop('selected', true);
-  
+  var hdrType = $("#headerType").val();
+
   if(button_property == 'view'){
-  
-  
-  <?php
-    if($_GET['p_type']=='13'){
-    ?>
-  $('.top_title').html('View Raw Material');
-  <?php }
-    if($_GET['p_type']=='50'){
-    ?>
-  $('.top_title').html('View Scrap');
-  <?php }
-    if($_GET['p_type']=='32'){
-    ?>
-  $('.top_title').html('View Part Name');
-  $("#rawdisp").css("display", "none");
-  
-  
-  
-  <?php }?>
-  
-  <?php 
-    if($_GET['p_type']=='33'){
-    ?>
-  $('.top_title').html('View Shape');
-  <?php }?>
-  
-  <?php 
-    if($_GET['p_type']=='14'){
-    ?>
-  $('.top_title').html('View Finish Goods');
-  <?php }?>
-  <?php 
-    if($_GET['p_type']=='15'){
-    ?>
-  $('.top_title').html('View Accessories');
-  <?php }?>
-  
-  <?php 
-    if($_GET['p_type']=='34'){
-    ?>
-  $('.top_title').html('View Packaging Material');
-  <?php }?>
-  
-  $('#button').css('display','none');
-  $("#ItemForm :input").prop("disabled", true);
+
+    if(hdrType=='13'){
+         $('.top_title').html('View Raw Material');
+      } else if(hdrType=='32') {
+         $('.top_title').html('View Part Name');
+      } else if(hdrType=='33') {
+         $('.top_title').html('View Shape Name');
+      } else if(hdrType=='14') {
+         $('.top_title').html('View Finish Goods');
+      } else if(hdrType=='50') {
+         $('.top_title').html('View Scrap');
+      } else if(hdrType=='34') {
+         $('.top_title').html('View Packaging Material');
+      } else if(hdrType=='35'){
+         $('.top_title').html('View Accessories');
+        }
+    
+    $('#button').css('display','none');
+    $("#ItemForm :input").prop("disabled", true);
+
   }else{
-  <?php
-    if($_GET['p_type']=='13'){
-    ?>
-  $('.top_title').html('Update Raw Material');
-  <?php }
-    if($_GET['p_type']=='32'){
-    ?>
-  $('.top_title').html('Update Part Name');
-  $("#rawdisp").css("display", "block");
-  
-  
-  
-  <?php }?>
-  
-  <?php 
-    if($_GET['p_type']=='33'){
-    ?>
-  $('.top_title').html('Update Shape ');
-  <?php }?>
-  
-  <?php 
-    if($_GET['p_type']=='50'){
-    ?>
-  $('.top_title').html('Update Scrap ');
-  <?php }?>
-  
-  <?php 
-    if($_GET['p_type']=='14'){
-    ?>
-  $('.top_title').html('Update Finish Goods');
-  <?php }?>
-  <?php 
-    if($_GET['p_type']=='15'){
-    ?>
-  $('.top_title').html('Update Accessories');
-  <?php }?>
-  
-  <?php 
-    if($_GET['p_type']=='34'){
-    ?>
-  $('.top_title').html('Update Packaging Material');
-  <?php }?>
-  $('#button').css('display','block');
-  $("#ItemForm :input").prop("disabled", false);
+
+    if(hdrType=='13'){
+         $('.top_title').html('Update Raw Material');
+      } else if(hdrType=='32') {
+         $('.top_title').html('Update Part Name');
+      } else if(hdrType=='33') {
+         $('.top_title').html('Update Shape Name');
+      } else if(hdrType=='14') {
+         $('.top_title').html('Update Finish Goods');
+      } else if(hdrType=='50') {
+         $('.top_title').html('Update Scrap');
+      } else if(hdrType=='34') {
+         $('.top_title').html('Update Packaging Material');
+      } else if(hdrType=='35'){
+         $('.top_title').html('Update Accessories');
+        }
+
+    $('#button').css('display','block');
+    $("#ItemForm :input").prop("disabled", false);
+
   }
   
   
@@ -697,18 +664,15 @@
   $("#consigneeMapping").hide();  
   }
   
-  
-  
   if(thsVal=='14')
   {
-  $("#consigneeTableShape").show();  
+   $("#consigneeTableShape").show();  
   }
   
   if(thsVal=='32')
   {
-  $("#consigneeMappingPart").show();  
-  }
-  
+   $("#consigneeMappingPart").show();  
+  }  
   else
   {
   $("#consigneeMappingPart").hide();  
@@ -829,6 +793,7 @@
   
   $(this).parent().parent().remove();
   $("#prodetails").append('<option value="'+mproductid+'^'+mproductname+'^'+usunit+'">'+mproductname+'</option>'); 
+  $("#rowparts").val(0);
   });
 
   
@@ -1137,9 +1102,11 @@
   $(document).ready(function(){
   
   $(document).delegate("#formreset","click",function(){
-       //  alert('ssdfsdf');
-      //var url = "<?=base_url()?>"+'assets/images/no_image.png';
+
+    var hdrType = $("#headerType").val();
+    var cntType = $("#contType").val();
     var formid =  $('#formreset').attr('formid');
+      //alert(url);  
     $(formid)[0].reset();
     
     $("#partTable").empty();
@@ -1151,74 +1118,37 @@
 	  $("#quotationTable").empty();
 	  $(".hiddenField").val('');
     
-    showconsigneemap(thsVal = "");
+    showBox();
+    //showconsigneemap(thsVal = "");
 
-    <?php 
-    if($_GET['con_type']=='4'){
-    ?>
-       $('.top_title').html('Add Buyer');
-    <?php }?>
-  
-  
-    <?php 
-    if($_GET['con_type']=='7'){
-    ?>
-       $('.top_title').html('Add Consignee');
-    <?php }?>
-    
-    <?php 
-    if($_GET['con_type']=='5'){
-    ?>
-       $('.top_title').html('Add Vendor');
-    <?php }?>
-    
-    <?php 
-    if($_GET['con_type']=='6'){
-    ?>
-       $('.top_title').html('Add Employee');
-    <?php }?>
-    
-  
-      <?php
-    if($_GET['p_type']=='13'){
-    ?>
+    if(hdrType=='13'){
        $('.top_title').html('Add Raw Material');
-       <?php }
-    if($_GET['p_type']=='32'){
-    ?>
+    } else if(hdrType=='32') {
        $('.top_title').html('Add Part Name');
-       <?php }?>
-       
-       <?php 
-    if($_GET['p_type']=='33'){
-    ?>
+    } else if(hdrType=='33') {
        $('.top_title').html('Add Shape Name');
-       <?php }?>
-       
-       <?php 
-    if($_GET['p_type']=='14'){
-    ?>
+    } else if(hdrType=='14') {
        $('.top_title').html('Add Finish Goods');
-       <?php }?>
-        <?php 
-    if($_GET['p_type']=='15'){
-    ?>
-       $('.top_title').html('Add Accessories');
-       <?php }?>
-       
-        <?php 
-    if($_GET['p_type']=='34'){
-    ?>
+    } else if(hdrType=='50') {
+       $('.top_title').html('Add Scrap');
+    } else if(hdrType=='34') {
        $('.top_title').html('Add Packaging Material');
-       <?php }?>
-       
-       <?php 
-    if($_GET['p_type']=='35'){
-    ?>
+    } else if(hdrType=='35'){
        $('.top_title').html('Add Accessories');
-       <?php }?>
+      }
+
+    if(cntType=='4') {
+       $('.top_title').html('Add Buyer')
+    } else if(cntType=='7') {
+       $('.top_title').html('Add Consignee');
+    } else if(cntType=='5') {
+       $('.top_title').html('Add Vendor');
+    } else if(cntType=='6') {
+       $('.top_title').html('Add Employee');
+      }
 
       $(formid+" :input").prop("disabled", false);
+      $(formid+" :input").val('');
       $("#button").css("display", "block");
       //CKEDITOR.instances['tem'].setData("");
       //$('#image').attr('src',url);
@@ -1986,7 +1916,6 @@
                   url  :  ur, 
                   //dataType : 'json', // Notice json here
                   data : formData, // serializes the form's elements.
-          //data : $('#contactForm').serialize(), // serializes the form's elements.
                   success : function (data) {
                     //alert(data); // show response from the php script.
                 
