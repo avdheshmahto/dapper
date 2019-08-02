@@ -569,7 +569,7 @@
     $('#category').val(editVal.category).prop('selected', true);
     $('#scrap_id').val(editVal.scrap_id).prop('selected', true);
     $('#sku_no').val(editVal.sku_no);
-    $('#circle_weight').val(editVal.circle_weight);
+    
     $('#productname').val(editVal.productname);
     $('#unit').val(editVal.usageunit);    
     $('#opening_stock').val(editVal.opening_stock);    
@@ -591,8 +591,7 @@
     $('#net_weight').val(editVal.net_weight);
     $('#cast_weight').val(editVal.cast_weight);
     $('#tolerance_percentage').val(editVal.tolerance_percentage);
-    $('#packing').val(editVal.packing);
-    $('#qty_box').val(editVal.qty_box);
+    $('#packing').val(editVal.packing);    
     
     getEntityRow(editVal.Product_id);
     
@@ -600,6 +599,9 @@
     
     getEntityRowOfShape(editVal.Product_id);
     
+    showBox(editVal.usageunit);
+    $('#circle_weight').val(editVal.circle_weight);
+    $('#qty_box').val(editVal.qty_box);
     // if(editVal.category != "")
     //   changing(editVal.category);
     
@@ -790,9 +792,10 @@
   var mproductname = $(this).attr('mproductname');
   var mproductid = $(this).attr('mproductid');
   var usunit = $(this).attr('uom');
+  var scrapNm = $(this).attr('scraps');
   
   $(this).parent().parent().remove();
-  $("#prodetails").append('<option value="'+mproductid+'^'+mproductname+'^'+usunit+'">'+mproductname+'</option>'); 
+  $("#prodetails").append('<option value="'+mproductid+'^'+mproductname+'^'+usunit+'^'+scrapNm+'">'+mproductname+'</option>'); 
   $("#rowparts").val(0);
   });
 
@@ -1105,6 +1108,8 @@
 
     var hdrType = $("#headerType").val();
     var cntType = $("#contType").val();
+    var cntType=$("#contType").val();
+
     var formid =  $('#formreset').attr('formid');
       //alert(url);  
     $(formid)[0].reset();
@@ -1118,22 +1123,38 @@
 	  $("#quotationTable").empty();
 	  $(".hiddenField").val('');
     
-    showBox();
     //showconsigneemap(thsVal = "");
+      
+    if(cntType=='4') {
+         $('.top_title').html('Add Buyer')
+      } else if(cntType=='7') {
+         $('.top_title').html('Add Consignee');
+      } else if(cntType=='5') {
+         $('.top_title').html('Add Vendor');
+      } else if(cntType=='6') {
+         $('.top_title').html('Add Employee');
+        }
 
     if(hdrType=='13'){
+          showBox();
        $('.top_title').html('Add Raw Material');
     } else if(hdrType=='32') {
+          showBox();
        $('.top_title').html('Add Part Name');
     } else if(hdrType=='33') {
+          showBox();
        $('.top_title').html('Add Shape Name');
     } else if(hdrType=='14') {
+          showBox();
        $('.top_title').html('Add Finish Goods');
     } else if(hdrType=='50') {
+          showBox();
        $('.top_title').html('Add Scrap');
     } else if(hdrType=='34') {
+          showBox();
        $('.top_title').html('Add Packaging Material');
     } else if(hdrType=='35'){
+          showBox();
        $('.top_title').html('Add Accessories');
       }
 
@@ -1148,7 +1169,9 @@
       }
 
       $(formid+" :input").prop("disabled", false);
-      $(formid+" :input").val('');
+      //$(formid+" :input").val('');
+      $("#rowparts").val(0);
+      $("#rowFg").val(0);
       $("#button").css("display", "block");
       //CKEDITOR.instances['tem'].setData("");
       //$('#image').attr('src',url);
@@ -2026,6 +2049,7 @@ $(document).delegate("#quotationdel_fg","click",function(){
   //alert(b);
   $(this).parent().parent().remove();  
   $("#entityShape").append('<option value="'+a+'">'+b+'</option>'); 
+  $("#rowFg").val(0);
   //alert(b);
   });
 
