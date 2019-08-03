@@ -25,9 +25,6 @@ class model_master extends CI_Model
     function product_get($last, $strat, $p_type)
     {
         
-        
-        
-        
         //echo "select *from tbl_product_stock where status='A' and type='$p_type'  order by Product_id desc limit $strt,$last";
         $query = $this->db->query("select *from tbl_product_stock where status='A' and type='$p_type'  order by sku_no asc limit $strat,$last");
         return $result = $query->result();
@@ -155,7 +152,7 @@ class model_master extends CI_Model
     
     function contact_get($last, $strat, $con_type)
     {
-        $query = $this->db->query("select *from tbl_contact_m where status='A' and group_name='$con_type' ORDER BY contact_id DESC limit $strat,$last");
+        $query = $this->db->query("select * from tbl_contact_m where status='A' and group_name='$con_type' ORDER BY contact_id DESC limit $strat,$last");
         return $result = $query->result();
     }
     
@@ -371,11 +368,11 @@ class model_master extends CI_Model
        <tr>
             <td>
                 <input  type ="hidden" class="form-control" name="entity[]" value="<?= $fetch_protype->contact_id; ?>">
-                <input  type ="text" class="form-control"  value="<?= $fetch_protype->first_name; ?>">
+                <input  type ="text" class="form-control" readonly value="<?= $fetch_protype->first_name; ?>">
             </td>
             
             <td>
-                <i class="fa fa-trash  fa-2x" id="quotationdel" style="font-size:20px;" attrVal="<?= $fetch_protype->contact_id; ?>" aria-hidden="true"></i>
+                <i class="fa fa-trash  fa-2x" id="quotationdel_shape" style="font-size:20px;" attrVal="<?= $fetch_protype->contact_id; ?>" val="<?= $fetch_protype->first_name; ?>" aria-hidden="true"></i>
             </td>
         </tr>
     <?php
@@ -388,13 +385,6 @@ class model_master extends CI_Model
     
     
     
-    
-    
-    
-    
-    
-    
-    
     function get_getentityRowsItem($id)
     {
         //echo "select * from tbl_shape_part_mapping  where product_id='$id'";die;
@@ -403,24 +393,44 @@ class model_master extends CI_Model
             $i         = 0;
             //echo "select * from tbl_shape_part_mapping  where product_id='$id'";
             $qryEntity = $this->db->query("select * from tbl_shape_part_mapping  where product_id='$id'");
+
             foreach ($qryEntity->result() as $fetch_protype) {
+
+                $ppm=$this->db->query("select * from tbl_part_price_mapping where part_id='$fetch_protype->part_id' ");
+                $getPpm=$ppm->row();
                 
                 $productQuery = $this->db->query("select *from tbl_product_stock where Product_id='" . $fetch_protype->part_id . "'");
                 $getProduct   = $productQuery->row();
+
+                $rm = $this->db->query("select * from tbl_product_stock where Product_id='".$getPpm->rowmatial."'");
+                $getRm   = $rm->row();
+
+                $productUnitQuery = $this->db->query("select * from tbl_master_data where serial_number='" . $getPpm->unit . "'");
+                $getUnitProduct   = $productUnitQuery->row();
+
+                $scraps = $this->db->query("select * from tbl_product_stock where Product_id='$getRm->scrap_id' ");
+                $scrapName=$scraps->row();
                 
                 
 ?>
        <tr>
             <td>
                 <input  type ="hidden" class="form-control" name="entity[]" value="<?= $getProduct->Product_id; ?>">
-                <input  type ="text" class="form-control"  value="<?= $getProduct->sku_no; ?>">
+                <?= $getProduct->sku_no; ?>
             </td>
-            <!-- <td>
-                <input  type ="hidden" class="form-control" value = "<?= $entityIdimplode; ?>" name="entity_code[]">
-                <input  type ="text" class="form-control" value="<?= $entityimplode; ?>">
-            </td> -->
+            
+            <td><?= $getRm->sku_no; ?></td>
+
+            <td><?= $getUnitProduct->keyvalue; ?></td>
+
+            <td><?= $getPpm->EPrice; ?></td>
+
+            <td><?= $getPpm->qty; ?></td>
+
+            <td><?= $scrapName->productname; ?></td>
+
             <td>
-                <i class="fa fa-trash  fa-2x" id="quotationdel" style="font-size:20px;" attrVal="<?= $fetch_protype->contact_id; ?>" aria-hidden="true"></i>
+                <i class="fa fa-trash  fa-2x" id="quotationdel_shape" style="font-size:20px;" attrVal="<?= $fetch_protype->part_id; ?>" val="<?= $getProduct->sku_no; ?>" aria-hidden="true"></i>
             </td>
         </tr>
     <?php
@@ -439,17 +449,23 @@ class model_master extends CI_Model
         //echo "select * from tbl_shape_part_mapping  where product_id='$id'";die;
         if ($id != 0) {
             
-            $i         = 0;
+            $i = 0;
             //echo "select * from tbl_shape_part_mapping  where product_id='$id'";
             $qryEntity = $this->db->query("select * from tbl_part_price_mapping  where part_id='$id'");
+            $count=$qryEntity->num_rows();
+            if($count > 0){
+
             foreach ($qryEntity->result() as $fetch_protype) {
                 
-                $productQuery = $this->db->query("select *from tbl_product_stock where Product_id='" . $fetch_protype->rowmatial . "'");
+                $productQuery = $this->db->query("select * from tbl_product_stock where Product_id='" . $fetch_protype->rowmatial . "'");
                 $getProduct   = $productQuery->row();
                 
                 
-                $productUnitQuery = $this->db->query("select *from tbl_master_data where serial_number='" . $fetch_protype->unit . "'");
+                $productUnitQuery = $this->db->query("select * from tbl_master_data where serial_number='" . $fetch_protype->unit . "'");
                 $getUnitProduct   = $productUnitQuery->row();
+
+                $scraps = $this->db->query("select * from tbl_product_stock where Product_id='$getProduct->scrap_id' ");
+                $scrapName=$scraps->row();
                 
                 
 ?>
@@ -461,22 +477,28 @@ class model_master extends CI_Model
 
         <td><input type ="hidden" name="uom[]" value="<?= $getUnitProduct->serial_number; ?>"><?= $getUnitProduct->keyvalue; ?></td>
 
-        <td><input type ="hidden" name="mproPrice[]" value="<?= $fetch_protype->qty; ?>"><?= $fetch_protype->qty; ?></td>
-
         <td><input type ="hidden" name="EPrice[]" value="<?= $fetch_protype->EPrice; ?>"><?= $fetch_protype->EPrice; ?></td>
 
-        <td id="partId"><i class="fa fa-trash  fa-2x" mproductid="<?= $getProduct->Product_id; ?>" mproductname="<?= $getProduct->sku_no; ?>" id="quotationdel" aria-hidden="true"></i></td>
+        <td><input type ="hidden" name="mproPrice[]" value="<?= $fetch_protype->qty; ?>"><?= $fetch_protype->qty; ?></td>
+
+        <td><input type ="hidden" name="scrapname[]" value="<?= $scrapName->productname; ?>"><?= $scrapName->productname; ?></td>
+
+        <td id="partId"><i class="fa fa-trash  fa-2x" mproductid="<?= $getProduct->Product_id; ?>" mproductname="<?= $getProduct->sku_no; ?>" uom="<?=$getUnitProduct->serial_number?>" scraps="<?= $getProduct->scrap_id; ?>" id="quotationdel" aria-hidden="true"></i></td>
 
     </tr>
        
     <?php
                 $i++;
             }
+
+          } else
+          {
+            echo 0;
+          }
+
         }
     }
     //}
-    
-    
     
     
     
@@ -491,6 +513,10 @@ class model_master extends CI_Model
             $i         = 0;
             //echo "select * from tbl_shape_part_mapping  where product_id='$id'";
             $qryEntity = $this->db->query("select * from tbl_machine  where code='$id'");
+            $count=$qryEntity->num_rows();
+
+            if($count > 0) {
+
             foreach ($qryEntity->result() as $fetch_protype) {
                 
                 $productQuery = $this->db->query("select *from tbl_product_stock where Product_id='" . $fetch_protype->machine_name . "'");
@@ -509,13 +535,16 @@ class model_master extends CI_Model
 
         
 
-        <td><i class="fa fa-trash  fa-2x" mproductid="<?= $getProduct->Product_id; ?>" mproductname="<?= $getProduct->sku_no; ?>" id="quotationdel" aria-hidden="true"></i></td>
+        <td><i class="fa fa-trash  fa-2x" attrVal="<?= $getProduct->Product_id; ?>" val="<?= $getProduct->sku_no; ?>" id="quotationdel_fg" aria-hidden="true"></i></td>
 
     </tr>
        
     <?php
                 $i++;
             }
+          } else {
+            echo 0;
+          }
         }
     }
     //}
@@ -558,15 +587,10 @@ class model_master extends CI_Model
     
     
     
-    
-    
     //===========================================Unit Conversion============================
     
     function unit_get($last, $strat)
     {
-        
-        
-        
         
         //echo "select *from tbl_product_stock where status='A' and type='$p_type'  order by Product_id desc limit $strt,$last";
         $query = $this->db->query("select *from tbl_unit_conversion where status='A'  order by id desc limit $strat,$last");
@@ -579,10 +603,6 @@ class model_master extends CI_Model
         $qry = "select * from tbl_unit_conversion where status = 'A' ";
         
         if (sizeof($get) > 0) {
-            
-            
-            
-            
             
             
             if ($get['main_unit'] != "") {
@@ -602,9 +622,6 @@ class model_master extends CI_Model
             
             if ($get['con_fact'] != "")
                 $qry .= " AND unit_conversion_value LIKE '%" . $get['con_fact'] . "%'";
-            
-            
-            
             
             
         }
@@ -666,11 +683,6 @@ class model_master extends CI_Model
         return $query[0]['countval'];
         
     }
-    
-    
-    
-    
-    
     
     
     
