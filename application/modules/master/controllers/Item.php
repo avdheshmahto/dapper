@@ -217,7 +217,7 @@ class Item extends my_controller
             echo "1" . "^" . $type;
         } else if ($id != "") {
             
-            $this->Model_admin_login->delete_user($pri_col, $table_name, $contact);
+            //$this->Model_admin_login->delete_user($pri_col, $table_name, $contact);
             $this->Model_admin_login->update_user($pri_col, $table_name, $id, $data);
             
             $this->Model_admin_login->delete_user($pri_col_map, $table_name_map, $id);
@@ -260,8 +260,8 @@ class Item extends my_controller
                     'unit' => $uom[$s]
                 );
                 
-                //$dataall = array_merge($data,$sesio);
-                $this->Model_admin_login->insert_user($table_name_part_price, $data);
+                $dataall = array_merge($data,$sesio);
+                $this->Model_admin_login->insert_user($table_name_part_price, $dataall);
                 
                 
                 
