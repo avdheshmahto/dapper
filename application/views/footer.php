@@ -374,11 +374,12 @@
               $("#resultarea").text(" "); 
               $('#contactForm')[0].reset(); 
               $("#contact_id").val("");
-            }, 1000);
+            }, 5000);
          }else{
             $("#resultarea").text(data);
          }
-  ajex_contactListData(type);
+        //ajex_contactListData(type);
+        ajex_contactListData_load();
        }
     });
   return false;
@@ -386,7 +387,11 @@
   }
   });
   
-  
+  function ajex_contactListData_load() {
+      
+    window.location.reload();
+  }
+
   function ajex_contactListData(type){
   ur = "<?=base_url('/master/Account/ajax_ContactListData');?>";
   
@@ -516,11 +521,12 @@
                $("#resultarea").text(" "); 
                $('#ItemForm')[0].reset(); 
                $("#Product_id").val("");
-            }, 1000);
+            }, 5000);
           }else{
             $("#resultarea").text(data);
          }
-         ajex_ItemListData(type);
+         //ajex_ItemListData(type);
+         ajex_ItemListData_load();
        },
         error: function(data){
             alert("error");
@@ -535,6 +541,11 @@
   }
   });
   
+  function ajex_ItemListData_load()
+  {
+    //alert("Successful Message");
+    window.location.reload();
+  }
   
   function ajex_ItemListData(type){
   
