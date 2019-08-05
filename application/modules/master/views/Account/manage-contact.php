@@ -413,7 +413,7 @@
       var indexVal =  y[x].text;
       $('#entity option:selected').remove();
       
-      $('#consigneeTable').append('<tr class="'+'row_'+value+'"><td><input  type ="hidden" class="form-control" name="entity[]" value="'+entity+'"><input   type ="text" readonly class="form-control"  value="'+indexVal+'"></td><td><i class="fa fa-trash  fa-3x" style="font-size:20px;" id="quotationdel_shape" attrVal="'+entity+'" val="'+indexVal+'" aria-hidden="true"></i></td></tr>');
+      $('#consigneeTable').append('<tr class="'+'row_'+value+'"><td><input  type ="hidden" class="form-control" name="entity[]" value="'+entity+'"><input   type ="text" readonly class="form-control"  value="'+indexVal+'"></td><td><i class="fa fa-trash  fa-3x" style="font-size:20px;" id="quotationdel_contact" attrVal="'+entity+'" val="'+indexVal+'" aria-hidden="true"></i></td></tr>');
       
       //amazonEntity();
       $("#entity").val("");

@@ -205,8 +205,8 @@
                   <th style="display: none;">Quantity In Stock</th>
                   <th>Usage Unit</th>
                   <th>Total Ord Qty.</th>
-                  <th >Per Crt Qty.</th>
-                  <th >Qty</th>
+                  <th>Per Crtn Qty.</th>
+                  <th>Total Crtn Qty.</th>
                   <th >Additional % Qty </th>
                   <th style="display: none;">Discount%</th>
                   <th style="display: none;">Discount Amount</th>
@@ -280,10 +280,10 @@
                   <div align="center"><u>Total Order Qty</u></div>
                 </td>
                 <td style="width:3%;">
-                  <div align="center"><u>Per Crt Qty</u></div>
+                  <div align="center"><u>Per Crtn Qty</u></div>
                 </td>
                 <td style="width:3%;">
-                  <div align="center"><u>Qty</u></div>
+                  <div align="center"><u>Total Crtn Qty</u></div>
                 </td>
                 <td style="width:3%;">
                   <div align="center"><u>Additional % Qty</u></div>
