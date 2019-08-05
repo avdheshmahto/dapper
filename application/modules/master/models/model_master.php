@@ -372,7 +372,7 @@ class model_master extends CI_Model
             </td>
             
             <td>
-                <i class="fa fa-trash  fa-2x" id="quotationdel_shape" style="font-size:20px;" attrVal="<?= $fetch_protype->contact_id; ?>" val="<?= $fetch_protype->first_name; ?>" aria-hidden="true"></i>
+                <i class="fa fa-trash  fa-2x" id="quotationdel_contact" style="font-size:20px;" attrVal="<?= $fetch_protype->contact_id; ?>" val="<?= $fetch_protype->first_name; ?>" aria-hidden="true"></i>
             </td>
         </tr>
     <?php
@@ -410,6 +410,12 @@ class model_master extends CI_Model
 
                 $scraps = $this->db->query("select * from tbl_product_stock where Product_id='$getRm->scrap_id' ");
                 $scrapName=$scraps->row();
+
+                $prodIdShape   = $getPpm->rowmatial;
+                $uomShape      = $getPpm->unit;
+                $Cwght         = $getPpm->EPrice;
+                $Nwght         = $getPpm->qty;
+                $scrpIdShape   = $getRm->scrap_id;
                 
                 
 ?>
@@ -430,7 +436,7 @@ class model_master extends CI_Model
             <td><?= $scrapName->productname; ?></td>
 
             <td>
-                <i class="fa fa-trash  fa-2x" id="quotationdel_shape" style="font-size:20px;" attrVal="<?= $fetch_protype->part_id; ?>" val="<?= $getProduct->sku_no; ?>" aria-hidden="true"></i>
+                <i class="fa fa-trash  fa-2x" id="quotationdel_shape" style="font-size:20px;" attrVal="<?= $fetch_protype->part_id; ?>" val="<?= $getProduct->sku_no; ?>" prodIdShape="<?=$prodIdShape?>" uomShape="<?=$uomShape?>" rcwgt="<?=$Cwght?>" rnwgt="<?=$Nwght?>" scrpIdShape="<?=$scrpIdShape?>" aria-hidden="true"></i>
             </td>
         </tr>
     <?php
@@ -513,29 +519,69 @@ class model_master extends CI_Model
             $i         = 0;
             //echo "select * from tbl_shape_part_mapping  where product_id='$id'";
             $qryEntity = $this->db->query("select * from tbl_machine  where code='$id'");
+            $fetch_protype=$qryEntity->row();
             $count=$qryEntity->num_rows();
-
             if($count > 0) {
+            $shp=$this->db->query("select * from tbl_shape_part_mapping where product_id='$fetch_protype->machine_name' ");
+            foreach ($shp->result() as $getShp) 
+            {
+                
+            $productQuery = $this->db->query("select *from tbl_product_stock where Product_id='" . $fetch_protype->machine_name . "'");
+            $getProduct   = $productQuery->row();
 
-            foreach ($qryEntity->result() as $fetch_protype) {
-                
-                $productQuery = $this->db->query("select *from tbl_product_stock where Product_id='" . $fetch_protype->machine_name . "'");
-                $getProduct   = $productQuery->row();
-                
-                
-                
-                
+            $ppm=$this->db->query("select * from tbl_part_price_mapping where part_id='$getShp->part_id' ");
+            $dtP=$ppm->row();
+
+            $part=$this->db->query("select * from tbl_product_stock where Product_id='$dtP->part_id' ");
+            $getPart=$part->row();
+
+            $rm=$this->db->query("select * from tbl_product_stock where Product_id='$dtP->rowmatial' ");
+            $getRm=$rm->row();
+
+            $scrp=$this->db->query("select * from tbl_product_stock where Product_id='$getRm->scrap_id' ");
+            $getScrp=$scrp->row();
+
+            $master=$this->db->query("select * from tbl_master_data where serial_number='$dtP->unit'");
+            $getMaster=$master->row();
+
+
                 
 ?>
 
 
     <tr>
-        
+        <?php if($i==0) { ?>
         <td><input type ="hidden" name="entityShape[]" value="<?= $getProduct->Product_id; ?>"><?= $getProduct->sku_no; ?></td>
+        <?php }  else { ?>
+        <td></td>
+    <?php } ?>
 
-        
+        <td><input type="hidden" id="partFg<?=$i?>" value="<?=$getPart->sku_no?>"><?=$getPart->sku_no?>
+       <input type="hidden" name="rowCount[]" id="rowCount" value="<?=$i?>">
+      </td>
 
+      <td><input type="hidden" id="rmFg<?=$i?>" value="<?=$getRm->sku_no?>"><?=$getRm->sku_no?>
+      </td>
+
+      <td><input type="hidden" id="unitFg<?=$i?>" value="<?=$getMaster->keyvalue?>"><?=$getMaster->keyvalue?>
+      </td>
+
+      <td>
+        <input type="hidden" id="cwgtFg<?=$i?>" value="<?=$dtP->EPrice?>" ><?=$dtP->EPrice?>
+      </td>
+
+      <td>
+        <input type="hidden" id="nwgtFg<?=$i?>" value="<?=$dtP->qty?>"><?=$dtP->qty?>
+      </td>
+
+      <td><input type="hidden" id="scrapFg<?=$i?>" value="<?=$getScrp->productname?>"><?=$getScrp->productname?>        
+      </td>
+      <?php if($i==0) { ?>
         <td><i class="fa fa-trash  fa-2x" attrVal="<?= $getProduct->Product_id; ?>" val="<?= $getProduct->sku_no; ?>" id="quotationdel_fg" aria-hidden="true"></i></td>
+    <?php }  else { ?>
+        <td></td>
+    <?php } ?>
+
 
     </tr>
        

@@ -291,87 +291,24 @@
                     <tr>
                       <td>
                         <input type="hidden" id="rowFg" class="form-control">
-                        <select  class="select2 form-control" id="entityShape" onchange="selectFgList(this);">
+                        <select  class="select2 form-control" id="entityShape" onchange="selectFgList(this.value);">
                           <option value="">----Select ----</option>
                           <?php 
                             $sqlprotype=$this->db->query("SELECT * FROM tbl_product_stock where type = '33'");
                             foreach ($sqlprotype->result() as $fetch_protype){
-
-                              $ppm=$this->db->query("select * from tbl_part_price_mapping where part_id='$fetch_protype->Product_id' ");
-                              $dtP=$ppm->row();
-                              $scp=$this->db->query("select * from tbl_product_stock where Product_id='$dtP->rowmatial' ");
-                              $getScId=$scp->row();
-
-                              $prodIdShape   = $dtP->rowmatial;
-                              $uomShape      = $dtP->unit;
-                              $Cwght         = $dtP->EPrice;
-                              $Nwght         = $dtP->qty;
-                              $scrpIdShape   = $getScId->scrap_id;
-
                             ?>
-                          <option value="<?=$fetch_protype->Product_id;?>^<?=$fetch_protype->sku_no;?>^<?=$prodIdShape;?>^<?=$uomShape;?>^<?=$Cwght;?>^<?=$Nwght;?>^<?=$scrpIdShape;?>"><?=$fetch_protype->sku_no; ?></option>
-                          <?php } ?>
-                        </select>
-                      </td>
-                      <td>
-                        <select  class="select2 form-control" id="partFg">
-                          <option value="" selected disabled>----Select ----</option>
-                          <?php 
-                            $sqlprotype=$this->db->query("SELECT * FROM tbl_product_stock where type = '32'");
-                              foreach ($sqlprotype->result() as $fetch_protype) { ?>
                           <option value="<?=$fetch_protype->Product_id;?>"><?=$fetch_protype->sku_no; ?></option>
                           <?php } ?>
                         </select>
                       </td>
-
-                      <td>
-                        <select id="rmFg"  class="select2 form-control">
-                        <option value="" selected disabled> </option>
-                        <?php
-                          $contQuery=$this->db->query("select * from tbl_product_stock where type = '13'");
-                          foreach($contQuery->result() as $dt) {
-                          ?>
-                        <option value="<?=$dt->Product_id?>" ><?=$dt->sku_no;?></option>
-                        <?php } ?>
-                      </select>
-                      </td>
-
-                      <td>
-                        <select class="form-control" id="unitFg" disabled>
-                        <option value=""></option>
-                        <?php 
-                          $sqlunit=$this->db->query("select * from tbl_master_data where param_id=16");
-                          foreach ($sqlunit->result() as $fetchunit){
-                          ?>
-                        <option value="<?php echo $fetchunit->serial_number;?>"><?php echo $fetchunit->keyvalue; ?></option>
-                        <?php } ?>
-                      </select>
-                      </td>
-
-                      <td>
-                        <input type="number" class="form-control" id="cwgtFg" >
-                      </td>
-
-                      <td>
-                        <input type="number" class="form-control" id="nwgtFg">
-                      </td>
-
-                      <td>
-                        <select id="scrapFg" class="form-control" disabled>
-                        <option value=""></option>
-                        <?php
-                          $scrapQuery=$this->db->query("select * from tbl_product_stock where type='50'");
-                          foreach($scrapQuery->result() as $getScrap){
-                          ?>
-                        <option value="<?=$getScrap->Product_id?>"><?=$getScrap->productname;?></option>
-                        <?php }?>
-                      </select>
-                      </td>
+                      <td colspan="6">
+                      </td>                      
                       <td>
                         <button type="button" onclick="addconsigneeShape()" class="btn btn-sm btn-black btn-outline">Add</button>
-                      </td>
+                      </td>                      
                     </tr>
                   </tbody>
+                  <tbody id="fgTable"></tbody>
                 </table>
                 <div class="col-sm-12" >
                 <table class="table table-bordered table-hover" >
@@ -1038,6 +975,28 @@
   	}   
   	});
   }
+
+  function selectFgList(v)
+  {
+    
+    var ul ="<?=base_url();?>master/Item/ajax_get_shape_list"
+    //lert(ul);
+
+    $.ajax({
+      type : "POST",
+      url  : ul,
+      data : {'id':v},
+      success : function(data)
+      {
+        //alert(data);
+        $("#fgTable").empty().append(data).fadeIn();
+      }
+
+    });
+
+  }
+
+
   function getFG()
   {
   $("#status").val("13").trigger('chosen:updated');
@@ -1085,6 +1044,7 @@ function selectShapeList(ths){
   
     var value        =  0;
     var entity       =  $('#entity').val();
+    var shape        =  $('#shapeId').val();
       
     var e = document.getElementById("rmShape");
     var rmCd = e.options[e.selectedIndex].text;
@@ -1102,15 +1062,20 @@ function selectShapeList(ths){
     var rmNw = $("#shapeNweight").val();
     //alert(entity) ;
 
-    if(entity != null)
+    var prodIdShape   = $("#rmShape").val();
+    var uomShape      = $("#shapeUnit").val();
+    var scrpIdShape   = $("#shapeScrap").val();
+
+    if(shape != null)
     {
       
       var x        = document.getElementById("entity").selectedIndex;
       var y        = document.getElementById("entity").options;
       var indexVal =  y[x].text;
+
       $('#entity option:selected').remove();
       
-      $('#consigneeTable').append('<tr class="'+'row_'+value+'"><td><input type ="hidden" class="form-control" name="entity[]" value="'+entity+'">'+indexVal+'</td><td>'+rmCd+'</td><td>'+rmUt+'</td><td>'+rmCw+'</td><td>'+rmNw+'</td><td>'+rmScrp+'</td><td><i class="fa fa-trash  fa-3x" style="font-size:20px;" id="quotationdel_shape" attrVal="'+entity+'" val="'+indexVal+'" aria-hidden="true"></i></td></tr>');
+      $('#consigneeTable').append('<tr class="'+'row_'+value+'"><td><input type ="hidden" class="form-control" name="entity[]" value="'+shape+'">'+indexVal+'</td><td>'+rmCd+'</td><td>'+rmUt+'</td><td>'+rmCw+'</td><td>'+rmNw+'</td><td>'+rmScrp+'</td><td><i class="fa fa-trash  fa-3x" style="font-size:20px;" id="quotationdel_shape" attrVal="'+shape+'" val="'+indexVal+'" prodIdShape="'+prodIdShape+'" uomShape="'+uomShape+'"  rcwgt="'+rmCw+'" rnwgt="'+rmNw+'" scrpIdShape="'+scrpIdShape+'" aria-hidden="true"></i></td></tr>');
       
       //amazonEntity();
       $("#entity").val("");
@@ -1178,6 +1143,7 @@ function selectShapeList(ths){
       //return false;
      } else if(row==1) {
       alert("You can't add more than one shape !");
+      $("#fgTable").empty();
      } else {
       
       var x        = document.getElementById("entityShape").selectedIndex;
@@ -1186,8 +1152,25 @@ function selectShapeList(ths){
      
       $('#entityShape option:selected').remove();
      
-      $('#consigneeTableShape').append('<tr class="'+'row_'+value+'"><td><input  type ="hidden" class="form-control" name="entityShape[]" value="'+entityShape+'"><input   type ="text" readonly class="form-control"  value="'+indexVal+'"></td><td><i class="fa fa-trash  fa-3x" style="font-size:20px;" id="quotationdel_fg" attrVal="'+entityShape+'" val="'+indexVal+'" aria-hidden="true"></i></td></tr>');
-    
+      var count = document.getElementsByName('rowCount[]'); 
+      var tcount = count.length;
+      //alert(tcount);
+      for(var i=0; i < tcount; i++){
+
+        var part = $("#partFg"+i).val();
+        var rm   = $("#rmFg"+i).val();
+        var unit = $("#unitFg"+i).val();
+        var cwgt = $("#cwgtFg"+i).val();
+        var nwgt = $("#nwgtFg"+i).val();
+        var scrp = $("#scrapFg"+i).val();
+      if(i==0){
+        $('#consigneeTableShape').append('<tr class="'+'row_'+value+'"><td><input type ="hidden" class="form-control" name="entityShape[]" value="'+entityShape+'">'+indexVal+'</td><td>'+part+'</td><td>'+rm+'</td><td>'+unit+'</td><td>'+cwgt+'</td><td>'+nwgt+'</td><td>'+scrp+'</td><td><i class="fa fa-trash  fa-3x" style="font-size:20px;" id="quotationdel_fg" attrVal="'+entityShape+'" val="'+indexVal+'" aria-hidden="true"></i></td></tr>');
+      }else{
+        $('#consigneeTableShape').append('<tr class="'+'row_'+value+'"><td></td><td>'+part+'</td><td>'+rm+'</td><td>'+unit+'</td><td>'+cwgt+'</td><td>'+nwgt+'</td><td>'+scrp+'</td><td></td></tr>');
+      }      
+
+      }
+      $("#fgTable").empty();
       $("#rowFg").val(1);
      
      }

@@ -303,6 +303,11 @@ class Item extends my_controller
     }
     
     
+    public function ajax_get_shape_list()
+    {
+        $data['id']=$_POST['id'];
+        $this->load->view("Item/get-fg-list",$data);
+    }
     
     
     public function test_3()
