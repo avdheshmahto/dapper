@@ -1133,6 +1133,7 @@
     $("#getPartView").empty();
 	  $("#quotationTable").empty();
 	  $(".hiddenField").val('');
+    $("#fgTable").empty();
     
     //showconsigneemap(thsVal = "");
       
@@ -2042,13 +2043,28 @@
 
 
 
-$(document).delegate("#quotationdel_shape","click",function(){
+$(document).delegate("#quotationdel_contact","click",function(){
 
   var a = $(this).attr('attrVal');
   var b = $(this).attr('val');
   //alert(b);
   $(this).parent().parent().remove();  
   $("#entity").append('<option value="'+a+'">'+b+'</option>'); 
+  //alert(b);
+  });
+
+$(document).delegate("#quotationdel_shape","click",function(){
+
+  var a = $(this).attr('attrVal');
+  var b = $(this).attr('val');
+  var c = $(this).attr('prodIdShape');
+  var d = $(this).attr('uomShape');
+  var e = $(this).attr('rcwgt');
+  var f = $(this).attr('rnwgt');
+  var g = $(this).attr('scrpIdShape');
+  //alert(b);
+  $(this).parent().parent().remove();  
+  $("#entity").append('<option value="'+a+'^'+b+'^'+c+'^'+d+'^'+e+'^'+f+'^'+g+'">'+b+'</option>'); 
   //alert(b);
   });
 
@@ -2061,6 +2077,7 @@ $(document).delegate("#quotationdel_fg","click",function(){
   $(this).parent().parent().remove();  
   $("#entityShape").append('<option value="'+a+'">'+b+'</option>'); 
   $("#rowFg").val(0);
+  $("#consigneeTableShape").empty();
   //alert(b);
   });
 
