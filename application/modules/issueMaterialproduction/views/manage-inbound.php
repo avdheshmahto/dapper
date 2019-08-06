@@ -335,18 +335,37 @@
   	var sumT=Number(remQyT)+Number(entQty);
   	
     document.getElementById("totTocomp").value=sumT;
+
+    /*var count = document.getElementsByName('qty[]'); 
+    var tcount = count.length;
+
+    for(var i=1; i<=tcount; i++)
+    { 
+      if(entQty[i]==undefined)
+      {
+        enterWgt=0;
+      }
+      else
+      {
+        enterWgt=entQty[i];
+      }
+      var sum=sum+enterWgt;
+    }
+
+    alert(sum);*/
   
-  	if(Number(remQty)<Number(entQty) )	
+  	if(Number(remQty)<Number(entQty) || Number(qtyInStcok)<Number(entQty) )	
   	{
-  		alert("Enter Qty should be less than remaining Qty");
+  		alert("Enter Qty should be less than remaining Qty or Qty in stock !");
   		document.getElementById("qty"+asx).focus();	
   		document.getElementById("add").disabled = true;
   		return false;
   	}
   	else
   	{
-  	document.getElementById("add").disabled = false;
+  	  document.getElementById("add").disabled = false;
   	}
+
   }
   
 </script>

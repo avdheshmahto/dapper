@@ -67,7 +67,7 @@
                       <th class="tdcenter">Remaining Weight</th>
                       <th class="tdcenter">Qty In Stock</th>
                       <th class="tdcenter">Issue Qty</th>
-                      <th class="tdcenter">Weight Qty</th>
+                      <th class="tdcenter">Issue Weight</th>
                     </tr>
                   </thead>
                   <?php
@@ -101,14 +101,14 @@
                     <td><?php echo $rmRR=$getProduct->order_qty-$getProduct->rem_order_qty;?></td>
                     <td><?php echo $rmR=round($getProduct->receive_qty-$getProduct->remaining_qty,3);?></td>
                     <td>
-                      <p id="qtyInStcok<?=$i;?>"><?=$getProductStock->quantity;?></p>
+                      <p id="qtyInStcok<?=$i;?>"><?php echo round($getProductStock->quantity,3);?></p>
                     </td>
                     <td><input name="order_qty[]" id="order_qty<?=$i;?>"  type="text" class="form-control"  /> 
                     <td><input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control" <?php if($$rmR=='0'){?> readonly="readonly" <?php }?> />
                     </td>
                   </tr>
                   <?php 
-                    $ordQtyTot=$ordQtyTot+$getProduct->receive_qty;
+                          $ordQtyTot=$ordQtyTot+$getProduct->receive_qty;
                     			$remQtyTot=$remQtyTot+$getProduct->remaining_qty;
                       $i++;
                     }?>
