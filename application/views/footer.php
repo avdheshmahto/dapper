@@ -555,9 +555,7 @@
   data: { 'id' : type },
   type: "POST",
   success: function(data){
-  //alert(data);
-  //alert("jkhkjh"+type);
-  //$("#listingData").hide();
+  
   $("#listingData").empty().append(data).fadeIn();
       
   }
@@ -583,24 +581,26 @@
     
     $('#productname').val(editVal.productname);
     $('#unit').val(editVal.usageunit);    
-    $('#opening_stock').val(editVal.opening_stock);    
+    //$('#opening_stock').val(editVal.opening_stock);    
     $('#percentage').val(editVal.percentage);
-    $('#size').val(editVal.pro_size);
-    $('#thickness').val(editVal.thickness);
-    $('#grade_code').val(editVal.grade_code);
-    $('#unitprice_sale').val(editVal.unitprice_sale);
-    $('#unitprice_purchase').val(editVal.unitprice_purchase);   
-    $('#hsn_code').val(editVal.hsn_code);
-    $('#gst_tax').val(editVal.gst_tax);
+    //$('#size').val(editVal.pro_size);
+    //$('#thickness').val(editVal.thickness);
+    //$('#grade_code').val(editVal.grade_code);
+    //$('#unitprice_sale').val(editVal.unitprice_sale);
+    //$('#unitprice_purchase').val(editVal.unitprice_purchase);   
+    //$('#hsn_code').val(editVal.hsn_code);
+    //$('#gst_tax').val(editVal.gst_tax);
     $('#weight').val(editVal.weight);
     $('#ctn_lenght').val(editVal.ctn_lenght);
     $('#ctn_width').val(editVal.ctn_width);
     $('#ctn_height').val(editVal.ctn_height);
-    $('#mst').val(editVal.mst);
+    //$('#mst').val(editVal.mst);
     $('#cbm').val(editVal.cbm);
-    $('#lead_time').val(editVal.lead_time);
-    $('#net_weight').val(editVal.net_weight);
-    $('#cast_weight').val(editVal.cast_weight);
+    $('#volume_weight').val(editVal.volume_weight);
+
+    //$('#lead_time').val(editVal.lead_time);
+    //$('#net_weight').val(editVal.net_weight);
+    //$('#cast_weight').val(editVal.cast_weight);
     $('#tolerance_percentage').val(editVal.tolerance_percentage);
     $('#packing').val(editVal.packing);    
     

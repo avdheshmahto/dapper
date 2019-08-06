@@ -141,7 +141,7 @@
               <div class="form-group" style="display: none;">
                 <label class="col-sm-2 control-label">Sale Price</label> 
                 <div class="col-sm-4"> 
-                  <input style="display:none;" type="text" name="grade_code" id="grade_code" class="form-control"/>
+                  <input type="text" name="grade_code" id="grade_code" class="form-control"/>
                   <input type="number" step="any" name="unitprice_sale" value="" id="unitprice_sale" class="form-control" >
                 </div>
                 <label class="col-sm-2 control-label">Purchase Price:</label> 
@@ -202,12 +202,13 @@
                 <div class="col-sm-4" id="regid"> 
                   <input type="number" min="0" max="100"  name="percentage" value="" id="percentage" class="form-control" >
                 </div>
-                <label class="col-sm-2 control-label"></label> 
+                <label class="col-sm-2 control-label">Volume Weight:</label> 
                 <div class="col-sm-4" id="regid"> 
-                  &nbsp;
-                </div>
+                  <input type="text"  name="volume_weight" id="volume_weight" class="form-control" readonly="readonly" >
+                </div> 
               </div>
               <?php } ?>
+
               <?php if($_GET['p_type']=='32') { ?>
               <div class="form-group">
               <label class="col-sm-2 control-label">Tolerance Percentage:</label> 
@@ -234,9 +235,9 @@
               </div>
 
               <div class="form-group" style="display: none;">
-                <label class="col-sm-2 control-label">Gross Weight:</label> 
+                <label class="col-sm-2 control-label"></label> 
                 <div class="col-sm-4" id="regid"> 
-                  <input type="number" name="weight" value="" id="weight" class="form-control" >
+                  &nbsp;
                 </div>
                 <label class="col-sm-2 control-label">Opening Stock</label> 
                 <div class="col-sm-4"> 
@@ -244,14 +245,22 @@
                 </div>
               </div>
 
-              <div class="form-group"> 
-               <?php if($_GET['p_type']=='14'){?>                
+              
+               <?php if($_GET['p_type']=='14'){?>     
+               <div class="form-group">            
                 <label class="col-sm-2 control-label">Case Pack Qty</label> 
                 <div class="col-sm-4" > 
                   <input type="number" name="packing" value="" id="packing" class="form-control" >
                 </div>
+                <label class="col-sm-2 control-label">Gross Weight:</label> 
+                <div class="col-sm-4" id="regid"> 
+                  <input type="number" name="weight" value="" id="weight" class="form-control" >
+                </div>                
+              </div>
               <?php } ?>
-              <?php if($_GET['p_type']=='13'){?>                
+
+              <?php if($_GET['p_type']=='13'){?>   
+              <div class="form-group">              
               <label class="col-sm-2 control-label">Scrap Name:</label> 
                 <div class="col-sm-4" id="regid">
                   <select name="scrap_id" id="scrap_id" class="form-control" >
@@ -264,8 +273,13 @@
                     <?php }?>
                   </select>
                 </div>
+                <label class="col-sm-2 control-label"></label> 
+                <div class="col-sm-4" id="regid"> 
+                  &nbsp;
+                </div>
+                </div>
                 <?php }?>                
-              </div>
+              
 
             </div>
 
@@ -1009,7 +1023,9 @@
   var ctn_lenght=document.getElementById("ctn_lenght").value;
   var ctn_width=document.getElementById("ctn_width").value;
   var calcbm=Number(ctn_height)*Number(ctn_lenght)*Number(ctn_width)/1000000;
+  var vlmwgt=Number(ctn_height)*Number(ctn_lenght)*Number(ctn_width)/5000;
   document.getElementById("cbm").value=calcbm;
+  document.getElementById("volume_weight").value=vlmwgt;
   }
   
 
