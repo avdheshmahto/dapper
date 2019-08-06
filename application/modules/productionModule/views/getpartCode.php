@@ -42,7 +42,7 @@
 		
       $jobQuery=$this->db->query("select sum(qty) as partQty from tbl_job_work_log where lot_no='$production_id' and shape_id='$id' and part_id='$getProductShape->part_id'");
       $getJob=$jobQuery->row();
-      $getJob->partQty;
+      //$getJob->partQty;
         
       
       $queryProduct=$this->db->query("select *from tbl_product_stock where Product_id='$getProductShape->part_id'");
@@ -54,6 +54,7 @@
     <tr class="gradeU record">
       <td> <input class="form-control" readonly="readonly" style="margin-bottom:10px; border:none; width:100px;" value="<?=$getProduct->sku_no;?>" name="part[]"/>
         <input class="form-control" type="hidden" style="margin-bottom:10px;" value="<?=$getProduct->Product_id;?>" name="part_code[]"/>
+        <input class="form-control" type="hidden" style="margin-bottom:10px;" value="<?=$getWght->rowmatial;?>" name="rm_code[]"/>
       </td>
       <td> <input type="number" min="0" class="form-control" style="margin-bottom:10px;width:55px;" value="" name="qty[]" id="entQty<?=$i;?>" onchange="val(this.id)" <?php if($shapeName=='Shape'){?> readonly="readonly"<?php } ?> /></td>
       <td> <input class="form-control" readonly="" style="margin-bottom:10px;width:55px;" value="<?=$getWght->EPrice;?>" name="weight[]" id="weight<?=$i;?>"  /></td>

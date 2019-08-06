@@ -88,7 +88,7 @@
 	var weight=document.getElementById("weight"+i).value;
 	var weightTotal=Number(weight)*Number(v);
   var xyz = Number(weightTotal).toFixed(3);
-	document.getElementById("total_weight"+i).value=xyz;
+	document.getElementById("total_weight"+i).value=Number(xyz).toFixed(3);
   	document.getElementById("entQty"+i).value=v;
 	if(v=='ShapePart')
 	{
@@ -124,9 +124,7 @@
   
   }
   
-  //******************************************************************************************************************************************************************************************************************************************************************************************************
-  
-  //*********************************************************************************************************************************************************************************************************************************************************************************************************
+  //*******************************************************************************************************
   
   
   //starts order repair  query
@@ -230,9 +228,11 @@
   	var labour_rate=$('#labour_rate').val();
   	var total_labour_rate=$('#total_labour_rate').val();
   	var total_cost=$('#total_cost').val();
-  	var PartId     = [];
+  	
+    var PartId     = [];
   	var qtyy	= []; 
   	var part_c	=[];
+    var rm_c = [];
   	var rate_c	=[];
   	var weight_c	=[];
   	var total_weight_c	=[];
@@ -243,7 +243,7 @@
   	
   	
   
-  	j=0;i=0;k=0;m=0;n=0,o=0,p=0,q=0,r=0,a=0;
+  	j=0;i=0;k=0;m=0;n=0;o=0;p=0;q=0;r=0;a=0;z=0;
   	
   	$('input[name="part[]"]').each(function(){
   	PartId[i++]  = $(this).val();
@@ -256,6 +256,10 @@
   	$('input[name="part_code[]"]').each(function(){
   	part_c[k++]  = $(this).val();
   	});
+
+    $('input[name="rm_code[]"]').each(function(){
+    rm_c[z++]  = $(this).val();
+    });
   
   	$('input[name="weight[]"]').each(function(){
   	weight_c[m++]  = $(this).val();
@@ -290,6 +294,7 @@
   	var pa=myObject.part = PartId;
   	var qt=qtyy;
   	var pa_co=part_c;
+    var rm_id=rm_c;
   	var weight_co=weight_c;
   	var rate_co=rate_c;
   	var total_rm_rate_co=total_rm_rate_c;
@@ -304,10 +309,10 @@
         //$('#QuotationMap').val(myString);
   	  
   	  
-  	   $('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><input type ="hidden" name="weight_qty[]" value="'+weight_co+'">'+weight_co+'</td><td><input type ="hidden" name="total_weight[]" value="'+total_weight_c+'">'+total_weight_c+'</td><td><input type ="hidden" name="rate_rs[]" value="'+rate_co+'">'+rate_co+'</td><td><input type ="hidden" name="total_rm_rate_rs[]" value="'+total_rm_rate_co+'">'+total_rm_rate_co+'</td><td><input type ="hidden" name="labour_rate_rs[]" value="'+labour_rate_co+'">'+labour_rate_co+'</td><td><input type ="hidden" name="total_labour_rate[]" value="'+total_labour_rate_co+'">'+total_labour_rate_co+'</td><td><input type ="hidden" name="total_cost[]" value="'+total_cost_co+'">'+total_cost_co+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
+  	   $('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><td><input type ="hidden" name="rm_code[]" value="'+rm_id+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><input type ="hidden" name="weight_qty[]" value="'+weight_co+'">'+weight_co+'</td><td><input type ="hidden" name="total_weight[]" value="'+total_weight_c+'">'+total_weight_c+'</td><td><input type ="hidden" name="rate_rs[]" value="'+rate_co+'">'+rate_co+'</td><td><input type ="hidden" name="total_rm_rate_rs[]" value="'+total_rm_rate_co+'">'+total_rm_rate_co+'</td><td><input type ="hidden" name="labour_rate_rs[]" value="'+labour_rate_co+'">'+labour_rate_co+'</td><td><input type ="hidden" name="total_labour_rate[]" value="'+total_labour_rate_co+'">'+total_labour_rate_co+'</td><td><input type ="hidden" name="total_cost[]" value="'+total_cost_co+'">'+total_cost_co+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
       
   	$("#shape").val("");
-	$("#fillQty").val("");
+	  $("#fillQty").val("");
 	
   	$("#getPartView").text("");
   
@@ -397,19 +402,19 @@
   
   function ajex_JobWorkListData(production_id){
   
-    ur = "<?=base_url('productionModule/getWorkOrder');?>";
+    window.location.reload();
+
+    /*ur = "<?=base_url('productionModule/getWorkOrder');?>";
       $.ajax({
         url: ur,
         data: { 'id' : production_id },
         type: "POST",
         success: function(data){
-          //alert(data);
-          //alert("jkhkjh"+type);
-          //$("#listingData").hide();
+        
           $("#listingData").empty().append(data).fadeIn();
                 
        }
-      });
+      });*/
   }
   
 </script>
@@ -975,7 +980,7 @@ $cntData=$poquery->num_rows();
                         <th>Shape Name</th>
                         <th>Part</th>
                         <th>Qty</th>
-                        <th>Net Weight</th>
+                        <th>Cast Weight</th>
                         <th>Total Weight</th>
                         <th>RM Rate Per Kg</th>
                         <th>Total RM Amount</th>
@@ -1229,10 +1234,7 @@ $cntData=$poquery->num_rows();
               </div>
             </div>
             <div class="col-sm-4">
-              <!--<label class="control-label">Product Name:</label> 
-                <input type="text" class="form-control input-sm" value="" id="mproductname" onkeyup="getdatarowmatrial(this.value);" autocomplete="off"> 
-                <ul style="position: absolute;z-index: 999999;top: 50px; width: 179%; margin-left: -39px;" id="productListData">
-                </ul> -->
+    
               <input type="hidden" class="form-control input-sm" value="" id="mproductname"> 
               <input type="hidden"  class="form-control" value="" id="mproductid" >
               <label class="control-label">Raw Material:</label> <br>
@@ -2201,13 +2203,6 @@ $cntData=$poquery->num_rows();
   	});
   
    }
-  
-  
-  
-  
-  
-  
-  
   
   
   

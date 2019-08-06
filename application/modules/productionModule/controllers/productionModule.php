@@ -578,6 +578,7 @@ public function insert_jobwork()
 				'date' => $date,
 				'shape_id' => $shapeId[$i],
 				'part_id' => $part_c[$i],
+				'rm_id' => $rm_code[$i],
 				'qty' => $qtyy[$i],
 				'weight' => $weight_qty[$i],
 				'total_weight' => $total_weight[$i],
@@ -602,6 +603,7 @@ public function insert_jobwork()
 			$dataall = array_merge($data,$sesio);
 			$this->Model_admin_login->insert_user($table_name,$dataall);
 			$dataP=explode(",",$part_c[$i]);
+			$dataZ=explode(",",$rm_code[$i]);
 			$dataQ=explode(",",$qtyy[$i]);
 			$dataW=explode(",",$weight_qty[$i]);
 			$dataR=explode(",",$rate_rs[$i]);
@@ -626,6 +628,7 @@ public function insert_jobwork()
 					'order_type' => $order_type,
 					'shape_id' => $shapeId[$i],
 					'part_id' => $dataP[$j],
+					'rm_id'  => $dataZ[$j],
 					'qty' => $dataQ[$j],
 					'weight' => $dataW[$j],
 					'rate' => $dataR[$j],

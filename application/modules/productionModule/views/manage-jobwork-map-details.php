@@ -700,20 +700,20 @@
   }
   
   function ajex_JobWorkListData(production_id){
-  
-    ur = "<?=base_url('productionModule/getWorkOrder');?>";
+    
+    window.location.reload();
+
+    /*ur = "<?=base_url('productionModule/getWorkOrder');?>";
       $.ajax({
         url: ur,
         data: { 'id' : production_id },
         type: "POST",
         success: function(data){
-          //alert(data);
-          //alert("jkhkjh"+type);
-          //$("#listingData").hide();
+
           $("#listingData").empty().append(data).fadeIn();
                 
        }
-      });
+      });*/
   }
   
 </script>
@@ -773,7 +773,7 @@
                       <div class="form-group">
                         <h4>Status</h4>
                         <?php
-                          if($getsched->status=='0')
+                          if($getsched->status=='')
                           {
                           echo "<input type='text'  class='form-control' value='Open' readonly >";
                           }
@@ -1862,7 +1862,7 @@
               <th>Raw Material Name</th>
               <th>UOM</th>
               <th>Order QTY</th>
-              <th>Cast Weight</th>
+              <!-- <th>Cast Weight</th> -->
               <th>Total Cast Weight</th>
             </tr>
           </tbody>
@@ -1870,14 +1870,11 @@
               <?php
             
                 //$contQuery=$this->db->query("select SUM(EPrice) as RMSUM,EPrice,rowmatial,SUM(qty) as sumqty from tbl_part_price_mapping where part_id in ($dataPartt) group by rowmatial ");
-              $contQuery=$this->db->query("select * from tbl_job_work_log where lot_no='$getsched->lot_no' AND job_order_no='$getsched->job_order_no' AND shape_id='$getsched->shape_id' ");
+              $contQuery=$this->db->query("select *,SUM(qty) as orderQty, SUM(total_weight) as ttlordrWgt from tbl_job_work_log where lot_no='$getsched->lot_no' AND job_order_no='$getsched->job_order_no' AND shape_id='$getsched->shape_id' group by rm_id ");
                 foreach($contQuery->result() as $dt)
                 {
 
-                $ptId=$this->db->query("select * from tbl_part_price_mapping where part_id='$dt->part_id'");
-                $getRmt=$ptId->row();
-
-                $productNameQuery=$this->db->query("select * from tbl_product_stock where Product_id='$getRmt->rowmatial'");
+                $productNameQuery=$this->db->query("select * from tbl_product_stock where Product_id='$dt->rm_id'");
                 $getProduct=$productNameQuery->row();
                 
                 $prodId   = $getProduct->Product_id;
@@ -1897,14 +1894,16 @@
                 <?=$sku;?>                
               </td>
               <td><?=$getUOM->keyvalue;?></td>
-              <td><input type="hidden" name="order_qty[]" value="<?php echo $dt->qty;; //$ordQ;?>" />
-                <?php echo  $dt->qty; //$ordQ; ?>
+              <td><input type="hidden" name="order_qty[]" value="<?php echo $dt->orderQty;; //$ordQ;?>" />
+                <?php echo  $dt->orderQty; //$ordQ; ?>
               </td>
-              <td><?php echo (round($getRmt->EPrice,3));?></td>
-              <input type="hidden" name="mproPrice[]" value="<?php echo round($getRmt->EPrice*$dt->qty,3);?>" />
-              <td><?php echo (round($getRmt->EPrice*$dt->qty,3));?></td>
+              
+              <!-- <td><?php echo (round($dt->weight,3));?></td> -->
+
+              <input type="hidden" name="mproPrice[]" value="<?php echo round($dt->ttlordrWgt,3);?>" />
+              <td><?php echo (round($dt->ttlordrWgt,3));?></td>
             </tr>
-            <?php  }?>
+            <?php  } ?>
           </tbody>
         </table>
         <div class="modal-footer" id="button" style="display: block;">
@@ -2260,17 +2259,12 @@
                           var msg = "Data Successfully Add !";
                         else
                           var msg = "Data Successfully Updated !";
-  						$("#resultareaRaw").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
-                         $("#modal-6 .close").click();
-  					   
-  					   
+              						$("#resultareaRaw").text(msg);
+              						setTimeout(function() {   //calls click event after a certain time
+                          $("#modal-6 .close").click();
   					   
                          $("#resultareaRaw").text(" "); 
                          $('#requestRawMat')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
-  					   
-                         //$("#id").val("");
        
                       }, 1000);
                     }else{
@@ -2292,110 +2286,107 @@
   
   function ajex_RawMatData(production_id){
   
-    ur = "<?=base_url('productionModule/getPurchaseRawOrder');?>";
+    window.location.reload();
+   /* ur = "<?=base_url('productionModule/getPurchaseRawOrder');?>";
       $.ajax({
         url: ur,
         data: { 'id' : production_id },
         type: "POST",
         success: function(data){
-         // alert(data);
-          //alert("jkhkjh"+type);
-          //$("#listingData").hide();
+  
           $("#listingPurchaseRawData").empty().append(data).fadeIn();
                 
        }
-      });
+      });*/
   }
 
 
 function ajex_RmReturnListData(production_id){
   
-    ur = "<?=base_url('productionModule/getRmReturn');?>";
+    window.location.reload();
+   /* ur = "<?=base_url('productionModule/getRmReturn');?>";
       $.ajax({
         url: ur,
         data: { 'id' : production_id },
         type: "POST",
         success: function(data){
-         // alert(data);
-          //alert("jkhkjh"+type);
-          //$("#listingData").hide();
           $("#listingRMreturnData").empty().append(data).fadeIn();
                 
        }
-      });
+      });*/
   }  
   
   
   function ajex_Order_Grn_Data(production_id){
+
+      window.location.reload();
   
-    ur = "<?=base_url('productionModule/getGRNOrder');?>";
-      $.ajax({
-        url: ur,
-        data: { 'id' : production_id },
-        type: "POST",
-        success: function(data){
-         // alert(data);
-          //alert("jkhkjh"+type);
-          //$("#listingData").hide();
-          $("#listingOrderGrnData").empty().append(data).fadeIn();
+    // ur = "<?=base_url('productionModule/getGRNOrder');?>";
+    //   $.ajax({
+    //     url: ur,
+    //     data: { 'id' : production_id },
+    //     type: "POST",
+    //     success: function(data){
+
+    //       $("#listingOrderGrnData").empty().append(data).fadeIn();
                 
-       }
-      });
+    //    }
+    //   });
   }
   
   
   function ajex_CheckingListData(production_id){
-  
-    ur = "<?=base_url('productionModule/getCheckingOrder');?>";
+    
+    window.location.reload();
+
+    /*ur = "<?=base_url('productionModule/getCheckingOrder');?>";
       $.ajax({
         url: ur,
         data: { 'id' : production_id },
         type: "POST",
         success: function(data){
-         // alert(data);
-          //alert("jkhkjh"+type);
-          //$("#listingData").hide();
+
           $("#listingCheckingGrnData").empty().append(data).fadeIn();
                 
        }
-      });
+      });*/
   }
   
   
   function ajex_OrderRepairListData(production_id){
-  
-    ur = "<?=base_url('productionModule/ajexRequestRepair');?>";
+    
+    window.location.reload();
+
+    /*ur = "<?=base_url('productionModule/ajexRequestRepair');?>";
       $.ajax({
         url: ur,
         data: { 'id' : production_id },
         type: "POST",
         success: function(data){
-         // alert(data);
-          //alert("jkhkjh"+type);
-          //$("#listingData").hide();
+
           $("#listingAjexRepair").empty().append(data).fadeIn();
                 
        }
-      });
+      });*/
   }  
   
   
   
   function ajex_requestRM(production_id){
   
-    ur = "<?=base_url('productionModule/ajexRequestRM');?>";
+     window.location.reload();
+
+    /*ur = "<?=base_url('productionModule/ajexRequestRM');?>";
       $.ajax({
         url: ur,
         data: { 'id' : production_id },
         type: "POST",
         success: function(data){
-         // alert(data);
-          //alert("jkhkjh"+type);
-          //$("#listingData").hide();
+
           $("#listingAjexRequestRM").empty().append(data).fadeIn();
                 
        }
-      });
+      });*/
   }
   
   
