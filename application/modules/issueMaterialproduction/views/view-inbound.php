@@ -103,8 +103,8 @@
                     <td>
                       <p id="qtyInStcok<?=$i;?>"><?=$getProductStock->quantity;?></p>
                     </td>
-                    <td><input name="order_qty[]" id="order_qty<?=$i;?>"  type="number" min="0" class="form-control"  /> 
-                    <td><input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="number" min="0" class="form-control" <?php if($$rmR=='0'){?> readonly="readonly" <?php }?> />
+                    <td><input name="order_qty[]" id="order_qty<?=$i;?>"  type="text" class="form-control"  /> 
+                    <td><input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control" <?php if($$rmR=='0'){?> readonly="readonly" <?php }?> />
                     </td>
                   </tr>
                   <?php 

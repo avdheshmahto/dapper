@@ -51,6 +51,7 @@
                 <th class="tdcenter">UOM</th>
                 <th class="tdcenter">Ordered Qty</th>
                 <th class="tdcenter">Issue Qty</th>
+                <th class="tdcenter">Return Qty</th>
                 <th class="tdcenter">Total GRN Qty 
                 <th class="tdcenter">Remaining GRN Qty</th>
                 <th style="display:none" class="tdcenter">Qty In Stock</th>
@@ -127,15 +128,18 @@
                 $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_production_order_log where productid='$getProduct->part_id' AND job_order_id = '$getOrder->id' and order_no='$getOrder->job_order_no'");
                 $getInboundGRNLog=$inbountLogGRNLogQuery->row();
                 
+                $rmReturn=$this->db->query("select SUM(order_qty) as rt_qty, SUM(qty) as rt_wgt from tbl_job_rm_return where lot_no='$getOrder->lot_no' AND order_no='$getOrder->job_order_no' AND job_order_id='$getOrder->id' ");
+                $getRMreturn=$rmReturn->row();
                 
                 ?>
               <input type="hidden" min="0" name="ord_qty[]" value="<?=$getProduct->qty;?>" class="form-control">
               <input type="hidden" min="0" name="rm_qty[]" value="<?=$getChallan->cIssueQty-$getInboundGRNLog->rec_qty;?>" class="form-control">
               <td><?=$getProduct->qty;?></td>
               <td><?=$getChallan->cIssueQty;?></td>
+              <td><?=$getRMreturn->rt_qty;?></td>
               <td><?=$getInboundGRNLog->rec_qty;?></td>
-              <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getChallan->cIssueQty-$getInboundGRNLog->rec_qty;?>" />
-              <td><?php echo $reci_qty=$getChallan->cIssueQty-$getInboundGRNLog->rec_qty;?></td>
+              <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getChallan->cIssueQty-$getInboundGRNLog->rec_qty-$getRMreturn->rt_qty;?>" />
+              <td><?php echo $reci_qty=$getChallan->cIssueQty-$getInboundGRNLog->rec_qty-$getRMreturn->rt_qty;?></td>
               <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
               <td>
                 <input name="tolerance_percentage[]" id="tolerance_percentage<?=$i;?>"  type="hidden" class="form-control" value="<?=$getProductStock->tolerance_percentage;?>"/>
