@@ -1,8 +1,8 @@
 <?php
-  $orderQuery=$this->db->query("select *from tbl_job_work where job_order_no='$id'");
+  $orderQuery=$this->db->query("select *from tbl_job_work where id='$id'");
   $getOrder=$orderQuery->row();
   
-  $issueQueryHdr=$this->db->query("select *from tbl_issuematrial_hdr where job_order_no='$id'");
+  $issueQueryHdr=$this->db->query("select *from tbl_issuematrial_hdr where po_no='$id'");
   $getIssueHdr=$issueQueryHdr->row();
   
   ?>
@@ -27,10 +27,7 @@
               <label for="po_order">Order Date.:</label>
               <input type="text" name="invoice_no"  class="form-control" value="<?=$getOrder->date;?>" readonly="readonly" required />
             </div>
-            <!--  <div class="col-sm-6" id="grnId" >
-              <label for="po_order">GRN No.:</label>
-                <input type="text" name="grn_no" class="form-control" required readonly="readonly" value="<?=$getHdr->grn_no;?>"  />
-                             </div> -->
+          
           </div>
           <div class="form-group">
             <div class="col-sm-6">
@@ -41,10 +38,7 @@
               <label for="po_order">RM Return Date</label>
               <input type="date" name="return_date"  class="form-control" value="<?=$getOrder->order_receive_date;?>"  required />
             </div>
-            <!--  <div class="col-sm-6" id="grnId" >
-              <label for="po_order">GRN No.:</label>
-                <input type="text" name="grn_no" class="form-control" required readonly="readonly" value="<?=$getHdr->grn_no;?>"  />
-                             </div> -->
+           
           </div>
         </div>
       </div>
@@ -71,11 +65,33 @@
             </tr>
           </thead>
           <?php
-            //  echo "select productid,inboundrhdr,receive_qty,remaining_qty,order_qty,rem_order_qty from tbl_issuematrial_dtl where inboundrhdr='$id' group by productid";
-            
-            	$productQuery=$this->db->query("select productid,inboundrhdr,receive_qty,remaining_qty,order_qty,rem_order_qty from tbl_issuematrial_dtl where inboundrhdr='$getIssueHdr->inboundid' group by productid");
+ 
+            	$productQuery=$this->db->query("select * from tbl_issuematrial_dtl where inboundrhdr='$getIssueHdr->inboundid' group by productid");
             	$i=1;
             	foreach($productQuery->result() as $getProduct){
+
+              ####issue Qty #############
+              $rmHdr=$this->db->query("select * from tbl_receive_matrial_hdr where po_no='$getOrder->id' ");
+              foreach ($rmHdr->result() as $rmDtl) 
+              {
+                $hdrPo[]=$rmDtl->inboundid;
+              }
+                            
+              @$getHdrId=implode(",",$hdrPo);
+              
+              if($getHdrId!='')
+              {
+                $getHdrIdd=$getHdrId;              
+              }
+              else
+              {
+                $getHdrIdd='0';
+              }
+              
+              $rmQtyDtl=$this->db->query("select SUM(order_qty) as cIssueQty, SUM(receive_qty) as cIssueWeight from tbl_receivematrial_dtl where inboundrhdr in ($getHdrIdd) ");
+              $getChallan=$rmQtyDtl->row();
+
+
             	####### get product #######
             	$productStockQuery=$this->db->query("select * from tbl_product_stock where Product_id='$getProduct->productid'");
             	$getProductStock=$productStockQuery->row();
@@ -92,33 +108,33 @@
             <td><?=$getProductStock->sku_no;?>
               <input type="hidden"  name="productid[]" value="<?=$getProduct->productid;?>" class="form-control">
             </td>
-            <td><?=$getProductUOM->keyvalue;?></td>
-            <?php
-              // select M.*,S.Product_id,S.quantity,S.usageunit,S.productname,S.Product_id from tbl_part_price_mapping M,tbl_product_stock S,tbl_machine MM where M.rowmatial = S.Product_id AND MM.id = M.machine_id AND MM.machine_name = $pid 
-              
-              $poLogQuery=$this->db->query("select D.qty as po_qty,SUM(M.qty) as mqty from tbl_quotation_purchase_order_dtl D,tbl_part_price_mapping M,tbl_machine MM where MM.machine_name = D.productid AND MM.id = M.machine_id AND D.purchaseid='$getHdr->po_no' and M.rowmatial='$getProduct->productid' AND M.type ='part'");
-              $getPoQty=$poLogQuery->row();
-              
-              
-              ?>
+            <td><?=$getProductUOM->keyvalue;?></td>            
             <td><?=$getProduct->order_qty;?></td>
             <td><?=$getProduct->receive_qty;?></td>
             <?php
-              $inbountLogQuery=$this->db->query("select SUM(D.receive_qty) as rec_qty from tbl_issuematrial_dtl D,tbl_issuematrial_hdr H where D.inboundrhdr = H.inboundid AND D.productid='$getProduct->productid' AND H.po_no='$getHdr->po_no'");
-              	$getInbound=$inbountLogQuery->row();
-              
-                    $inbountLogGRNQuery=$this->db->query("select SUM(receive_qty) as rec_qty from tbl_issuematrial_dtl where productid='$getProduct->productid' AND inboundrhdr = '$id'");
-              	$getInboundGRN=$inbountLogGRNQuery->row();
-              
-              	?>
-            <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$rmRR=$getProduct->order_qty-$getProduct->rem_order_qty;?>" />
-            <td><?php echo $rmRR=$getProduct->order_qty-$getProduct->rem_order_qty;?></td>
-            <td><?php echo $rmR=$getProduct->receive_qty-$getProduct->remaining_qty;?></td>
+                $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty, SUM(total_weight) as rec_wgt from tbl_production_order_log where job_order_id = '$getOrder->id' and order_no='$getOrder->job_order_no'");
+                $getInboundGRNLog=$inbountLogGRNLogQuery->row();
+                
+                $rmReturn=$this->db->query("select SUM(order_qty) as rt_qty, SUM(qty) as rt_wgt from tbl_job_rm_return where lot_no='$getOrder->lot_no' AND order_no='$getOrder->job_order_no' AND job_order_id='$getOrder->id' ");
+                $getRMreturn=$rmReturn->row();
+                ?>
+            <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$rmRR=$getChallan->cIssueQty-$getInboundGRNLog->rec_qty-$getRMreturn->rt_qty;?>" />
+            <td><?php 
+              //echo $rmRR=$getProduct->order_qty-$getProduct->rem_order_qty;
+              echo $rmRR=$getChallan->cIssueQty-$getInboundGRNLog->rec_qty-$getRMreturn->rt_qty;
+
+              ?></td>
+              <input type="hidden" id="rem_wgt<?=$i;?>" value="<?=$rmRR=$getChallan->cIssueWeight-$getInboundGRNLog->rec_wgt-$getRMreturn->rt_wgt;?>" />
+            <td><?php 
+              //echo $rmR=$getProduct->receive_qty-$getProduct->remaining_qty;
+              echo $rmR=$getChallan->cIssueWeight-$getInboundGRNLog->rec_wgt-$getRMreturn->rt_wgt;
+
+            ?></td>
             <td>
               <p id="qtyInStcok<?=$i;?>"><?=$getProductStock->quantity;?></p>
             </td>
-            <td><input name="order_qty[]" id="qty<?=$i;?>" onkeyup="qtyVal(this.id)"  type="number" min="0" class="form-control"  /> 
-            <td><input name="qty[]"  type="number" step="any" min="0"  id="qty<?=$i;?>" onchange="qtyVal(this.id)"  class="form-control" <?php if($$rmR=='0'){?> readonly="readonly" <?php }?> />
+            <td><input name="order_qty[]" id="order_qty<?=$i;?>" onkeyup="qtyValRmReturn(this.id)"  type="number" min="0" class="form-control"  /></td> 
+            <td><input name="qty[]"  type="number" step="any"  id="qty<?=$i;?>" onchange="wgtValRmReturn(this.id)"  class="form-control" <?php if($$rmR=='0'){?> readonly="readonly" <?php }?> />
             </td>
           </tr>
           <?php 
@@ -133,14 +149,7 @@
       </div>
     </div>
   </div>
-  <!--scrollbar-y close-->		
-  <!-- <div style="width:100%; background:#dddddd; padding-left:0px; color:#000000; border:2px solid "> -->
-  <!-- <div style="width:100%; background:white;   color:#000000;  max-height:170px; overflow-x:auto;overflow-y:auto;" id="m">
-    <table id="invoice"  style="width:100%;background:white;margin-bottom:0px;margin-top:0px;min-height:30px;" title="Invoice" class="table table-bordered blockContainer lineItemTable ui-sortable"  >
-    
-    <tr></tr>
-    </table> -->
-  <!-- </div> -->
+
 </div>
 <div class="modal-footer">
   <input type="submit" class="btn btn-sm" id="add_req" value="Save">

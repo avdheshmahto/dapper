@@ -1021,10 +1021,11 @@ public function getPo()
 
 
 public function getPoDtl()
- {
-@extract($_GET);
-$productQuery=$this->db->query("select * from tbl_po_order_log where po_order_no='$ID'  ");
-			$i=1;
+{
+
+	@extract($_GET);
+	$productQuery=$this->db->query("select * from tbl_po_order_log where po_order_no='$ID'  ");
+		$i=1;
 		foreach($productQuery->result() as $getProduct){
 			
 		####### get product #######
@@ -1047,29 +1048,30 @@ $productQuery=$this->db->query("select * from tbl_po_order_log where po_order_no
 											$remQQ=$getProduct->qty-$getInbound->rec_qty;
 
         echo "<tr class='gradeX odd' role='row'>
-                                            <td class='size-60 text-center sorting_1'>$i</td>
-																	 
-											<td>$getProductStock->sku_no
-                                            
-                                            
-                                            <input type='hidden'  name='productid[]' value='$getProduct->part_id' class='form-control'>
-                                            </td>
-											<td>$getProductUOM->keyvalue</td>
-											<td>$getProduct->qty</td>
-                                          	<td>$remQQ<input type='hidden' id='rem_qty$i' min='0' name='remaining_qty[]' value=$remQQ class='form-control'>
-                                            
-                                            <input type='hidden' name='po_no' value='$getProduct->po_order_no' />
-                                           
-                                            
-                                            </td>
-                                            <td><input type='number' min='1' name='receive_qty[]' id='rec_qty$i' onkeyup='qtyValidation(this.id);' class='form-control'>
-                                            
-                                            <input type='hidden' name='validationCheck' id='validationCheck' value='0' />
-                                            </td>
-						</tr>";
-                        
-						$i++;
-						}
+        <td class='size-60 text-center sorting_1'>$i</td>
+								 
+		<td>$getProductStock->sku_no
+        
+        
+        <input type='hidden'  name='productid[]' value='$getProduct->part_id' class='form-control'>
+        </td>
+		<td>$getProductUOM->keyvalue</td>
+		<td>$getProduct->qty</td>
+      	<td>$remQQ<input type='hidden' id='rem_qty$i' min='0' name='remaining_qty[]' value=$remQQ class='form-control'>
+        
+        <input type='hidden' name='po_no' value='$getProduct->po_order_no' />
+       
+        
+        </td>
+        <td><input type='number' min='1' name='receive_qty[]' id='rec_qty$i' onkeyup='qtyValidation(this.id);' class='form-control'>
+        
+        <input type='hidden' name='validationCheck' id='validationCheck' value='0' />
+        </td>
+</tr>";
+
+$i++;
+}
+
 }
 
 

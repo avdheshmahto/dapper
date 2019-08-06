@@ -1214,7 +1214,7 @@
                         <?php }?>
                         <tr class="gradeU">
                           <td>
-                            <button  type="button" class="btn btn-default modalMapSpare" onclick="RM_return('<?=$getsched->job_order_no;?>');" data-toggle="modal" data-target="#modal-purchase-return"><img src="<?=base_url();?>assets/images/plus.png" /></button>
+                            <button  type="button" class="btn btn-default modalMapSpare" onclick="RM_return('<?=$getsched->id;?>');" data-toggle="modal" data-target="#modal-purchase-return"><img src="<?=base_url();?>assets/images/plus.png" /></button>
                           </td>
                           <td>&nbsp;</td>
                           <td>&nbsp;</td>
@@ -2091,7 +2091,59 @@
 
   }
   
+  function qtyValRmReturn(d)
+  {
+   
+    var zz=document.getElementById(d).id;
+    var myarra = zz.split("order_qty");
+    var asx= myarra[1];
+    //alert(asx);
+    var entQty=document.getElementById("order_qty"+asx).value;  
+    var remQty=document.getElementById("rem_qty"+asx).value;  
+
+    if(Number(remQty)<Number(entQty)) 
+    {
+
+      alert("Enter Qty should be less than remaining Qty");
+      document.getElementById("order_qty"+asx).focus(); 
+      document.getElementById("add_req").disabled = true;
+      
+      return false;
+    }
+    else
+    {
+
+      document.getElementById("add_req").disabled = false;
+    
+    }
+
+  }
+
+  function wgtValRmReturn(d)
+  {
+   
+    var zz=document.getElementById(d).id;
+    var myarra = zz.split("qty");
+    var asx= myarra[1];
+    //alert(asx);
+    var entWgt=document.getElementById("qty"+asx).value;  
+    var remWgt=document.getElementById("rem_wgt"+asx).value;
   
+    if(Number(remWgt)<Number(entWgt))
+    {
+      alert("Enter Wgt should be less than remaining Wgt");
+      document.getElementById("qty"+asx).focus(); 
+      document.getElementById("add_req").disabled = true;
+      return false;
+    }
+    else
+    {
+
+      document.getElementById("add_req").disabled = false;
+    
+    }
+
+  }
   
   
   // start checking qty validation
