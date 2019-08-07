@@ -444,7 +444,7 @@
       var priceT=document.getElementById("priceT").value;
       
       var total=Number(total_qty)*Number(priceT);
-      document.getElementById("nettot").value=total;
+      document.getElementById("nettot").value=total.toFixed(3);
       document.getElementById("nettot").focus();
       
       //if(document.getElementById("priceT").value=="" && entr==08){
