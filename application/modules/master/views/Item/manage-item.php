@@ -1024,8 +1024,8 @@
   var ctn_width=document.getElementById("ctn_width").value;
   var calcbm=Number(ctn_height)*Number(ctn_lenght)*Number(ctn_width)/1000000;
   var vlmwgt=Number(ctn_height)*Number(ctn_lenght)*Number(ctn_width)/5000;
-  document.getElementById("cbm").value=calcbm;
-  document.getElementById("volume_weight").value=vlmwgt;
+  document.getElementById("cbm").value=calcbm.toFixed(3);
+  document.getElementById("volume_weight").value=vlmwgt.toFixed(3);
   }
   
 
