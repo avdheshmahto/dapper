@@ -180,6 +180,29 @@
             
             $usagesQuery=$this->db->query("select *from tbl_master_data where serial_number='$getProduct->usageunit'");
             $getUnit=$usagesQuery->row();
+
+
+            $fg=$this->db->query("select * from tbl_machine where code='$getDtl->productid'");
+            $getFg=$fg->row();
+
+            $shape=$this->db->query("select * from tbl_shape_part_mapping where product_id='$getFg->machine_name'");
+            foreach ($shape->result() as $getShape) {
+              $part_id[]=$getShape->part_id;
+            }
+            $partsId=implode(",",$part_id);
+
+            if($partsId !='')
+            {
+              $rmPartId=$partsId;
+            }
+            else
+            {
+              $rmPartId="9999";
+            }
+
+            $netWeight=$this->db->query("select SUM(qty) as netwgt from tbl_part_price_mapping where part_id IN ($rmPartId) ");
+            $getNetWgt=$netWeight->row();
+            $netweights= round($getNetWgt->netwgt,3);
             ?>
           <tr>
             <td><?=$getProduct->sku_no;?></td>
@@ -197,11 +220,18 @@
             $totalQty=$totalQty+$getDtl->qty;
             $price=$price+$getDtl->price;
             $Totalprice=$Totalprice+$getDtl->price*$getDtl->qty;
-            $totalCbm=$totalCbm+$getProduct->cbm;
-            $totalNetWeight=$totalNetWeight+$getProduct->net_weight*$getDtl->qty;
+
+            $totalCbm=$totalCbm+$getProduct->cbm*$getDtl->ord_qty;
+            $totalVolumeWgt=$totalVolumeWgt+$getProduct->volume_weight*$getDtl->ord_qty;
+            
+            //$totalNetWeight=$totalNetWeight+$getProduct->net_weight*$getDtl->qty;
+            $totalNetWeight=$totalNetWeight+$netweights*$getDtl->qty;
+
+            
             $Totalpacking=$Totalpacking+$getDtl->ord_qty;
-            $TotalGrossWeight=($getProduct->weight*$getProduct->packing)+5;
-            $finalGrossWeight=$TotalGrossWeight*$getDtl->ord_qty;
+            
+            //$TotalGrossWeight=($getProduct->weight*$getProduct->packing)+5;
+            $finalGrossWeight=$finalGrossWeight+$getProduct->weight*$getDtl->ord_qty;
             
             
             }?>
@@ -221,16 +251,17 @@
               <h5>Amount in Figure</h5>
               <ul>
                 <li>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?=$totalQty;?></li>
-                <li>US $<?=$price;?></li>
-                <li>US $<?=$Totalprice;?></li>
+                <li style="margin: 0 0 0 -20px;">US $<?=$price;?></li>
+                <li style="margin: 0 0 0 -25px;">US $<?=$Totalprice;?></li>
               </ul>
-              <h4 class="dollar">US. Dollars <?php echo  words_repues(number_format((float)$getDtl->price*$getDtl->qty, 2, '.', '')); ?></h4>
+              <h4 class="dollar">US. Dollars <?php echo  words_repues(number_format((float)$Totalprice, 2, '.', '')); ?> ONLY</h4>
               <ol class="total">
                 <li>TOTAL QTY : <?=$totalQty;?> Pcs.</li>
-                <li>TOTAL CARTONS : <?=$Totalpacking;?></li>
-                <li>TOTAL NET WT. : <?=$totalNetWeight;?> KGS.</li>
+                <li>TOTAL CARTONS : <?=$Totalpacking;?> CARTONS</li>
+                <li>TOTAL NET WT. : <?php echo round($totalNetWeight,3);?> KGS.</li>
                 <li>TOTAL GROSS WT. : <?=$finalGrossWeight?> KGS.</li>
-                <li>TOTAL CBM : <?php echo round($totalCbm*$getDtl->ord_qty,3);?> CBM</li>
+                <li>TOTAL VOLUME WT. : <?php echo round($totalVolumeWgt,3);?> KGS.</li>
+                <li>TOTAL CBM : <?php echo round($totalCbm,3);?> CBM</li>
               </ol>
               <span>Please send us a copy of Proforma Invoice duly signed and stamped.</span>
               <div class="signature1">
