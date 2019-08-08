@@ -86,7 +86,7 @@
                   <th><a href="<?=base_url();?>kora/manage_kora_map?id=<?=$sales->lot_no;?>"><?=$sales->lot_no;?></a></th>
                   <th>Pending</th>
                   <th> <button class="btn btn-xs btn-black" data-toggle="modal" data-target="#modal-0" onclick="getspharemap('<?=$sales->lot_no;?>');"  type="button"><i class="icon-eye"></i></button>
-                    <a href="<?=base_url();?>kora/manage_kora_map?id=<?=$sales->lot_no;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
+                    <!-- <a href="<?=base_url();?>kora/manage_kora_map?id=<?=$sales->lot_no;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a> -->
                   </th>
                 </tr>
                 <?php } ?>
