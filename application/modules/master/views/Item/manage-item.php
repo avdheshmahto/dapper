@@ -175,7 +175,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Cartoon Height:</label> 
                 <div class="col-sm-4" id="regid"> 
-                  <input type="text"  name="ctn_height" onchange="cbmCalculation();" value="" id="ctn_height" class="form-control" >
+                  <input type="text"  name="ctn_height" onkeyup="cbmCalculation();" onchange="cbmCalculation();" value="" id="ctn_height" class="form-control" >
                 </div>
                 <label class="col-sm-2 control-label">CBM:</label> 
                 <div class="col-sm-4" id="regid"> 
