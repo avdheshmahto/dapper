@@ -65,7 +65,7 @@
                       <th class="tdcenter">Ordered Weight</th>
                       <th class="tdcenter">Remaining Qty</th>
                       <th class="tdcenter">Remaining Weight</th>
-                      <th class="tdcenter">Qty In Stock</th>
+                      <th class="tdcenter">Weight In Stock</th>
                       <th class="tdcenter">Issue Qty</th>
                       <th class="tdcenter">Issue Weight</th>
                     </tr>
@@ -104,7 +104,7 @@
                       <p id="qtyInStcok<?=$i;?>"><?php echo round($getProductStock->quantity,3);?></p>
                     </td>
                     <td><input name="order_qty[]" id="order_qty<?=$i;?>"  type="text" class="form-control"  /> 
-                    <td><input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control" <?php if($$rmR=='0'){?> readonly="readonly" <?php }?> />
+                    <td><input name="qty[]" id="qty<?=$i;?>" onkeyup="qtyVal(this.id)" onchange="qtyVal(this.id)" type="text" class="form-control" <?php if($$rmR=='0'){?> readonly="readonly" <?php }?> />
                     </td>
                   </tr>
                   <?php 

@@ -354,9 +354,9 @@
 
     alert(sum);*/
   
-  	if(Number(remQty)<Number(entQty) || Number(qtyInStcok)<Number(entQty) )	
+  	if(Number(qtyInStcok)<Number(entQty) )	
   	{
-  		alert("Enter Qty should be less than remaining Qty or Qty in stock !");
+  		alert("Enter weight should be less than weight in stock !");
   		document.getElementById("qty"+asx).focus();	
   		document.getElementById("add").disabled = true;
   		return false;
