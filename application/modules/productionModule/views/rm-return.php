@@ -52,16 +52,16 @@
         <table class="table table-striped table-bordered table-hover " >
           <thead>
             <tr>
-              <th class="tdcenter"> Sl No</th>
+              <th class="tdcenter">Sl No</th>
               <th class="tdcenter">Item Number & Description</th>
               <th class="tdcenter">UOM</th>
               <th class="tdcenter">Ordered Qty</th>
               <th class="tdcenter">Ordered Weight</th>
               <th class="tdcenter">Remaining Qty</th>
               <th class="tdcenter">Remaining Weight</th>
-              <th class="tdcenter">Qty In Stock</th>
-              <th class="tdcenter">Issue Qty</th>
-              <th class="tdcenter">Weight Qty</th>
+              <th class="tdcenter">Weight In Stock</th>
+              <th class="tdcenter">Return Qty</th>
+              <th class="tdcenter">Return Weight</th>
             </tr>
           </thead>
           <?php

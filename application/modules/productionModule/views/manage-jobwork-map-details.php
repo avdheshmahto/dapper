@@ -1206,7 +1206,7 @@
                           <th>
                          
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
-                            <button class="btn btn-default" onclick="viewRMOrderDetails('<?=$getPo->return_no;?>');" data-toggle="modal" data-target="#modal-checking" type="button" ><i class="fa fa-eye"></i></button>
+                            <button class="btn btn-default" onclick="viewRMOrderDetails('<?=$getPo->return_no;?>');" data-toggle="modal" data-target="#modal-checking" type="button" title="Return Log"><i class="fa fa-eye"></i></button>
                             <a style="display:none" href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
                             <a target="_blank" href="<?=base_url();?>productionModule/print_rm_return?id=<?=$getPo->return_no;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
                           </th>
@@ -1357,7 +1357,7 @@
                             <button class="btn btn-default" onclick="viewRepairOrder('<?=$getPo->repair_no;?>');" data-toggle="modal" data-target="#modal-view_order_repair" type="button" ><i class="fa fa-eye"></i></button>
                             
                                <button class="btn btn-default delbuttonOrderRepair" id="<?=$getPo->repair_no; ?>" type="button"><i class="icon-trash"></i></button>
-                            <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>&check_no=<?=$getPo->check_no;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
+                            <!-- <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>&check_no=<?=$getPo->check_no;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a> -->
                             <a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
                           </th>
                           <?php }?>
@@ -2084,7 +2084,7 @@
     {
 
       document.getElementById("add_req").disabled = false;
-      document.getElementById("total_weight"+asx).value=tWgt;
+      document.getElementById("total_weight"+asx).value=tWgt.toFixed(3);
     
     }
 
@@ -2103,7 +2103,7 @@
     if(Number(remQty)<Number(entQty)) 
     {
 
-      alert("Enter Qty should be less than remaining Qty");
+      alert("Return Qty should be less than remaining Qty");
       document.getElementById("order_qty"+asx).focus(); 
       document.getElementById("add_req").disabled = true;
       
@@ -2130,7 +2130,7 @@
   
     if(Number(remWgt)<Number(entWgt))
     {
-      alert("Enter Wgt should be less than remaining Wgt");
+      alert("Return weight should be less than remaining weight");
       document.getElementById("qty"+asx).focus(); 
       document.getElementById("add_req").disabled = true;
       return false;
@@ -2254,24 +2254,24 @@
   	
   	  if(data == 1 || data == 2){
   		
-                        if(data == 1)
-  					    
-                          var msg = "Data Successfully Add !";
-                        else
-                          var msg = "Data Successfully Updated !";
-              						$("#resultareaRaw").text(msg);
-              						setTimeout(function() {   //calls click event after a certain time
-                          $("#modal-6 .close").click();
-  					   
-                         $("#resultareaRaw").text(" "); 
-                         $('#requestRawMat')[0].reset(); 
-       
-                      }, 1000);
-                    }else{
-                      $("#resultareaRaw").text(data);
-  					
-                   }
-  				 ajex_requestRM(<?=$_GET['id'];?>);
+            if(data == 1)
+    
+              var msg = "Data Successfully Add !";
+            else
+              var msg = "Data Successfully Updated !";
+  						$("#resultareaRaw").text(msg);
+  						setTimeout(function() {   //calls click event after a certain time
+              $("#modal-6 .close").click();
+   
+             $("#resultareaRaw").text(" "); 
+             $('#requestRawMat')[0].reset(); 
+
+          }, 1000);
+        }else{
+          $("#resultareaRaw").text(data);
+
+       }
+ajex_requestRM(<?=$_GET['id'];?>);
    
   	 
       console.log(data);
@@ -2451,7 +2451,7 @@ function ajex_RmReturnListData(production_id){
   }
   else
   {
-  document.getElementById("weight"+asx).value=totalWeight;
+  document.getElementById("weight"+asx).value=totalWeight.toFixed(3);
   document.getElementById("add_req").disabled = false;	
   }
   }

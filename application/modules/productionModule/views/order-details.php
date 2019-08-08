@@ -46,13 +46,13 @@
           <table class="table table-striped table-bordered table-hover" >
             <thead>
               <tr>
-                <th class="tdcenter"> Sl No</th>
+                <th class="tdcenter">Sl No</th>
                 <th class="tdcenter">Item Number & Description</th>
                 <th class="tdcenter">UOM</th>
                 <th class="tdcenter">Ordered Qty</th>
-                <th class="tdcenter">Issue Qty</th>
-                <th class="tdcenter">Return Qty</th>
-                <th class="tdcenter">Total GRN Qty 
+                <!-- <th class="tdcenter">Issue Qty</th>
+                <th class="tdcenter">Return Qty</th> -->
+                <th class="tdcenter">GRN Qty 
                 <th class="tdcenter">Remaining GRN Qty</th>
                 <th style="display:none" class="tdcenter">Qty In Stock</th>
                 <th class="tdcenter">Receive Qty</th>
@@ -133,13 +133,13 @@
                 
                 ?>
               <input type="hidden" min="0" name="ord_qty[]" value="<?=$getProduct->qty;?>" class="form-control">
-              <input type="hidden" min="0" name="rm_qty[]" value="<?=$getChallan->cIssueQty-$getInboundGRNLog->rec_qty;?>" class="form-control">
+              <input type="hidden" min="0" name="rm_qty[]" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" class="form-control">
               <td><?=$getProduct->qty;?></td>
-              <td><?=$getChallan->cIssueQty;?></td>
-              <td><?=$getRMreturn->rt_qty;?></td>
+              <!-- <td><?=$getChallan->cIssueQty;?></td>
+              <td><?=$getRMreturn->rt_qty;?></td> -->
               <td><?=$getInboundGRNLog->rec_qty;?></td>
-              <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getChallan->cIssueQty-$getInboundGRNLog->rec_qty-$getRMreturn->rt_qty;?>" />
-              <td><?php echo $reci_qty=$getChallan->cIssueQty-$getInboundGRNLog->rec_qty-$getRMreturn->rt_qty;?></td>
+              <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" />
+              <td><?php echo $reci_qty=$getProduct->qty-$getInboundGRNLog->rec_qty;?></td>
               <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
               <td>
                 <input name="tolerance_percentage[]" id="tolerance_percentage<?=$i;?>"  type="hidden" class="form-control" value="<?=$getProductStock->tolerance_percentage;?>"/>
@@ -158,8 +158,10 @@
             </tr>
             <?php 
               $i++;
-              }?>
+              } ?>
           </table>
+          <!-- <input type="text" name="cIssueQty" value="<?=$getChallan->cIssueQty;?>">
+          <input type="text" name="getRMreturn" value="<?=$getRMreturn->rt_qty;?>"> -->
         </div>
       </div>
     </div>
