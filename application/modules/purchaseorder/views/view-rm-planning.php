@@ -201,8 +201,8 @@
                 </td>
                 <td><?=$fetch_list->grn_no;?></td>
                 <td><?=$fetch_list->grn_date;?></td>
-                <td><?=$fetch_list->receive_qty;?></td>
                 <td><?=$fetch_list->qn_pc;?></td>
+                <td><?=$fetch_list->receive_qty;?></td>                
               </tr>
               <?php } ?>
             </tbody>
