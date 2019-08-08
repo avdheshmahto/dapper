@@ -172,13 +172,13 @@
             <th>Amount $</th>
           </tr>
           <?php
-            $dtlQuery=$this->db->query("select *from tbl_quotation_purchase_order_dtl where purchaseid='$getPrint->purchaseid'");
+            $dtlQuery=$this->db->query("select * from tbl_quotation_purchase_order_dtl where purchaseid='$getPrint->purchaseid'");
             foreach($dtlQuery->result() as $getDtl){
             	
             $productQuery=$this->db->query("select *from tbl_product_stock where Product_id='$getDtl->productid'");
             $getProduct=$productQuery->row();
             
-            $usagesQuery=$this->db->query("select *from tbl_master_data where serial_number='$getProduct->usageunit'");
+            $usagesQuery=$this->db->query("select * from tbl_master_data where serial_number='$getProduct->usageunit'");
             $getUnit=$usagesQuery->row();
 
 
@@ -217,7 +217,14 @@
             <td class="right">$<?php echo $getDtl->price*$getDtl->qty;?></td>
           </tr>
           <?php
-            $totalQty=$totalQty+$getDtl->qty;
+            
+            if($getProduct->usageunit == 51)
+              $totalQtyA=$totalQtyA+$getDtl->qty;
+
+            if($getProduct->usageunit == 41)
+              $totalQtyB=$totalQtyB+$getDtl->qty;
+
+
             $price=$price+$getDtl->price;
             $Totalprice=$Totalprice+$getDtl->price*$getDtl->qty;
 
@@ -233,7 +240,7 @@
             //$TotalGrossWeight=($getProduct->weight*$getProduct->packing)+5;
             $finalGrossWeight=$finalGrossWeight+$getProduct->weight*$getDtl->ord_qty;
             
-            
+            unset($part_id);
             }?>
           <tr>
             <td rowspan="3" class="space"></td>
@@ -250,13 +257,13 @@
             <td rowspan="6" colspan="3">
               <h5>Amount in Figure</h5>
               <ul>
-                <li>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?=$totalQty;?></li>
-                <li style="margin: 0 0 0 -20px;">US $<?=$price;?></li>
-                <li style="margin: 0 0 0 -25px;">US $<?=$Totalprice;?></li>
+                <li>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FOB<?php //echo $totalQty;?></li>
+                <!-- <li>US $<?=$price;?></li> -->
+                <li>&nbsp;&nbsp;&nbsp;US $<?=$Totalprice;?></li>
               </ul>
-              <h4 class="dollar">US. Dollars <?php echo  words_repues(number_format((float)$Totalprice, 2, '.', '')); ?> ONLY</h4>
+              <h4 class="dollar" style="margin: -10px 0px 0px 0px;">US. Dollars <?php echo  words_repues(number_format((float)$Totalprice, 2, '.', '')); ?> ONLY</h4>
               <ol class="total">
-                <li>TOTAL QTY : <?=$totalQty;?> Pcs.</li>
+                <li>TOTAL QTY : <?=$totalQtyA;?> Pcs.  <?=$totalQtyB;?> Set.</li>
                 <li>TOTAL CARTONS : <?=$Totalpacking;?> CARTONS</li>
                 <li>TOTAL NET WT. : <?php echo round($totalNetWeight,3);?> KGS.</li>
                 <li>TOTAL GROSS WT. : <?=$finalGrossWeight?> KGS.</li>
