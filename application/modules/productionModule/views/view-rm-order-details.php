@@ -33,10 +33,10 @@
                 <table class="table table-striped table-bordered table-hover " >
                   <thead>
                     <tr>
-                      <th class="tdcenter"> Sl No</th>
+                      <th class="tdcenter">Sl No</th>
                       <th class="tdcenter">Item Number & Description</th>
                       <th class="tdcenter">UOM</th>
-                      <th class="tdcenter">Qty</th>
+                      <th class="tdcenter">Return Weight</th>
                     </tr>
                   </thead>
                   <?php

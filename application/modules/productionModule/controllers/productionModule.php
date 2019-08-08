@@ -1767,6 +1767,7 @@ public function productionRMReturn()
 			);
 			$this->Model_admin_login->insert_user($table_name,$data_dtl);
 			$this->db->query("update tbl_product_stock set quantity=quantity+'$qty[$i]' where Product_id='$productid[$i]'");
+			$this->db->query("update tbl_product_serial set quantity=quantity+'$qty[$i]',qn_pc=qn_pc+'$order_qty[$i]',location_id='1' where product_id='$productid[$i]' and location_id='1' ");
 		  	}
 	 	}
 	echo "1";	
