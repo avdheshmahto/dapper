@@ -728,7 +728,7 @@
               <div class="panel panel-default___">
                 <div class="panel-heading" style="background-color: #F5F5F5; color:#fff; border-color:#DDDDDD;">
                   <h3 class="panel-title" style="float: initial;"><span style="color:#000;">Order Details:-</span><?=$getsched->inboundid;?>
-                    <a href="<?=base_url();?>productionModule/manage_jobwork_map?id=<?=$getsched->production_id;?>" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
+                    <a href="<?=base_url();?>productionModule/manage_jobwork_map?id=<?=$getsched->production_id;?>&&jo_no=<?=$getsched->job_order_no?>" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
                   </h3>
                 </div>
                 <div class="panel-body" style="padding:15px 0px;">
@@ -809,40 +809,26 @@
           </div>
           <div class="tabs-container">
             <ul class="nav nav-tabs">
-              <?php
-                if($getsched->order_type=='Job Order')
-                {
-                	
-                ?>
+              <?php if($getsched->order_type=='Job Order') { ?>
               <li style="display:none1;"  class="active"><a href="#receiveJobWork" data-toggle="tab">RM Request</a></li>
               <?php } ?>
-              <li ><a href="#home" data-toggle="tab">GRN</a></li>
+              <li <?php if($getsched->order_type=='Purchase Oder') { ?> class="active" <?php } else { ?> class="" <?php } ?>  ><a href="#home" data-toggle="tab">GRN</a></li>
               <li ><a href="#check" data-toggle="tab">Checking</a></li>
               <li style="display:none1;"><a href="#returnOrder" data-toggle="tab">Order Repair</a></li>
               <li style="display:none1;"><a href="#scrap" data-toggle="tab">Scrap</a></li>
-              <?php
-                if($getsched->order_type!='Job Order')
-                {
-                	
-                ?>
+              <?php if($getsched->order_type!='Job Order') { ?>
               <li style="display:none1;"><a href="#purchaseReturn" data-toggle="tab">Purchase Return</a></li>
-              <?php }?>
-              <?php
-                if($getsched->order_type=='Job Order')
-                {
-                	
-                ?>
+              <?php } ?>
+              <?php if($getsched->order_type=='Job Order') { ?>
               <li style="display:none1;"><a href="#RMReturn" data-toggle="tab">RM  Return</a></li>
-              <?php }?>
+              <?php } ?>
               <li style="display:none" class=""><a href="#four" data-toggle="tab">Request Raw Material</a></li>
               <li style="display:none" class=""><a href="#receiveRaw" data-toggle="tab">Receive Raw Material</a></li>
               <li style="display:none" class=""><a href="#work_order" data-toggle="tab">Transfer to Module</a></li>
             </ul>
             <div class="tab-content">
-              <?php
-                if($getsched->order_type=='Job Order')
-                {
-                ?>
+              
+              <?php if($getsched->order_type=='Job Order') { ?>
               <div class="tab-pane active" id="receiveJobWork">
                 <div class="panel-body">
                   <div class="table-responsive">
@@ -938,10 +924,7 @@
                 </div>
               </div>
               <?php }?>
-              <div <?php
-                if($getsched->order_type!='Job Order')
-                {
-                ?> class="tab-pane active" <?php } else {?> class="tab-pane" <?php } ?> id="home">
+              <div <?php if($getsched->order_type=='Purchase Oder') { ?> class="tab-pane active" <?php } else { ?> class="tab-pane" <?php } ?> id="home">
                 <div class="panel-body">
                   <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover dataTables-example1"  id="listingOrderGrnData">
@@ -1006,6 +989,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="tab-pane" id="check">
                 <div class="panel-body">
                   <div class="table-responsive">
@@ -1388,105 +1372,8 @@
 <!--main-content close-->
 <?php
   $this->load->view("footer.php");
-  ?>
-<SCRIPT language="javascript">
-  function addRow(tableID) {
-  
-  	var table = document.getElementById(tableID);
-  
-  	var rowCount = table.rows.length;
-  	var row = table.insertRow(rowCount);
-  
-  var cell1 = row.insertCell(0);
-  	var element1 = document.createElement("input");
-  	element1.type = "checkbox";
-  	element1.name="chkbox[]";
-  	cell1.appendChild(element1);
-  	
-  var cell2 = row.insertCell(1);
-  	var element2 = document.createElement("select");
-  	element2.name = "spare_id[]";
-  	element2.className="form-control";
-  	element2.style.width="250px";
-  	var option1 = document.createElement("option");
-  	option1.innerHTML = "--Select--";
-    option1.value = "";
-    element2.appendChild(option1, null);
-  <?php
-    $contactQuery=$this->db->query("select *from tbl_product_stock where status='A'");
-    foreach($contactQuery->result() as $getContact){
-    ?>
-  
-    var option2 = document.createElement("option");
-    option2.innerHTML = "<?=$getContact->productname;?>";
-    option2.value = "<?=$getContact->Product_id;?>";
-    element2.appendChild(option2, null);
-    
-  <?php }?>
-  	cell2.appendChild(element2);
-  	
-  
-  }
-  
-  
-  
-  function deleteRow(tableID) {
-  	try {
-  	var table = document.getElementById(tableID);
-  	var rowCount = table.rows.length;
-  
-  	for(var i=0; i<rowCount; i++) {
-  		var row = table.rows[i];
-  		var chkbox = row.cells[0].childNodes[0];
-  		if(null != chkbox && true == chkbox.checked) {
-  			table.deleteRow(i);
-  			rowCount--;
-  			i--;
-  		}
-  
-  
-  	}
-  	}catch(e) {
-  		alert(e);
-  	}
-  }
-  
-  
-  
-    
-</SCRIPT>
+?>
 
-<style>
-  .c-error .c-validation{ 
-  background: #c51244 !important;
-  padding: 10px !important;
-  border-radius: 0 !important;
-  position: relative; 
-  display: inline-block !important;
-  box-shadow: 1px 1px 1px #aaaaaa;
-  margin-top: 10px;
-  }
-  .c-error  .c-validation:before{ 
-  content: ''; 
-  width: 0; 
-  height: 0; 
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #c51244;
-  position: absolute; 
-  top: -10px; 
-  }
-  .c-label:after{
-  color: #c51244 !important;
-  }
-  .c-error input, .c-error select, .c-error .c-choice-option{ 
-  background: #fff0f4; 
-  color: #c51244;
-  }
-  .c-error input, .c-error select{ 
-  border: 1px solid #c51244 !important; 
-  }
-</style>
 <!-- view production GRN here -->
 <div id="modal-PurchaseGRN" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg">
@@ -2408,52 +2295,91 @@ function ajex_RmReturnListData(production_id){
   	});
   }
   
+
+// function issweightcalc(v)
+// {
+
+//     var weightVal=document.getElementById(v).id;
+//     var weightData = weightVal.split("weight");
+//     var asx= weightData[1];
+    
+//     var weight=document.getElementById("weight"+asx).value;
+    
+
+// }
+
+
   function totalWeightCal(v)
   {
-  var weightVal=document.getElementById(v).id;
-  var weightData = weightVal.split("weight");
-  var asx= weightData[1];
-  
-  var qty=document.getElementById("qty"+asx).value;
-  var weight=document.getElementById("weight"+asx).value;
-  var total_weight=document.getElementById("total_weight"+asx).value;
-  var ideal_total_weight=document.getElementById("ideal_total_weight"+asx).value;
-  
-  
-  var totalWeight=Number(total_weight)/Number(qty);
-  var tolerance_percentage=document.getElementById("tolerance_percentage"+asx).value;
-  document.getElementById("weight"+asx).value=totalWeight.toFixed(3);;
-  var netweightCal=document.getElementById("net_weight_cal"+asx).value;
-  var netWeightToatl=Number(ideal_total_weight)*Number(qty);
-  
-  var fivePercentageCal=Number(netWeightToatl)*Number(tolerance_percentage)/100;
-  
-  var totalFivePluspercentageVal=Number(netWeightToatl)+Number(fivePercentageCal);
-  
-  var totalFiveMinuspercentageVal=Number(netWeightToatl)-Number(fivePercentageCal);
-  
-  
-  
-  if(Number(totalFivePluspercentageVal)<Number(total_weight))
-  {
-  
-  alert("Enter Weight is greater then Net Weight");	
-  document.getElementById("total_weight"+asx).focus();
-  document.getElementById("add_req").disabled = true;	
-  }
-  else if(Number(totalFiveMinuspercentageVal)>Number(total_weight))
-  {
-  
-  alert("Enter Weight is less then Net Weight");
-  document.getElementById("total_weight"+asx).focus();
-  document.getElementById("add_req").disabled = true;	
-  
-  }
-  else
-  {
-  document.getElementById("weight"+asx).value=totalWeight.toFixed(3);
-  document.getElementById("add_req").disabled = false;	
-  }
+    var weightVal=document.getElementById(v).id;
+    var weightData = weightVal.split("weight");
+    var asx= weightData[1];
+    
+    var qty=document.getElementById("qty"+asx).value;
+    var weight=document.getElementById("weight"+asx).value;
+    var total_weight=document.getElementById("total_weight"+asx).value;
+    var ideal_total_weight=document.getElementById("ideal_total_weight"+asx).value;
+    
+    
+    var totalWeight=Number(total_weight)/Number(qty);
+    var tolerance_percentage=document.getElementById("tolerance_percentage"+asx).value;
+    document.getElementById("weight"+asx).value=totalWeight.toFixed(3);;
+    var netweightCal=document.getElementById("net_weight_cal"+asx).value;
+    var netWeightToatl=Number(ideal_total_weight)*Number(qty);
+    
+    var fivePercentageCal=Number(netWeightToatl)*Number(tolerance_percentage)/100;
+    
+    var totalFivePluspercentageVal=Number(netWeightToatl)+Number(fivePercentageCal);
+    
+    var totalFiveMinuspercentageVal=Number(netWeightToatl)-Number(fivePercentageCal);
+    
+    
+    
+    //=================issue weight calc================
+    var enrmid=document.getElementById("rmOrdId"+asx).value;
+    //alert(enrmid);
+
+    var isrmid=$("#rmIssueId").val();
+
+    //alert(isrmid);
+
+    var isrmwt=$("#rmIssueWgt").val();    
+
+
+    if(Number(totalFivePluspercentageVal)<Number(total_weight))
+    {
+    
+    alert("Enter Weight is greater then Net Weight");	
+    document.getElementById("total_weight"+asx).focus();
+    document.getElementById("add_req").disabled = true;	
+    }
+    else if(Number(totalFiveMinuspercentageVal)>Number(total_weight))
+    {
+    
+    alert("Enter Weight is less then Net Weight");
+    document.getElementById("total_weight"+asx).focus();
+    document.getElementById("add_req").disabled = true;	
+    
+    }
+    else if(Number(enrmid)==Number(isrmid))
+    {
+      if(weight > isrmwt)
+      {
+        alert("GRN weight can't be greater than issue weight!");
+        document.getElementById("add_req").disabled = true;  
+      }
+      else
+      {
+        var finalWgt=Number(isrmwt)-Number(weight);
+        document.getElementById("rmIssueWgt").value=finalWgt.toFixed(3);
+        document.getElementById("add_req").disabled = true;   
+      }
+    }
+    else
+    {
+    document.getElementById("weight"+asx).value=totalWeight.toFixed(3);
+    document.getElementById("add_req").disabled = false;	
+    }
   }
   
   function RateCal(d)

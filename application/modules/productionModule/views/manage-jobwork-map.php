@@ -8,10 +8,10 @@
   $dtlQuery=$this->db->query("select *from tbl_quotation_purchase_order_dtl where purchaseid='$getsched->purchaseid'");
   foreach($dtlQuery->result() as $getDtl){
   $getDtl->productid;
-  	$pId[]=$getDtl->productid;
+    $pId[]=$getDtl->productid;
   }
   
- @$getP=implode(",",$pId);
+  @$getP=implode(",",$pId);
   
   ?>
 <style type="text/css">
@@ -23,25 +23,7 @@
   }
 </style>
 <script>
-  function getPart(v)
-  {
-  	var production_id=document.getElementById("lot_number").value;
-  	
-  	var select_id=document.getElementById("select_id").value;
-  	var ur = '<?=base_url();?>productionModule/getPart';
-  	$.ajax({
-  	type: "POST",
-  	url: ur,
-  	data: {'shape':v,'production_id':production_id,'shapeName':select_id},
-  	success: function(data){
-      // console.log(data);
-      $("#getPartView").empty().append(data).fadeIn();
-	 
-	  
-  	// $("#btn").prop('disabled', false);
-      }
-      });
-  }
+ 
   
   
   
@@ -49,64 +31,22 @@
   
   function getPartPo(v)
   {
-  	
-  	var ur = '<?=base_url();?>productionModule/getPartPo';
-  	$.ajax({
-  	type: "POST",
-  	url: ur,
-  	data: {'shape':v,'production_id':<?=$_GET['id'];?>},
-  	success: function(data){
+  
+    var ur = '<?=base_url();?>productionModule/getPartPo';
+    $.ajax({
+    type: "POST",
+    url: ur,
+    data: {'shape':v,'production_id':<?=$_GET['id'];?>},
+    success: function(data){
       // console.log(data);
       $("#getPartPoView").empty().append(data).fadeIn();
-  	// $("#btn").prop('disabled', false);
+    // $("#btn").prop('disabled', false);
       }
       });
   }
   
   
-  function qtyFill(v)
-  {
-  
-  
-  var cntV=document.getElementById("cntVal").value;
-  var fillQty=document.getElementById("fillQty").value;
-  var remQ=[];
-  for(i=1;i<=cntV;i++)
-  {
-	var remQty=document.getElementById("remQty"+i).value;
-  	remQ.push(remQty);
-	
-  }
-  	
-	minVal=Math.min(...remQ);
-	
-	if(fillQty<minVal)
-	{
-		
-	for(i=1;i<=cntV;i++)
- 	{
-	var weight=document.getElementById("weight"+i).value;
-	var weightTotal=Number(weight)*Number(v);
-  var xyz = Number(weightTotal).toFixed(3);
-	document.getElementById("total_weight"+i).value=Number(xyz).toFixed(3);
-  	document.getElementById("entQty"+i).value=v;
-	if(v=='ShapePart')
-	{
-		document.getElementById("total_weight"+i).value="";
-	}
-  }
-	}
-	else
-	{
-	alert("Enter Qty must be less then remaining qty");	
-	for(i=1;i<=cntV;i++)
- 	{
-	document.getElementById("total_weight"+i).value="";
-	document.getElementById("entQty"+i).value="";
-	}
-	}
-  }
-  
+ 
   
   function qtyFillPO(v)
   {
@@ -115,11 +55,11 @@
   
   for(i=1;i<=cntV;i++)
   {
-  	
-  	document.getElementById("entQty"+i).value=v;
-	
-	
-  	
+  
+    document.getElementById("entQty"+i).value=v;
+  
+  
+  
   }
   
   }
@@ -130,7 +70,7 @@
   //starts order repair  query
   
   function submitorderTransferToModule() {
-             
+  
     var form_data = new FormData(document.getElementById("myProduction_order_transfer_to_module"));
     form_data.append("label", "WEBUPLOAD");
   
@@ -141,38 +81,38 @@
         processData: false,  // tell jQuery not to process the data
         contentType: false   // tell jQuery not to set contentType
     }).done(function( data ) {
-  	//alert(data);
-  	
-  	
-  	  if(data == 1 || data == 2){
-  		
+    //alert(data);
+  
+  
+      if(data == 1 || data == 2){
+  
                         if(data == 1)
-  					    
+  
                           var msg = "Data Successfully Add !";
                         else
                           var msg = "Data Successfully Updated !";
-  						$("#OrderTransferToModuleresultarea").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
+              $("#OrderTransferToModuleresultarea").text(msg);
+              setTimeout(function() {   //calls click event after a certain time
                          $("#modal-order-repair").click();
-                         $("#OrderTransferToModuleresultarea").text(" "); 
-                         $('#myProduction_order_transfer_to_module')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
-  					   
+                         $("#OrderTransferToModuleresultarea").text(" ");
+                         $('#myProduction_order_transfer_to_module')[0].reset();
+               //$("#quotationTable").text(" ");
+  
                          //$("#id").val("");
-       
+  
                       }, 1000);
                     }else{
                       $("#OrderTransferToModuleresultarea").text(data);
-  					
+  
                    }
-  				 ajex_LoadTransferData();
-   
-  	 
+           ajex_LoadTransferData();
+  
+  
       console.log(data);
       //Perform ANy action after successfuly post data
-         
+  
     });
-    return false;     
+    return false;
   }
   // ends
   
@@ -180,195 +120,40 @@
 <script>
   function addpricemapPoOrder(){
   
-  	var shapeid =  $('#shapePO').val();
-  	var shapeVal     =  $("#shapePO option:selected").text();   
-  	var part=$('#part').val();
-  	var PartId     = [];
-  	var qtyy	= []; 
-  	var part_c	=[];
-  	j=0;i=0;k=0;
-  	
-  	$('input[name="part[]"]').each(function(){
-  	PartId[i++]  = $(this).val();
-  	});
-  
-  	$('input[name="qty[]"]').each(function(){
-  	qtyy[j++]  = $(this).val();
-  	});
-  
-  	$('input[name="part_code[]"]').each(function(){
-  	part_c[k++]  = $(this).val();
-  	});
-        
-  	var myObject  = new Object();
-      // myObject.productId = $('#quotationPro').val();
-  	var pa=myObject.part = PartId;
-  	var qt=qtyy;
-  	var pa_co=part_c;
-  	var myString = JSON.stringify(myObject);    
-  	
- 
-  	  
-  	   $('#quotationTablePO').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
-      
-  	$("#shapePO").val("");
-  	$("#getPartPoView").text("");
-    }
-  
-  
-  function addpricemap(){
-  
-  	var shapeid =  $('#shape').val();
-  	var shapeVal     =  $("#shape option:selected").text();   
-  	var part=$('#part').val();
-  	var weight=$('#weight').val();
-  	var total_weight=$('#total_weight').val();
-  	var rate=$('#rate').val();
-  	var total_rm_rate=$('#total_rm_rate').val();
-  	var labour_rate=$('#labour_rate').val();
-  	var total_labour_rate=$('#total_labour_rate').val();
-  	var total_cost=$('#total_cost').val();
-  	
+    var shapeid =  $('#shapePO').val();
+    var shapeVal     =  $("#shapePO option:selected").text();
+    var part=$('#part').val();
     var PartId     = [];
-  	var qtyy	= []; 
-  	var part_c	=[];
-    var rm_c = [];
-  	var rate_c	=[];
-  	var weight_c	=[];
-  	var total_weight_c	=[];
-  	var total_rm_rate_c	=[];
-  	var labour_rate_c	=[];
-  	var total_labour_rate_c	=[];
-  	var total_cost_c	=[];
-  	
-  	
+    var qtyy  = [];
+    var part_c  =[];
+    j=0;i=0;k=0;
   
-  	j=0;i=0;k=0;m=0;n=0;o=0;p=0;q=0;r=0;a=0;z=0;
-  	
-  	$('input[name="part[]"]').each(function(){
-  	PartId[i++]  = $(this).val();
-  	});
-  
-  	$('input[name="qty[]"]').each(function(){
-  	qtyy[j++]  = $(this).val();
-  	});
-  
-  	$('input[name="part_code[]"]').each(function(){
-  	part_c[k++]  = $(this).val();
-  	});
-
-    $('input[name="rm_code[]"]').each(function(){
-    rm_c[z++]  = $(this).val();
+    $('input[name="part[]"]').each(function(){
+    PartId[i++]  = $(this).val();
     });
   
-  	$('input[name="weight[]"]').each(function(){
-  	weight_c[m++]  = $(this).val();
-  	});
-  	$('input[name="total_weight[]"]').each(function(){
-  	total_weight_c[a++]  = $(this).val();
-  	});
+    $('input[name="qty[]"]').each(function(){
+    qtyy[j++]  = $(this).val();
+    });
   
-  	$('input[name="rate[]"]').each(function(){
-  	rate_c[n++]  = $(this).val();
-  	});
-  	
-  	$('input[name="total_rm_rate[]"]').each(function(){
-  	total_rm_rate_c[o++]  = $(this).val();
-  	});
-  	
-  	$('input[name="labour_rate[]"]').each(function(){
-  	labour_rate_c[p++]  = $(this).val();
-  	});
-  	
-  	$('input[name="total_labour_rate[]"]').each(function(){
-  	total_labour_rate_c[q++]  = $(this).val();
-  	});
-  	
-  	$('input[name="total_cost[]"]').each(function(){
-  	total_cost_c[r++]  = $(this).val();
-  	});
-  	
-        
-  	var myObject  = new Object();
+    $('input[name="part_code[]"]').each(function(){
+    part_c[k++]  = $(this).val();
+    });
+  
+    var myObject  = new Object();
       // myObject.productId = $('#quotationPro').val();
-  	var pa=myObject.part = PartId;
-  	var qt=qtyy;
-  	var pa_co=part_c;
-    var rm_id=rm_c;
-  	var weight_co=weight_c;
-  	var rate_co=rate_c;
-  	var total_rm_rate_co=total_rm_rate_c;
-  	var labour_rate_co=labour_rate_c;
-  	var total_labour_rate_co=total_labour_rate_c;
-  	var total_cost_co=total_cost_c;
-  	
-  	
-  	var myString = JSON.stringify(myObject);    
-  	
-  	 // $('#quotationProductmapValue').empty().append("<input type ='text' id ='proQuotation' name='quotationMapedValue[]' value='"+myString+"'>");
-        //$('#QuotationMap').val(myString);
-  	  
-  	  
-  	   $('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><td><input type ="hidden" name="rm_code[]" value="'+rm_id+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><input type ="hidden" name="weight_qty[]" value="'+weight_co+'">'+weight_co+'</td><td><input type ="hidden" name="total_weight[]" value="'+total_weight_c+'">'+total_weight_c+'</td><td><input type ="hidden" name="rate_rs[]" value="'+rate_co+'">'+rate_co+'</td><td><input type ="hidden" name="total_rm_rate_rs[]" value="'+total_rm_rate_co+'">'+total_rm_rate_co+'</td><td><input type ="hidden" name="labour_rate_rs[]" value="'+labour_rate_co+'">'+labour_rate_co+'</td><td><input type ="hidden" name="total_labour_rate[]" value="'+total_labour_rate_co+'">'+total_labour_rate_co+'</td><td><input type ="hidden" name="total_cost[]" value="'+total_cost_co+'">'+total_cost_co+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
-      
-  	$("#shape").val("");
-	  $("#fillQty").val("");
-	
-  	$("#getPartView").text("");
+    var pa=myObject.part = PartId;
+    var qt=qtyy;
+    var pa_co=part_c;
+    var myString = JSON.stringify(myObject);
   
   
   
+       $('#quotationTablePO').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
   
+    $("#shapePO").val("");
+    $("#getPartPoView").text("");
     }
-    function submitForm() {
-
-			  
-    var form_data = new FormData(document.getElementById("myform"));
-    form_data.append("label", "WEBUPLOAD");
-  
-    $.ajax({
-        url: "productionModule/insert_jobwork",
-        type: "POST",
-        data: form_data,
-        processData: false,  // tell jQuery not to process the data
-        contentType: false   // tell jQuery not to set contentType
-    }).done(function( data ) {
-  	
-  	
-  	
-  	  if(data == 1 || data == 2){
-  		
-                        if(data == 1)
-  					    
-                          var msg = "Data Successfully Add !";
-                        else
-                          var msg = "Data Successfully Updated !";
-  						$("#resultarea").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
-                         $("#modal-2 .close").click();
-                         $("#resultarea").text(" "); 
-                         $('#myform')[0].reset(); 
-  					   $("#quotationTable").text(" "); 
-  					   
-                         $("#id").val("");
-       
-                      }, 1000);
-                    }else{
-                      $("#resultarea").text(data);
-  					
-                   }
-  				 ajex_JobWorkListData(<?=$_GET['id'];?>);
-   
-  	 
-      console.log(data);
-      //Perform ANy action after successfuly post data
-         
-    });
-    return false;  
-  
-}
-  
-  
   
   
   function Order_transfer(viewId){
@@ -376,23 +161,23 @@
   var order_type=document.getElementById("order_type").innerHTML;
   var lot_no=document.getElementById("lot_no").innerHTML;
   
-   	$.ajax({   
-  		    type: "POST",  
-  			url: "order_transfer",  
-  			cache:false,  
-  			data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},  
-  			success: function(data)  
-  			{  
-  			  
-  			 $("#orderTransfer").empty().append(data).fadeIn();
-  			//referesh table
-  			}   
-  	});
+    $.ajax({
+          type: "POST",
+        url: "order_transfer",
+        cache:false,
+        data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},
+        success: function(data)
+        {
+  
+         $("#orderTransfer").empty().append(data).fadeIn();
+        //referesh table
+        }
+    });
   
    }
   
   function viewWorkOrder(v){
-  	
+  
   var pro=v;
   var xhttp = new XMLHttpRequest();
   xhttp.open("GET", "productionModule/view_work_order?ID="+pro, false);
@@ -400,25 +185,10 @@
    document.getElementById("viewWork").innerHTML = xhttp.responseText;
   }
   
-  function ajex_JobWorkListData(production_id){
-  
-    window.location.reload();
 
-    /*ur = "<?=base_url('productionModule/getWorkOrder');?>";
-      $.ajax({
-        url: ur,
-        data: { 'id' : production_id },
-        type: "POST",
-        success: function(data){
-        
-          $("#listingData").empty().append(data).fadeIn();
-                
-       }
-      });*/
-  }
   
-function ajex_LoadTransferData()
-{
+  function ajex_LoadTransferData()
+  {
   
   window.location.reload();
    /*ur = "<?=base_url('productionModule/getWorkOrder');?>";
@@ -427,14 +197,14 @@ function ajex_LoadTransferData()
         data: { 'id' : production_id },
         type: "POST",
         success: function(data){
-        
+  
           $("#listingData").empty().append(data).fadeIn();
-                
+  
        }
       });*/
-      
-}
-
+  
+  }
+  
 </script>
 <!-- Main content -->
 <div class="main-content">
@@ -447,7 +217,7 @@ function ajex_LoadTransferData()
               <div class="panel panel-default____">
                 <div class="panel-heading" style="background-color: #F5F5F5; color:#fff; border-color:#DDDDDD;">
                   <h3 class="panel-title" style="float: initial;"><span style="color:#000;">Production Details:-</span><?=$getsched->inboundid;?>
-                    <a href="<?=base_url();?>productionModule/manage_production" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
+                    <a href="<?=base_url();?>productionModule/manage_jobwork_view?id=<?=$_GET['id']?>" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
                   </h3>
                 </div>
                 <div class="panel-body" style="padding:15px 0px;">
@@ -461,7 +231,7 @@ function ajex_LoadTransferData()
                     <div class="col-xs-6 col-sm-6 col-md-6">
                       <h4>Date</h4>
                       <div class="form-group">
-                        <?php 
+                        <?php
                           /*$queryType=$this->db->query("select *from tbl_facilities where id='$getsched->m_type'");
                           $getType=$queryType->row();
                           */
@@ -474,7 +244,7 @@ function ajex_LoadTransferData()
                     <div class="col-xs-6 col-sm-6 col-md-6">
                       <div class="form-group">
                         <h4>Customer Name</h4>
-                        <?php 
+                        <?php
                           $queryVendor=$this->db->query("select *from tbl_contact_m where contact_id='$getsched->contactid'");
                           $getVendor=$queryVendor->row();
                           ?>
@@ -530,6 +300,7 @@ function ajex_LoadTransferData()
                       <thead>
                         <tr>
                           <th>Order Type</th>
+                          <th>Shape</th>
                           <th>Order no.</th>
                           <th>Vendor Name</th>
                           <th>Date</th>
@@ -539,22 +310,30 @@ function ajex_LoadTransferData()
                       </thead>
                       <tbody>
                         <?php
-                          $queryData=$this->db->query("select *from tbl_job_work where production_id='".$_GET['id']."' ");
+                          $queryData=$this->db->query("select *from tbl_job_work where production_id='".$_GET['id']."' AND job_order_no='".$_GET['jo_no']."' ");
                             foreach($queryData->result() as $fetch_list)
                             {
-                            
+                          
                           ?>
                         <tr class="gradeU record">
                           <td>
                             <p style="display:none" id="lot_no"><?=$_GET['id'];?></p>
                             <p style="display:none" id="order_type"><?=$fetch_list->order_type;?></p>
-                            <a href="<?=base_url();?>productionModule/manage_jobwork_map_details?id=<?=$fetch_list->id;?>&&p_id=<?=$_GET['id'];?>"><?=$fetch_list->order_type;?></a>
+                            <?=$fetch_list->order_type;?>
                             <button style="display:none" type="button" class="btn btn-default modalMapSpare" onclick="Order('<?=$fetch_list->job_order_no;?>');" data-toggle="modal" data-target="#modal-order"><?=$fetch_list->order_type;?></button>
+                          </td>
+                          <td>
+                            <?php 
+                              $shp=$this->db->query("select * from tbl_product_stock where Product_id='$fetch_list->shape_id'");
+                              $getShape=$shp->row();
+                              //echo $getShape->sku_no;
+                              ?>
+                              <a href="<?=base_url();?>productionModule/manage_jobwork_map_details?id=<?=$fetch_list->id;?>&&p_id=<?=$_GET['id'];?>"><?=$getShape->sku_no;?></a>
                           </td>
                           <td>
                             <?=$fetch_list->job_order_no;?>
                           </td>
-                          <?php 
+                          <?php
                             $sqlQueryMachineIdview=$this->db->query("select * from tbl_contact_m where contact_id ='$fetch_list->vendor_id'  and status = 'A' ");
                             
                             $getMachineIdview=$sqlQueryMachineIdview->row();
@@ -567,44 +346,30 @@ function ajex_LoadTransferData()
                           <td>Pending</td>
                           <td>
                             <button class="btn btn-default" onclick="viewWorkOrder(<?=$fetch_list->id;?>);" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>
-<?php
-$pri_coll   = 'job_order_no';
-$table_namee = 'tbl_work_order';
-                 
-$poquery=$this->db->query("select *from tbl_issuematrial_hdr where job_order_no='$fetch_list->job_order_no'");
-$cntData=$poquery->num_rows();					   
-					   if($cntData>0){
-						   
-					  
-					   ?>
-                        <button class="btn btn-default" onclick="return confirm('Please Delete Child Data First');" type="button"><i class="icon-trash"></i></button>
-                       <?php
-					   }
-					   else{
-					   ?>
-                      
-                  
-                           <button class="btn btn-default delbuttonOrder" id="<?=$fetch_list->job_order_no ?>" type="button"><i class="icon-trash"></i></button>
-                          
-                           <?php }?>
-                            <a target="_blank" href="<?=base_url();?>productionModule/print_challan?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
+                            <?php
+                              $pri_coll   = 'job_order_no';
+                              $table_namee = 'tbl_work_order';
+                              
+                              $poquery=$this->db->query("select *from tbl_issuematrial_hdr where job_order_no='$fetch_list->job_order_no'");
+                              $cntData=$poquery->num_rows();
+                                           if($cntData>0){
+                              
+                              
+                                           ?>
+                            <button class="btn btn-default" onclick="return confirm('Please Delete Child Data First');" type="button"><i class="icon-trash"></i></button>
+                            <?php
+                              }
+                              else{
+                              ?>
+                            <button class="btn btn-default delbuttonOrder" id="<?=$fetch_list->job_order_no ?>" type="button"><i class="icon-trash"></i></button>
+                            <?php }?>
+                            <a target="_blank" href="<?=base_url();?>productionModule/print_challan?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>
                           </td>
                         </tr>
                         <?php  }?>
-                        <tr class="gradeU">
-                          <td>
-                            <button type="button" formid="#myform" id="formreset" class="btn btn-default modalMapSpare" data-toggle="modal" data-target="#modal-2"><img src="<?=base_url();?>assets/images/plus.png" /></button> 
-                          </td>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                        </tr>
+                        
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
+
                     </table>
                   </div>
                 </div>
@@ -648,25 +413,24 @@ $cntData=$poquery->num_rows();
                             <?php
                               if($getQty->qty==$getQtygrnLog->qty)
                               {
-                              	echo "Completed";
+                                echo "Completed";
                               }
                               elseif($getQty->qty<$getQtygrnLog->qty)
                               {
-                              	echo "Partial Completed";
+                                echo "Partial Completed";
                               }
                               else
                               {
-                              	echo "Pending";
+                                echo "Pending";
                               }
                               
                               ?>
                           </th>
                           <th>
-                         
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewTransferOrder('<?=$getPo->transfer_no;?>');" data-toggle="modal" data-target="#modal-view-transfer" type="button" ><i class="fa fa-eye"></i></button>
                             <!-- <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a> -->
-                            <a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
+                            <a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>
                           </th>
                         </tr>
                         <?php }?>
@@ -707,29 +471,29 @@ $cntData=$poquery->num_rows();
                           <th>
                             <div style="width:100px;">Usages Unit</div>
                           </th>
-                          <!-- 	<th><div style="width:50px;">Size</div></th>
+                          <!--  <th><div style="width:50px;">Size</div></th>
                             <th><div style="width:100px;">Thickness</div></th>
                             <th><div style="width:100px;">Grade Code</div></th> -->
                           <th>
                             <div style="width:120px;">Total Stock</div>
                           </th>
-                          <!-- <th><div style="width:120px;">Action</div></th> -->  
+                          <!-- <th><div style="width:120px;">Action</div></th> -->
                         </tr>
                       </thead>
                       <tbody>
                         <?php
                           $poquery=$this->db->query("select * from tbl_product_stock where status='A' and type in(13) ");
                           foreach($poquery->result() as $getPo){
-                          	####### get product #######
-                          		$productStockQuery=$this->db->query("select * from tbl_product_stock where Product_id='$getPo->productid'");
-                          		$getProductStock=$productStockQuery->row();
-                          		####### ends ########
-                          		
-                          		
-                          		$productUOMQuery=$this->db->query("select *from tbl_master_data where serial_number='$getPo->usageunit'");
-                          		$getProductUOM=$productUOMQuery->row();
-                          		####### ends ########
-                          		
+                            ####### get product #######
+                              $productStockQuery=$this->db->query("select * from tbl_product_stock where Product_id='$getPo->productid'");
+                              $getProductStock=$productStockQuery->row();
+                              ####### ends ########
+                          
+                          
+                              $productUOMQuery=$this->db->query("select *from tbl_master_data where serial_number='$getPo->usageunit'");
+                              $getProductUOM=$productUOMQuery->row();
+                              ####### ends ########
+                          
                           ?>
                         <tr  class="gradeC record" data-row-id="<?php echo $fetch_list->Product_id; ?>">
                           <?php
@@ -739,23 +503,23 @@ $cntData=$poquery->num_rows();
                           <th><?=$getPo->sku_no;?></th>
                           <th><?=$getType->keyvalue;?></th>
                           <th>
-                            <?php 
+                            <?php
                               $compQuery = $this ->db
-                              	   -> select('*')
-                              	   -> where('id',$getPo->category)
-                              	   -> get('tbl_category');
-                              	  $compRow = $compQuery->row();
+                                   -> select('*')
+                                   -> where('id',$getPo->category)
+                                   -> get('tbl_category');
+                                  $compRow = $compQuery->row();
                               echo $compRow->name;
                               ?>
                           </th>
                           <th><?=$getPo->productname;?></th>
                           <th><?php
                             $compQuery1 = $this -> db
-                            		   -> select('*')
-                            		   -> where('serial_number',$fetch_list->usageunit)
-                            		   -> get('tbl_master_data');
-                            		  $keyvalue1 = $compQuery1->row();
-                            echo $getProductUOM->keyvalue;		  
+                                   -> select('*')
+                                   -> where('serial_number',$fetch_list->usageunit)
+                                   -> get('tbl_master_data');
+                                  $keyvalue1 = $compQuery1->row();
+                            echo $getProductUOM->keyvalue;
                             ?></th>
                           <!-- <th><?=$fetch_list->pro_size;?></th>
                             <th><?=$fetch_list->thickness;?></th>
@@ -780,9 +544,9 @@ $cntData=$poquery->num_rows();
                               $table_name='tbl_product_stock';
                               ?>
                             <button class="btn btn-default delbutton" id="<?php echo $fetch_list->Product_id."^".$table_name."^".$pri_col ; ?>" type="button">
-                             <i class="icon-trash"></i></button>		
+                             <i class="icon-trash"></i></button>
                             <?php ?>
-                             
+                            
                             </th> -->
                         </tr>
                         <?php }?>
@@ -805,246 +569,8 @@ $cntData=$poquery->num_rows();
 <!--main-content close-->
 <?php
   $this->load->view("footer.php");
-  ?>
-<SCRIPT language="javascript">
-  function addRow(tableID) {
-  
-  	var table = document.getElementById(tableID);
-  
-  	var rowCount = table.rows.length;
-  	var row = table.insertRow(rowCount);
-  
-  var cell1 = row.insertCell(0);
-  	var element1 = document.createElement("input");
-  	element1.type = "checkbox";
-  	element1.name="chkbox[]";
-  	cell1.appendChild(element1);
-  	
-  var cell2 = row.insertCell(1);
-  	var element2 = document.createElement("select");
-  	element2.name = "spare_id[]";
-  	element2.className="form-control";
-  	element2.style.width="250px";
-  	var option1 = document.createElement("option");
-  	option1.innerHTML = "--Select--";
-    option1.value = "";
-    element2.appendChild(option1, null);
-  <?php
-    $contactQuery=$this->db->query("select *from tbl_product_stock where status='A'");
-    foreach($contactQuery->result() as $getContact){
-    ?>
-  
-    var option2 = document.createElement("option");
-    option2.innerHTML = "<?=$getContact->productname;?>";
-    option2.value = "<?=$getContact->Product_id;?>";
-    element2.appendChild(option2, null);
-    
-  <?php }?>
-  	cell2.appendChild(element2);
-  	
-  
-  }
-  
-  
-  
-  function deleteRow(tableID) {
-  	try {
-  	var table = document.getElementById(tableID);
-  	var rowCount = table.rows.length;
-  
-  	for(var i=0; i<rowCount; i++) {
-  		var row = table.rows[i];
-  		var chkbox = row.cells[0].childNodes[0];
-  		if(null != chkbox && true == chkbox.checked) {
-  			table.deleteRow(i);
-  			rowCount--;
-  			i--;
-  		}
-  
-  
-  	}
-  	}catch(e) {
-  		alert(e);
-  	}
-  }
- 
-  
-  
-    
-</SCRIPT>
-<script>
-  
-</script>
-<style>
-  .c-error .c-validation{ 
-  background: #c51244 !important;
-  padding: 10px !important;
-  border-radius: 0 !important;
-  position: relative; 
-  display: inline-block !important;
-  box-shadow: 1px 1px 1px #aaaaaa;
-  margin-top: 10px;
-  }
-  .c-error  .c-validation:before{ 
-  content: ''; 
-  width: 0; 
-  height: 0; 
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #c51244;
-  position: absolute; 
-  top: -10px; 
-  }
-  .c-label:after{
-  color: #c51244 !important;
-  }
-  .c-error input, .c-error select, .c-error .c-choice-option{ 
-  background: #fff0f4; 
-  color: #c51244;
-  }
-  .c-error input, .c-error select{ 
-  border: 1px solid #c51244 !important; 
-  }
-</style>
-<!--Large Modal-->
-<div id="modal-2" class="modal fade" tabindex="-1" role="dialog">
-  <form name="myForm" class="form-horizontal" id ="myform" action="#" 
-    onsubmit="return submitForm();"method="POST" enctype="multipart/form-datam">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Order(Lot No.:-<?=$getsched->lot_no;?>)</h4>
-          <div id="resultarea" class="text-center " style="font-size: 15px;color: red;"></div>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="form-group">
-              <label class="col-sm-2 control-label">Type:</label> 
-              <div class="col-sm-4">
-                <select class="form-control" name="order_type"  required>
-                  <option value="">--Select--</option>
-                  <option value="Job Order">Job Order</option>
-                  <option value="Purchase Oder">Purchase Oder</option>
-                </select>
-              </div>
-              <input type="hidden" name="lot_number" id="lot_number" value="<?=$getsched->lot_no;?>" />
-              <label class="col-sm-2 control-label">Order No.:</label> 
-              <div class="col-sm-4"> 
-                <input name="job_order_no" type="text" value="" class="form-control" id="thickness">
-              </div>
-            </div>
-            <div class="form-group">
-              <input type="hidden" name="production_id" id="production_id" value="<?=$_GET['id'];?>" />
-              <label class="col-sm-2 control-label">Vendor:</label> 
-              <div class="col-sm-4">
-                <select class="form-control" name="vendor_id" required>
-                  <option value="">--Select--</option>
-                  <?php
-                    $queryProductShape=$this->db->query("select *from tbl_contact_m where group_name='5'");
-                    foreach($queryProductShape->result() as $getProductShape){
-                    
-                    ?>
-                  <option value="<?=$getProductShape->contact_id;?>"><?=$getProductShape->first_name;?></option>
-                  <?php }?>
-                </select>
-              </div>
-              <label class="col-sm-2 control-label">date:</label> 
-              <div class="col-sm-4"> 
-                <input name="date" type="date" value="" class="form-control" id="thickness"> 
-              </div>
-            </div>
-            <div class="form-group">
-              <input type="hidden" name="production_id" id="production_id" value="<?=$_GET['id'];?>" />
-              <label class="col-sm-2 control-label">Select:</label> 
-              <div class="col-sm-4">
-                <select class="form-control" name="type" id="select_id" required onchange="checkQtyVal();">
-                  <option value="">--Select--</option>
-                  <option value="Shape">Shape Complete</option>
-                  <option value="ShapePart">Shape in Parts</option>
-                </select>
-              </div>
-              <label class="col-sm-2 control-label">Shape:</label> 
-              <div class="col-sm-4">
-                <select class="form-control" name="shape" id="shape" onchange="getPart(this.value);">
-                  <option value="">--Select--</option>
-                  <?php
-                    $queryProductShape=$this->db->query("select distinct(machine_name) from tbl_machine where code in($getP)");
-                    foreach($queryProductShape->result() as $getProductShape){
-                    $queryProduct=$this->db->query("select *from tbl_product_stock where Product_id='$getProductShape->machine_name'");
-                    $getProduct=$queryProduct->row();
-                    
-                    ?>
-                  <option value="<?=$getProduct->Product_id;?>"><?=$getProduct->sku_no;?></option>
-                  <?php }?>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" id="qtyn" style="display:none">Qty:</label> 
-              <div class="col-sm-4">
-                <input name="shape_qty" type="number" value="" id="fillQty" onchange="qtyFill(this.value);" class="form-control" style="display:none" > 
-              </div>
-              <label class="col-sm-12 control-label">
-                <div class="table-responsive" id="getPartView" >
-                </div>
-              </label>
-              <div class="col-sm-12">
-                <br />
-                <div class="modal-header table-responsive">
-                  <table class="table table-bordered table-hover" >
-                    <tbody>
-                      <tr class="gradeA">
-                        <th>Shape Name</th>
-                        <th>Part</th>
-                        <th>Qty</th>
-                        <th>Cast Weight</th>
-                        <th>Total Weight</th>
-                        <th>RM Rate Per Kg</th>
-                        <th>Total RM Amount</th>
-                        <th>Labour Rate Per Kg</th>
-                        <th>Total Labour Amount</th>
-                        <th>Total Cost</th>
-                        <th>Action</th>
-                      </tr>
-                    </tbody>
-                    <tbody id="quotationTable">
-                      <?php if($result != ""){
-                        foreach ($result as  $dt) {
-                           $query11    = $this->db->query("select * from tbl_product_stock where Product_id = '".$dt['rowmatial']."'");
-                           $rowmatrial = $query11->row(); 
-                        
-                           $uom        = $this->db->query("select * from tbl_master_data where serial_number = '".$dt['unit']."'");
-                           $rowmatrialuom = $uom->row();
-                        ?>
-                      <tr >
-                        <td><input type ="hidden" name="prodcId[]" value="<?=$dt['rowmatial'];?>"><?=$rowmatrial->productname;?></td>
-                        <td><input type ="hidden" name="mproPrice[]" value="<?=$dt['qty'];?>"><?=$dt['qty'];?></td>
-                        <td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td>
-                      </tr>
-                      <?php  }
-                        } ?>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <input type="submit" id="saveId" class="btn btn-sm" value="Save">
-          <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-  </form>
-</div>
-<!-- /.modal -->
-<!--End Large Modal-->
+?>
+
 <!-- transfer -->
 <div id="modal-order-transfer" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg">
@@ -1054,7 +580,7 @@ $cntData=$poquery->num_rows();
         <h4 class="modal-title">Order Transfer(Lot No.:-<?=$getsched->lot_no;?>)</h4>
         <div id="OrderTransferToModuleresultarea" class="text-center " style="font-size: 15px;color: red;"></div>
         <div class="modal-body">
-          <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_order_transfer_to_module" action="#" 
+          <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_order_transfer_to_module" action="#"
             onsubmit="return submitorderTransferToModule();"method="POST">
             <div class="row" id="orderTransfer">
             </div>
@@ -1191,10 +717,9 @@ $cntData=$poquery->num_rows();
         <h4 class="modal-title">Order(Lot No.:-<?=$getsched->lot_no;?>)</h4>
         <div id="Orderresultarea" class="text-center " style="font-size: 15px;color: red;"></div>
         <div class="modal-body">
-          <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_order_receive" action="#" 
+          <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_order_receive" action="#"
             onsubmit="return submitProductionOrderReceive();"method="POST">
             <div class="row" id="orderDetails">
-           
             </div>
           </form>
         </div>
@@ -1214,7 +739,7 @@ $cntData=$poquery->num_rows();
         <h4 class="modal-title">View Production Log(Lot No.:-<?=$getsched->lot_no;?>)</h4>
         <div id="Orderresultarea" class="text-center " style="font-size: 15px;color: red;"></div>
         <div class="modal-body">
-          <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_order_receive" action="#" 
+          <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_order_receive" action="#"
             onsubmit="return submitProductionOrderReceive();"method="POST">
             <div class="row" id="view-production-log">
             </div>
@@ -1236,24 +761,23 @@ $cntData=$poquery->num_rows();
         <h4 class="modal-title"> Request Raw Material(Lot No.:-<?=$getsched->lot_no;?>)</h4>
         <div id="resultareaRaw" class="text-center " style="font-size: 15px;color: red;"></div>
       </div>
-      <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="requestRawMat" action="#" 
+      <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="requestRawMat" action="#"
         onsubmit="return submitRequestRawMat();"method="POST">
         <div class="modal-body">
           <div class="form-group">
             <div class="form-group">
-              <label class="col-sm-2 control-label"> Request No.: </label> 
-              <div class="col-sm-4"> 
+              <label class="col-sm-2 control-label"> Request No.: </label>
+              <div class="col-sm-4">
                 <input type="hidden" name="req_production_id" id="production_id" value="<?=$_GET['id'];?>" />
-                <input name="request_no" type="text" value="" class="form-control" > 
+                <input name="request_no" type="text" value="" class="form-control" >
               </div>
-              <label class="col-sm-2 control-label"> Date: </label> 
-              <div class="col-sm-4"> 
-                <input name="date" type="date" value="" class="form-control" > 
+              <label class="col-sm-2 control-label"> Date: </label>
+              <div class="col-sm-4">
+                <input name="date" type="date" value="" class="form-control" >
               </div>
             </div>
             <div class="col-sm-4">
-    
-              <input type="hidden" class="form-control input-sm" value="" id="mproductname"> 
+              <input type="hidden" class="form-control input-sm" value="" id="mproductname">
               <input type="hidden"  class="form-control" value="" id="mproductid" >
               <label class="control-label">Raw Material:</label> <br>
               <?php
@@ -1292,7 +816,7 @@ $cntData=$poquery->num_rows();
                 $contQuery=$this->db->query("select distinct(part_id) from tbl_shape_part_mapping where product_id in ($dataMacc) ");
                         foreach($contQuery->result() as $dt)
                         {
-                $partId[]=$dt->part_id;  
+                $partId[]=$dt->part_id;
                 }
                 @$dataPart=implode(",",$partId);
                 
@@ -1325,11 +849,11 @@ $cntData=$poquery->num_rows();
               </select>
             </div>
             <div class="col-sm-4">
-              <label class="control-label">UOM:</label> 
+              <label class="control-label">UOM:</label>
               <!-- <input type="text" class="form-control input-sm" value="" > -->
               <select name="unit"  class="form-control" id="muom" disabled>
                 <option value="" >----Select Unit----</option>
-                <?php 
+                <?php
                   $sqlunit=$this->db->query("select * from tbl_master_data where param_id=16");
                   foreach ($sqlunit->result() as $fetchunit){
                   ?>
@@ -1337,14 +861,14 @@ $cntData=$poquery->num_rows();
                 <?php } ?>
               </select>
             </div>
-            <div class="col-sm-3" > 
-              <label class="control-label">QTY:</label> 
+            <div class="col-sm-3" >
+              <label class="control-label">QTY:</label>
               <input type="text" class="form-control" value="" id="mPrice" >
               <input type="hidden" name = "partid" class="form-control" value="" id="partid">
               <input type="hidden" name = "itemid" class="form-control" value="" id="itemid">
               <input type="hidden" name = "mapType" class="form-control" value="" id="mapType">
             </div>
-            <div class="col-sm-1" > 
+            <div class="col-sm-1" >
               <button  style = "margin-top: 20px;" class="btn btn-default"  type="button" onclick="addpricemap1()"><img src="<?=base_url();?>assets/images/plus.png" />
               </button>
             </div>
@@ -1377,7 +901,7 @@ $cntData=$poquery->num_rows();
 <!-- raw material request ends here -->
 <!-- purchase order model starts here -->
 <div id="modal-5" class="modal fade" tabindex="-1" role="dialog">
-  <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_purchase" action="#" 
+  <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_purchase" action="#"
     onsubmit="return submitProductionPurchase();"method="POST">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -1389,18 +913,18 @@ $cntData=$poquery->num_rows();
         <div class="modal-body">
           <div class="row">
             <div class="form-group">
-              <label class="col-sm-2 control-label">Purchase Order No.:</label> 
+              <label class="col-sm-2 control-label">Purchase Order No.:</label>
               <div class="col-sm-4">
                 <input name="job_order_no" type="text" value="" class="form-control" id="thickness">
               </div>
               &nbsp;
-              <div class="col-sm-4"> 
+              <div class="col-sm-4">
                 &nbsp;
               </div>
             </div>
             <div class="form-group">
               <input type="hidden" name="production_id" id="production_id" value="<?=$_GET['id'];?>" />
-              <label class="col-sm-2 control-label">Vendor:</label> 
+              <label class="col-sm-2 control-label">Vendor:</label>
               <div class="col-sm-4">
                 <select class="form-control" name="vendor_id" required>
                   <option value="">--Select--</option>
@@ -1413,14 +937,14 @@ $cntData=$poquery->num_rows();
                   <?php }?>
                 </select>
               </div>
-              <label class="col-sm-2 control-label">date:</label> 
-              <div class="col-sm-4"> 
-                <input name="date" type="date" value="" class="form-control" id="thickness"> 
+              <label class="col-sm-2 control-label">date:</label>
+              <div class="col-sm-4">
+                <input name="date" type="date" value="" class="form-control" id="thickness">
               </div>
             </div>
             <div class="form-group">
               <input type="hidden" name="production_id" id="production_id" value="<?=$_GET['id'];?>" />
-              <label class="col-sm-2 control-label">Select:</label> 
+              <label class="col-sm-2 control-label">Select:</label>
               <div class="col-sm-4">
                 <select class="form-control" name="type" id="select_id" required>
                   <option value="">--Select--</option>
@@ -1428,13 +952,13 @@ $cntData=$poquery->num_rows();
                   <option value="ShapePart">Shape in Parts</option>
                 </select>
               </div>
-              <label class="col-sm-2 control-label">Qty:</label> 
-              <div class="col-sm-4"> 
-                <input name="shape_qty" type="text" value="" id="fillQtyPO" onchange="qtyFillPO(this.value);" class="form-control" > 
+              <label class="col-sm-2 control-label">Qty:</label>
+              <div class="col-sm-4">
+                <input name="shape_qty" type="text" value="" id="fillQtyPO" onchange="qtyFillPO(this.value);" class="form-control" >
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label">Shape:</label> 
+              <label class="col-sm-2 control-label">Shape:</label>
               <div class="col-sm-4">
                 <select class="form-control" name="shape" id="shapePO" onchange="getPartPo(this.value);">
                   <option value="">--Select--</option>
@@ -1469,7 +993,7 @@ $cntData=$poquery->num_rows();
                       <?php if($result != ""){
                         foreach ($result as  $dt) {
                            $query11    = $this->db->query("select * from tbl_product_stock where Product_id = '".$dt['rowmatial']."'");
-                           $rowmatrial = $query11->row(); 
+                           $rowmatrial = $query11->row();
                         
                            $uom        = $this->db->query("select * from tbl_master_data where serial_number = '".$dt['unit']."'");
                            $rowmatrialuom = $uom->row();
@@ -1510,12 +1034,12 @@ $cntData=$poquery->num_rows();
         <h4 class="modal-title"> GRN Purchase Order(Lot No.:-<?=$getsched->lot_no;?>)</h4>
         <div id="PoGRNresultarea" class="text-center " style="font-size: 15px;color: red;"></div>
       </div>
-      <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_purchase_grn" action="#" 
+      <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_purchase_grn" action="#"
         onsubmit="return submitProductionPurchaseGrn();"method="POST">
         <div class="modal-body">
           <div class="form-group">
             <div class="form-group">
-              <label class="col-sm-2 control-label"> *Vendor Name: </label> 
+              <label class="col-sm-2 control-label"> *Vendor Name: </label>
               <div class="col-sm-4">
                 <input type="hidden" name="GRNproduction_id" id="production_id" value="<?=$_GET['id'];?>" />
                 <select name="vendor_id" class="form-control" onchange="getPo(this.value);" >
@@ -1528,7 +1052,7 @@ $cntData=$poquery->num_rows();
                   <?php }?>
                 </select>
               </div>
-              <label class="col-sm-2 control-label"> Po Number: </label> 
+              <label class="col-sm-2 control-label"> Po Number: </label>
               <div class="col-sm-4">
                 <select name="po_no" class="form-control" id="divPo" onchange="getPodtl(this.value)">
                   <option value="">--Select--</option>
@@ -1588,7 +1112,7 @@ $cntData=$poquery->num_rows();
         <h4 class="modal-title">Receive Raw Material Order(Lot No.:-<?=$getsched->lot_no;?>)</h4>
         <div id="viewrawReceive" class="text-center " style="font-size: 15px;color: red;"></div>
         <div class="modal-body">
-          <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="rawMaterialReceive" action="#" 
+          <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="rawMaterialReceive" action="#"
             onsubmit="return submitrawMaterialReceive();" method="POST">
             <div class="row" id="viewrawReceiveDiv"></div>
           </form>
@@ -1604,7 +1128,7 @@ $cntData=$poquery->num_rows();
   
   
   function submitProductionPurchase() {
-              
+  
     var form_data = new FormData(document.getElementById("myProduction_purchase"));
     form_data.append("label", "WEBUPLOAD");
   
@@ -1615,44 +1139,44 @@ $cntData=$poquery->num_rows();
         processData: false,  // tell jQuery not to process the data
         contentType: false   // tell jQuery not to set contentType
     }).done(function( data ) {
-  	
-  	
-  	
-  	  if(data == 1 || data == 2){
-  		
+  
+  
+  
+      if(data == 1 || data == 2){
+  
                         if(data == 1)
-  					    
+  
                           var msg = "Data Successfully Add !";
                         else
                           var msg = "Data Successfully Updated !";
-  						$("#Poresultarea").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
+              $("#Poresultarea").text(msg);
+              setTimeout(function() {   //calls click event after a certain time
                          $("#modal-5 .close").click();
-                         $("#Poresultarea").text(" "); 
-                         //$('#myform')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
-  					   
+                         $("#Poresultarea").text(" ");
+                         //$('#myform')[0].reset();
+               //$("#quotationTable").text(" ");
+  
                          //$("#id").val("");
-       
+  
                       }, 1000);
                     }else{
                       $("#Poresultarea").text(data);
-  					
+  
                    }
-  				 ajex_PurchaseListData(<?=$_GET['id'];?>);
-   
-  	 
+           ajex_PurchaseListData(<?=$_GET['id'];?>);
+  
+  
       console.log(data);
       //Perform ANy action after successfuly post data
-         
+  
     });
-    return false;     
+    return false;
   }
   // ends
   //starts request raw Material query
   
   function submitRequestRawMat() {
-            
+  
     var form_data = new FormData(document.getElementById("requestRawMat"));
     form_data.append("label", "WEBUPLOAD");
   
@@ -1663,48 +1187,48 @@ $cntData=$poquery->num_rows();
         processData: false,  // tell jQuery not to process the data
         contentType: false   // tell jQuery not to set contentType
     }).done(function( data ) {
-  	//alert(data);
-  	
-  	
-  	  if(data == 1 || data == 2){
-  		
+    //alert(data);
+  
+  
+      if(data == 1 || data == 2){
+  
                         if(data == 1)
-  					    
+  
                           var msg = "Data Successfully Add !";
                         else
                           var msg = "Data Successfully Updated !";
-  						$("#resultarea").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
+              $("#resultarea").text(msg);
+              setTimeout(function() {   //calls click event after a certain time
                          $("#modal-6 .close").click();
-  					   
-  					   
-  					   
-                         $("#resultareaRaw").text(" "); 
-                         $('#requestRawMat')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
-  					   
+  
+  
+  
+                         $("#resultareaRaw").text(" ");
+                         $('#requestRawMat')[0].reset();
+               //$("#quotationTable").text(" ");
+  
                          //$("#id").val("");
-       
+  
                       }, 1000);
                     }else{
                       $("#resultareaRaw").text(data);
-  					
+  
                    }
-  				 ajex_RawMatData(<?=$_GET['id'];?>);
-   
-  	 
+           ajex_RawMatData(<?=$_GET['id'];?>);
+  
+  
       console.log(data);
       //Perform ANy action after successfuly post data
-         
+  
     });
-    return false;     
+    return false;
   }
   // ends
   
   //starts production purchase Grn  query
   
   function submitProductionPurchaseGrn() {
-              
+  
     var form_data = new FormData(document.getElementById("myProduction_purchase_grn"));
     form_data.append("label", "WEBUPLOAD");
   
@@ -1715,38 +1239,38 @@ $cntData=$poquery->num_rows();
         processData: false,  // tell jQuery not to process the data
         contentType: false   // tell jQuery not to set contentType
     }).done(function( data ) {
-  	//alert(data);
-  	
-  	
-  	  if(data == 1 || data == 2){
-  		
+    //alert(data);
+  
+  
+      if(data == 1 || data == 2){
+  
                         if(data == 1)
-  					    
+  
                           var msg = "Data Successfully Add !";
                         else
                           var msg = "Data Successfully Updated !";
-  						$("#PoGRNresultarea").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
+              $("#PoGRNresultarea").text(msg);
+              setTimeout(function() {   //calls click event after a certain time
                          $("#modal-GRN").click();
-                         $("#PoGRNresultarea").text(" "); 
-                         $('#modal-GRN')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
-  					   
+                         $("#PoGRNresultarea").text(" ");
+                         $('#modal-GRN')[0].reset();
+               //$("#quotationTable").text(" ");
+  
                          //$("#id").val("");
-       
+  
                       }, 1000);
                     }else{
                       $("#PoGRNresultarea").text(data);
-  					
+  
                    }
-  				 ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
-   
-  	 
+           ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
+  
+  
       console.log(data);
       //Perform ANy action after successfuly post data
-         
+  
     });
-    return false;     
+    return false;
   }
   // ends
   
@@ -1762,7 +1286,7 @@ $cntData=$poquery->num_rows();
           //alert("jkhkjh"+type);
           //$("#listingData").hide();
           $("#listingPurchaseData").empty().append(data).fadeIn();
-                
+  
        }
       });
   }
@@ -1779,7 +1303,7 @@ $cntData=$poquery->num_rows();
           //alert("jkhkjh"+type);
           //$("#listingData").hide();
           $("#listingPurchaseGRNData").empty().append(data).fadeIn();
-                
+  
        }
       });
   }
@@ -1797,7 +1321,7 @@ $cntData=$poquery->num_rows();
           //alert("jkhkjh"+type);
           //$("#listingData").hide();
           $("#listingPurchaseRawData").empty().append(data).fadeIn();
-                
+  
        }
       });
   }
@@ -1821,7 +1345,7 @@ $cntData=$poquery->num_rows();
   
   
   function viewPurchaseOrderGRN(v){
-  	
+  
   var pro=v;
   var xhttp = new XMLHttpRequest();
   xhttp.open("GET", "productionModule/view_inbound?ID="+pro, false);
@@ -1830,7 +1354,7 @@ $cntData=$poquery->num_rows();
   }
   
   function viewRawRequest(v){
-  	
+  
   var pro=v;
   var xhttp = new XMLHttpRequest();
   xhttp.open("GET", "productionModule/view_request_raw?ID="+pro, false);
@@ -1841,7 +1365,7 @@ $cntData=$poquery->num_rows();
   
   
   function viewTransferOrder(v){
-  	
+  
   var pro=v;
   var xhttp = new XMLHttpRequest();
   xhttp.open("GET", "productionModule/view_transfer_order?ID="+pro, false);
@@ -1851,85 +1375,10 @@ $cntData=$poquery->num_rows();
   
   
   
-  function val(d)
-  {
-  var zz=document.getElementById(d).id;
-  var myarra = zz.split("entQty");
-  var asx= myarra[1];
-  //alert(asx);
-  var entQty=document.getElementById("entQty"+asx).value;	
-  var orderQty=document.getElementById("orderQty"+asx).value;	
-  var remQty=document.getElementById("remQty"+asx).value;	
-  var weightQty=document.getElementById("weight"+asx).value;
-  var totWeight=Number(entQty)*Number(weightQty);
-  document.getElementById("total_weight"+asx).value=totWeight;
-  	
-  if(Number(remQty)<Number(entQty))	
-  {
-  alert("Enter Qty should be less then remaining Qty");
-  	document.getElementById("entQty"+asx).focus();	
-  	document.getElementById("add").disabled = true;
-  	
-  	return false;
-  }
-  else
-  {
-  document.getElementById("add").disabled = false;
-  	
-  }
-  }
-  
-  
-  
-  function RateCal(d)
-  {
-  
-  var zz=document.getElementById(d).id;
-  var myarra = zz.split("rate");
-  var asx= myarra[1];
-  //alert(asx);
-  var total_weight=document.getElementById("total_weight"+asx).value;	
-  var rate=document.getElementById("rate"+asx).value;	
-  
-  var totalRMRate=Number(total_weight)*Number(rate);
-  var t = Number(totalRMRate).toFixed(3);
-  document.getElementById("total_rm_rate"+asx).value=t;
-  document.getElementById("total_cost"+asx).value=t;
-  
-  
-  }
-  
-  function labourRateCal(d)
-  {
-  
-  var zz=document.getElementById(d).id;
-  var myarra = zz.split("labour_rate");
-  var asx= myarra[1];
-  //alert(asx);
-  var total_weight=document.getElementById("total_weight"+asx).value;	
-  var labour_rate=document.getElementById("labour_rate"+asx).value;	
-  
-  var totalRMRate=Number(total_weight)*Number(labour_rate);
-  var y = Number(totalRMRate).toFixed(3);
-  document.getElementById("total_labour_rate"+asx).value=y;
-  
-  var total_cost=document.getElementById("total_cost"+asx).value;
-  var x = Number(total_cost).toFixed(3);
-  
-  document.getElementById("total_cost"+asx).value=Number(y)+Number(x);
-  
-  }
-  
-  
-  
-  
-  
-  
-  
   
   
   function addpricemap1(){
-  	
+  
      var mproductname =  $('#mproductname').val();
      var mproductid   =  $('#mproductid').val();
      var price        =  $('#mPrice').val();
@@ -1945,28 +1394,28 @@ $cntData=$poquery->num_rows();
           var msg = 'Please Enter  Product Price';
   
        $('#resultarea').text(msg);
-      	 
+  
       }else{
-  		
-  	
-  	$('#prodetails option:selected').remove();
+  
+  
+    $('#prodetails option:selected').remove();
          $('#quotationTable1').append('<tr><td><input type ="hidden" name="prodcId[]" value="'+mproductid+'">'+mproductname+'</td><td><input type ="hidden" name="uom[]" value="'+muom+'">'+muomval+'</td><td><input type ="hidden" name="mproPrice[]" value="'+price+'">'+price+'</td><td><i class="fa fa-trash  fa-2x" mproductid="'+mproductid+'" mproductname="'+mproductname+'" id="quotationdel" aria-hidden="true"></i></td></tr>');
   
          $('#mproductname').val("");
          $('#mproductid').val("");
          $('#mPrice').val("");
-  	   
+  
          $("#muom").val("");
-  	   $("#prodetails").val("");
-  	   
+       $("#prodetails").val("");
+  
          $("#select2-prodetails-container").text("--select--");
-  	   
-         
+  
+  
       }
     }
   
   function addpricemapPo(){
- 
+  
      var mproductname =  $('#purmproductname').val();
      var mproductid   =  $('#purmproductid').val();
      var price        =  $('#purmPrice').val();
@@ -1977,38 +1426,38 @@ $cntData=$poquery->num_rows();
      $('#resultarea').text("");
   
       if(mproductid == "" || price == ""){
-  		
+  
         if(mproductid == "")
           var msg = 'Please Enter Right Product Name';
-  	     else
-  		 var msg = 'Please Enter  Product Price';
-  		 //$('#resultarea').text(msg);
+         else
+       var msg = 'Please Enter  Product Price';
+       //$('#resultarea').text(msg);
   
       }else{
-  		
   
-  	$('#purprodetails option:selected').remove();
+  
+    $('#purprodetails option:selected').remove();
          $('#quotationTable12').append('<tr><td><input type ="hidden" name="prodcId[]" value="'+mproductid+'">'+mproductname+'</td><td><input type ="hidden" name="uom[]" value="'+muom+'">'+muomval+'</td><td><input type ="hidden" name="mproPrice[]" value="'+price+'">'+price+'</td><td><i class="fa fa-trash  fa-2x" mproductid="'+mproductid+'" mproductname="'+mproductname+'" id="quotationdel2" aria-hidden="true"></i></td></tr>');
   
          $('#mproductname').val("");
          $('#mproductid').val("");
          $('#mPrice').val("");
-  	   
+  
          $("#muom").val("");
-  	   $("#prodetails").val("");
-  	   
+       $("#prodetails").val("");
+  
        //  $("#select2-prodetails-container").text("--select--");
-  	   
-         
+  
+  
       }
     }
   
   function selectListdata(ths){
-    	 
-    	 $("#muom").attr('disabled',false);
+  
+       $("#muom").attr('disabled',false);
        $('#productListData').css('display','none');
        res = ths.value.split("^");
-      
+  
        $('#mproductname').val(res[1]);
        $('#mproductid').val(res[0]);
        // $('').val();
@@ -2020,11 +1469,11 @@ $cntData=$poquery->num_rows();
   
   function selectListdataPurchase(ths){
   
-    	 
-    	 $("#Umuom").attr('disabled',false);
+  
+       $("#Umuom").attr('disabled',false);
        $('#productListData').css('display','none');
        res = ths.value.split("^");
-      
+  
        $('#purmproductname').val(res[1]);
        $('#purmproductid').val(res[0]);
        // $('').val();
@@ -2054,67 +1503,67 @@ $cntData=$poquery->num_rows();
   xhttp.open("GET", "productionModule/getPoDtl?ID="+pro, false);
   xhttp.send();
   document.getElementById("divPoDtl").innerHTML = xhttp.responseText;
-  	
+  
   }
   
   
   function qtyValidation(v)
   {
   
-  	var zz=document.getElementById(v).id;
-  	
-  	var myarra = zz.split("rec_qty");
-  	var asx= myarra[1];
-  	var rec_qty=document.getElementById("rec_qty"+asx).value;
-  	var rem_qty=document.getElementById("rem_qty"+asx).value;
-  	
-  	var validationCheck=document.getElementById("validationCheck").value;
-  	
-  	document.getElementById("validationCheck").value=rec_qty;
+    var zz=document.getElementById(v).id;
+  
+    var myarra = zz.split("rec_qty");
+    var asx= myarra[1];
+    var rec_qty=document.getElementById("rec_qty"+asx).value;
+    var rem_qty=document.getElementById("rem_qty"+asx).value;
+  
+    var validationCheck=document.getElementById("validationCheck").value;
+  
+    document.getElementById("validationCheck").value=rec_qty;
   
   if(rec_qty)
   {
   
-  	if(Number(rec_qty)==0)
-  	{
-  		
-  		alert("Qty must be grater than 0");
-  		document.getElementById("sv1").disabled = true;
-  		return false;
-  	}
-  	
+    if(Number(rec_qty)==0)
+    {
+  
+      alert("Qty must be grater than 0");
+      document.getElementById("sv1").disabled = true;
+      return false;
+    }
+  
   }
-  	if(Number(rem_qty)<Number(rec_qty))
-  	{
-  		alert("Enter Qty must be less then enter qty");
-  		document.getElementById("sv1").disabled = true;
-  		
-  		
-  	}
-  	else
-  	{
-  		document.getElementById("sv1").disabled = false;
-  	}
-  	
-  	
-  	
+    if(Number(rem_qty)<Number(rec_qty))
+    {
+      alert("Enter Qty must be less then enter qty");
+      document.getElementById("sv1").disabled = true;
+  
+  
+    }
+    else
+    {
+      document.getElementById("sv1").disabled = false;
+    }
+  
+  
+  
   }
   
   function viewrawReceiveFun(viewId){
   var po_no=document.getElementById("p_n").value;
   
-   	$.ajax({   
-  		    type: "POST",  
-  			url: "view_raw_receive",  
-  			cache:false,  
-  			data: {'id':viewId,'po_id':po_no,},  
-  			success: function(data)  
-  			{  
-  			  
-  			 $("#viewrawReceiveDiv").empty().append(data).fadeIn();
-  			//referesh table
-  			}   
-  	});
+    $.ajax({
+          type: "POST",
+        url: "view_raw_receive",
+        cache:false,
+        data: {'id':viewId,'po_id':po_no,},
+        success: function(data)
+        {
+  
+         $("#viewrawReceiveDiv").empty().append(data).fadeIn();
+        //referesh table
+        }
+    });
   
    }
   
@@ -2123,7 +1572,7 @@ $cntData=$poquery->num_rows();
   
   
   function submitrawMaterialReceive() {
-          
+  
     var form_data = new FormData(document.getElementById("rawMaterialReceive"));
     form_data.append("label", "WEBUPLOAD");
   
@@ -2134,41 +1583,41 @@ $cntData=$poquery->num_rows();
         processData: false,  // tell jQuery not to process the data
         contentType: false   // tell jQuery not to set contentType
     }).done(function( data ) {
-  	
-  	
-  	
-  	  if(data == 1 || data == 2){
-  		
+  
+  
+  
+      if(data == 1 || data == 2){
+  
                         if(data == 1)
-  					    
+  
                           var msg = "Data Successfully Add !";
                         else
                           var msg = "Data Successfully Updated !";
-  						$("#resultarea").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
+              $("#resultarea").text(msg);
+              setTimeout(function() {   //calls click event after a certain time
                          $("#modal-rawReceive .close").click();
-  					   
-  					   
-  					   
-                         $("#resultareaRaw").text(" "); 
-                         $('#requestRawMat')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
-  					   
+  
+  
+  
+                         $("#resultareaRaw").text(" ");
+                         $('#requestRawMat')[0].reset();
+               //$("#quotationTable").text(" ");
+  
                          //$("#id").val("");
-       
+  
                       }, 1000);
                     }else{
                       $("#resultareaRaw").text(data);
-  					
+  
                    }
-  				 ajex_RawMatData(<?=$_GET['id'];?>);
-   
-  	 
+           ajex_RawMatData(<?=$_GET['id'];?>);
+  
+  
       console.log(data);
       //Perform ANy action after successfuly post data
-         
+  
     });
-    return false;     
+    return false;
   }
   // ends
   
@@ -2183,21 +1632,21 @@ $cntData=$poquery->num_rows();
   var myarra = zz.split("qty");
   var asx= myarra[1];
   //alert(asx);
-  var entQty=document.getElementById("qty"+asx).value;	
-  var remQty=document.getElementById("rem_qty"+asx).value;	
+  var entQty=document.getElementById("qty"+asx).value;
+  var remQty=document.getElementById("rem_qty"+asx).value;
   
-  if(Number(remQty)<Number(entQty))	
+  if(Number(remQty)<Number(entQty))
   {
   alert("Enter Qty should be less then remaining Qty");
-  	document.getElementById("qty"+asx).focus();	
-  	document.getElementById("add_req").disabled = true;
-  	
-  	return false;
+    document.getElementById("qty"+asx).focus();
+    document.getElementById("add_req").disabled = true;
+  
+    return false;
   }
   else
   {
   document.getElementById("add_req").disabled = false;
-  	
+  
   }
   }
 </script>
@@ -2207,18 +1656,18 @@ $cntData=$poquery->num_rows();
   var order_type=document.getElementById("order_type").innerHTML;
   var lot_no=document.getElementById("lot_no").innerHTML;
   
-   	$.ajax({   
-  		    type: "POST",  
-  			url: "order_details",  
-  			cache:false,  
-  			data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},  
-  			success: function(data)  
-  			{  
-  			  
-  			 $("#orderDetails").empty().append(data).fadeIn();
-  			//referesh table
-  			}   
-  	});
+    $.ajax({
+          type: "POST",
+        url: "order_details",
+        cache:false,
+        data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},
+        success: function(data)
+        {
+  
+         $("#orderDetails").empty().append(data).fadeIn();
+        //referesh table
+        }
+    });
   
    }
   
@@ -2227,7 +1676,7 @@ $cntData=$poquery->num_rows();
   //starts order receive  query
   
   function submitProductionOrderReceive() {
-              
+  
     var form_data = new FormData(document.getElementById("myProduction_order_receive"));
     form_data.append("label", "WEBUPLOAD");
   
@@ -2238,101 +1687,60 @@ $cntData=$poquery->num_rows();
         processData: false,  // tell jQuery not to process the data
         contentType: false   // tell jQuery not to set contentType
     }).done(function( data ) {
-  	//alert(data);
-  	
-  	
-  	  if(data == 1 || data == 2){
-  		
+    //alert(data);
+  
+  
+      if(data == 1 || data == 2){
+  
                         if(data == 1)
-  					    
+  
                           var msg = "Data Successfully Add !";
                         else
                           var msg = "Data Successfully Updated !";
-  						$("#Orderresultarea").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
+              $("#Orderresultarea").text(msg);
+              setTimeout(function() {   //calls click event after a certain time
                          $("#modal-order").click();
-                         $("#Orderresultarea").text(" "); 
-                         $('#myProduction_order_receive')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
-  					   
+                         $("#Orderresultarea").text(" ");
+                         $('#myProduction_order_receive')[0].reset();
+               //$("#quotationTable").text(" ");
+  
                          //$("#id").val("");
-       
+  
                       }, 1000);
                     }else{
                       $("#Orderresultarea").text(data);
-  					
+  
                    }
-  				 //ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
-   
-  	 
+           //ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
+  
+  
       console.log(data);
       //Perform ANy action after successfuly post data
-         
+  
     });
-    return false;     
+    return false;
   }
   // ends
   
   function view_production_log(poid){
-  	
-  	
-      $.ajax({   
-  	    type: "POST",  
-  		url: "view_production_log_cont",  
-  		cache:false,  
-  		data: {'id':poid},  
-  		success: function(data)  
-  		{  
-  		// /alert(data); 
-  		// $("#loading").hide();  
-  		 $("#view-production-log").empty().append(data).fadeIn();
-  		//referesh table
-  		}   
-  	});
+  
+  
+      $.ajax({
+        type: "POST",
+      url: "view_production_log_cont",
+      cache:false,
+      data: {'id':poid},
+      success: function(data)
+      {
+      // /alert(data);
+      // $("#loading").hide();
+       $("#view-production-log").empty().append(data).fadeIn();
+      //referesh table
+      }
+    });
   }
   
   
   
-  function checkQtyVal()
-  {
   
-  var shapePart=document.getElementById("select_id").value;	
-  if(shapePart=='Shape')
-  {
-  	
-  	document.getElementById("fillQty").style.display = "block";
-  	document.getElementById("qtyn").style.display = "block";
-	document.getElementById("shape").value = "";
-	document.getElementById("fillQty").value = "";
-  	$('#getPartView').empty();
-	
-  	for(i=1;i<=cntVal;i++)
-  	{
-  
-  
-  	document.getElementById("entQty"+i).readOnly = true;
-	
-	
-
-  	}
-  
-  }
-  else
-  {
-  document.getElementById("fillQty").style.display = "none";	
-  document.getElementById("shape").value = "";	
-  document.getElementById("qtyn").style.display = "none";	
- 
-  	$('#getPartView').empty();
-  
-  
-  for(i=1;i<=10;i++)
-  	{
-  	
-  	document.getElementById("entQty"+i).value = "";
-  
-  	}
-  }
-  
-  }
 </script>

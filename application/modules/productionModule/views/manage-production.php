@@ -1,12 +1,12 @@
 <?php
-  $this->load->view("header.php");	
-  
+  $this->load->view("header.php");
+
   $entries = "";
   if($this->input->get('entries')!="")
   {
     $entries = $this->input->get('entries');
   }
-  
+
 
   ?>
 <!-- Main content -->
@@ -40,7 +40,7 @@
               Entries
             </label>
             <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite" style=" margin-top: -6px;margin-left: 12px;float: right;">
-              Showing <?=$dataConfig['page']+1;?> to 
+              Showing <?=$dataConfig['page']+1;?> to
               <?php
                 $m=$dataConfig['page']==0?$dataConfig['perPage']:$dataConfig['page']+$dataConfig['perPage'];
                 echo $m >= $dataConfig['total']?$dataConfig['total']:$m;
@@ -86,16 +86,16 @@
                 </form>
                 <?php
                   $i=1;
-                  foreach($result as $sales) {                                      
+                  foreach($result as $sales) {
                 ?>
                 <tr class="gradeC record">
-                  <th><a href="<?=base_url();?>productionModule/manage_jobwork_map?id=<?=$sales->purchaseid;?>"><?=$sales->lot_no;?></a></th>
+                  <th><a href="<?=base_url();?>productionModule/manage_jobwork_view?id=<?=$sales->purchaseid;?>"><?=$sales->lot_no;?></a></th>
                   <th><?=$sales->maker_date;?></th>
                   <th>
                     <?php
-                      $queryVendor=$this->db->query("select * from tbl_contact_m where status='A' and contact_id='$sales->contactid'");	
+                      $queryVendor=$this->db->query("select * from tbl_contact_m where status='A' and contact_id='$sales->contactid'");
                       $getVendor=$queryVendor->row();
-                      
+
                       echo $getVendor->first_name;
                       ?>
                   </th>
@@ -171,42 +171,42 @@
 <?php	$this->load->view("footer.php"); ?>
 <script>
   function exportTableToExcel(tableID, filename = ''){
-   
+
    	//alert();
       var downloadLink;
       var dataType = 'application/vnd.ms-excel';
       var tableSelect = document.getElementById(tableID);
       var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-      
+
       // Specify file name
       filename = filename?filename+'.xls':'Production_<?php echo date('d-m-Y'); ?>.xls';
-      
+
       // Create download link element
       downloadLink = document.createElement("a");
-      
+
       document.body.appendChild(downloadLink);
-      
+
       if(navigator.msSaveOrOpenBlob){
           var blob = new Blob(['\ufeff', tableHTML], {
               type: dataType
           });
           navigator.msSaveOrOpenBlob( blob, filename);
       }else{
-  
+
           // Create a link to the file
           downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-      
+
           // Setting the file name
           downloadLink.download = filename;
-          
+
           //triggering the function
           downloadLink.click();
       }
   }
-  
-   
+
+
    function viewRMFun(v){
-     
+
      var ur = "view_rm";
      $.ajax({
        url:ur,
@@ -233,5 +233,5 @@
        }
      });
    }
-     
+
 </script>
