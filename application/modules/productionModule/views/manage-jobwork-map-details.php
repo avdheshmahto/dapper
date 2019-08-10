@@ -2339,11 +2339,16 @@ function ajex_RmReturnListData(production_id){
     var enrmid=document.getElementById("rmOrdId"+asx).value;
     //alert(enrmid);
 
-    var isrmid=$("#rmIssueId").val();
+    var isrmid=$("#rmIssueId"+asx).val();
+    
+    var count = document.getElementsByName('rmIssueId[]'); 
+    var tcount = count.length;
+
+    //alert(tcount);
 
     //alert(isrmid);
 
-    var isrmwt=$("#rmIssueWgt").val();    
+    var isrmwt=$("#rmIssueWgt"+asx).val();    
 
 
     if(Number(totalFivePluspercentageVal)<Number(total_weight))
@@ -2363,18 +2368,48 @@ function ajex_RmReturnListData(production_id){
     }
     else if(Number(enrmid)==Number(isrmid))
     {
-      if(weight > isrmwt)
+      if(total_weight > isrmwt)
       {
-        alert("GRN weight can't be greater than issue weight!");
+        alert("Grn weight can't be greater than issue weight!");
         document.getElementById("add_req").disabled = true;  
       }
       else
       {
-        var finalWgt=Number(isrmwt)-Number(weight);
-        document.getElementById("rmIssueWgt").value=finalWgt.toFixed(3);
+        var finalWgt=Number(isrmwt)-Number(total_weight);
+        document.getElementById("rmIssueWgt"+asx).value=finalWgt.toFixed(3);
         document.getElementById("add_req").disabled = true;   
       }
     }
+    
+    else if(Number(enrmid)!=Number(isrmid))
+    {
+
+      for(var i=1; i<=tcount; i++)
+      {
+
+        var gnrIssId=$("#rmIssueId"+i).val();
+        var grnIssWt=$("#rmIssueWgt"+i).val();
+        if(Number(enrmid) == Number(gnrIssId))
+        {
+
+          if(total_weight > grnIssWt)
+          {
+            alert("grn weight can't be greater than issue weight!");
+            document.getElementById("add_req").disabled = true;  
+          }
+          else
+          {
+            var finalWgt=Number(grnIssWt)-Number(total_weight);
+            document.getElementById("rmIssueWgt"+i).value=finalWgt.toFixed(3);
+            document.getElementById("add_req").disabled = true;   
+          }
+
+        }        
+
+      }
+
+    }
+
     else
     {
     document.getElementById("weight"+asx).value=totalWeight.toFixed(3);

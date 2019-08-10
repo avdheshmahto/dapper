@@ -537,8 +537,8 @@
   
   var total_cost=document.getElementById("total_cost"+asx).value;
   var x = Number(total_cost).toFixed(3);
-  
-  document.getElementById("total_cost"+asx).value=Number(y)+Number(x);
+  var z = Number(y)+Number(x);
+  document.getElementById("total_cost"+asx).value=z.toFixed(3);
   
   }
 

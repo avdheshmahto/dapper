@@ -47,6 +47,7 @@
           <thead>
             <?php
               $productQuery=$this->db->query("select * from tbl_job_work_log where lot_no='$getOrder->lot_no' AND job_order_no='$getOrder->job_order_no' AND shape_id='$getOrder->shape_id' group by rm_id");
+              $j=1;
               foreach($productQuery->result() as $getProduct) { ?>
             <tr>
               <th><?php 
@@ -54,7 +55,7 @@
               $getRm=$rm->row();              
               ?>
               <input type="text" value="<?=$getRm->sku_no;?>" class="form-control" readonly>
-              <input type="text" id="rmIssueId" value="<?=$getProduct->rm_id;?>" style="display: none;">
+              <input type="text" id="rmIssueId<?=$j?>" name="rmIssueId[]" value="<?=$getProduct->rm_id;?>" style="display: none;">
               </th>
               <?php
               $isRM=$this->db->query("select * from tbl_issuematrial_hdr where job_order_no='$getProduct->job_order_no' ");
@@ -62,11 +63,19 @@
 
               $isRMdtl=$this->db->query("select * from tbl_issuematrial_dtl where inboundrhdr='$getIsRM->inboundid' AND productid='$getProduct->rm_id' ");
               $getRmDtl=$isRMdtl->row();
+              if($getRmDtl->remaining_qty != '')
+              {
+                $jobIssueWeight=$getRmDtl->remaining_qty;
+              }
+              else
+              {
+                $jobIssueWeight=0; 
+              }
 
               ?>
-               <td><input type="text" id="rmIssueWgt" class="form-control" value="<?=$getRmDtl->remaining_qty?>"  readonly></td> 
+               <td><input type="text" id="rmIssueWgt<?=$j?>" class="form-control" value="<?=$jobIssueWeight?>"  readonly></td> 
              </tr>
-           <?php } ?>
+           <?php $j++; } ?>
           </thead>
         </table>
       </div>
@@ -180,10 +189,10 @@
               <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
               <td class="tdcenter">
                 <input name="tolerance_percentage[]" id="tolerance_percentage<?=$i;?>"  type="hidden" class="form-control" value="<?=$getProductStock->tolerance_percentage;?>"/>
-                <input name="qty[]" id="qty<?=$i;?>" onkeyup="qtyVal(this.id)" type="text" min="0" class="form-control"<?php if($reci_qty==0){?> style="width:75px;" readonly="readonly" <?php }?> />
+                <input name="qty[]" id="qty<?=$i;?>" onkeyup="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> style="width:75px;" readonly="readonly" <?php } ?> />
                 <input type="text" style="display:none" name="process_ends[]" value="1" />
               </td>
-              <td class="tdcenter"> <input class="form-control" onkeyup="totalWeightCal(this.id)" onchange="totalWeightCal(this.id)"  style="margin-bottom:10px;width:100px;" value="" type="text" min="0" step="any" name="total_weight[]" id="total_weight<?=$i;?>" <?php if($reci_qty==0){?> readonly="readonly" <?php }?>  /></td>
+              <td class="tdcenter"> <input class="form-control" onkeyup="totalWeightCal(this.id)" onchange="totalWeightCal(this.id)"  style="margin-bottom:10px;width:100px;" value="" type="text"  name="total_weight[]" id="total_weight<?=$i;?>" <?php if($reci_qty==0){?> readonly="readonly" <?php }?>  /></td>
               <td class="tdcenter"> <input class="form-control"   style="margin-bottom:10px;width:105px;" value="<?=$getProductPart->qty;?>" readonly="readonly" name="ideal_total_weight[]" id="ideal_total_weight<?=$i;?>"  /></td>
               <td class="tdcenter"> <input class="form-control"   style="margin-bottom:10px;width:95px;" readonly="readonly" value="" name="weight[]" id="weight<?=$i;?>"  /></td>
               <input type="hidden" id="net_weight_cal<?=$i;?>" value="<?=$getProductStock->net_weight;?>" />

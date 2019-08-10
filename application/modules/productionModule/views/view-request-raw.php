@@ -40,7 +40,7 @@
                       <th class="tdcenter">Description</th>
                       <th class="tdcenter">Usage Unit</th>
                       <th class="tdcenter">Ordered Qty</th>
-                      <th class="tdcenter">Circle Weight</th>
+                      <!-- <th class="tdcenter">Circle Weight</th> -->
                       <th class="tdcenter">Ordered Weight</th>
                     </tr>
                   </thead>
@@ -71,7 +71,7 @@
                       $getPoQty=$poLogQuery->row();
                       ?>
                     <td><?=$getProduct->order_qty;?></td>
-                    <td><?=$getProductStock->circle_weight;?></td>
+                    <!-- <td><?=$getProductStock->circle_weight;?></td> -->
                     <td><?=$getProduct->receive_qty;?></td>
                   </tr>
                   <?php 
