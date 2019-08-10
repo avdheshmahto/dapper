@@ -849,15 +849,15 @@ public function manageItemJoinfun()
 
 		if($_GET['entries'] != '' && $_GET['filter'] != 'filter')
 		  {
-			 $url = site_url('/productionModule/item_Stock?entries='.$_GET['entries']);
+			 $url = site_url('/productionModule/view_Stock?entries='.$_GET['entries']);
 		  }
 		elseif($_GET['filter'] == 'filter' || $_GET['entries'] != '')
 		  {
-			$url = site_url('/productionModule/item_Stock?sku_no='.$_GET['sku_no'].'&type='.$_GET['type'].'&category='.$_GET['category'].'&productname='.$_GET['productname'].'&usages_unit='.$_GET['usages_unit'].'&size='.$_GET['size'].'&thickness='.$_GET['thickness'].'&gradecode='.$_GET['gradecode'].'&filter='.$_GET['filter'].'&entries='.$_GET['entries']);
+			$url = site_url('/productionModule/view_Stock?sku_no='.$_GET['sku_no'].'&type='.$_GET['type'].'&category='.$_GET['category'].'&productname='.$_GET['productname'].'&usages_unit='.$_GET['usages_unit'].'&size='.$_GET['size'].'&thickness='.$_GET['thickness'].'&gradecode='.$_GET['gradecode'].'&filter='.$_GET['filter'].'&entries='.$_GET['entries']);
 		  }
 		else
 		  {
-			$url = site_url('/productionModule/item_Stock?');
+			$url = site_url('/productionModule/view_Stock?');
 		  }
 
 		  $pagination = $this->ciPagination($url,$totalData,$sgmnt,$showEntries);

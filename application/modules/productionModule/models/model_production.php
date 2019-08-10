@@ -164,13 +164,19 @@ class model_production extends CI_Model
     }
     
     // product Stock paging and search query strats from here // 
-    
+
+    function product_get($last, $strat)
+    {
+        $query = $this->db->query("select *,SUM(rem_order_qty) as issueQty, SUM(remaining_qty) as issueWeight from tbl_issuematrial_dtl where status = 'A' group by productid limit $strat,$last");
+        return $result = $query->result();
+    }
+
     function count_product($tableName, $status = 0, $get)
     {
         
-        $qry = "select count(*) as countval from $tableName where status='A' and type='13' or type='32' or type='33'";
+        $qry = "select count(*) as countval from tbl_issuematrial_dtl where status='A' ";
         
-        if (sizeof($get) > 0) {
+        /*if (sizeof($get) > 0) {
             
             if ($get['sku_no'] != "")
                 $qry .= " AND sku_no LIKE '%" . $get['sku_no'] . "%'";
@@ -209,7 +215,7 @@ class model_production extends CI_Model
             if ($get['gradecode'] != "")
                 $qry .= " AND grade_code LIKE '%" . $get['gradecode'] . "%'";
             
-        }
+        }*/
         
         $query = $this->db->query($qry, array(
             $status
@@ -222,9 +228,9 @@ class model_production extends CI_Model
     function filterProductList($perpage, $pages, $get)
     {
         
-        $qry = "select * from tbl_product_stock where status = 'A' and type='13' or type='32' or type='33'";
+        $qry = "select *,SUM(rem_order_qty) as issueQty, SUM(remaining_qty) as issueWeight from tbl_issuematrial_dtl where status = 'A' group by productid";
         
-        if (sizeof($get) > 0) {
+        /*if (sizeof($get) > 0) {
             
             if ($get['sku_no'] != "")
                 $qry .= " AND sku_no LIKE '%" . $get['sku_no'] . "%'";
@@ -262,7 +268,7 @@ class model_production extends CI_Model
             if ($get['gradecode'] != "")
                 $qry .= " AND grade_code LIKE '%" . $get['gradecode'] . "%'";
             
-        }
+        }*/
         
         $qry .= " LIMIT $pages,$perpage";
         $data = $this->db->query($qry)->result();
@@ -270,11 +276,7 @@ class model_production extends CI_Model
         
     }
     
-    function product_get($last, $strat)
-    {
-        $query = $this->db->query("select *from tbl_product_stock where status='A' and type in(13,32,33)  order by Product_id desc limit $strat,$last");
-        return $result = $query->result();
-    }
+
     
     // ends
     

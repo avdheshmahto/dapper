@@ -38,7 +38,7 @@
             <div class="dataTables_length" id="DataTables_Table_0_length" style="margin: 15px 0px -15px 5px;">
               <label>
                 Show
-                <select name="DataTables_Table_0_length" url="<?=base_url('productionModule/item_Stock').'?sku_no='.$_GET['sku_no'].'&type='.$_GET['type'].'&category='.$_GET['category'].'&productname='.$_GET['productname'].'&usages_unit='.$_GET['usages_unit'].'&size='.$_GET['size'].'&thickness='.$_GET['thickness'].'&gradecode='.$_GET['gradecode'].'&filter='.$_GET['filter'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
+                <select name="DataTables_Table_0_length" url="<?=base_url('productionModule/view_Stock').'?sku_no='.$_GET['sku_no'].'&type='.$_GET['type'].'&category='.$_GET['category'].'&productname='.$_GET['productname'].'&usages_unit='.$_GET['usages_unit'].'&size='.$_GET['size'].'&thickness='.$_GET['thickness'].'&gradecode='.$_GET['gradecode'].'&filter='.$_GET['filter'];?>" aria-controls="DataTables_Table_0" id="entries" class="form-control input-sm">
                   <option value="10" <?=$entries=='10'?'selected':'';?>>10</option>
                   <option value="25" <?=$entries=='25'?'selected':'';?>>25</option>
                   <option value="50" <?=$entries=='50'?'selected':'';?>>50</option>
@@ -86,13 +86,9 @@
                   <th>
                     <div style="width:100px;">Usages Unit</div>
                   </th>
-                  <!-- 	<th><div style="width:50px;">Size</div></th>
-                    <th><div style="width:100px;">Thickness</div></th>
-                    <th><div style="width:100px;">Grade Code</div></th> -->
                   <th>
                     <div style="width:120px;">Total Stock</div>
                   </th>
-                  <!-- <th><div style="width:120px;">Action</div></th> -->
                 </tr>
               </thead>
               <tbody id="getDataTable" >
@@ -102,21 +98,18 @@
                     <td><input name="type"  type="text"  class="search_box form-control input-sm"  value="" /></td>
                     <td><input name="category"  type="text"  class="search_box form-control input-sm"  value="" /></td>
                     <td><input name="productname"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-                    <td><input name="usages_unit"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-                    <!-- 	<td><input name="size" type="text"  class="search_box form-control input-sm"  value="" /></td>
-                      <td><input name="thickness" type="text"  class="search_box form-control input-sm"  value="" /></td>
-                      <td><input name="gradecode" type="text"  class="search_box form-control input-sm"  value="" /></td> -->
+                    <td><input name="usages_unit"  type="text"  class="search_box form-control input-sm"  value="" /></td>                   
                     <td><button type="submit" class="btn btn-sm" name="filter" value="filter"><span>Search</span></button></td>
                   </tr>
                 </form>
                 <?php  
                   $i=1;
                   
-                   foreach($result as $fetch_list)
+                   foreach($result as $getDtl)
                    {
-					 
-					   $serialquery=$this->db->query("select *from tbl_product_serial where product_id='$fetch_list->Product_id' and location_id='1'");
-					   $getSerialData=$serialquery->row();
+					         
+                   $list=$this->db->query("select * from tbl_product_stock where Product_id='$getDtl->productid'");
+                   $fetch_list=$list->row();
                   ?>
                 <tr  class="gradeC record" data-row-id="<?php echo $fetch_list->Product_id; ?>">
                   <?php
@@ -144,9 +137,6 @@
                     		  $keyvalue1 = $compQuery1->row();
                     echo $keyvalue1->keyvalue;		  
                     ?></th>
-                  <!-- <th><?=$fetch_list->pro_size;?></th>
-                    <th><?=$fetch_list->thickness;?></th>
-                    <th><?=$fetch_list->grade_code;?></th> -->
                   <?php
                    
                     $issueMat=$this->db->query("select *from tbl_issuematrial_dtl where productid='$fetch_list->Product_id'");
@@ -154,28 +144,10 @@
                     
                     
                     ?>
-                  <th><?=$getSerialData->quantity;?></th>
-                  <!-- <th class="bs-example">
-                    <?php if($view!=''){ ?>
-                    <button class="btn btn-default" property="view" arrt= '<?=json_encode($fetch_list);?>' onclick ="editItem(this);" type="button" data-toggle="modal" data-target="#modal-0" data-backdrop='static' data-keyboard='false'> <i class="fa fa-eye"></i></button>
-                    
-                    <?php } if($edit!=''){ ?>
-                    <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#modal-0" arrt= '<?=json_encode($fetch_list);?>' onclick="editItem(this)"><i class="icon-pencil"></i></button>
-                    
-                    <?php }
-                      $pri_col='Product_id';
-                      $table_name='tbl_product_stock';
-                      ?>
-                    <button class="btn btn-default delbutton" id="<?php echo $fetch_list->Product_id."^".$table_name."^".$pri_col ; ?>" type="button">
-                     <i class="icon-trash"></i></button>		
-                    <?php ?>
-                     
-                    </th> -->
+                  <th><?=round($getDtl->issueQty,3)."/".round($getDtl->issueWeight,3);?></th>                  
                 </tr>
                 <?php $i++; } ?>
               </tbody>
-              <input type="text" style="display:none;" id="table_name" value="tbl_product_stock">  
-              <input type="text" style="display:none;" id="pri_col" value="Product_id">
             </table>
           </div>
         </div>
@@ -191,31 +163,8 @@
 </div>
 <?php
   $this->load->view("footer.php");
-  ?>
-<script>
-  // function editItem(v){
-  // //alert(v);
-  // var pro=v;
-  //  var xhttp = new XMLHttpRequest();
-  //   xhttp.open("GET", "updateItem?ID="+pro, false);
-  //   xhttp.send();
-  //   document.getElementById("contentitem").innerHTML = xhttp.responseText;
-  // }
-  
-  
-  function changing(v)
-  {
-  	//alert(v);
-   	var pro=v;
-  	var xhttp = new XMLHttpRequest();
-  	  xhttp.open("GET", "changesubcatg?ID="+pro, false);
-  	  xhttp.send();
-  	  //alert(xhttp.responseText);
-  	  document.getElementById("subcategory1").innerHTML = xhttp.responseText;
-  	 // document.getElementById("subcategory11").innerHTML = xhttp.responseText;
-  }
-  
-</script>	
+?>
+
 <script>
   function exportTableToExcel(tableID, filename = ''){
    
