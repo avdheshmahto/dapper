@@ -84,7 +84,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel-body">
-          <div class="table-responsive">
+          <div class="table-responsive__">
             <table class="table table-striped table-bordered table-hover dataTables-example1" id="tblData">
               <thead>
                 <tr>
@@ -97,7 +97,7 @@
                   <th style="display:none">Status</th>
                   <th style="display:none">Grand Total</th>
                   <th>Status</th>
-                  <th>Reason</th>
+                  <!-- <th>Reason</th> -->
                   <th>Action</th>
                 </tr>
               </thead>
@@ -111,7 +111,7 @@
                     <td style="display:none">&nbsp;</td>
                     <td style="display:none"><input name="grand_total"  type="text"  class="search_box form-control input-sm"  value="" /></td>
                     <td><input name="force_close_status"  type="text"  class="search_box form-control input-sm"  value="" /></td>
-                    <td><input name="reason"  type="text"  class="search_box form-control input-sm"  value="" /></td>
+                    <!-- <td><input name="reason"  type="text"  class="search_box form-control input-sm"  value="" /></td> -->
                     <td><button type="submit" class="btn btn-sm" name="filter" value="filter"><span>Search</span></button></td>
                   </tr>
                 </form>
@@ -201,7 +201,7 @@
                     }
                     
                     ?></th>
-                  <th><?=$sales->reason;?></th>
+                  <!-- <th><?=$sales->reason;?></th> -->
                   <th>
                     <button class="btn btn-default"  type="button" data-toggle="modal" data-target="#modal-0" onclick="viewGrn('<?=$sales->purchaseid;?>');"> <i class="icon-eye"></i></button>
                     <?php

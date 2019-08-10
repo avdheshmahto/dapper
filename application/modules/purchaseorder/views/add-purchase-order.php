@@ -387,8 +387,8 @@
       var total=(Number(rate)*Number(qnt));
       
       var net_total=(Number(rate)*Number(qnt)+Number(gstTotal));
-      document.getElementById("tot").value=total;
-      document.getElementById("nettot").value=net_total;
+      document.getElementById("tot").value=total.toFixed(2);
+      document.getElementById("nettot").value=net_total.toFixed(2);
     
       if(entr==13)
       {      
@@ -424,7 +424,7 @@
     
       document.getElementById("disAmt").value=disPer;    
       document.getElementById("gstTotal").value=aftGstPer;
-      document.getElementById("tot").value=toT;
+      document.getElementById("tot").value=toT.toFixed(2);
       document.getElementById("nettot").value=afterGstTot.toFixed(2);
 
       if(entr==13)
@@ -1063,8 +1063,8 @@
         document.getElementById("lph").value=lph;
         document.getElementById("discount").value=discount;
         document.getElementById("disAmt").value=disAmt;
-        document.getElementById("tot").value=tot;
-        document.getElementById("nettot").value=nettot;
+        document.getElementById("tot").value=tot.toFixed(2);
+        document.getElementById("nettot").value=nettot.toFixed(2);
         document.getElementById("igst").value=igst;
         document.getElementById("cgst").value=cgst;
         document.getElementById("sgst").value=sgst;
