@@ -13,7 +13,8 @@
   
   @$getP=implode(",",$pId);
   
-  ?>
+?>
+
 <style type="text/css">
   .select2-container--open {
   z-index: 99999999 !important;
@@ -22,13 +23,10 @@
   min-width: 256px !important;
   }
 </style>
+
+
 <script>
  
-  
-  
-  
-  
-  
   function getPartPo(v)
   {
   
@@ -117,6 +115,8 @@
   // ends
   
 </script>
+
+
 <script>
   function addpricemapPoOrder(){
   
@@ -284,13 +284,7 @@
             <ul class="nav nav-tabs">
               <li class="active"><a href="#home" data-toggle="tab">Order</a></li>
               <li style="display:none1;"><a href="#Transfer" data-toggle="tab">Transfer</a></li>
-              <li style="display:none;" ><a href="#receiveJobWork" data-toggle="tab">Transfer</a></li>
-              <li style="display:none;"><a href="#store" data-toggle="tab">Join</a></li>
               <li style="display:none1;"><a href="#store" data-toggle="tab">Stock</a></li>
-              <li style="display:none;"><a href="#PurchaseGRN" data-toggle="tab">Purchase GRN</a></li>
-              <li style="display:none" class=""><a href="#four" data-toggle="tab">Request Raw Material</a></li>
-              <li style="display:none" class=""><a href="#receiveRaw" data-toggle="tab">Receive Raw Material</a></li>
-              <li style="display:none" class=""><a href="#work_order" data-toggle="tab">Transfer to Module</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane  active" id="home">
@@ -442,9 +436,6 @@
                           <td>&nbsp;</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
                     </table>
                   </div>
                 </div>
@@ -471,20 +462,34 @@
                           <th>
                             <div style="width:100px;">Usages Unit</div>
                           </th>
-                          <!--  <th><div style="width:50px;">Size</div></th>
-                            <th><div style="width:100px;">Thickness</div></th>
-                            <th><div style="width:100px;">Grade Code</div></th> -->
                           <th>
                             <div style="width:120px;">Total Stock</div>
                           </th>
-                          <!-- <th><div style="width:120px;">Action</div></th> -->
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                          $poquery=$this->db->query("select * from tbl_product_stock where status='A' and type in(13) ");
-                          foreach($poquery->result() as $getPo){
+                          $joStock=$this->db->query("select * from tbl_issuematrial_hdr where job_order_no='".$_GET['jo_no']."' and lot_no='$getsched->lot_no' ");
+                          foreach($joStock->result() as $getJoStock){
+                            $inbnd_id[]=$getJoStock->inboundid;
+                          }
+
+                          if($inbnd_id != '')
+                          {
+                            $inbndId=implode(',', $inbnd_id);
+                          }
+                          else
+                          {
+                            $inbndId='9999999';
+                          }
+
+
+                          $joStockDtl=$this->db->query("select *,SUM(rem_order_qty) as issueQty, SUM(remaining_qty) as issueWeight from tbl_issuematrial_dtl where inboundrhdr in ($inbndId) group by productid");
+
+                          foreach($joStockDtl->result() as $getJoStockDtl){
                             ####### get product #######
+                            $poquery=$this->db->query("select * from tbl_product_stock where status='A' and Product_id='$getJoStockDtl->productid' ");
+                            $getPo=$poquery->row();
                               $productStockQuery=$this->db->query("select * from tbl_product_stock where Product_id='$getPo->productid'");
                               $getProductStock=$productStockQuery->row();
                               ####### ends ########
@@ -521,39 +526,14 @@
                                   $keyvalue1 = $compQuery1->row();
                             echo $getProductUOM->keyvalue;
                             ?></th>
-                          <!-- <th><?=$fetch_list->pro_size;?></th>
-                            <th><?=$fetch_list->thickness;?></th>
-                            <th><?=$fetch_list->grade_code;?></th> -->
-                          <?php
-                            //echo "select *from tbl_issuematrial_dtl where productid='$fetch_list->Product_id'";
-                            $issueMat=$this->db->query("select *from tbl_issuematrial_dtl where productid='$fetch_list->Product_id'");
-                            $getIssueMat=$issueMat->row();
-                            
-                            
+                          <?php                            
+                              $totalStockQty=round($getJoStockDtl->issueQty,3);
+                              $totalStockWgt=round($getJoStockDtl->issueWeight,3);
                             ?>
-                          <th><?=$getIssueMat->receive_qty;?></th>
-                          <!-- <th class="bs-example">
-                            <?php if($view!=''){ ?>
-                            <button class="btn btn-default" property="view" arrt= '<?=json_encode($fetch_list);?>' onclick ="editItem(this);" type="button" data-toggle="modal" data-target="#modal-0" data-backdrop='static' data-keyboard='false'> <i class="fa fa-eye"></i></button>
-                            
-                            <?php } if($edit!=''){ ?>
-                            <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#modal-0" arrt= '<?=json_encode($fetch_list);?>' onclick="editItem(this)"><i class="icon-pencil"></i></button>
-                            
-                            <?php }
-                              $pri_col='Product_id';
-                              $table_name='tbl_product_stock';
-                              ?>
-                            <button class="btn btn-default delbutton" id="<?php echo $fetch_list->Product_id."^".$table_name."^".$pri_col ; ?>" type="button">
-                             <i class="icon-trash"></i></button>
-                            <?php ?>
-                            
-                            </th> -->
+                          <th><?=$totalStockQty."/".$totalStockWgt;?></th>
                         </tr>
-                        <?php }?>
+                        <?php } ?>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
                     </table>
                   </div>
                 </div>
