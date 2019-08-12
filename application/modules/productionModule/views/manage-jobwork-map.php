@@ -311,7 +311,7 @@
                           ?>
                         <tr class="gradeU record">
                           <td>
-                            <p style="display:none" id="lot_no"><?=$_GET['id'];?></p>
+                            <p style="display:none" id="lot_no"><?=$fetch_list->lot_no;?></p>
                             <p style="display:none" id="order_type"><?=$fetch_list->order_type;?></p>
                             <?=$fetch_list->order_type;?>
                             <button style="display:none" type="button" class="btn btn-default modalMapSpare" onclick="Order('<?=$fetch_list->job_order_no;?>');" data-toggle="modal" data-target="#modal-order"><?=$fetch_list->order_type;?></button>
@@ -430,7 +430,7 @@
                         <?php }?>
                         <tr class="gradeU">
                           <td>
-                            <button style="display:none1" type="button" class="btn btn-default modalMapSpare" onclick="Order_transfer('<?=$getsched->lot_no;?>');" data-toggle="modal" data-target="#modal-order-transfer"><img src="<?=base_url();?>assets/images/plus.png" /></button>
+                            <button style="display:none1" type="button" class="btn btn-default" onclick="Order_transfer('<?=$_GET['id'];?>');" data-toggle="modal" data-target="#modal-order-transfer"><img src="<?=base_url();?>assets/images/plus.png" /></button>
                           </td>
                           <td>&nbsp;</td>
                           <td>&nbsp;</td>

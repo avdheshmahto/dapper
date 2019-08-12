@@ -1370,6 +1370,9 @@ public function productionOrderInsert()
 				 'job_order_id' => $job_order_id,
 				 'productid'		=> $productid[$i],
 				 'qty'		=> $qty[$i],
+
+				 'rm_id'		=> $rmOrdId[$i],
+
 				 'process_ends' => $p_ends,
 				 'weight' => $weight[$i],
 				 'total_weight' => $total_weight[$i],
@@ -1384,7 +1387,7 @@ public function productionOrderInsert()
 				 'brnh_id'			=> $this->session->userdata('brnh_id')
 				);
 
-                 //print_r($data_dtl);die;
+                // print_r($data_dtl);die;
 
 $data_dtl_avl=array(
 					'lot_no'		=> $lot_no,
@@ -1511,7 +1514,7 @@ public function productionOrderTransferToModule()
 				 'order_no'		=> $order_no,
 				 'transfer_no' => $transfer_no,
 				 'transfer_date' => $transfer_date,
-				'module_name' => $module_name,
+				 'module_name' => $module_name,
 				 'vendor_id' => $vendor_id,
 				 'job_order_id' => $job_order_id,
 				 'productid'		=> $productid[$i],

@@ -254,12 +254,12 @@
                           var msg = "Data Successfully Add !";
                         else
                           var msg = "Data Successfully Updated !";
-  						$("#Orderresultarea").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
+  						          $("#Orderresultarea").text(msg);
+  						          setTimeout(function() {   //calls click event after a certain time
                          $("#modal-order").click();
                          $("#Orderresultarea").text(" "); 
                          $('#myProduction_order_receive')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
+  					             //$("#quotationTable").text(" "); 
   					   
                          //$("#id").val("");
        
@@ -2377,7 +2377,7 @@ function ajex_RmReturnListData(production_id){
       {
         var finalWgt=Number(isrmwt)-Number(total_weight);
         document.getElementById("rmIssueWgt"+asx).value=finalWgt.toFixed(3);
-        document.getElementById("add_req").disabled = true;   
+        document.getElementById("add_req").disabled = false;   
       }
     }
     
@@ -2401,7 +2401,7 @@ function ajex_RmReturnListData(production_id){
           {
             var finalWgt=Number(grnIssWt)-Number(total_weight);
             document.getElementById("rmIssueWgt"+i).value=finalWgt.toFixed(3);
-            document.getElementById("add_req").disabled = true;   
+            document.getElementById("add_req").disabled = false;   
           }
 
         }        
