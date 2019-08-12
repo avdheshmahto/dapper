@@ -225,6 +225,8 @@ class kora extends my_controller
             
             for ($j = 0; $j < $cntP; $j++) {
                 
+                if($dataQ[$j] != ''){
+
                 $data = array(
                     'vendor_id' => $vendor_id,
                     'date' => $date,
@@ -253,7 +255,7 @@ class kora extends my_controller
                 $dataall = array_merge($data, $sesio);
                 $this->Model_admin_login->insert_user(tbl_job_work_log, $dataall);
                 
-                
+              }  
             }
         }
         echo "1";
