@@ -58,6 +58,13 @@
               <input type="text" id="rmIssueId<?=$j?>" name="rmIssueId[]" value="<?=$getProduct->rm_id;?>" style="display: none;">
               </th>
               <?php
+
+              $PoLog=$this->db->query("select SUM(total_weight) as rec_weight from tbl_production_order_log where lot_no='$getOrder->lot_no' AND job_order_id='$getOrder->id' AND order_no='$getOrder->job_order_no' AND rm_id='$getProduct->rm_id' ");
+                $getPoLog=$PoLog->row();
+
+                $rmRtrn=$this->db->query("select SUM(order_qty) as rt_qty, SUM(qty) as rt_wgt from tbl_job_rm_return where lot_no='$getOrder->lot_no' AND order_no='$getOrder->job_order_no' AND job_order_id='$getOrder->id' AND productid='$getProduct->rm_id' ");
+                $getRMrtrn=$rmRtrn->row();
+
               $isRM=$this->db->query("select * from tbl_issuematrial_hdr where job_order_no='$getProduct->job_order_no' ");
               $getIsRM=$isRM->row();
 
@@ -65,7 +72,7 @@
               $getRmDtl=$isRMdtl->row();
               if($getRmDtl->remaining_qty != '')
               {
-                $jobIssueWeight=$getRmDtl->remaining_qty;
+                $jobIssueWeight=$getRmDtl->remaining_qty-$getPoLog->rec_weight-$getRMrtrn->rt_wgt;
               }
               else
               {
@@ -167,7 +174,7 @@
               <td class="size-60 text-center sorting_1"><?=$i;?></td>
               <td class="tdcenter" style="width: 20%;"><?=$getProductStock->sku_no ."  (".$getRm->sku_no.")";?>
                 <input type="hidden"  name="productid[]" value="<?=$getProduct->part_id;?>" class="form-control">
-                <input type="hidden"  id="rmOrdId<?=$i?>" value="<?=$getProduct->rm_id;?>" class="form-control">
+                <input type="hidden"  name="rmOrdId[]" id="rmOrdId<?=$i?>" value="<?=$getProduct->rm_id;?>" class="form-control">
               </td>
               <td class="tdcenter"><?=$getProductUOM->keyvalue;?></td>
               <?php

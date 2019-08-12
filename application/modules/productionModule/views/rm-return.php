@@ -121,8 +121,8 @@
             <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$rmRR=$getChallan->cIssueQty-$getInboundGRNLog->rec_qty-$getRMreturn->rt_qty;?>" />
             <td><?php 
               //echo $rmRR=$getProduct->order_qty-$getProduct->rem_order_qty;
-              echo $rmRR=$getChallan->cIssueQty-$getInboundGRNLog->rec_qty-$getRMreturn->rt_qty;
-
+              //echo $rmRR=$getChallan->cIssueQty-$getInboundGRNLog->rec_qty-$getRMreturn->rt_qty;
+             echo $rmRR=$getProduct->order_qty-$getInboundGRNLog->rec_qty;
               ?></td>
               <input type="hidden" id="rem_wgt<?=$i;?>" value="<?=$rmRR=$getChallan->cIssueWeight-$getInboundGRNLog->rec_wgt-$getRMreturn->rt_wgt;?>" />
             <td><?php 
