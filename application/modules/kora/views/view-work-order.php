@@ -1,10 +1,9 @@
 <?php
-  $queryData=$this->db->query("select *from tbl_job_work where id='$id'");
+  $queryData=$this->db->query("select * from tbl_job_work where id='$id'");
   $getData=$queryData->row();
   
   ?>
-<form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_purchase" action="#" 
-  onsubmit="return submitProductionPurchase();"method="POST">
+<form class="form-horizontal">
 <div class="modal-body">
   <div class="form-group">
     <label class="col-sm-2 control-label">Vendor:</label> 
@@ -39,38 +38,37 @@
           </tbody>
           <tbody id="quotationTable">
             <?php 
-              $selectQuery=$this->db->query("select *from tbl_job_work where id='$id'");
-                         foreach ($selectQuery->result() as  $dt) {
-                  $shapeQuery=$this->db->query("select *from tbl_product_stock where Product_id='$dt->shape_id'");
-                  $getShape=$shapeQuery->row();
+              $selectQuery=$this->db->query("select * from tbl_job_work_log where lot_no='$getData->lot_no' AND job_order_no='$getData->job_order_no' AND shape_id='$getData->shape_id'");
+                  foreach ($selectQuery->result() as  $dt) {
+
+                  // $shapeQuery=$this->db->query("select *from tbl_product_stock where Product_id='$dt->shape_id'");
+                  // $getShape=$shapeQuery->row();
                             
                        ?>
             <tr>
               <td>
                 <?php
-                  $productQ=$this->db->query("select *from tbl_product_stock where Product_id in ($dt->part_id)");
-                  foreach($productQ->result() as $getPQ){
-                  ?>
-                <?=$getPQ->productname."&nbsp;".$getPQ->sku_no."<br>";
-                  }
-                          ?>
+                  $productQ=$this->db->query("select * from tbl_product_stock where Product_id='$dt->part_id' ");
+                  $getPQ=$productQ->row();
+                    echo $getPQ->productname."&nbsp;".$getPQ->sku_no;              
+                ?>
               </td>
               <td>
                 <?php
-                  $imp=explode(",",$dt->qty);
-                  for($i=0;$i<count($imp);$i++)
-                  {
-                    echo $imp[$i]."<br>";
-                  }
+                  // $imp=explode(",",$dt->qty);
+                  // for($i=0;$i<count($imp);$i++)
+                  // {
+                  //   echo $imp[$i]."<br>";
+                  // }
                   ?>
-                <?php //$dt->qty;?>
+                <?= $dt->qty;?>
               </td>
             </tr>
-            <?php 
-              } ?>
+            <?php } ?>
           </tbody>
         </table>
       </div>
     </div>
   </div>
 </div>
+</form>
