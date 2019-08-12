@@ -61,22 +61,23 @@
           <td><?=$getShape->productname;?></td>
           <td>
             <?php
-              $productQ=$this->db->query("select *from tbl_product_stock where Product_id in ($dt->part_id)");
-              foreach($productQ->result() as $getPQ){
-              ?>
-            <?=$getPQ->productname."<br>";
+              $jLog=$this->db->query("select * from tbl_job_work_log where lot_no='$dt->lot_no' AND job_order_no='$dt->job_order_no' AND shape_id='$dt->shape_id' ");
+              foreach($jLog->result() as $imp)
+              {
+                $productQ=$this->db->query("select * from tbl_product_stock where Product_id='$imp->part_id' ");
+                $getPQ=$productQ->row();
+                echo $getPQ->productname."<br>";
               }
-                      ?>
+            ?>
           </td>
           <td>
             <?php
-              $imp=explode(",",$dt->qty);
-              for($i=0;$i<count($imp);$i++)
+              $jLog=$this->db->query("select * from tbl_job_work_log where lot_no='$dt->lot_no' AND job_order_no='$dt->job_order_no' AND shape_id='$dt->shape_id' ");
+              foreach($jLog->result() as $imp)
               {
-                echo $imp[$i]."<br>";
+                echo $imp->qty."<br>";
               }
-              ?>
-            <?php //$dt->qty;?>
+            ?>
           </td>
         </tr>
         <?php 
