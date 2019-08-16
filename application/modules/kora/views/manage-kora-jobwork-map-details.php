@@ -108,10 +108,9 @@
                       $("#OrderRepairresultarea").text(data);
   					
                    }
-  				// ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
-   
+                ajax_listGrnData();
   	 
-      console.log(data);
+      //console.log(data);
       //Perform ANy action after successfuly post data
          
     });
@@ -162,7 +161,8 @@
                       $("#Orderresultarea").text(data);
   					
                    }
-  				 ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
+  				 //ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
+           ajax_listGrnData();
    
   	 
       console.log(data);
@@ -195,6 +195,10 @@
    }
   
   
+  function ajax_listGrnData()
+  {
+    window.location.reload();
+  }
   
   
   function Order(viewId){
@@ -387,9 +391,7 @@
   
   }
   
-  //******************************************************************************************************************************************************************************************************************************************************************************************************
-  
-  //*********************************************************************************************************************************************************************************************************************************************************************************************************
+  //*********************************************************************************************************************************************************
   
   
   function viewScrap(v){
@@ -548,9 +550,7 @@
         data: { 'id' : production_id },
         type: "POST",
         success: function(data){
-          //alert(data);
-          //alert("jkhkjh"+type);
-          //$("#listingData").hide();
+    
           $("#listingData").empty().append(data).fadeIn();
                 
        }
@@ -650,14 +650,10 @@
           </div>
           <div class="tabs-container">
             <ul class="nav nav-tabs">
-              <li style="display:none;"  ><a href="#receiveJobWork" data-toggle="tab">RM Request</a></li>
-              <li ><a href="#home" data-toggle="tab" class="active">GRN</a></li>
-              <li ><a href="#check" data-toggle="tab">Checking</a></li>
-              <li style="display:none1;"><a href="#returnOrder" data-toggle="tab">Order Repair</a></li>
-              <li style="display:none1;"><a href="#scrap" data-toggle="tab">Scrap</a></li>
-              <li style="display:none" class=""><a href="#four" data-toggle="tab">Request Raw Material</a></li>
-              <li style="display:none" class=""><a href="#receiveRaw" data-toggle="tab">Receive Raw Material</a></li>
-              <li style="display:none" class=""><a href="#work_order" data-toggle="tab">Transfer to Module</a></li>
+            <li class="active"><a href="#home" data-toggle="tab" class="active">GRN</a></li>
+              <li><a href="#check" data-toggle="tab">Checking</a></li>
+              <li><a href="#returnOrder" data-toggle="tab">Order Repair</a></li>
+              <li><a href="#scrap" data-toggle="tab">Scrap</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane " id="receiveJobWork">
@@ -685,16 +681,10 @@
                             <?php
                               $poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$getPo->inboundid'");
                               $getQty=$poquery->row();
-                              
-                              // tbl_receive_matrial_grn_log query
-                              
-                              
-                              //echo "select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->inboundid'";
-                              
+                                                            
                               $poquerygrnLog=$this->db->query("select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->po_no'");
                               $getQtygrnLog=$poquerygrnLog->row();
-                              
-                              
+                                                            
                               ?>
                             <?=$getQty->qty;?>
                           </th>
@@ -721,15 +711,14 @@
                               	}
                               ?>
                           </th>
-                          <th>
-                            <?php /*?><button class="btn btn-default" onclick="viewPurchaseOrder(<?=$getPo->purchaseid;?>);" data-toggle="modal" data-target="#modal-6" type="button" ><i class="fa fa-eye"></i></button><?php */?>
+                          <th>                            
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewRawRequest(<?=$getPo->inboundid;?>);" data-toggle="modal" data-target="#modal-rawRequest" type="button" ><i class="fa fa-eye"></i></button>
                             <a href="<?=base_url();?>productionModule/manage_jobwork_map_rm_details?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
                             <a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
                           </th>
                         </tr>
-                        <?php }?>
+                        <?php } ?>
                         <tr class="gradeU">
                           <td>
                             <button type="button" class="btn btn-default modalMapSpare1" data-toggle="modal" data-target="#modal-6"><img src="<?=base_url();?>assets/images/plus.png" /></button> 
@@ -740,9 +729,6 @@
                           <td>&nbsp;</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
                     </table>
                   </div>
                 </div>
@@ -784,7 +770,7 @@
                          $cntData=$poquery->num_rows();
 						 
                           if($cntData>0)
-						  {
+						              {
                           ?>
                        <button class="btn btn-default" onclick="return confirm('Please Delete Child Data First');" type="button"><i class="icon-trash"></i></button>
                           <?php }else{?>
@@ -806,9 +792,6 @@
                           <td>&nbsp;</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
                     </table>
                   </div>
                 </div>
@@ -835,12 +818,7 @@
                           <th><?=$getPo->check_date;?></th>
                           <?php
                             $poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$getPo->inboundid'");
-                            $getQty=$poquery->row();
-                            
-                            // tbl_receive_matrial_grn_log query
-                            
-                            
-                            //echo "select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->inboundid'";
+                            $getQty=$poquery->row();                          
                             
                             $poquerygrnLog=$this->db->query("select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->po_no'");
                             $getQtygrnLog=$poquerygrnLog->row();
@@ -864,8 +842,7 @@
                               
                               ?>
                           </th>
-                          <th>
-                            <?php /*?><button class="btn btn-default" onclick="viewPurchaseOrder(<?=$getPo->purchaseid;?>);" data-toggle="modal" data-target="#modal-6" type="button" ><i class="fa fa-eye"></i></button><?php */?>
+                          <th>                            
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewChecking('<?=$getPo->check_no;?>');" data-toggle="modal" data-target="#modal-checking" type="button" ><i class="fa fa-eye"></i></button>
                             <a style="display:none" href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
@@ -884,9 +861,6 @@
                           <td>&nbsp;</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
                     </table>
                   </div>
                 </div>
@@ -913,12 +887,7 @@
                           <th><?=$getPo->check_date;?></th>
                           <?php
                             $poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$getPo->inboundid'");
-                            $getQty=$poquery->row();
-                            
-                            // tbl_receive_matrial_grn_log query
-                            
-                            
-                            //echo "select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->inboundid'";
+                            $getQty=$poquery->row();                          
                             
                             $poquerygrnLog=$this->db->query("select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->po_no'");
                             $getQtygrnLog=$poquerygrnLog->row();
@@ -942,8 +911,7 @@
                               
                               ?>
                           </th>
-                          <th>
-                            <?php /*?><button class="btn btn-default" onclick="viewPurchaseOrder(<?=$getPo->purchaseid;?>);" data-toggle="modal" data-target="#modal-6" type="button" ><i class="fa fa-eye"></i></button><?php */?>
+                          <th>                            
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewScrap('<?=$getPo->check_no;?>');" data-toggle="modal" data-target="#modal-viewScrap" type="button" ><i class="fa fa-eye"></i></button>
                             
@@ -960,9 +928,6 @@
                           <td>&nbsp;</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
                     </table>
                   </div>
                 </div>
@@ -989,12 +954,7 @@
                           <th><?=$getPo->repair_date;?></th>
                           <?php
                             $poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$getPo->inboundid'");
-                            $getQty=$poquery->row();
-                            
-                            // tbl_receive_matrial_grn_log query
-                            
-                            
-                            //echo "select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->inboundid'";
+                            $getQty=$poquery->row();                          
                             
                             $poquerygrnLog=$this->db->query("select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->po_no'");
                             $getQtygrnLog=$poquerygrnLog->row();
@@ -1018,8 +978,7 @@
                               
                               ?>
                           </th>
-                          <th>
-                            <?php /*?><button class="btn btn-default" onclick="viewPurchaseOrder(<?=$getPo->purchaseid;?>);" data-toggle="modal" data-target="#modal-6" type="button" ><i class="fa fa-eye"></i></button><?php */?>
+                          <th>                            
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewRepairOrder('<?=$getPo->repair_no;?>');" data-toggle="modal" data-target="#modal-view_order_repair" type="button" ><i class="fa fa-eye"></i></button>
                              <button class="btn btn-default delbuttonOrderRepair" id="<?=$getPo->repair_no; ?>" type="button"><i class="icon-trash"></i></button>
@@ -1035,9 +994,6 @@
                           <td>&nbsp;</td>
                         </tr>
                       </tbody>
-                      <tfoot>
-                        <!--<button  class="btn btn-default modalMapSpare" data-a="<?php echo $fetch_list->id;?>" href='#mapSpare'  type="button" data-toggle="modal" data-backdrop='static' data-keyboard='false' formid = "#mapSpareForm" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button>-->
-                      </tfoot>
                     </table>
                   </div>
                 </div>
@@ -1053,134 +1009,8 @@
 <!--main-content close-->
 <?php
   $this->load->view("footer.php");
-  ?>
-<SCRIPT language="javascript">
-  function addRow(tableID) {
-  
-  	var table = document.getElementById(tableID);
-  
-  	var rowCount = table.rows.length;
-  	var row = table.insertRow(rowCount);
-  
-  var cell1 = row.insertCell(0);
-  	var element1 = document.createElement("input");
-  	element1.type = "checkbox";
-  	element1.name="chkbox[]";
-  	cell1.appendChild(element1);
-  	
-  var cell2 = row.insertCell(1);
-  	var element2 = document.createElement("select");
-  	element2.name = "spare_id[]";
-  	element2.className="form-control";
-  	element2.style.width="250px";
-  	var option1 = document.createElement("option");
-  	option1.innerHTML = "--Select--";
-    option1.value = "";
-    element2.appendChild(option1, null);
-  <?php
-    $contactQuery=$this->db->query("select *from tbl_product_stock where status='A'");
-    foreach($contactQuery->result() as $getContact){
-    ?>
-  
-    var option2 = document.createElement("option");
-    option2.innerHTML = "<?=$getContact->productname;?>";
-    option2.value = "<?=$getContact->Product_id;?>";
-    element2.appendChild(option2, null);
-    
-  <?php }?>
-  	cell2.appendChild(element2);
-  	
-  
-  }
-  
-  
-  
-  function deleteRow(tableID) {
-  	try {
-  	var table = document.getElementById(tableID);
-  	var rowCount = table.rows.length;
-  
-  	for(var i=0; i<rowCount; i++) {
-  		var row = table.rows[i];
-  		var chkbox = row.cells[0].childNodes[0];
-  		if(null != chkbox && true == chkbox.checked) {
-  			table.deleteRow(i);
-  			rowCount--;
-  			i--;
-  		}
-  
-  
-  	}
-  	}catch(e) {
-  		alert(e);
-  	}
-  }
-  
-  // function saveData()
-  // {
-  // 	  var code= document.getElementById("code").value;
-  // 	  var machine_name= document.getElementById("machine_name").value;
-  // 	  var machine_des= document.getElementById("machine_des").value;
-  // 	  var capacity= document.getElementById("capacity").value;
-   
-  // 	  if(code=='')
-  // 	  {
-  // 	   document.getElementById("codemsg").innerHTML = "Please Enter Code";
-  // 	   return false;
-  // 	  }
-  // 	 var xhttp = new XMLHttpRequest();
-  // 	 xhttp.open("GET", "insert_machine?code="+code+"&machine_name="+machine_name+"&machine_des="+machine_des+"&capacity="+capacity, false);
-  // 	 xhttp.send();
-  
-  // 	 $("#modal-0 .close").click();	   
-  // 	 document.getElementById("loadData").innerHTML = xhttp.responseText;
-  // 	 document.getElementById("code").value='';
-  // }
-  
-  
-  
-    
-</SCRIPT>
-<script>
-  /*$(document).ready(function() {
-    $.ajaxSetup({ cache: false }); // This part addresses an IE bug.  without it, IE will only load the first number and will never refresh
-    setInterval(function() {
-      //$('#getDataTable').load('get_machine');
-    }, 3000); // the "3000" 
-  });
-  */
-</script>
-<style>
-  .c-error .c-validation{ 
-  background: #c51244 !important;
-  padding: 10px !important;
-  border-radius: 0 !important;
-  position: relative; 
-  display: inline-block !important;
-  box-shadow: 1px 1px 1px #aaaaaa;
-  margin-top: 10px;
-  }
-  .c-error  .c-validation:before{ 
-  content: ''; 
-  width: 0; 
-  height: 0; 
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #c51244;
-  position: absolute; 
-  top: -10px; 
-  }
-  .c-label:after{
-  color: #c51244 !important;
-  }
-  .c-error input, .c-error select, .c-error .c-choice-option{ 
-  background: #fff0f4; 
-  color: #c51244;
-  }
-  .c-error input, .c-error select{ 
-  border: 1px solid #c51244 !important; 
-  }
-</style>
+?>
+
 <!-- view production GRN here -->
 <div id="modal-PurchaseGRN" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg">
@@ -1199,6 +1029,7 @@
     <!-- /.modal-dialog -->
   </div>
 </div>
+
 <!-- // ends -->
 <!-- order module starts here-->
 <div id="modal-order" class="modal fade" tabindex="-1" role="dialog">
@@ -1434,12 +1265,8 @@
             <?php
               ?>
             <div style="display:none">
-              <div class="col-sm-4">
-                <!--<label class="control-label">Product Name:</label> 
-                  <input type="text" class="form-control input-sm" value="" id="mproductname" onkeyup="getdatarowmatrial(this.value);" autocomplete="off"> 
-                  <ul style="position: absolute;z-index: 999999;top: 50px; width: 179%; margin-left: -39px;" id="productListData">
-                  </ul> -->
-                <input type="hidden" class="form-control input-sm" value="" id="mproductname"> 
+              <div class="col-sm-4">              
+              <input type="hidden" class="form-control input-sm" value="" id="mproductname"> 
                 <input type="hidden"  class="form-control" value="" id="mproductid" >
                 <label class="control-label">Raw Material:</label> <br>
                 <?php
@@ -1866,8 +1693,8 @@
   
   
   
-  function qtyVal(d)
-  {
+function qtyVal(d)
+{
   	
   var zz=document.getElementById(d).id;
   var myarra = zz.split("qty");
@@ -1878,7 +1705,8 @@
   
   if(Number(remQty)<Number(entQty))	
   {
-  alert("Enter Qty should be less then remaining Qty");
+    
+    alert("Enter Qty should be less then remaining Qty");
   	document.getElementById("qty"+asx).focus();	
   	document.getElementById("add_req").disabled = true;
   	
@@ -1886,10 +1714,10 @@
   }
   else
   {
-  document.getElementById("add_req").disabled = false;
-  	
+    document.getElementById("add_req").disabled = false;
   }
-  }
+
+}
 </script>
 <script>
   function selectListdata(ths){
@@ -1968,15 +1796,15 @@
                           var msg = "Data Successfully Add !";
                         else
                           var msg = "Data Successfully Updated !";
-  						$("#resultareaRaw").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
+  						          $("#resultareaRaw").text(msg);
+  						          setTimeout(function() {   //calls click event after a certain time
                          $("#modal-6 .close").click();
   					   
   					   
   					   
                          $("#resultareaRaw").text(" "); 
                          $('#requestRawMat')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
+  					             //$("#quotationTable").text(" "); 
   					   
                          //$("#id").val("");
        
@@ -2006,9 +1834,7 @@
         data: { 'id' : production_id },
         type: "POST",
         success: function(data){
-         // alert(data);
-          //alert("jkhkjh"+type);
-          //$("#listingData").hide();
+ 
           $("#listingPurchaseRawData").empty().append(data).fadeIn();
                 
        }
@@ -2024,9 +1850,7 @@
         data: { 'id' : production_id },
         type: "POST",
         success: function(data){
-         // alert(data);
-          //alert("jkhkjh"+type);
-          //$("#listingData").hide();
+
           $("#listingPurchaseGRNData").empty().append(data).fadeIn();
                 
        }
@@ -2042,9 +1866,7 @@
         data: { 'id' : production_id },
         type: "POST",
         success: function(data){
-         // alert(data);
-          //alert("jkhkjh"+type);
-          //$("#listingData").hide();
+
           $("#listingAjexRequestRM").empty().append(data).fadeIn();
                 
        }
@@ -2054,11 +1876,5 @@
   
   
   
-  /*
-  window.onbeforeunload = function (e) {
-  // Your logic to prepare for 'Stay on this Page' goes here 
   
-      return "Please click 'Stay on this Page' and we will give you candy";
-  };
-  */
 </script>
