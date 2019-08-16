@@ -412,13 +412,8 @@
           <div class="tabs-container">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#home" data-toggle="tab">Order</a></li>
-              <li style="display:none1;"><a href="#Transfer" data-toggle="tab">Transfer</a></li>
-              <li style="display:none;" ><a href="#receiveJobWork" data-toggle="tab">Transfer</a></li>
-              <li style="display:none1;"><a href="#store" data-toggle="tab">Stock</a></li>
-              <li style="display:none;"><a href="#PurchaseGRN" data-toggle="tab">Purchase GRN</a></li>
-              <li style="display:none" class=""><a href="#four" data-toggle="tab">Request Raw Material</a></li>
-              <li style="display:none" class=""><a href="#receiveRaw" data-toggle="tab">Receive Raw Material</a></li>
-              <li style="display:none" class=""><a href="#work_order" data-toggle="tab">Transfer to Module</a></li>
+              <li><a href="#Transfer" data-toggle="tab">Transfer</a></li>
+              <li><a href="#store" data-toggle="tab">Stock</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane  active" id="home">
@@ -585,7 +580,7 @@
               <div class="tab-pane" id="store">
                 <div class="panel-body">
                   <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover dataTables-example"  id="listingAjexRequestRM">
+                    <table class="table table-striped table-bordered table-hover dataTables-example___"  id="listingAjexRequestRM">
                       <thead>
                         <tr>
                           <th>
@@ -610,53 +605,50 @@
                       </thead>
                       <tbody>
                         <?php
-                          $poquery=$this->db->query("select * from tbl_product_stock where status='A' and type in(32) ");
-                          foreach($poquery->result() as $getPo){
+                          $poquery=$this->db->query("select * from tbl_production_order_log where lot_no='".$_GET['id']."' AND order_type='Kora Order' ");
+                          foreach($poquery->result() as $getPoLog){
+
+
                           	####### get product #######
-                          		$productStockQuery=$this->db->query("select * from tbl_product_stock where Product_id='$getPo->productid'");
+
+                          		$productStockQuery=$this->db->query("select * from tbl_product_stock where Product_id='$getPoLog->productid'");
                           		$getProductStock=$productStockQuery->row();
                           		####### ends ########
                           		
-                          		
-                          		$productUOMQuery=$this->db->query("select *from tbl_master_data where serial_number='$getPo->usageunit'");
+                          		$productUOMQuery=$this->db->query("select *from tbl_master_data where serial_number='$getProductStock->usageunit'");
                           		$getProductUOM=$productUOMQuery->row();
                           		####### ends ########
                           		
                           ?>
-                        <tr  class="gradeC record" data-row-id="<?php echo $fetch_list->Product_id; ?>">
+                        <tr  class="gradeC record">
                           <?php
-                            $queryType=$this->db->query("select *from tbl_master_data where serial_number='$getPo->type'");
+                            $queryType=$this->db->query("select * from tbl_master_data where serial_number='$getProductStock->type'");
                             $getType=$queryType->row();
                             ?>
-                          <th><?=$getPo->sku_no;?></th>
+                          <th><?=$getProductStock->sku_no;?></th>
                           <th><?=$getType->keyvalue;?></th>
                           <th>
                             <?php 
                               $compQuery = $this ->db
                               	   -> select('*')
-                              	   -> where('id',$getPo->category)
+                              	   -> where('id',$getProductStock->category)
                               	   -> get('tbl_category');
                               	  $compRow = $compQuery->row();
                               echo $compRow->name;
                               ?>
                           </th>
-                          <th><?=$getPo->productname;?></th>
+                          <th><?=$getProductStock->productname;?></th>
                           <th><?php
                             $compQuery1 = $this -> db
                             		   -> select('*')
-                            		   -> where('serial_number',$getPo->usageunit)
+                            		   -> where('serial_number',$getProductStock->usageunit)
                             		   -> get('tbl_master_data');
                             		  $keyvalue1 = $compQuery1->row();
                             echo $keyvalue1->keyvalue;		  
                             ?></th>
 
-                          <?php
-                            $queryQty=$this->db->query("select SUM(qty) as qty from tbl_production_order_transfer_another_module where module_name='Kora' and lot_no='".$_GET['id']."' and  productid='$getPo->Product_id'");
-                            $getQty=$queryQty->row();
-                            
-                            
-                            ?>
-                          <th><?php echo $getQty->qty;?></th>
+                         
+                          <th><?php echo $getPoLog->qty;?></th>
                           
                         </tr>
                         <?php }?>

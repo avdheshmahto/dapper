@@ -1355,9 +1355,11 @@ public function productionOrderInsert()
 		    	{
 		    			$p_ends='0';
 		    	}
-		    	else{
+		    	else
+		    	{
 						$p_ends='1';
 		    	}
+		    	
 			  if($qty[$i]!=''){
                  $data_dtl=array(
 				 'lot_no'		=> $lot_no,
@@ -1418,7 +1420,7 @@ $data_dtl_avl=array(
 
 if($grn_type=='Job Order')
 {
-			  $rm_q=$qty[$i]+$rm_qty[$i];
+	     $rm_q=$qty[$i]+$rm_qty[$i];
 		 if($ord_qty[$i]==$rm_q)
 		 {
 			 $this->db->query("update tbl_job_work set status='2' where job_order_no='$order_no'");
@@ -1430,9 +1432,9 @@ if($grn_type=='Job Order')
 
 	 }
 
-if($grn_type=='rm_receive')
-{
-			  $rm_q=$qty[$i]+$rm_qty[$i];
+	if($grn_type=='rm_receive')
+	{
+		 $rm_q=$qty[$i]+$rm_qty[$i];
 		 if($ord_qty[$i]==$rm_q)
 		 {
 			 $this->db->query("update tbl_issuematrial_hdr set status='2' where po='$order_no'");
@@ -1442,7 +1444,7 @@ if($grn_type=='rm_receive')
 			  $this->db->query("update tbl_job_work set status='3' where po='$order_no'");
 		 }
 
-	 }
+	}
 
 
 
