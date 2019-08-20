@@ -469,7 +469,7 @@ Thank you for your business.&nbsp;</div>
         $this->load->model('Model_admin_login');
         $this->Model_admin_login->update_user($pri_col, $table_name, $id, $data_merge);
         
-        echo $rows;
+        //echo $rows;
         for ($i = 0; $i < $rows; $i++) {
             if ($qty[$i] != '') {
                 $data_dtl = array(
@@ -501,11 +501,11 @@ Thank you for your business.&nbsp;</div>
             }
         }
         
-        //$this->software_log_insert($id,$vendor_id,$grand_total,'Invoice Updated');
-        echo "<script type='text/javascript'>";
+        redirect('buyerorder/manage_purchase_order');
+        /*echo "<script type='text/javascript'>";
         echo "window.close();";
         echo "window.opener.location.reload();";
-        echo "</script>";
+        echo "</script>";*/
         
         
     }

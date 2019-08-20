@@ -492,8 +492,9 @@
                     <?php if($_GET['view']!='')
                       {} else {?>
                     <input class="btn btn-sm" type="button" value="SAVE"   id="sv1" onclick="fsv(this)" >&nbsp;
-                    <?php }?>
-                    <a onclick="popupclose(this.value)" class="btn btn-secondary btn-sm">Cancel</a>
+                    <?php } ?>
+                    <!-- <a onclick="popupclose(this.value)" class="btn btn-secondary btn-sm">Cancel</a> -->
+                    <a href="<?=base_url();?>buyerorder/manage_purchase_order" class="btn btn-secondary btn-sm">Cancel</a>
                   </th>
                 </tr>
 
@@ -569,15 +570,18 @@
 
         document.getElementById("tot").value = Math.round(tott);
         document.getElementById("ord_qty").value = Math.round(totalPackingCrt);
-        document.getElementById("priceT").focus();}
-        document.getElementById("priceT").onchange = function (e) {
+        document.getElementById("priceT").focus();
+      }
+       
+      document.getElementById("priceT").onchange = function (e) 
+      {
 
         var entr  = (e.keyCode);
         var total_qty=document.getElementById("qn").value;
         var priceT=document.getElementById("priceT").value;
         var total=Number(total_qty)*Number(priceT);
 
-        document.getElementById("nettot").value=total;
+        document.getElementById("nettot").value=total.toFixed(3);
         document.getElementById("nettot").focus();
     
         // if(document.getElementById("priceT").value=="" && entr==08)
@@ -668,10 +672,10 @@
     		var gstTotal=document.getElementById("gstTotal"+id).value;
     		var pri_id=document.getElementById("main_id"+id).value;
     		// ####### ends ##############//
-    
+        
     		// ####### starts ##############//
     		document.getElementById("pri_id").value=pri_id;
-    		document.getElementById("ord_qty").focus();
+    		document.getElementById("qn").focus();
     		document.getElementById("prd").value=pd;
     		document.getElementById("usunit").value=unit;
     		document.getElementById("qn").value=qn;
@@ -1424,7 +1428,7 @@
     }
     // ##### ends ###########
     
-           function getvalues(){
+function getvalues(){
 		
     var inps  = document.getElementsByName('main_id[]');
 	
@@ -1437,7 +1441,82 @@
        var webcamval = myarr;
     return webcamval.join(",");
 }    
-  </script>
+
+
+
+
+
+      document.getElementById("qn").onchange = function (e) 
+      {
+    
+        var entr  = (e.keyCode);
+        var rate  = document.getElementById("lph").value;
+        var per_crt_qn  = document.getElementById("per_crt_qn").value;
+        var ord_qty  = document.getElementById("ord_qty").value;
+        var qnt   = document.getElementById("qn").value;    
+        var totalQty=Number(qnt)*Number(per_crt_qn);        
+        //document.getElementById("qn").value=totalQty;
+        var total = Number(qnt)*Number(rate)/100;
+        //alert(total);
+        var tott=Number(total)+Number(qnt);
+        var totalPackingCrt=Number(qnt)/Number(per_crt_qn);
+
+        document.getElementById("tot").value = Math.round(tott);
+        document.getElementById("ord_qty").value = Math.round(totalPackingCrt);
+
+        var total_qty=document.getElementById("qn").value;
+        var priceT=document.getElementById("priceT").value;
+        var total=Number(total_qty)*Number(priceT);
+
+        document.getElementById("nettot").value=total.toFixed(3);
+        
+        document.getElementById("priceT").focus();
+      }
+       
+      document.getElementById("priceT").onchange = function (e) 
+      {
+
+        var entr  = (e.keyCode);
+        var total_qty=document.getElementById("qn").value;
+        var priceT=document.getElementById("priceT").value;
+        var total=Number(total_qty)*Number(priceT);
+
+        document.getElementById("nettot").value=total.toFixed(3);
+        document.getElementById("nettot").focus();
+    
+        // if(document.getElementById("priceT").value=="" && entr==08)
+        // {
+    
+        // }
+      
+       if (e.keyCode == "13")
+       {
+      
+         e.preventDefault();
+         e.stopPropagation();
+        
+          if(ppp!=='' || ef==1)
+          {
+      
+            adda();     
+            
+            var ddid=document.getElementById("spid").value;
+            var ddi=document.getElementById(ddid);
+            ddi.id="d";
+          
+          }
+          else
+          {
+             alert("Enter Correct Product");
+          }
+          return false;
+       }
+    }
+
+
+
+
+</script>
 
 </form>
 </div>
