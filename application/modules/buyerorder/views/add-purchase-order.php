@@ -1090,7 +1090,7 @@
     
       // ####### starts ##############//
       document.getElementById("pri_id").value=pri_id;
-      document.getElementById("ord_qty").focus();
+      document.getElementById("qn").focus();
       document.getElementById("ord_qty").value=ord_qty;
       document.getElementById("per_crt_qn").value=per_crt_qn;
       document.getElementById("priceT").value=priceT;        

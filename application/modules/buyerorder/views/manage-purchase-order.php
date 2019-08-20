@@ -139,8 +139,11 @@
                       else
                       {
                       ?>
-                    <button class="btn btn-default" onClick="openpopup('<?=base_url();?>buyerorder/edit_purchase_order_1',1400,600,'view',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-eye"></i></button>
-                    <button class="btn btn-default" onClick="openpopup('<?=base_url();?>buyerorder/edit_purchase_order_1',1400,600,'id',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-pencil"></i></button>
+                    <!-- <button class="btn btn-default" onClick="openpopup('<?=base_url();?>buyerorder/edit_purchase_order_1',1400,600,'view',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-eye"></i></button> -->
+                     <a class="btn btn-default" href="<?=base_url();?>buyerorder/edit_purchase_order_1?view=<?=$sales->purchaseid;?>" > <i class="icon-eye"></i></a>
+                    <!-- <button class="btn btn-default" onClick="openpopup('<?=base_url();?>buyerorder/edit_purchase_order_1',1400,600,'id',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-pencil"></i></button> -->
+
+                    <a class="btn btn-default" href="<?=base_url();?>buyerorder/edit_purchase_order_1?id=<?=$sales->purchaseid;?>" > <i class="icon-pencil"></i></a>
                     <?php
                       $pri_col    = 'purchaseid';
                       $table_name = 'tbl_quotation_purchase_order_hdr';
