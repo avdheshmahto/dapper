@@ -170,7 +170,7 @@
                       $("#OrderTransferToModuleresultarea").text(data);
   					
                    }
-  				// ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
+  				ajex_transferKoraTo();
    
   	 
       console.log(data);
@@ -356,7 +356,13 @@
        }
       });*/
   }
-  
+
+function ajex_transferKoraTo(){
+
+  window.location.reload();
+
+}
+
 </script>
 <!-- Main content -->
 <div class="main-content">
@@ -432,7 +438,6 @@
                       </thead>
                       <tbody>
                         <?php
-                          //echo "select *from tbl_job_work where production_id='".$_GET['id']."'";
                           
                           $queryData=$this->db->query("select *from tbl_job_work where lot_no='".$_GET['id']."' and order_type='Kora Order'");
                             foreach($queryData->result() as $fetch_list)
@@ -475,9 +480,9 @@
                                            
                         $poquery=$this->db->query("select *from tbl_production_order_log where order_no='$fetch_list->job_order_no' and grn_type='Kora Order'");
                         $cntData=$poquery->num_rows();					   
-                        					   if($cntData>0){
-						   
-					  
+          					   if($cntData>0){
+ 
+
           					    ?>
                         <button class="btn btn-default" onclick="return confirm('Please Delete Child Data First');" type="button"><i class="icon-trash"></i></button>
                        <?php
@@ -559,7 +564,7 @@
 
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewTransferOrder('<?=$getPo->transfer_no;?>');" data-toggle="modal" data-target="#modal-view-transfer" type="button" ><i class="fa fa-eye"></i></button>
-                            <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
+                            <!-- <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a> -->
                             <a target="_blank" href="<?=base_url();?>kora/print_transfer_challan?id=<?=$getPo->transfer_no;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
                           </th>
                         </tr>
