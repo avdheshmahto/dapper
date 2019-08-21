@@ -5,15 +5,17 @@ class model_finish extends CI_Model
     function getfinish($last, $strat)
     {
         
-        $query = $this->db->query("select * from tbl_production_order_transfer_another_module where status='A' and module_name='Finish'    group by lot_no desc limit $strat,$last ");
+        $query = $this->db->query("select * from tbl_production_order_transfer_another_module where status='A' and module_name='Finish'    group by lot_no  limit $strat,$last ");
         return $result = $query->result();
+
     }
     
     function filterfinishList($perpage, $pages, $get)
     {
         
-        $qry = "select * from tbl_production_order_log where status = 'A' group by lot_no";
-        if (sizeof($get) > 0) {
+        $qry = "select * from tbl_production_order_transfer_another_module where status = 'A' ";
+        
+        /*if (sizeof($get) > 0) {
             if ($get['p_id'] != "")
                 $qry .= " AND lot_no = '" . $get['p_id'] . "'";
             if ($get['date'] != "")
@@ -26,15 +28,20 @@ class model_finish extends CI_Model
             }
             if ($get['qty'] != "")
                 $qry .= " AND qty = '" . $get['qty'] . "'";
-        }
+        }*/
+
+        $qry .= "group by lot_no";
         $data = $this->db->query($qry)->result();
         return $data;
+
     }
     
     function count_finish($tableName, $status = 0, $get)
     {
-        $qry = "select count(*) as countval from tbl_production_order_log where status='A'";
-        if (sizeof($get) > 0) {
+
+        $qry = "select count(*) as countval from tbl_production_order_transfer_another_module where status='A' and module_name='Finish'";
+
+        /*if (sizeof($get) > 0) {
             if ($get['p_id'] != "")
                 $qry .= " AND lot_no = '" . $get['p_id'] . "' ";
             if ($get['date'] != "")
@@ -47,7 +54,9 @@ class model_finish extends CI_Model
             }
             if ($get['qty'] != "")
                 $qry .= " AND qty = '" . $get['qty'] . "'";
-        }
+        }*/
+
+        $qry .= " group by lot_no ";
         
         $query = $this->db->query($qry, array(
             $status
@@ -156,12 +165,9 @@ class model_finish extends CI_Model
     //ends
     
     
-    
-    
-    
-    
     function modgetitemspharemap($id)
     {
+
         $qry   = "select * from tbl_quotation_purchase_order_dtl where purchaseid = $id AND status='A'";
         $query = $this->db->query($qry)->result();
         $arr   = "";
@@ -207,6 +213,8 @@ class model_finish extends CI_Model
         }
         return $arr;
     }
+
+    
     
 }
 ?>
