@@ -1245,9 +1245,11 @@ public function scrap_grn_details()
 public function order_check()
 {
 	@extract($_POST);
-	$data=array('id' => $id,
+	$data=array(
+	'id' => $id,
 	'order_type' => $order_type,
-	'lot_no' => $lot_no
+	'lot_no' => $lot_no,
+	'job_lot_no' => $job_lot_no
 	);
 	$this->load->view("order-check",$data);
 }
@@ -1278,9 +1280,11 @@ public function order_details_repair_grn()
 public function order_transfer()
 {
 	@extract($_POST);
-	$data=array('id' => $id,
+	$data=array(
+	'id' => $id,
 	'order_type' => $order_type,
-	'lot_no' => $lot_no
+	'lot_no' => $lot_no,
+	'jo_no' => $jo_no
 	);
 	$this->load->view("order-transfer",$data);
 }
@@ -1513,6 +1517,7 @@ public function productionOrderTransferToModule()
 			  if($qty[$i]!=''){
                  $data_dtl=array(
 				 'lot_no'		=> $lot_no,
+				 'jo_no'        => $jo_no,
 				 'order_no'		=> $order_no,
 				 'transfer_no' => $transfer_no,
 				 'transfer_date' => $transfer_date,

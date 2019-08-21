@@ -284,12 +284,12 @@
   
   var order_type=document.getElementById("order_type").innerHTML;
   var lot_no=document.getElementById("lot_no").innerHTML;
-  
+  var job_lot_no=document.getElementById("job_lot_no").value;
    	$.ajax({   
   		    type: "POST",  
   			url: "order_check",  
   			cache:false,  
-  			data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},  
+  			data: {'id':viewId,'order_type':order_type,'lot_no':lot_no,'job_lot_no':job_lot_no},  
   			success: function(data)  
   			{  
   			  
@@ -736,7 +736,7 @@
                     <div class="col-xs-6 col-sm-6 col-md-6">
                       <div class="form-group">
                         <h4>Lot No.</h4>
-                        <input type="text" name="" value="<?=$getsched->lot_no;?>" id="first_name" class="form-control" readonly >
+                        <input type="text" name="" id="job_lot_no" value="<?=$getsched->lot_no;?>" id="first_name" class="form-control" readonly >
                       </div>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6">
@@ -1055,7 +1055,7 @@
                         <?php }?>
                         <tr class="gradeU">
                           <td>
-                            <button style="display:none1" type="button" class="btn btn-default modalMapSpare" onclick="Order_check('<?=$getsched->job_order_no;?>');" data-toggle="modal" data-target="#modal-order-checking"><img src="<?=base_url();?>assets/images/plus.png" /></button>
+                            <button style="display:none1" type="button" class="btn btn-default" onclick="Order_check('<?=$getsched->job_order_no;?>');" data-toggle="modal" data-target="#modal-order-checking"><img src="<?=base_url();?>assets/images/plus.png" /></button>
                           </td>
                           <td>&nbsp;</td>
                           <td>&nbsp;</td>

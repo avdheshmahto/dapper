@@ -1,5 +1,5 @@
 <?php
-  $orderQuery=$this->db->query("select *from tbl_job_work where job_order_no='$id'");
+  $orderQuery=$this->db->query("select *from tbl_job_work where job_order_no='$id' AND id='$lot_no' AND lot_no='$job_lot_no'");
   $getOrder=$orderQuery->row();
   
   ?>
@@ -24,10 +24,7 @@
               <label for="po_order">Order Date.:</label>
               <input type="text" name="check_date"  class="form-control" value="<?=$getOrder->date;?>" readonly="readonly" required />
             </div>
-            <!--  <div class="col-sm-6" id="grnId" >
-              <label for="po_order">GRN No.:</label>
-                <input type="text" name="grn_no" class="form-control" required readonly="readonly" value="<?=$getHdr->grn_no;?>"  />
-                             </div> -->
+
           </div>
           <div class="form-group">
             <div class="col-sm-6">
@@ -38,17 +35,13 @@
               <label for="po_order">Check Date</label>
               <input type="date" name="check_date"  class="form-control" value="<?=$getOrder->order_receive_date;?>"  required />
             </div>
-            <!--  <div class="col-sm-6" id="grnId" >
-              <label for="po_order">GRN No.:</label>
-                <input type="text" name="grn_no" class="form-control" required readonly="readonly" value="<?=$getHdr->grn_no;?>"  />
-                             </div> -->
+ 
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- <div class="table-responsive-">
-    </div> -->
+
   <div class="" id="style-3-y">
     <div class="force-overflow-y">
       <div class="table-responsive">
@@ -68,7 +61,7 @@
             </tr>
           </thead>
           <?php
-            $productQuery=$this->db->query("select SUM(qty) as qty,productid from tbl_production_order_log where order_no='$id' and grn_type='Job Order' group by productid");
+            $productQuery=$this->db->query("select SUM(qty) as qty,productid from tbl_production_order_log where order_no='$id' AND job_order_id='$lot_no' AND lot_no='$job_lot_no' AND grn_type='Job Order' group by productid");
             $i=1;
             foreach($productQuery->result() as $getProduct){
             ####### get product #######
@@ -80,10 +73,6 @@
             $productUOMQuery=$this->db->query("select *from tbl_master_data where serial_number='$getProductStock->usageunit'");
             $getProductUOM=$productUOMQuery->row();
             ####### ends ########
-            
-            
-            
-            
             
             ####### get product serial #######
             $productStockSerialQuery=$this->db->query("select * from tbl_product_serial where product_id='$getProduct->part_id'");
@@ -98,33 +87,38 @@
               <input type="hidden"  name="productid[]" value="<?=$getProduct->productid;?>" class="form-control">
             </td>
             <td><?=$getProductUOM->keyvalue;?></td>
+            
             <?php
-              // select M.*,S.Product_id,S.quantity,S.usageunit,S.productname,S.Product_id from tbl_part_price_mapping M,tbl_product_stock S,tbl_machine MM where M.rowmatial = S.Product_id AND MM.id = M.machine_id AND MM.machine_name = $pid 
-              
-              $poLogQuery=$this->db->query("select D.qty as po_qty,SUM(M.qty) as mqty from tbl_quotation_purchase_order_dtl D,tbl_part_price_mapping M,tbl_machine MM where MM.machine_name = D.productid AND MM.id = M.machine_id AND D.purchaseid='$getHdr->po_no' and M.rowmatial='$getProduct->productid' AND M.type ='part'");
-              $getPoQty=$poLogQuery->row();
-              
-              
-              ?>
-            <?php
-              $inbountLogGRNLogQuery=$this->db->query("select SUM(transfer_qty) as rec_qty from tbl_production_order_check where productid='$getProduct->productid' AND job_order_id = '$lot_no' and order_no='$id'");
-              			$getInboundGRNLog=$inbountLogGRNLogQuery->row();
-              
-              
-              			?>
+
+              $transQty=$this->db->query("select SUM(transfer_qty) as trans_qty from tbl_production_order_check where productid='$getProduct->productid' AND job_order_id = '$lot_no' and order_no='$id' AND lot_no='$job_lot_no'");
+        			$getTransQty=$transQty->row();
+
+              $repairQty=$this->db->query("select SUM(repair_qty) as repa_qty from tbl_production_order_check where productid='$getProduct->productid' AND job_order_id = '$lot_no' and order_no='$id' AND lot_no='$job_lot_no'");
+              $getRepairQty=$repairQty->row();
+
+              $scrapQty=$this->db->query("select SUM(scrap_qty) as scra_qty from tbl_production_order_check where productid='$getProduct->productid' AND job_order_id = '$lot_no' and order_no='$id' AND lot_no='$job_lot_no' ");
+              $getScrapQty=$scrapQty->row();
+
+              $sumCheckingQty=$getTransQty->trans_qty + $getRepairQty->repa_qty + $getScrapQty->scra_qty ;
+        
+        		?>
+
             <input type="hidden" min="0" name="ord_qty[]" value="<?=$getProduct->qty;?>" class="form-control">
-            <input type="hidden" min="0" name="rm_qty[]" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" class="form-control">
+            <input type="hidden" min="0" name="rm_qty[]" value="<?=$getProduct->qty-$sumCheckingQty;?>" class="form-control">
             <td><?=$getProduct->qty;?></td>
-            <input type="hidden"  arrt="scrap_qty" id="remQty<?=$i;?>" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" />
-            <td><?php echo $reci_qty=$getProduct->qty-$getInboundGRNLog->rec_qty;?></td>
+            <input type="hidden"  arrt="scrap_qty" id="remQty<?=$i;?>" value="<?=$getProduct->qty-$sumCheckingQty;?>" />
+            <td><?php echo $reci_qty=$getProduct->qty-$sumCheckingQty;?></td>
+            
             <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
-            <td><input name="transfer_qty[]" id="transfer_qty<?=$i;?>" arrt="transfer_qty" onkeyup="checkQtyVal(this)" type="number" min="0" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
-            <td><input name="repair_qty[]"  id="repair_qty<?=$i;?>" arrt="repair_qty" onkeyup="checkQtyVal(this)" type="number" min="0"  class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
-            <td><input name="scrap_qty[]" arrt="scrap_qty" id="scrap_qty<?=$i;?>" onkeyup="checkQtyVal(this)" type="number" min="0"  class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> />
+            
+            <td><input name="transfer_qty[]" id="transfer_qty<?=$i;?>" arrt="transfer_qty" onkeyup="checkQtyVal(this)" type="number" min="0" class="form-control"<?php if($reci_qty<=0){?> readonly="readonly" <?php }?> /></td>
+            <td><input name="repair_qty[]"  id="repair_qty<?=$i;?>" arrt="repair_qty" onkeyup="checkQtyVal(this)" type="number" min="0"  class="form-control"<?php if($reci_qty<=0){?> readonly="readonly" <?php }?> /></td>
+            <td><input name="scrap_qty[]" arrt="scrap_qty" id="scrap_qty<?=$i;?>" onkeyup="checkQtyVal(this)" type="number" min="0"  class="form-control"<?php if($reci_qty<=0){?> readonly="readonly" <?php }?> />
             
            <input name="test_qty[]" type="hidden"    class="form-control" /> 
             </td>
-            <td><input name="name[]"   type="text" class="form-control" /></td>
+          <td><input name="name[]"   type="text" class="form-control" /></td>
+          
           </tr>
           <?php 
             $i++;
