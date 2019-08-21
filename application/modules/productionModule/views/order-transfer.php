@@ -1,5 +1,5 @@
 <?php
-  $orderQuery=$this->db->query("select * from tbl_production_available_order where lot_no='$lot_no'");
+  $orderQuery=$this->db->query("select * from tbl_production_available_order where lot_no='$lot_no' AND order_no='$jo_no'");
   $getOrder=$orderQuery->row();
   
   ?>
@@ -12,6 +12,7 @@
             <div class="col-sm-6">
               <input type="hidden" name="grn_type" value="<?=$getOrder->order_type;?>" />
               <input type="hidden" name="job_order_id" value="<?=$id;?>" />
+              <input type="hidden" name="jo_no" value="<?=$jo_no;?>" />
               <input type="hidden" name="vendor_id" value="<?=$getOrder->vendor_id;?>" />
               <label for="po_order">Order No.:</label>
               <input type="hidden" name="lot_no" value="<?=$getOrder->lot_no;?>" />
@@ -75,7 +76,7 @@
             </tr>
           </thead>
           <?php
-            $productQuery=$this->db->query("select SUM(transfer_qty) as qty ,productid from tbl_production_available_order where lot_no='$id' and order_type='Job Order' group by productid" );
+            $productQuery=$this->db->query("select SUM(transfer_qty) as qty ,productid from tbl_production_available_order where lot_no='$lot_no' AND order_no='$jo_no' and order_type='Job Order' group by productid" );
             $i=1;
             foreach($productQuery->result() as $getProduct){
             ####### get product #######
@@ -102,8 +103,8 @@
             <td><?=$getProductUOM->keyvalue;?></td>
             
             <?php
-              $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_production_order_transfer_another_module where productid='$getProduct->productid' AND  order_no='$id' and  module_name='Kora'");
-              			$getInboundGRNLog=$inbountLogGRNLogQuery->row();
+              $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_production_order_transfer_another_module where productid='$getProduct->productid' AND  job_order_id='$id' AND lot_no='$lot_no' AND jo_no='$jo_no' and  module_name='Kora'");
+              $getInboundGRNLog=$inbountLogGRNLogQuery->row();
             ?>
             
             <input type="hidden" min="0" name="ord_qty[]" value="<?=$getProduct->qty;?>" class="form-control">

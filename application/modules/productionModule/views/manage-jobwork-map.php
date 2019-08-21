@@ -156,7 +156,7 @@
     }
   
   
-  function Order_transfer(viewId){
+  function Order_transfer(viewId,joId){
   
   var order_type=document.getElementById("order_type").innerHTML;
   var lot_no=document.getElementById("lot_no").innerHTML;
@@ -165,7 +165,7 @@
           type: "POST",
         url: "order_transfer",
         cache:false,
-        data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},
+        data: {'id':viewId,'jo_no':joId,'order_type':order_type,'lot_no':lot_no},
         success: function(data)
         {
   
@@ -430,7 +430,7 @@
                         <?php }?>
                         <tr class="gradeU">
                           <td>
-                            <button style="display:none1" type="button" class="btn btn-default" onclick="Order_transfer('<?=$_GET['id'];?>');" data-toggle="modal" data-target="#modal-order-transfer"><img src="<?=base_url();?>assets/images/plus.png" /></button>
+                            <button style="display:none1" type="button" class="btn btn-default" onclick="Order_transfer('<?=$_GET['id'];?>','<?=$_GET['jo_no'];?>');" data-toggle="modal" data-target="#modal-order-transfer"><img src="<?=base_url();?>assets/images/plus.png" /></button>
                           </td>
                           <td>&nbsp;</td>
                           <td>&nbsp;</td>
