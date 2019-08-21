@@ -86,31 +86,36 @@
               <input type="hidden"  name="productid[]" value="<?=$getProduct->productid;?>" class="form-control">
             </td>
             <td><?=$getProductUOM->keyvalue;?></td>
-            <?php
-              
-              $poLogQuery=$this->db->query("select D.qty as po_qty,SUM(M.qty) as mqty from tbl_quotation_purchase_order_dtl D,tbl_part_price_mapping M,tbl_machine MM where MM.machine_name = D.productid AND MM.id = M.machine_id AND D.purchaseid='$getHdr->po_no' and M.rowmatial='$getProduct->productid' AND M.type ='part'");
-              $getPoQty=$poLogQuery->row();
-              
-              
-              ?>
+            
             <?php
             
-              $inbountLogGRNLogQuery=$this->db->query("select SUM(transfer_qty) as rec_qty from tbl_production_order_check where productid='$getProduct->productid' AND job_order_id = '$lot_no' and order_no='$id'");
-              			$getInboundGRNLog=$inbountLogGRNLogQuery->row();
-              
-              
-              			?>
+              $transQty=$this->db->query("select SUM(transfer_qty) as trans_qty from tbl_production_order_check where productid='$getProduct->productid' AND job_order_id = '$lot_no' and order_no='$id'");
+              $getTransQty=$transQty->row();
+
+              $repairQty=$this->db->query("select SUM(repair_qty) as repa_qty from tbl_production_order_check where productid='$getProduct->productid' AND job_order_id = '$lot_no' and order_no='$id'");
+              $getRepairQty=$repairQty->row();
+
+              $scrapQty=$this->db->query("select SUM(scrap_qty) as scra_qty from tbl_production_order_check where productid='$getProduct->productid' AND job_order_id = '$lot_no' and order_no='$id'");
+              $getScrapQty=$scrapQty->row();
+
+              $checkingSumQty=$getTransQty->trans_qty + $getRepairQty->repa_qty + $getScrapQty->scra_qty ;
+            
+            ?>
+            
             <input type="hidden" min="0" name="ord_qty[]" value="<?=$getProduct->qty;?>" class="form-control">
-            <input type="hidden" min="0" name="rm_qty[]" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" class="form-control">
+            <input type="hidden" min="0" name="rm_qty[]" value="<?=$getProduct->qty-$checkingSumQty;?>" class="form-control">
             <td><?=$getProduct->qty;?></td>
-            <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" />
-            <input type="hidden" name="test_qty[]" value="" />
-            <td><?php echo $reci_qty=$getProduct->qty-$getInboundGRNLog->rec_qty;?></td>
+            <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->qty-$checkingSumQty;?>" />
+            <input type="hidden" name="test_qty[]" value="" >
+            <td><?php echo $reci_qty=$getProduct->qty-$checkingSumQty;?></td>
+
             <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
-            <td><input name="transfer_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
-            <td><input name="repair_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
-            <td><input name="scrap_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
+
+            <td><input name="transfer_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty<=0){?> readonly="readonly" <?php }?> /></td>
+            <td><input name="repair_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty<=0){?> readonly="readonly" <?php }?> /></td>
+            <td><input name="scrap_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty<=0){?> readonly="readonly" <?php }?> /></td>
             <td><input name="name[]"   type="text" class="form-control" /></td>
+
           </tr>
           <?php 
             $i++;
