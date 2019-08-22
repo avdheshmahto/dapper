@@ -53,68 +53,58 @@
                   <th>
                     <div style="width:120px;">Total Stock</div>
                   </th>
-                  <!-- <th><div style="width:120px;">Action</div></th> -->  
                 </tr>
               </thead>
               <tbody>
-                <?php
-                  $poquery=$this->db->query("select * from tbl_product_stock where status='A' and type in(32) ");
-                  foreach($poquery->result() as $getPo){
-                  	####### get product #######
-                  		$productStockQuery=$this->db->query("select * from tbl_product_stock where Product_id='$getPo->productid'");
-                  		$getProductStock=$productStockQuery->row();
-                  		####### ends ########
-                  		
-                  		
-                  		$productUOMQuery=$this->db->query("select *from tbl_master_data where serial_number='$getPo->usageunit'");
-                  		$getProductUOM=$productUOMQuery->row();
-                  		####### ends ########
-                  		
-						
-						$serialquery=$this->db->query("select *from tbl_product_serial where product_id='$fetch_list->Product_id' and location_id='1'");
-					   $getSerialData=$serialquery->row();
-					   
-                  ?>
-                <tr  class="gradeC record" data-row-id="<?php echo $fetch_list->Product_id; ?>">
-                  <?php
-                    $queryType=$this->db->query("select *from tbl_master_data where serial_number='$getPo->type'");
-                    $getType=$queryType->row();
-                    ?>
-                  <th><?=$getPo->sku_no;?></th>
-                  <th><?=$getType->keyvalue;?></th>
-                  <th>
-                    <?php 
-                      $compQuery = $this ->db
-                      	   -> select('*')
-                      	   -> where('id',$getPo->category)
-                      	   -> get('tbl_category');
-                      	  $compRow = $compQuery->row();
-                      echo $compRow->name;
-                      ?>
-                  </th>
-                  <th><?=$getPo->productname;?></th>
-                  <th><?php
-                    $compQuery1 = $this -> db
-                    		   -> select('*')
-                    		   -> where('serial_number',$getPo->usageunit)
-                    		   -> get('tbl_master_data');
-                    		  $keyvalue1 = $compQuery1->row();
-                    echo $keyvalue1->keyvalue;		  
-                    ?></th>
-                 
-                  <?php
-                    $queryQty=$this->db->query("select SUM(qty) as qty from tbl_production_order_transfer_another_module where module_name='Finish' and  productid='$getPo->Product_id'");
-                    $getQty=$queryQty->row();
-                    
-                    
-                    ?>
+                        <?php
+                          $poquery=$this->db->query("select * from tbl_production_order_log where order_type='Finish Order' ");
+                          foreach($poquery->result() as $getPoLog){
 
-                  <th><?php echo $getQty->qty;?></th>
-                 
 
-                </tr>
-                <?php }?>
-              </tbody>
+                            ####### get product #######
+
+                              $productStockQuery=$this->db->query("select * from tbl_product_stock where Product_id='$getPoLog->productid'");
+                              $getProductStock=$productStockQuery->row();
+                              ####### ends ########
+                              
+                              $productUOMQuery=$this->db->query("select *from tbl_master_data where serial_number='$getProductStock->usageunit'");
+                              $getProductUOM=$productUOMQuery->row();
+                              ####### ends ########
+                              
+                          ?>
+                        <tr  class="gradeC record">
+                          <?php
+                            $queryType=$this->db->query("select * from tbl_master_data where serial_number='$getProductStock->type'");
+                            $getType=$queryType->row();
+                            ?>
+                          <th><?=$getProductStock->sku_no;?></th>
+                          <th><?=$getType->keyvalue;?></th>
+                          <th>
+                            <?php 
+                              $compQuery = $this ->db
+                                   -> select('*')
+                                   -> where('id',$getProductStock->category)
+                                   -> get('tbl_category');
+                                  $compRow = $compQuery->row();
+                              echo $compRow->name;
+                              ?>
+                          </th>
+                          <th><?=$getProductStock->productname;?></th>
+                          <th><?php
+                            $compQuery1 = $this -> db
+                                   -> select('*')
+                                   -> where('serial_number',$getProductStock->usageunit)
+                                   -> get('tbl_master_data');
+                                  $keyvalue1 = $compQuery1->row();
+                            echo $keyvalue1->keyvalue;      
+                            ?></th>
+
+                         
+                          <th><?php echo $getPoLog->qty;?></th>
+                          
+                        </tr>
+                        <?php }?>
+                      </tbody>
               
             </table>
           </div>
