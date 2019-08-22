@@ -1,7 +1,7 @@
 <?php
   $this->load->view("header.php");
   
-  $scheQuery=$this->db->query("select *from tbl_job_work where id='".$_GET['id']."' ");
+  $scheQuery=$this->db->query("select * from tbl_job_work where id='".$_GET['id']."' ");
   $getsched=$scheQuery->row();
   $input = $getsched->qty;
   $res = explode(',',$input);
@@ -21,7 +21,7 @@
   	var form_data = new FormData(document.getElementById("myProduction_order_repair"));
   	form_data.append("label", "WEBUPLOAD");
   	$.ajax({
-  		url: "productionModule/productionOrderRepair",
+  		url: "<?=base_url();?>productionModule/productionOrderRepair",
   		type: "POST",
   		data: form_data,
   		processData: false,  // tell jQuery not to process the data
@@ -42,6 +42,9 @@
               }else{
               $("#OrderRepairresultarea").text(data);
   			}
+
+        ajex_finish_order_repair();
+
   			console.log(data);
       });
   	return false;     
@@ -49,13 +52,17 @@
   
   // ends
   
+  ajex_finish_order_repair()
+  {
+    window.location.reload();
+  }
   
   //starts order check  query
   function submitProductionOrderCheck() {
   	 var form_data = new FormData(document.getElementById("myProduction_order_check"));
   	form_data.append("label", "WEBUPLOAD");
   	$.ajax({
-  		url: "<?=base_url();?>finish/productionOrderCheck",
+  		url: "<?=base_url();?>productionModule/productionOrderCheck",
   		type: "POST",
   		data: form_data,
   		processData: false,  // tell jQuery not to process the data
@@ -69,18 +76,24 @@
   				$("#OrderCheckresultarea").text(msg);
   				setTimeout(function() {   //calls click event after a certain time
   				$("#modal-order-checking").click();
-  				$("#OrderRepairresultarea").text(" "); 
+  				$("#OrderCheckresultarea").text(" "); 
   				$('#myProduction_order_check')[0].reset(); 
   				}, 1000);
-                  }else{
-                  $("#OrderRepairresultarea").text(data);
+          }else{
+            $("#OrderCheckresultarea").text(data);
   				}
+          ajax_finish_order_checking();
   				console.log(data);
         });
   				return false;     
   }
   
   // ends
+
+  ajax_finish_order_checking()
+  {
+    window.location.reload();
+  }
   
   //starts order receive  query
   
@@ -98,30 +111,26 @@
     }).done(function( data ) {
   	//alert(data);
   	
-  	
   	  if(data == 1 || data == 2){
   		
-                        if(data == 1)
-  					    
-                          var msg = "Data Successfully Add !";
-                        else
-                          var msg = "Data Successfully Updated !";
-  						$("#Orderresultarea").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
-                         $("#modal-order").click();
-                         $("#Orderresultarea").text(" "); 
-                         $('#myProduction_order_receive')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
-  					   
-                         //$("#id").val("");
-       
-                      }, 1000);
-                    }else{
-                      $("#Orderresultarea").text(data);
-  					
-                   }
-  				 ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
-   
+                if(data == 1)
+		    
+                  var msg = "Data Successfully Add !";
+                else
+                  var msg = "Data Successfully Updated !";
+                
+			          $("#Orderresultarea").text(msg);
+			          setTimeout(function() {   //calls click event after a certain time
+                 $("#modal-order").click();
+                 $("#Orderresultarea").text(" "); 
+                 $('#myProduction_order_receive')[0].reset(); 
+
+              }, 1000);
+            }else{
+              $("#Orderresultarea").text(data);
+           }
+
+  				 ajax_load_finish_order_grn();
   	 
       console.log(data);
       //Perform ANy action after successfuly post data
@@ -131,6 +140,12 @@
   }
   // ends
   
+  ajax_load_finish_order_grn()
+  {
+    window.location.reload();
+  }
+
+  //================
   
   function Order_check(viewId){
  
@@ -177,7 +192,14 @@
    }
   
   
+  function viewScrap(v){
   
+  var pro=v;
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("GET", "<?=base_url();?>productionModule/view_scrap_order?ID="+pro, false);
+  xhttp.send();
+   document.getElementById("viewScrap").innerHTML = xhttp.responseText;
+  }
   
   
   
@@ -240,9 +262,10 @@
   
   var pro=v;
   var xhttp = new XMLHttpRequest();
-  xhttp.open("GET", "productionModule/view_repair_order?ID="+pro, false);
+  xhttp.open("GET", "<?=base_url()?>productionModule/view_repair_order?ID="+pro, false);
   xhttp.send();
    document.getElementById("viewRepairOrder").innerHTML = xhttp.responseText;
+
   }
   
   
@@ -587,16 +610,14 @@
           </div>
           <div class="tabs-container">
             <ul class="nav nav-tabs">
-              <li style="display:none;"  ><a href="#receiveJobWork" data-toggle="tab">RM Request</a></li>
-              <li ><a href="#home" data-toggle="tab" class="active">GRN</a></li>
-              <li ><a href="#check" data-toggle="tab">Checking</a></li>
-              <li style="display:none1;"><a href="#returnOrder" data-toggle="tab">Order Repair</a></li>
-              <li style="display:none1;"><a href="#scrap" data-toggle="tab">Scrap</a></li>
-              <li style="display:none" class=""><a href="#four" data-toggle="tab">Request Raw Material</a></li>
-              <li style="display:none" class=""><a href="#receiveRaw" data-toggle="tab">Receive Raw Material</a></li>
-              <li style="display:none" class=""><a href="#work_order" data-toggle="tab">Transfer to Module</a></li>
+              <li class="active"><a href="#home" data-toggle="tab" >GRN</a></li>
+              <li><a href="#check" data-toggle="tab">Checking</a></li>
+              <li><a href="#returnOrder" data-toggle="tab">Order Repair</a></li>
+              <li><a href="#scrap" data-toggle="tab">Scrap</a></li>
             </ul>
+
             <div class="tab-content">
+
               <div class="tab-pane " id="receiveJobWork">
                 <div class="panel-body">
                   <div class="table-responsive">
@@ -623,11 +644,8 @@
                               $poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$getPo->inboundid'");
                               $getQty=$poquery->row();
                               
-                             
-                              
                               $poquerygrnLog=$this->db->query("select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->po_no'");
                               $getQtygrnLog=$poquerygrnLog->row();
-                              
                               
                               ?>
                             <?=$getQty->qty;?>
@@ -679,6 +697,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="tab-pane active" id="home">
                 <div class="panel-body">
                   <div class="table-responsive">
@@ -716,7 +735,7 @@
                          $cntData=$poquery->num_rows();
 						 
                           if($cntData>0)
-						  {
+						              {
                           ?>
                        <button class="btn btn-default" onclick="return confirm('Please Delete Child Data First');" type="button"><i class="icon-trash"></i></button>
                           <?php }else{?>
@@ -743,6 +762,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="tab-pane" id="check">
                 <div class="panel-body">
                   <div class="table-responsive">
@@ -814,6 +834,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="tab-pane" id="scrap">
                 <div class="panel-body">
                   <div class="table-responsive">
@@ -864,9 +885,9 @@
                           <th>
                             
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
-                            <button class="btn btn-default" onclick="viewRawRequest('<?=$getPo->check_no;?>');" data-toggle="modal" data-target="#modal-rawRequest" type="button" ><i class="fa fa-eye"></i></button>
+                            <button class="btn btn-default" onclick="viewScrap('<?=$getPo->check_no;?>');" data-toggle="modal" data-target="#modal-viewScrap" type="button" ><i class="fa fa-eye"></i></button>
                                <button class="btn btn-default delbuttonOrderScrap" id="<?=$getPo->check_no; ?>" type="button"><i class="icon-trash"></i></button>   
-                            <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
+                           <!--  <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a> -->
                             
                             <a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
                           </th>
@@ -884,6 +905,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="tab-pane" id="returnOrder">
                 <div class="panel-body">
                   <div class="table-responsive">
@@ -908,11 +930,8 @@
                             $poquery=$this->db->query("select SUM(receive_qty) as qty from tbl_issuematrial_dtl where status='A' and inboundrhdr='$getPo->inboundid'");
                             $getQty=$poquery->row();
                             
-                            
-                            
                             $poquerygrnLog=$this->db->query("select SUM(receive_qty) as qty from tbl_receive_matrial_grn_log where status='A' and po_no='$getPo->po_no'");
                             $getQtygrnLog=$poquerygrnLog->row();
-                            
                             
                             ?>
                           <th style="display:none">
@@ -937,7 +956,9 @@
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewRepairOrder('<?=$getPo->repair_no;?>');" data-toggle="modal" data-target="#modal-view_order_repair" type="button" ><i class="fa fa-eye"></i></button>
                               <button class="btn btn-default delbuttonOrderRepair" id="<?=$getPo->repair_no; ?>" type="button"><i class="icon-trash"></i></button>
-                            <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>&check_no=<?=$getPo->check_no;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
+                            
+                            <!-- <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>&check_no=<?=$getPo->check_no;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a> -->
+                            
                             <a target="_blank" href="<?=base_url();?>productionModule/print_request_challan?id=<?=$getPo->inboundid;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
                           </th>
                           <?php }?>
@@ -965,102 +986,8 @@
 <!--main-content close-->
 <?php
   $this->load->view("footer.php");
-  ?>
-<SCRIPT language="javascript">
-  function addRow(tableID) {
-  
-  	var table = document.getElementById(tableID);
-  
-  	var rowCount = table.rows.length;
-  	var row = table.insertRow(rowCount);
-  
-  var cell1 = row.insertCell(0);
-  	var element1 = document.createElement("input");
-  	element1.type = "checkbox";
-  	element1.name="chkbox[]";
-  	cell1.appendChild(element1);
-  	
-  var cell2 = row.insertCell(1);
-  	var element2 = document.createElement("select");
-  	element2.name = "spare_id[]";
-  	element2.className="form-control";
-  	element2.style.width="250px";
-  	var option1 = document.createElement("option");
-  	option1.innerHTML = "--Select--";
-    option1.value = "";
-    element2.appendChild(option1, null);
-  <?php
-    $contactQuery=$this->db->query("select *from tbl_product_stock where status='A'");
-    foreach($contactQuery->result() as $getContact){
-    ?>
-  
-    var option2 = document.createElement("option");
-    option2.innerHTML = "<?=$getContact->productname;?>";
-    option2.value = "<?=$getContact->Product_id;?>";
-    element2.appendChild(option2, null);
-    
-  <?php }?>
-  	cell2.appendChild(element2);
-  	
-  
-  }
-  
-  
-  
-  function deleteRow(tableID) {
-  	try {
-  	var table = document.getElementById(tableID);
-  	var rowCount = table.rows.length;
-  
-  	for(var i=0; i<rowCount; i++) {
-  		var row = table.rows[i];
-  		var chkbox = row.cells[0].childNodes[0];
-  		if(null != chkbox && true == chkbox.checked) {
-  			table.deleteRow(i);
-  			rowCount--;
-  			i--;
-  		}
-  
-  
-  	}
-  	}catch(e) {
-  		alert(e);
-  	}
-  }
-  
+?>
 
-</script>
-<style>
-  .c-error .c-validation{ 
-  background: #c51244 !important;
-  padding: 10px !important;
-  border-radius: 0 !important;
-  position: relative; 
-  display: inline-block !important;
-  box-shadow: 1px 1px 1px #aaaaaa;
-  margin-top: 10px;
-  }
-  .c-error  .c-validation:before{ 
-  content: ''; 
-  width: 0; 
-  height: 0; 
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #c51244;
-  position: absolute; 
-  top: -10px; 
-  }
-  .c-label:after{
-  color: #c51244 !important;
-  }
-  .c-error input, .c-error select, .c-error .c-choice-option{ 
-  background: #fff0f4; 
-  color: #c51244;
-  }
-  .c-error input, .c-error select{ 
-  border: 1px solid #c51244 !important; 
-  }
-</style>
 <!-- view production GRN here -->
 <div id="modal-PurchaseGRN" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg">
@@ -1177,8 +1104,7 @@
         <h4 class="modal-title">View Production Log(Lot No.:-<?=$getsched->lot_no;?>)</h4>
         <div id="Orderresultarea" class="text-center " style="font-size: 15px;color: red;"></div>
         <div class="modal-body">
-          <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_order_receive" action="#" 
-            onsubmit="return submitProductionOrderReceive();"method="POST">
+          <form class="form-horizontal" role="form"  >
             <div class="row" id="view-production-log">
             </div>
           </form>
@@ -1247,6 +1173,28 @@
   </div>
 </div>
 <!-- ends -->
+
+<!-- start scrap view -->
+<div id="modal-viewScrap" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">View Check Order(Lot No.:-<?=$getsched->lot_no;?>)</h4>
+        <div id="resultarea" class="text-center " style="font-size: 15px;color: red;"></div>
+        <div class="modal-body">
+          <div class="row" id="viewScrap">
+          </div>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+</div>
+<!-- ends-->
+
+
 <!-- rm request starts here -->
 <div id="modal-6" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg">
