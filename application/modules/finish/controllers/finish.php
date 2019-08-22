@@ -144,7 +144,8 @@ class finish extends my_controller
         @extract($_POST);
         $data = array(
             'id' => $shape,
-            'production_id' => $production_id
+            'production_id' => $production_id,
+            'shapeName'  => $shapePart
         );
         $this->load->view("getpartCode", $data);
     }
@@ -237,15 +238,17 @@ class finish extends my_controller
         return $data;
     }
     
-    public function insert_jobwork()
+    public function insert_finish_jobwork()
     {
         
         @extract($_POST);
+        
         $table_name = 'tbl_job_work';
         $cnt        = count($shapeId);
         for ($i = 0; $i < $cnt; $i++) {
             
             $data = array(
+
                 'vendor_id' => $vendor_id,
                 'job_order_no' => $job_order_no,
                 'lot_no' => $lot_number,
@@ -254,16 +257,20 @@ class finish extends my_controller
                 'date' => $date,
                 'shape_id' => $shapeId[$i],
                 'part_id' => $part_c[$i],
-                'fg_id' => $fg_id[$i],
+
+                //'fg_id' => $fg_id[$i],
+                
                 'qty' => $qtyy[$i],
                 'production_id' => $production_id,
                 //'type' => $type,
-                'shape_qty' => $shape_qty,
+                'shape_qty' => $shape_qtyFg,
+
                 'module_name' => 'Kora'
                 
             );
             
             $sesio = array(
+
                 'comp_id' => $this->session->userdata('comp_id'),
                 'zone_id' => $this->session->userdata('zone_id'),
                 
@@ -272,16 +279,21 @@ class finish extends my_controller
             );
             
             //print_r($data);die;
+            
             $dataall = array_merge($data, $sesio);
             $this->Model_admin_login->insert_user($table_name, $dataall);
+
             $dataP = explode(",", $part_c[$i]);
             $dataQ = explode(",", $qtyy[$i]);
-            $dataR = explode(",", $fg_id[$i]);
+            //$dataR = explode(",", $fg_id[$i]);
             $cntP  = count($dataP);
             
             for ($j = 0; $j < $cntP; $j++) {
+
+                 if($dataQ[$j] != '') {
                 
-                $data = array(
+                $datalog = array(
+
                     'vendor_id' => $vendor_id,
                     'date' => $date,
                     'job_order_no' => $job_order_no,
@@ -290,16 +302,18 @@ class finish extends my_controller
                     'process' => $process,
                     'shape_id' => $shapeId[$i],
                     'part_id' => $dataP[$j],
-                    'fg_id' => $dataR[$j],
+
+                    //'fg_id' => $dataR[$j],
                     
                     'qty' => $dataQ[$j],
                     'production_id' => $production_id,
                     //'type' => $type,
-                    'shape_qty' => $shape_qty,
-                    'module_name' => 'Kora'
+                    'shape_qty' => $shape_qtyFg,
+
+                    'module_name' => 'Finish'
                 );
                 
-                $sesio = array(
+                $sesioLog = array(
                     'comp_id' => $this->session->userdata('comp_id'),
                     'zone_id' => $this->session->userdata('zone_id'),
                     
@@ -308,14 +322,15 @@ class finish extends my_controller
                 );
                 
                 
-                $dataall = array_merge($data, $sesio);
-                $this->Model_admin_login->insert_user(tbl_job_work_log, $dataall);
-                
-                
+                $dataallLog = array_merge($datalog, $sesioLog);
+                $this->Model_admin_login->insert_user(tbl_job_work_log, $dataallLog);
+                //print_r($dataallLog);die;
+              }
+
             }
         }
+       
         echo "1";
-        
         
     }
     
@@ -325,10 +340,11 @@ class finish extends my_controller
         
         @extract($_POST);
         $data = array(
+
             'id' => $id,
-            
             'order_type' => $order_type,
             'lot_no' => $lot_no
+
         );
         $this->load->view("order-check", $data);
     }
@@ -350,6 +366,18 @@ class finish extends my_controller
         
     }
     
+    public function order_repair()
+    {
+        
+        @extract($_POST);
+        $data = array(
+            'id' => $id,
+            
+            'order_type' => $order_type,
+            'lot_no' => $lot_no
+        );
+        $this->load->view("order-repair", $data);
+    }
     
     public function view_finish_test()
     {
