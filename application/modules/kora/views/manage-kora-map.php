@@ -2019,14 +2019,15 @@ function ajex_transferKoraTo(){
   	
   	document.getElementById("fillQty").style.display = "block";
   	document.getElementById("qtyn").style.display = "block";
-	document.getElementById("shape").value = "";
-	document.getElementById("fillQty").value = "";
+	 document.getElementById("shape").value = "";
+	 document.getElementById("fillQty").value = "";
   	$('#getPartView').empty();
 	
   	for(i=1;i<=cntVal;i++)
   	{
   
-  	document.getElementById("entQty"+i).readOnly = true;
+  	 document.getElementById("entQty"+i).readOnly = true;
+
   	}
   
   }

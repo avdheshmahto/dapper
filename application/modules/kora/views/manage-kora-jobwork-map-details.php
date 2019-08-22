@@ -60,6 +60,7 @@
   					
                    }
   				// ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
+          ajax_order_repair_list_data();
    
   	 
       console.log(data);
@@ -70,6 +71,11 @@
   }
   // ends
   
+
+  ajax_order_repair_list_data()
+  {
+    window.location.reload();
+  }
   //starts order check  query
   
   function submitProductionOrderCheck() {
@@ -982,7 +988,7 @@
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewRepairOrder('<?=$getPo->repair_no;?>');" data-toggle="modal" data-target="#modal-view_order_repair" type="button" ><i class="fa fa-eye"></i></button>
                              <button class="btn btn-default delbuttonOrderRepair" id="<?=$getPo->repair_no; ?>" type="button"><i class="icon-trash"></i></button>
-                            <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>&check_no=<?=$getPo->check_no;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
+                            <!-- <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>&check_no=<?=$getPo->check_no;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a> -->
                             <a target="_blank" href="<?=base_url();?>kora/print_repair_challan?id=<?=$getPo->repair_no;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>		
                           </th>
                           <?php }?>
