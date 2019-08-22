@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th>Part Code</th>
-      <th>Finish Goods</th>
+      <!-- <th>Finish Goods</th> -->
       <th>Order Qty</th>
       <th>Placed Qty</th>
       <th>Remaining Qty</th>
@@ -18,10 +18,8 @@
       foreach($queryProductShape->result() as $getProductShape){
                      
       $jobQuery=$this->db->query("select sum(qty) as partQty from tbl_production_order_transfer_another_module where productid='$getProductShape->part_id' and module_name='Finish'");
-
       $getJob=$jobQuery->row();
-      $getJob->partQty;
-        
+
       $queryProduct=$this->db->query("select *from tbl_product_stock where Product_id='$getProductShape->part_id'");
       $getProduct=$queryProduct->row();
             
@@ -38,10 +36,11 @@
       
       ?>
     <tr class="gradeU record">
-      <td> <input class="form-control" style="margin-bottom:10px; border:none; width:80px;" value="<?=$getProduct->sku_no;?>" name="part[]"/>
-        <input class="form-control" type="hidden" style="margin-bottom:10px;" value="<?=$getProduct->Product_id;?>" name="part_code[]"/>
+      <td> <input class="form-control" style="margin-bottom:10px; border:none; width:100%;" value="<?=$getProduct->sku_no;?>" name="part[]" readonly>
+        <input class="form-control" type="hidden" style="margin-bottom:10px;" value="<?=$getProduct->Product_id;?>" name="part_code[]">
       </td>
-      <td>
+
+      <!-- <td>
         <?php
 
           $fgHdrQuery=$this->db->query("select *from tbl_quotation_purchase_order_hdr where lot_no='$production_id' ");
@@ -63,12 +62,13 @@
           <?php }?>
         </select>
         <input type="hidden" name="fg[]" id="finish_goods_val<?=$i;?>" />
-      </td>
-      <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="qty[]" id="entQty<?=$i;?>" onchange="val(this.id)" /></td>
-      <td>  <input class="form-control" style="margin-bottom:10px; width:55px;" value="<?=$getJob->partQty;?>" id="orderQty<?=$i;?>" name="qtyy[]" readonly="readonly" /></td>
+      </td> -->
+
+      <td> <input class="form-control" style="margin-bottom:10px;width:100%;" value="" name="qty[]" id="entQty<?=$i;?>" onchange="val(this.id)" <?php if($shapeName=='Shape'){?> readonly="readonly"<?php }?> /></td>
+      <td>  <input class="form-control" style="margin-bottom:10px; width:100%;" value="<?=$getJob->partQty;?>" id="orderQty<?=$i;?>" name="qtyy[]" readonly="readonly" /></td>
       <td><?php
         $remQty=$getJob->partQty-$getGrnQty->qty+$getTotRem->qty;
-        ?>          <input class="form-control" style="margin-bottom:10px;width:55px;" value="<?=$remQty;?>" name="qtyy[]" id="remQty<?=$i;?>" readonly="readonly" />
+        ?>          <input class="form-control" style="margin-bottom:10px;width:100%;" value="<?=$remQty;?>" name="qtyy[]" id="remQty<?=$i;?>" readonly="readonly" />
       </td>
     </tr>
     <?php $i++;}?>

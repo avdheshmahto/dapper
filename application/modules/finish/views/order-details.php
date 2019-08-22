@@ -42,15 +42,14 @@
       </div>
     </div>
   </div>
-  <!-- <div class="table-responsive-">
-    </div> -->
+  
   <div class="" id="style-3-y">
     <div class="force-overflow-y">
       <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover " >
           <thead>
             <tr>
-              <th class="tdcenter"> Sl No</th>
+              <th class="tdcenter">Sl No</th>
               <th class="tdcenter">Item Number & Description</th>
               <th class="tdcenter">UOM</th>
               <th class="tdcenter">Ordered Qty</th>
@@ -74,10 +73,6 @@
             $getProductUOM=$productUOMQuery->row();
             ####### ends ########
             
-            
-            
-            
-            
             ####### get product serial #######
             $productStockSerialQuery=$this->db->query("select * from tbl_product_serial where product_id='$getProduct->part_id'");
             $getProductSerialStock=$productStockSerialQuery->row();
@@ -91,20 +86,12 @@
               <input type="hidden"  name="productid[]" value="<?=$getProduct->part_id;?>" class="form-control">
             </td>
             <td><?=$getProductUOM->keyvalue;?></td>
-            <?php
-              
-              
-              $poLogQuery=$this->db->query("select D.qty as po_qty,SUM(M.qty) as mqty from tbl_quotation_purchase_order_dtl D,tbl_part_price_mapping M,tbl_machine MM where MM.machine_name = D.productid AND MM.id = M.machine_id AND D.purchaseid='$getHdr->po_no' and M.rowmatial='$getProduct->productid' AND M.type ='part'");
-              $getPoQty=$poLogQuery->row();
-              
-              
-              ?>
+
             <?php
               $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_production_order_log where productid='$getProduct->part_id' AND job_order_id = '$lot_no' and order_no='$id'");
-              			$getInboundGRNLog=$inbountLogGRNLogQuery->row();
-              
-              
-              			?>
+              $getInboundGRNLog=$inbountLogGRNLogQuery->row();
+      			?>
+
             <input type="hidden" min="0" name="ord_qty[]" value="<?=$getProduct->qty;?>" class="form-control">
             <input type="hidden" min="0" name="rm_qty[]" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" class="form-control">
             <td><?=$getProduct->qty;?></td>
@@ -114,6 +101,7 @@
             <td> <input type="checkbox" name="process_ends[]" value="0" /></td>
             <td>
               <input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> />
+              
               <input type="hidden" name="qty_weight" />
               <input type="hidden" name="weight[]" />
               <input type="hidden" name="total_weight[]" />
@@ -121,6 +109,9 @@
               <input type="hidden" name="total_rm_rate[]" />
               <input type="hidden" name="total_labour_rate[]" />
               <input type="hidden" name="total_cost[]" />
+
+              <input type="hidden" name="rmOrdId[]" />
+
             </td>
           </tr>
           <?php 
