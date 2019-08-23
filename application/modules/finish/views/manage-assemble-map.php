@@ -1,18 +1,22 @@
 <?php
   $this->load->view("header.php");
+
   $scheQuery=$this->db->query("select *from tbl_production_order_transfer_another_module where lot_no='".$_GET['id']."'");
   $getsched=$scheQuery->row();
+  
   $dtlQuery=$this->db->query("select *from tbl_quotation_purchase_order_dtl where purchaseid='$getsched->job_order_id'");
+  
   foreach($dtlQuery->result() as $getDtl){
   $getDtl->productid;
   $pId[]=$getDtl->productid;
   }
   @$getP=implode(",",$pId);
   ?>
+
 <script>
-  function getPart(v)
+  function getPartAssm(v)
   {
-  	var ur = '<?=base_url();?>finish/getPart';
+  	var ur = '<?=base_url();?>finish/getPartAssemble';
   	$.ajax({
   	type: "POST",
   	url: ur,
@@ -251,7 +255,7 @@
   	var lot_no=document.getElementById("lot_no").innerHTML;
    	$.ajax({   
   		type: "POST",  
-  		url: "order_transfer",  
+  		url: "order_transfer_assmb",  
   		cache:false,  
   		data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},  
   		success: function(data)  
@@ -317,7 +321,7 @@
               <div class="panel panel-default____">
                 <div class="panel-heading" style="background-color: #F5F5F5; color:#fff; border-color:#DDDDDD;">
                   <h3 class="panel-title" style="float: initial;"><span style="color:#000;">Finish Assemble Map Details:-<?=$_GET['id'];?></span>
-                    <a href="<?=base_url();?>finish/manage_finish" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
+                    <a href="<?=base_url();?>finish/manage_assemble" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
                   </h3>
                 </div>
                 <div class="panel-body" style="padding:15px 0px;">
@@ -360,13 +364,8 @@
           <div class="tabs-container">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#home" data-toggle="tab">Order List</a></li>
-              <li style="display:none1;"><a href="#Transfer" data-toggle="tab">Transfer</a></li>
-              <li style="display:none;" ><a href="#receiveJobWork" data-toggle="tab">Transfer</a></li>
-              <li style="display:none1;"><a href="#store" data-toggle="tab">Stock</a></li>
-              <li style="display:none;"><a href="#PurchaseGRN" data-toggle="tab">Purchase GRN</a></li>
-              <li style="display:none" class=""><a href="#four" data-toggle="tab">Request Raw Material</a></li>
-              <li style="display:none" class=""><a href="#receiveRaw" data-toggle="tab">Receive Raw Material</a></li>
-              <li style="display:none" class=""><a href="#work_order" data-toggle="tab">Transfer to Module</a></li>
+              <li><a href="#Transfer" data-toggle="tab">Transfer</a></li>
+              <li><a href="#store" data-toggle="tab">Stock</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane  active" id="home">
@@ -375,48 +374,64 @@
                     <table class="table table-striped table-bordered table-hover dataTables-example1" id="listingData">
                       <thead>
                         <tr>
-                          <th>ITEM NUMBER & DESCRIPTION</th>
-                          <th>UOM</th>
+                          <th>Order No.</th>
+                          <th>Shape</th>
+                          <th>Finish Goods</th>
                           <th>QTY</th>
+                          <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                          $queryData=$this->db->query("select * from tbl_quotation_purchase_order_hdr where status='A' and lot_no='".$_GET['id']."'");
-                          $getQueryData=$queryData->row();
-                          
-                          $queryPIData=$this->db->query("select * from tbl_quotation_purchase_order_dtl where status='A' and purchaseid='$getQueryData->purchaseid'");
-                          
-                          	foreach($queryPIData->result() as $fetch_list)
-                          	{
+                          $queryData=$this->db->query("select * from tbl_job_work where production_id='".$_GET['id']."' and order_type='Assemble Order'");
+                          foreach($queryData->result() as $fetch_list)
+                          {
                           ?>
-                        <tr class="gradeU record">
+                        <tr class="gradeU record">                          
                           <td>
-                            <p style="display:none" id="lot_no"><?=$_GET['id'];?></p>
-                            <?php
-                              // starts product Query
-                              
-                              $productQuery=$this->db->query("select *from tbl_product_stock where Product_id='$fetch_list->productid'");
-                              $getProduct=$productQuery->row();
-                              // ends
-                              
-                              
-                              // starts master data query
-                              $processquery=$this->db->query("select *from tbl_master_data where 		serial_number='$getProduct->usageunit'");
-                              $getProcess=$processquery->row();
-                              // ends
-                              ?>
-                              <p style="display:none" id="order_type"><?=$fetch_list->process;?></p>
-                            <a href="#" onclick="assemble_grn('<?=$getProduct->Product_id;?>','<?=$_GET['id'];?>');" data-toggle="modal" data-target="#modal-3"><?=$getProduct->sku_no;?>&nbsp;<?=$getProduct->productname;?></a>
+                            <?=$fetch_list->job_order_no;?>
                           </td>
-                          <td><?=$getProcess->keyvalue;?></td>
-                          <?php 
-                            $sqlQueryMachineIdview=$this->db->query("select * from tbl_contact_m where contact_id ='$fetch_list->vendor_id'  and status = 'A' ");
-                            $getMachineIdview=$sqlQueryMachineIdview->row();
+                          <td><?=$fetch_list->date;?></td>
+                          <td></td>
+                          <td></td>
+                          <td><?php $pri_col='id';
+                            $table_name='tbl_schedule_triggering';
                             ?>
-                          <td><?=$fetch_list->qty;?></td>
+                            <button class="btn btn-default" onclick="viewWorkOrder(<?=$fetch_list->id;?>);" data-toggle="modal" data-target="#modal-3" type="button" ><i class="fa fa-eye"></i></button>     
+                            
+                            <?php
+                            
+                            $pri_coll   = 'job_order_no';
+                            $table_namee = 'tbl_work_order';
+                                               
+                            $poquery=$this->db->query("select *from tbl_production_order_log where order_no='$fetch_list->job_order_no' and grn_type='Finish Order'");
+                            $cntData=$poquery->num_rows();             
+                            
+                            if($cntData>0){
+            
+                         ?>
+                        <button class="btn btn-default" onclick="return confirm('Please Delete Child Data First');" type="button"><i class="icon-trash"></i></button>
+                       <?php
+                         }
+                         else{
+                         ?>
+                      
+                           <button class="btn btn-default delbuttonOrder" id="<?=$fetch_list->job_order_no ?>" type="button"><i class="icon-trash"></i></button>
+                          
+                           <?php }?> 
+                            <a target="_blank" href="<?=base_url();?>productionModule/print_challan?id=<?=$fetch_list->id;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>  
+                          </td>
                         </tr>
                         <?php  }?>
+                        <tr class="gradeU">
+                          <td>
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-2" formid="#myform" id="formreset"><img src="<?=base_url();?>assets/images/plus.png" /></button> 
+                          </td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                        </tr>
                       </tbody>
                       <tfoot></tfoot>
                     </table>
@@ -493,7 +508,7 @@
               <div class="tab-pane" id="store">
                 <div class="panel-body">
                   <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover dataTables-example"  id="listingAjexRequestRM">
+                    <table class="table table-striped table-bordered table-hover dataTables-example___">
                       <thead>
                         <tr>
                           <th>
@@ -583,97 +598,7 @@
 <?php
   $this->load->view("footer.php");
   ?>
-<SCRIPT language="javascript">
-  function addRow(tableID) {
-  
-  	var table = document.getElementById(tableID);
-  
-  	var rowCount = table.rows.length;
-  	var row = table.insertRow(rowCount);
-  
-  var cell1 = row.insertCell(0);
-  	var element1 = document.createElement("input");
-  	element1.type = "checkbox";
-  	element1.name="chkbox[]";
-  	cell1.appendChild(element1);
-  	
-  var cell2 = row.insertCell(1);
-  	var element2 = document.createElement("select");
-  	element2.name = "spare_id[]";
-  	element2.className="form-control";
-  	element2.style.width="250px";
-  	var option1 = document.createElement("option");
-  	option1.innerHTML = "--Select--";
-    option1.value = "";
-    element2.appendChild(option1, null);
-  <?php
-    $contactQuery=$this->db->query("select *from tbl_product_stock where status='A'");
-    foreach($contactQuery->result() as $getContact){
-    ?>
-  
-    var option2 = document.createElement("option");
-    option2.innerHTML = "<?=$getContact->productname;?>";
-    option2.value = "<?=$getContact->Product_id;?>";
-    element2.appendChild(option2, null);
-    
-  <?php }?>
-  	cell2.appendChild(element2);
-  }
-  
-  function deleteRow(tableID) {
-  	try {
-  	var table = document.getElementById(tableID);
-  	var rowCount = table.rows.length;
-  
-  	for(var i=0; i<rowCount; i++) {
-  		var row = table.rows[i];
-  		var chkbox = row.cells[0].childNodes[0];
-  		if(null != chkbox && true == chkbox.checked) {
-  			table.deleteRow(i);
-  			rowCount--;
-  			i--;
-  		}
-  
-  
-  	}
-  	}catch(e) {
-  		alert(e);
-  	}
-  }
-  
-    
-</SCRIPT>
-<style>
-  .c-error .c-validation{ 
-  background: #c51244 !important;
-  padding: 10px !important;
-  border-radius: 0 !important;
-  position: relative; 
-  display: inline-block !important;
-  box-shadow: 1px 1px 1px #aaaaaa;
-  margin-top: 10px;
-  }
-  .c-error  .c-validation:before{ 
-  content: ''; 
-  width: 0; 
-  height: 0; 
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #c51244;
-  position: absolute; 
-  top: -10px; 
-  }
-  .c-label:after{
-  color: #c51244 !important;
-  }
-  .c-error input, .c-error select, .c-error .c-choice-option{ 
-  background: #fff0f4; 
-  color: #c51244;
-  }
-  .c-error input, .c-error select{ 
-  border: 1px solid #c51244 !important; 
-  }
-</style>
+
 <!--Large Modal-->
 <div id="modal-2" class="modal fade" tabindex="-1" role="dialog">
   <form name="myForm" class="form-horizontal" id ="myform" action="#" 
@@ -687,27 +612,12 @@
         </div>
         <div class="modal-body">
           <div class="row">
-            <div class="form-group">
-              <label class="col-sm-2 control-label">Process:</label> 
-              <div class="col-sm-4">
-                <select name="process" class="form-control">
-                  <option value="">--Select--</option>
-                  <?php 
-                    $processQuery=$this->db->query("select *from tbl_master_data where param_id='20'");
-                    foreach($processQuery->result() as $getProcess){
-                    ?>
-                  <option value="<?=$getProcess->serial_number;?>"><?=$getProcess->keyvalue;?></option>
-                  <?php }?>
-                </select>
-              </div>
+            <div class="form-group">             
               <input type="hidden" name="lot_number" value="<?=$getsched->lot_no;?>" />
               <label class="col-sm-2 control-label">Order No.:</label> 
               <div class="col-sm-4"> 
-                <input name="job_order_no" type="text" value="" class="form-control" id="thickness">
+                <input name="job_order_no" type="text" value="" class="form-control" >
               </div>
-            </div>
-            <div class="form-group">
-              <input type="hidden" name="production_id" id="production_id" value="<?=$_GET['id'];?>" />
               <label class="col-sm-2 control-label">Vendor:</label> 
               <div class="col-sm-4">
                 <select class="form-control" name="vendor_id" required>
@@ -721,30 +631,16 @@
                   <?php }?>
                 </select>
               </div>
-              <label class="col-sm-2 control-label">date:</label> 
-              <div class="col-sm-4"> 
-                <input name="date" type="date" value="" class="form-control" id="thickness"> 
-              </div>
             </div>
             <div class="form-group">
-              <input type="hidden" name="production_id" id="production_id" value="<?=$_GET['id'];?>" />
-              <label class="col-sm-2 control-label">Select:</label> 
-              <div class="col-sm-4">
-                <select class="form-control" name="type" id="select_id" required>
-                  <option value="">--Select--</option>
-                  <option value="Shape">Shape Complete</option>
-                  <option value="ShapePart">Shape in Parts</option>
-                </select>
-              </div>
-              <label class="col-sm-2 control-label">Qty:</label> 
+              <input type="hidden" name="production_id" id="production_id" value="<?=$_GET['id'];?>" />              
+              <label class="col-sm-2 control-label">Date:</label> 
               <div class="col-sm-4"> 
-                <input name="shape_qty" type="text" value="" id="fillQty" onchange="qtyFill(this.value);" class="form-control" > 
+                <input name="date" type="date" value="" class="form-control" > 
               </div>
-            </div>
-            <div class="form-group">
               <label class="col-sm-2 control-label">Shape:</label> 
               <div class="col-sm-4">
-                <select class="form-control" name="shape" id="shape" onchange="getPart(this.value);">
+                <select class="form-control" name="shape" id="shape" onchange="getPartAssm(this.value);">
                   <option value="">--Select--</option>
                   <?php
                     $queryProductShape=$this->db->query("select distinct(machine_name) from tbl_machine where code in($getP)");
@@ -757,10 +653,38 @@
                   <?php }?>
                 </select>
               </div>
-              <label class="col-sm-6 control-label">
+            </div>
+ 
+            <div class="form-group">                            
+              <label class="col-sm-2 control-label">Finish Goods:</label> 
+              <div class="col-sm-4">
+                <select name="fg[]" id="fg<?=$i;?>" class="form-control" onchange="getFinishGoods();">
+                  <option value="">--Select--</option>
+                  <?php
+                    $fgHdrQuery=$this->db->query("select *from tbl_quotation_purchase_order_hdr where lot_no='".$_GET['id']."' ");
+                    $getfgHdr=$fgHdrQuery->row();
+                    
+                    $fgQuery=$this->db->query("select *from tbl_quotation_purchase_order_dtl where purchaseid='$getfgHdr->purchaseid' ");
+                        
+                        foreach($fgQuery->result() as $getFg){
+                        $productQuery=$this->db->query("select *from tbl_product_stock where Product_id='$getFg->productid'");
+                          $getProduct=$productQuery->row();
+                        ?>
+                  <option value="<?=$getProduct->Product_id?>"><?=$getProduct->sku_no;?></option>
+                  <?php }?>
+                </select>
+              </div> 
+              <label class="col-sm-2 control-label">Qty:</label> 
+              <div class="col-sm-4"> 
+                <input name="shape_qty" type="text" value="" id="fillQty" onchange="qtyFill(this.value);" class="form-control" > 
+              </div>
+            </div>
+
+              <label class="col-sm-12 control-label">
                 <div class="table-responsive" id="getPartView">
                 </div>
               </label>
+
               <div class="col-sm-12">
                 <br />
                 <div class="modal-header">
@@ -769,7 +693,7 @@
                       <tr class="gradeA">
                         <th>Shape Name</th>
                         <th>Part</th>
-                        <th>fg</th>
+                        <th>Finish Goods</th>
                         <th>Qty</th>
                         <th>Action</th>
                       </tr>
@@ -796,9 +720,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
-          </div>
-        </div>
+            
         <div class="modal-footer">
           <input type="submit" class="btn btn-sm" value="Save">
           <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
@@ -817,7 +739,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Order Transfer(Lot No.:-<?=$getsched->lot_no;?>)</h4>
+        <h4 class="modal-title">Order Transfer Assemble(Lot No.:-<?=$getsched->lot_no;?>)</h4>
         <div id="OrderTransferToModuleresultarea" class="text-center " style="font-size: 15px;color: red;"></div>
         <div class="modal-body">
           <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_order_transfer_to_module" action="#" 
@@ -2022,11 +1944,11 @@
   }
   // ends
   
-  function view_production_log(poid){
-  	
+  function view_production_log(poid)
+  {
   	
       $.ajax({   
-  	    type: "POST",  
+  	  type: "POST",  
   		url: "view_production_log_cont",  
   		cache:false,  
   		data: {'id':poid},  
@@ -2038,6 +1960,7 @@
   		//referesh table
   		}   
   	});
+
   }
   
  
