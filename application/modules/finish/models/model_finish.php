@@ -13,7 +13,7 @@ class model_finish extends CI_Model
     function filterfinishList($perpage, $pages, $get)
     {
         
-        $qry = "select * from tbl_production_order_transfer_another_module where status = 'A' ";
+        $qry = "select * from tbl_production_order_transfer_another_module where module_name = 'Finish' ";
         
         /*if (sizeof($get) > 0) {
             if ($get['p_id'] != "")
@@ -70,7 +70,7 @@ class model_finish extends CI_Model
     function gettest($last, $strat)
     {
         
-        $query = $this->db->query("select * from tbl_production_order_check where status='A' and test_qty!=''    group by lot_no desc limit $strat,$last ");
+        $query = $this->db->query("select * from tbl_production_order_check where status='A' and test_qty!='' group by lot_no desc limit $strat,$last ");
         return $result = $query->result();
     }
     
@@ -112,15 +112,16 @@ class model_finish extends CI_Model
     
     function getassemble($last, $strat)
     {
-        $query = $this->db->query("select * from tbl_production_order_check where status='A' and order_type='Finish Order' and transfer_qty!=''   group by lot_no desc limit $strat,$last ");
+        $query = $this->db->query("select * from tbl_production_order_transfer_another_module where status='A' and module_name='Assemble' group by lot_no  limit $strat,$last  ");
         return $result = $query->result();
     }
     
     function filterassembleList($perpage, $pages, $get)
     {
         
-        $qry = "select * from tbl_production_order_check where order_type='Finish Order' and transfer_qty!=''";
-        if (sizeof($get) > 0) {
+        $qry = "select * from tbl_production_order_transfer_another_module where status='A' and module_name='Assemble' group by lot_no  limit $strat,$last ";
+
+        /*if (sizeof($get) > 0) {
             if ($get['p_id'] != "")
                 $qry .= " AND productionid = '" . $get['p_id'] . "'";
             if ($get['date'] != "")
@@ -133,15 +134,19 @@ class model_finish extends CI_Model
             }
             if ($get['qty'] != "")
                 $qry .= " AND qty = '" . $get['qty'] . "'";
-        }
+        }*/
+
         $data = $this->db->query($qry)->result();
         return $data;
+
     }
     
     function count_assemble($tableName, $status = 0, $get)
     {
-        $qry = "select count(*) as countval from tbl_production_order_check where  order_type='Finish Order' and transfer_qty!=''";
-        if (sizeof($get) > 0) {
+        
+        $qry = "select count(*) as countval from tbl_production_order_transfer_another_module where module_name='Assemble'";
+
+        /*if (sizeof($get) > 0) {
             if ($get['p_id'] != "")
                 $qry .= " AND productionid = '" . $get['p_id'] . "' ";
             if ($get['date'] != "")
@@ -154,12 +159,13 @@ class model_finish extends CI_Model
             }
             if ($get['qty'] != "")
                 $qry .= " AND qty = '" . $get['qty'] . "'";
-        }
+        }*/
         
         $query = $this->db->query($qry, array(
             $status
         ))->result_array();
         return $query[0]['countval'];
+
     }
     
     //ends

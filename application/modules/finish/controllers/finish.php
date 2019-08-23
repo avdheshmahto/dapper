@@ -27,6 +27,7 @@ class finish extends my_controller
         } else {
             redirect('index');
         }
+
     }
     
     
@@ -43,6 +44,7 @@ class finish extends my_controller
             redirect('index');
             
         }
+
     }
     
     function manage_testJoin()
@@ -105,6 +107,19 @@ class finish extends my_controller
         $this->load->view("order-transfer", $data);
     }
     
+    public function order_transfer_assmb()
+    {
+
+        @extract($_POST);
+        $data           = array(
+            'id' => $id,
+            'order_type' => $order_type,
+            'lot_no' => $lot_no
+        );
+        $this->load->view("order-transfer-assemble", $data);
+       
+    }
+
     public function view_transfer_order()
     {
         
@@ -148,6 +163,17 @@ class finish extends my_controller
             'shapeName'  => $shapePart
         );
         $this->load->view("getpartCode", $data);
+    }
+
+    public function getPartAssemble()
+    {
+        @extract($_POST);
+        $data = array(
+            'id' => $shape,
+            'production_id' => $production_id,
+            'shapeName'  => $shapePart
+        );
+        $this->load->view("getPartAssemble", $data);
     }
     
     public function view_finish_order()
