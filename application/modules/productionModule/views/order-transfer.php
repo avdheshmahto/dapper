@@ -44,8 +44,8 @@
               <select name="module_name" class="form-control">
                 <option>--Select--</option>
                 <option value="Kora">Kora</option>
-                <option value="Finish">Finish</option>
-                <option value="Inspection">Inspection</option>
+               <!--  <option value="Finish">Finish</option>
+                <option value="Inspection">Inspection</option> -->
               </select>
             </div>
             <div class="col-sm-6" id="invoiceId" >

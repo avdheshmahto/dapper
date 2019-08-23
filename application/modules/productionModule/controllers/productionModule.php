@@ -1517,7 +1517,9 @@ public function productionOrderTransferToModule()
 			  if($qty[$i]!=''){
                  $data_dtl=array(
 				 'lot_no'		=> $lot_no,
+
 				 'jo_no'        => $jo_no,
+				 
 				 'order_no'		=> $order_no,
 				 'transfer_no' => $transfer_no,
 				 'transfer_date' => $transfer_date,
