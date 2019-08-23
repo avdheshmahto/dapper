@@ -146,9 +146,15 @@
   			}else{
   			$("#OrderTransferToModuleresultarea").text(data);
   			}
+        ajex_finish_order_transfer();
   			console.log(data);
   	});
   	return false;     
+  }
+
+  function ajex_finish_order_transfer()
+  {
+    window.location.reload();
   }
 </script>
 <script>
@@ -213,8 +219,8 @@
   	var fg_d=fg_c;
   	var fg_t=fg_m;
   	var myString = JSON.stringify(myObject);    
-  	//$('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="fg_id[]" value="'+fg_t+'">'+fg_t+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
-    $('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
+  	$('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="fg_id[]" value="'+fg_t+'">'+fg_t+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
+    //$('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
   	$("#shape").val("");
   	$("#getPartView").empty();
   }
@@ -376,7 +382,7 @@
                       </thead>
                       <tbody>
                         <?php
-                          $queryData=$this->db->query("select *from tbl_job_work where production_id='".$_GET['id']."' and order_type='Finish Order'");
+                          $queryData=$this->db->query("select * from tbl_job_work where production_id='".$_GET['id']."' and order_type='Finish Order'");
                           foreach($queryData->result() as $fetch_list)
                           {
                           ?>
@@ -460,7 +466,7 @@
                       </thead>
                       <tbody>
                         <?php
-                          $poquery=$this->db->query("select * from tbl_production_order_transfer_another_module where status='A' and lot_no='$getsched->lot_no' and module_name='Inspection'    group by transfer_no desc");
+                          $poquery=$this->db->query("select * from tbl_production_order_transfer_another_module where status='A' and lot_no='$getsched->lot_no' and module_name='Assemble'    group by transfer_no desc");
                           foreach($poquery->result() as $getPo){
                           ?>
                         <tr class="gradeC record">
@@ -494,7 +500,9 @@
                           <th>
                             <input type="hidden" id="p_n" value="<?=$getPo->po_no;?>" />
                             <button class="btn btn-default" onclick="viewTransferOrder('<?=$getPo->transfer_no;?>');" data-toggle="modal" data-target="#modal-view-transfer" type="button" ><i class="fa fa-eye"></i></button>
-                            <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a>
+                            
+                            <!-- <a href="<?=base_url();?>productionModule/manage_jobwork_map_order_repair?id=<?=$getPo->job_order_id;?>"><img src="<?=base_url();?>assets/images/click.png" height="25" width="50" /></a> -->
+
                             <a target="_blank" href="<?=base_url();?>finish/print_transfer_challan?id=<?=$getPo->transfer_no;?>"><img src="<?=base_url();?>assets/images/print1.png" /></a>	
                           </th>
                         </tr>
@@ -659,6 +667,7 @@
                 <input name="date" type="date" value="" class="form-control" id="thickness"> 
               </div>
             </div>
+            
             <div class="form-group">
               <input type="hidden" name="production_id" id="production_id" value="<?=$_GET['id'];?>" />
               <label class="col-sm-2 control-label">Select:</label> 
@@ -686,16 +695,9 @@
                 
               </div>
             </div>
-            <div class="form-group">
-            
-            <div id="qtyFg">
-              <label class="col-sm-2 control-label">Qty:</label> 
-              <div class="col-sm-4">
-              <input name="shape_qtyFg" type="text" value="" id="fillQty" onkeyup="qtyFill(this.value);" class="form-control" >                  
-              </div>
-            </div>
 
-              <!-- <label class="col-sm-2 control-label">Finish Goods:</label> 
+            <div class="form-group">
+            <label class="col-sm-2 control-label">Finish Goods:</label> 
               <div class="col-sm-4">
                 <select name="fg[]" id="fg<?=$i;?>" class="form-control" onchange="getFinishGoods();">
                   <option value="">--Select--</option>
@@ -712,7 +714,15 @@
                   <option value="<?=$getProduct->Product_id?>"><?=$getProduct->sku_no;?></option>
                   <?php }?>
                 </select>
-              </div> -->
+              </div>
+
+            <div id="qtyFg">
+              <label class="col-sm-2 control-label">Qty:</label> 
+              <div class="col-sm-4">
+              <input name="shape_qtyFg" type="text" value="" id="fillQty" onkeyup="qtyFill(this.value);" class="form-control" >                  
+              </div>
+            </div>
+          </div>
 
               <label class="col-sm-12 control-label">
                 <div class="table-responsive" id="getPartView"></div>
@@ -726,7 +736,7 @@
                       <tr class="gradeA">
                         <th>Shape Name</th>
                         <th>Part</th>
-                        <!-- <th>Finish Goods</th> -->
+                        <th>Finish Goods</th>
                         <th>Qty</th>
                         <th>Action</th>
                       </tr>
@@ -752,7 +762,7 @@
                   </table>
                 </div>
               </div>
-            </div>
+          
           </div>
           <div class="row"></div>
         </div>
@@ -1856,7 +1866,7 @@
                          $("#modal-order").click();
                          $("#Orderresultarea").text(" "); 
                          $('#myProduction_order_receive')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
+  					           //$("#quotationTable").text(" "); 
   					   
                          //$("#id").val("");
        
@@ -1924,13 +1934,14 @@
   {
   
   var shapePart=document.getElementById("select_id").value;	
-  var cntVal= document.getElementById("cntVal").value;
+  //var cntVal= document.getElementById("cntVal").value;
+  var cntVal= shapePart.length;
   //alert(cntVal);
   if(shapePart=='Shape')
   {
   	
   	document.getElementById("qtyFg").style.display = "block";
-  	document.getElementById("qtyn").style.display = "block";
+  	//document.getElementById("qtyn").style.display = "block";
 	  document.getElementById("shape").value = "";
 	  document.getElementById("fillQty").value = "";
   	$('#getPartView').empty();
@@ -1946,7 +1957,7 @@
 
     document.getElementById("qtyFg").style.display = "none";	
     document.getElementById("shape").value = "";	
-    document.getElementById("qtyn").style.display = "none";	
+    //document.getElementById("qtyn").style.display = "none";	
  
   	$('#getPartView').empty();
   

@@ -52,7 +52,7 @@
   
   // ends
   
-  ajex_finish_order_repair()
+  function ajex_finish_order_repair()
   {
     window.location.reload();
   }
@@ -90,7 +90,7 @@
   
   // ends
 
-  ajax_finish_order_checking()
+  function ajax_finish_order_checking()
   {
     window.location.reload();
   }
@@ -113,24 +113,23 @@
   	
   	  if(data == 1 || data == 2){
   		
-                if(data == 1)
-		    
-                  var msg = "Data Successfully Add !";
-                else
-                  var msg = "Data Successfully Updated !";
-                
-			          $("#Orderresultarea").text(msg);
-			          setTimeout(function() {   //calls click event after a certain time
-                 $("#modal-order").click();
-                 $("#Orderresultarea").text(" "); 
-                 $('#myProduction_order_receive')[0].reset(); 
+            if(data == 1)    
+              var msg = "Data Successfully Add !";
+            else
+              var msg = "Data Successfully Updated !";
+            
+	          $("#Orderresultarea").text(msg);
+	          setTimeout(function() {   //calls click event after a certain time
+             $("#modal-order").click();
+             $("#Orderresultarea").text(" "); 
+             $('#myProduction_order_receive')[0].reset(); 
 
-              }, 1000);
-            }else{
-              $("#Orderresultarea").text(data);
-           }
+          }, 1000);
+        }else{
+          $("#Orderresultarea").text(data);
+       }
 
-  				 ajax_load_finish_order_grn();
+			 ajax_load_finish_order_grn();
   	 
       console.log(data);
       //Perform ANy action after successfuly post data
@@ -140,7 +139,7 @@
   }
   // ends
   
-  ajax_load_finish_order_grn()
+ function ajax_load_finish_order_grn()
   {
     window.location.reload();
   }
@@ -750,7 +749,7 @@
                           <td>
                             <p style="display:none" id="lot_no"><?=$_GET['id'];?></p>
                             <p style="display:none" id="order_type"><?=$getsched->order_type;?></p>
-                            <button style="display:none1" type="button" class="btn btn-default modalMapSpare" onclick="Order('<?=$getsched->job_order_no;?>');" data-toggle="modal" data-target="#modal-order"><img src="<?=base_url();?>assets/images/plus.png" /></button>
+                            <button style="display:none1" type="button" class="btn btn-default" onclick="Order('<?=$getsched->job_order_no;?>');" data-toggle="modal" data-target="#modal-order"><img src="<?=base_url();?>assets/images/plus.png" /></button>
                           </td>
                           <td>&nbsp;</td>
                           <td>&nbsp;</td>
@@ -821,7 +820,7 @@
                         <?php }?>
                         <tr class="gradeU">
                           <td>
-                            <button style="display:none1" type="button" class="btn btn-default modalMapSpare" onclick="Order_check('<?=$getsched->job_order_no;?>');" data-toggle="modal" data-target="#modal-order-checking"><img src="<?=base_url();?>assets/images/plus.png" /></button>
+                            <button type="button" class="btn btn-default" onclick="Order_check('<?=$getsched->job_order_no;?>');" data-toggle="modal" data-target="#modal-order-checking"><img src="<?=base_url();?>assets/images/plus.png" /></button>
                           </td>
                           <td>&nbsp;</td>
                           <td>&nbsp;</td>
@@ -1079,7 +1078,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Order Transfer(Lot No.:-<?=$getsched->lot_no;?>)</h4>
+        <h4 class="modal-title">Order Transfer Finish(Lot No.:-<?=$getsched->lot_no;?>)</h4>
         <div id="OrderRepairresultarea" class="text-center " style="font-size: 15px;color: red;"></div>
         <div class="modal-body">
           <form class="form-horizontal" role="form"  enctype="multipart/form-data"   id ="myProduction_order_repair" action="#" 
