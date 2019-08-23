@@ -11,6 +11,7 @@
           <div class="form-group">
             <div class="col-sm-6">
               <input type="hidden" name="grn_type" value="<?=$getOrder->order_type;?>" />
+              <input type="hidden" name="jo_no" value="" />
               <input type="hidden" name="job_order_id" value="<?=$getOrder->id;?>" />
               <input type="hidden" name="vendor_id" value="<?=$getOrder->vendor_id;?>" />
               <label for="po_order">Order No.:</label>
@@ -42,9 +43,9 @@
               <label for="po_order">Transfer Module:</label>
               <select name="module_name" class="form-control">
                 <option>--Select--</option>
-                <option value="Kora">Kora</option>
+                <!-- <option value="Kora">Kora</option> -->
                 <option value="Finish">Finish</option>
-                <option value="Inspection">Inspection</option>
+                <!-- <option value="Inspection">Inspection</option> -->
               </select>
             </div>
             <div class="col-sm-6" id="invoiceId" >
