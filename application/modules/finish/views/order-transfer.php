@@ -9,6 +9,7 @@
         <div class="panel-body">
           <div class="form-group">
             <div class="col-sm-6">
+              <input type="hidden" name="jo_no" value="" />
               <input type="hidden" name="grn_type" value="<?=$getOrder->order_type;?>" />
               <input type="hidden" name="job_order_id" value="<?=$getOrder->id;?>" />
               <input type="hidden" name="vendor_id" value="<?=$getOrder->vendor_id;?>" />
@@ -41,9 +42,11 @@
               <label for="po_order">Transfer Module:</label>
               <select name="module_name" class="form-control">
                 <option>--Select--</option>
-                <option value="Kora">Kora</option>
-                <option value="Finish">Finish</option>
-                <option value="Inspection">Inspection</option>
+                <!-- <option value="Kora">Kora</option>
+                <option value="Finish">Finish</option> 
+                <option value="Inspection">Inspection</option> -->
+                <option value="Assemble">Assemble</option>
+                
               </select>
             </div>
             <div class="col-sm-6" id="invoiceId" >
@@ -56,30 +59,24 @@
       </div>
     </div>
   </div>
-  <!-- <div class="table-responsive-">
-    </div> -->
+
   <div class="" id="style-3-y">
     <div class="force-overflow-y">
       <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover " >
           <thead>
             <tr>
-              <th class="tdcenter"> Sl No</th>
+              <th class="tdcenter">Sl No</th>
               <th class="tdcenter">Item Number & Description</th>
               <th class="tdcenter">UOM</th>
               <th class="tdcenter">Ordered Qty</th>
               <th class="tdcenter">Remaining Qty</th>
               <th style="display:none" class="tdcenter">Qty In Stock</th>
               <th class="tdcenter">Receive Qty</th>
-              <th class="tdcenter">View</th>
             </tr>
           </thead>
           <?php
-            $productHdrQuery=$this->db->query("select *from tbl_quotation_purchase_order_hdr where lot_no='$id' " );
-            $getProductHdr=$productHdrQuery->row();
-            
-            
-            $productQuery=$this->db->query("select *from tbl_quotation_purchase_order_dtl where purchaseid='$getProductHdr->purchaseid' " );
+            $productQuery=$this->db->query("select SUM(transfer_qty) as qty ,productid from tbl_production_available_order where lot_no='$id' and order_type='Finish Order' group by productid" );
             $i=1;
             foreach($productQuery->result() as $getProduct){
             ####### get product #######
@@ -91,10 +88,6 @@
             $productUOMQuery=$this->db->query("select *from tbl_master_data where serial_number='$getProductStock->usageunit'");
             $getProductUOM=$productUOMQuery->row();
             ####### ends ########
-            
-            
-            
-            
             
             ####### get product serial #######
             $productStockSerialQuery=$this->db->query("select * from tbl_product_serial where product_id='$getProduct->part_id'");
@@ -109,20 +102,12 @@
               <input type="hidden"  name="productid[]" value="<?=$getProduct->productid;?>" class="form-control">
             </td>
             <td><?=$getProductUOM->keyvalue;?></td>
+            
             <?php
+              $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_production_order_transfer_another_module where productid='$getProduct->productid' AND  order_no='$id' and module_name='Finish'");
+              $getInboundGRNLog=$inbountLogGRNLogQuery->row();
               
-              
-              $poLogQuery=$this->db->query("select D.qty as po_qty,SUM(M.qty) as mqty from tbl_quotation_purchase_order_dtl D,tbl_part_price_mapping M,tbl_machine MM where MM.machine_name = D.productid AND MM.id = M.machine_id AND D.purchaseid='$getHdr->po_no' and M.rowmatial='$getProduct->productid' AND M.type ='part'");
-              $getPoQty=$poLogQuery->row();
-              
-              
-              ?>
-            <?php
-              $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_production_order_transfer_another_module where productid='$getProduct->productid' AND  order_no='$id' and module_name='Inspection'");
-              			$getInboundGRNLog=$inbountLogGRNLogQuery->row();
-              
-              
-              			?>
+            ?>
             <input type="hidden" min="0" name="ord_qty[]" value="<?=$getProduct->qty;?>" class="form-control">
             <input type="hidden" min="0" name="rm_qty[]" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" class="form-control">
             <td><?=$getProduct->qty;?></td>
@@ -130,7 +115,6 @@
             <td><?php echo $reci_qty=$getProduct->qty-$getInboundGRNLog->rec_qty;?></td>
             <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
             <td><input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
-            <td><button class="btn btn-default" onclick="viewFinishParts('<?=$getProduct->productid;?>');" data-toggle="modal" data-target="#modal-view-finish-parts" type="button" ><i class="fa fa-eye"></i></button></td>
           </tr>
           <?php 
             $i++;

@@ -99,7 +99,7 @@
             <td><input name="transfer_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
             <td><input name="repair_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
             <td><input name="scrap_qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
-            <td><input name="test_qty[]" id="test_qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control" /></td>
+            <td><input name="test_qty[]" id="test_qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control" <?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
             <td><input name="name[]"   type="text" class="form-control" /></td>
           </tr>
           <?php 
