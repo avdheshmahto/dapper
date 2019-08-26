@@ -61,7 +61,7 @@
             </tr>
           </thead>
           <?php
-            $productQuery=$this->db->query("select SUM(qty) as qty,productid from tbl_production_order_log where order_no='$id' and grn_type='Kora Order' and process_ends='0' group by productid");
+            $productQuery=$this->db->query("select SUM(qty) as qty,productid from tbl_production_order_log where order_no='$id' and grn_type='Kora Order' and process_ends='1' group by productid");
             $i=1;
             foreach($productQuery->result() as $getProduct){
             ####### get product #######
