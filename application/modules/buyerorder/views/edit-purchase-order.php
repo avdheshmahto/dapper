@@ -211,7 +211,7 @@
                   <th>Total Ord Qty.</th>
                   <th>Per Crtn Qty.</th>
                   <th>Total Crtn Qty.</th>
-                  <th >Additional % Qty </th>
+                  <th style="display:none">Additional % Qty </th>
                   <th style="display:none">Discount%</th>
                   <th style="display:none">Discount Amt</th>
                   <th style="display:none">
@@ -226,7 +226,7 @@
                   <th style="display:none">
                     <div align="center"><b>GST Total</b></div>
                   </th>
-                  <th >Production Qty</th>
+                  <th style="display:none">Production Qty</th>
                   <th >Price US $</th>
                   <th >Total</th>
                   <?php if($_GET['view']!=''){?>
@@ -260,13 +260,13 @@
                   </th>
                   <b id="lpr" style="display:none"></b>
                   <th >
-                    <input type="number" id="qn" min="1" style="width:70px;"   class="form-control">
+                    <input type="number" id="qn" min="1" style="width:90px;"   class="form-control">
                   </th>
                   <th><input type="number" id="per_crt_qn" min="1" style="width:70px;" readonly="readonly"   class="form-control"></th>
                   <th>
-                    <input type="number" id="ord_qty" min="1" style="width:70px;"    class="form-control">
+                    <input type="number" id="ord_qty" min="1" style="width:90px;"    class="form-control" readonly="">
                   </th>
-                  <th ><input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:70px;" readonly="readonly" ></th>
+                  <th style="display:none"><input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:70px;" readonly="readonly" ></th>
                   <th style="display:none"><input type="number" step="any" name="saleamnt" id="discount" class="form-control"  style="width:70px;"/ ></th>
                   <th style="display:none"><input type="number" step="any" name="saleamnt" id="disAmt" class="form-control"   style="width:70px;"/ ></th>
                   <td style="display:none"> 
@@ -279,10 +279,10 @@
                     <input type="text" id="igst" class="form-control"  onfocus="this.select()" style="width:62px;" readonly>
                   </td>
                   <td style="display:none"><input type="text" id="gstTotal" class="form-control"  onfocus="this.select()" style="width:62px;" readonly></td>
-                  <th ><input type="number" step="any" name="saleamnt" id="tot" class="form-control"   style="width:70px;" readonly="readonly"/ ></th>
+                  <th style="display:none"><input type="number" step="any" name="saleamnt" id="tot" class="form-control"   style="width:70px;" readonly="readonly"/ ></th>
                   <th style="display:none"><input type="number" step="any" name="saleamnt" id="gstTotal" class="form-control"   style="width:70px;"/ ></th>
-                  <th ><input type="number" step="any" name="saleamnt" id="priceT" class="form-control"   style="width:70px;"/ ></th>
-                  <th ><input type="text" name="saleamnt" readonly="" id="nettot" class="form-control"  style="width:70px;"/ ></th>
+                  <th ><input type="number" step="any" name="saleamnt" id="priceT" class="form-control"   style="width:90px;" readonly="" / ></th>
+                  <th ><input type="text" name="saleamnt" readonly="" id="nettot" class="form-control"  style="width:90px;"/ ></th>
                   <?php if($_GET['view']!=''){?>
                   <?php } else {?>
                   <th><img src="<?=base_url();?>assets/images/plus.png" onclick="adda();" /></th>
@@ -297,7 +297,7 @@
                 <td style="width:1%;">
                   <div align="center"><u>Sl No</u>.</div>
                 </td>
-                <td style="width:11%;">
+                <td style="width:9%;">
                   <div align="center"><u>Item Code</u></div>
                 </td>
                 <td style="width:3%;">
@@ -309,7 +309,7 @@
                 <td style="width:3%;">
                   <div align="center"><u>Total Crtn Qty</u></div>
                 </td>
-                <td style="width:3%;">
+                <td style="width:3%;display: none;">
                   <div align="center"><u>Additional % Qty</u></div>
                 </td>
                 <td style="width:3%;display:none;">
@@ -330,13 +330,13 @@
                 <td style="width:3%;display:none;">
                   <div align="center"><u>GST TOTAL</u></div>
                 </td>
-                <td style="width:3%;">
+                <td style="width:3%;display: none;">
                   <div align="center"><u>Production Qty</u></div>
                 </td>
-                <td style="width:3%;display: none1;">
+                <td style="width:3%;">
                   <div align="center"><u> Price</u></div>
                 </td>
-                <td style="width:3%;display: none1;">
+                <td style="width:3%;">
                   <div align="center"><u>Total Price</u></div>
                 </td>
                 <?php
@@ -373,10 +373,10 @@
                   <td align="center" style="width: 3%;">
                     <input type="text" name="ord_qty[]" id="ord_qty<?php echo $z;?>" value="<?php echo $invoiceFetch->ord_qty;?>"readonly="" style="text-align: center; width: 100%; border: hidden;">
                   </td>
-                  <td align="center" style="width: 3%;">
+                  <td align="center" style="width: 3%;display: none;">
                     <input type="text" name="list_price[]" id="lph<?php echo $z;?>" value="<?php echo $invoiceFetch->list_price;?>" readonly="" style="text-align: center; width: 100%; border: hidden;">
                   </td>
-                  <td align="center" style="width: 3%;"><input type="text" name="tot[]" id="tot<?php echo $z;?>" value="<?php echo $invoiceFetch->total_price;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
+                  <td align="center" style="width: 3%;display: none;"><input type="text" name="tot[]" id="tot<?php echo $z;?>" value="<?php echo $invoiceFetch->total_price;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
                   <td align="center" style="width: 3%;display:none;"><input type="text" name="discount[]" id="dis<?php echo $z;?>" value="<?php echo $invoiceFetch->discount;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
                   <td align="center" style="width: 3%;display:none;"><input type="text" name="disAmount[]" id="disAmount<?php echo $z;?>" value="<?php echo $invoiceFetch->discount_amount;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
                   <td align="center" style="width: 3%;display:none;"><input type="text" name="cgst[]" id="cgst<?php echo $z;?>" value="<?php echo $invoiceFetch->cgst;?>"readonly="" style="text-align: center; width: 100%; border: hidden;"></td>
@@ -428,7 +428,7 @@
                   </th>
                 </tr>
                 <tr class="gradeA">
-                  <th>Sub Total</th>
+                  <th>Sub Total Qty</th>
                   <!-- <th>&nbsp;</th> -->
                   <th><input type="text" placeholder="Placeholder" id="sub_total" readonly="" name="sub_total" value="<?php echo $fetchq->sub_total; ?>" class="form-control"></th>
                 </tr>
@@ -570,7 +570,15 @@
 
         document.getElementById("tot").value = Math.round(tott);
         document.getElementById("ord_qty").value = Math.round(totalPackingCrt);
-        document.getElementById("priceT").focus();
+        
+        //=====================price calculation========
+        var total_qty=document.getElementById("qn").value;
+        var priceT=document.getElementById("priceT").value;
+        var total=Number(total_qty)*Number(priceT);
+
+        document.getElementById("nettot").value=total.toFixed(3);
+        document.getElementById("nettot").focus();
+
       }
        
       document.getElementById("priceT").onchange = function (e) 
@@ -984,7 +992,7 @@
     	var cell=cell+indexcell;
             cell = row.insertCell(indexcell);
     				cell.style.width="3%";
-    				//cell.style.display="none";
+    				cell.style.display="none";
     				cell.align="center"
     				var salepr = document.createElement("input");
     							salepr.type="text";
@@ -1142,6 +1150,7 @@
     		var cell=cell+indexcell;		
     	    cell = row.insertCell(indexcell);
     				cell.style.width="3%";
+            cell.style.display="none";
     				cell.align="center"	
     				
     												

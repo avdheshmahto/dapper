@@ -149,7 +149,7 @@
               
       
       
-      	  function abc(pt,pr,tid,q,u,igst,quantity,reorder,per,p,packing)
+      	  function abc(pt,pr,tid,q,u,igst,quantity,reorder,per,p,packing,priceT)
           {
       		       		
       		    var qnTT=Number(quantity);      		 
@@ -200,6 +200,8 @@
                 document.getElementById("usunit").value=u;
                 document.getElementById("tot").value=pr;
 
+                document.getElementById("priceT").value=priceT;
+
         				if(igst=='NON_TAX')
       					{
          					document.getElementById("nettot").value=pr;
@@ -211,7 +213,7 @@
       		
           	  document.getElementById("qn").value='';
               document.getElementById("ord_qty").value='';					
-      				document.getElementById("priceT").value='';
+      				
       				
       	  }
       
@@ -284,8 +286,8 @@
       
       ?>
     <input type="text" id="ty<?php echo $id;?>"  class="prds form-control" value="<?php echo $arr->sku_no.'' ?>" name="<?php echo $id;?>"
-      onFocus="abc(this.value,'<?php echo $arr->unitprice_purchase; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>','<?php echo $igst; ?>','<?php echo $arr->quantity; ?>','<?php echo $arr->min_re_level; ?>','<?php echo $arr->percentage;?>','<?php echo $arr->Product_id; ?>','<?php echo $arr->packing; ?>')"
-      onClick="abc(this.value,'<?php echo $arr->unitprice_purchase; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>','<?php echo $igst; ?>','<?php echo $arr->quantity; ?>','<?php echo $arr->min_re_level; ?>','<?php echo $arr->percentage;?>','<?php echo $arr->Product_id; ?>','<?php echo $arr->packing; ?>')" style="width:240px;border:1px solid;" tabindex="-1"  readonly >
+      onFocus="abc(this.value,'<?php echo $arr->unitprice_purchase; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>','<?php echo $igst; ?>','<?php echo $arr->quantity; ?>','<?php echo $arr->min_re_level; ?>','<?php echo $arr->percentage;?>','<?php echo $arr->Product_id; ?>','<?php echo $arr->packing; ?>','<?php echo $arr->unitprice_sale; ?>')"
+      onClick="abc(this.value,'<?php echo $arr->unitprice_purchase; ?>',this.id,'<?php echo $qty; ?>','<?php echo $usunit; ?>','<?php echo $igst; ?>','<?php echo $arr->quantity; ?>','<?php echo $arr->min_re_level; ?>','<?php echo $arr->percentage;?>','<?php echo $arr->Product_id; ?>','<?php echo $arr->packing; ?>','<?php echo $arr->unitprice_sale; ?>')" style="width:240px;border:1px solid;" tabindex="-1"  readonly >
     
     <?php  }  }  ?>
 

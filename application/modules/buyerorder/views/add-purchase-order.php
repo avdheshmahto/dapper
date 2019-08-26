@@ -207,14 +207,14 @@
                   <th>Total Ord Qty.</th>
                   <th>Per Crtn Qty.</th>
                   <th>Total Crtn Qty.</th>
-                  <th >Additional % Qty </th>
+                  <th style="display: none;">Additional % Qty </th>
                   <th style="display: none;">Discount%</th>
                   <th style="display: none;">Discount Amount</th>
                   <th style="display: none;">CGST</th>
                   <th style="display: none;">SGST</th>
                   <th style="display: none;">IGST</th>
                   <th style="display: none;">GST Total</th>
-                  <th >Production Qty</th>
+                  <th style="display: none;">Production Qty</th>
                   <th >Price US $</th>
                   <th >Total</th>
                   <th>Action</th>
@@ -245,23 +245,23 @@
                   </th>
                   <b id="lpr" style="display:none"></b>
                   <th >
-                    <input type="number" id="qn" min="1" style="width:70px;"   class="form-control">
+                    <input type="number" id="qn" min="1" style="width:90px;"   class="form-control">
                   </th>
                   <th><input type="number" id="per_crt_qn" min="1" style="width:70px;" readonly="readonly"   class="form-control"></th>
                   <th>
-                    <input type="number" id="ord_qty" min="1" style="width:70px;"    class="form-control" readonly="readonly">
+                    <input type="number" id="ord_qty" min="1" style="width:90px;"    class="form-control" readonly="readonly">
                   </th>
-                  <th ><input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:70px;" readonly="readonly" ></th>
+                  <th style="display: none;"><input type="number" step="any" id="lph" min="1"  value="" class="form-control" style="width:70px;" readonly="readonly" ></th>
                   <th style="display: none;"><input type="number" step="any" name="saleamnt" id="discount" class="form-control" style="width:70px;"/ ></th>
                   <th style="display: none;"><input type="number" step="any" name="saleamnt" id="disAmt" class="form-control"  style="width:70px;"/ ></th>
                   <th style="display: none;"><input type="number" min="1" step="any" name="saleamnt" id="cgst" class="form-control"  style="width:70px;"/ ></th>
                   <th style="display: none;"><input type="number" min="1" step="any" name="saleamnt" id="sgst" class="form-control"   style="width:70px;"/ ></th>
                   <th style="display: none;"><input type="number" step="any" name="saleamnt" id="igst" class="form-control"  style="width:70px;"/ ></th>
                   <th style="display: none;"><input type="number" step="any" name="saleamnt" id="gstTotal" class="form-control"   style="width:70px;"/ ></th>
-                  <th ><input type="number" step="any" name="saleamnt" id="tot" class="form-control"   style="width:70px;" readonly="readonly"/ ></th>
+                  <th style="display: none;"><input type="number" step="any" name="saleamnt" id="tot" class="form-control"   style="width:70px;" readonly="readonly"/ ></th>
                   <th style="display:none"><input type="number" step="any" name="saleamnt" id="gstTotal" class="form-control"   style="width:70px;"/ ></th>
-                  <th ><input type="number" step="any" name="saleamnt" id="priceT" class="form-control"   style="width:70px;"/ ></th>
-                  <th ><input type="text" name="saleamnt" readonly="" id="nettot" class="form-control"  style="width:70px;"/ ></th>
+                  <th ><input type="number" step="any" name="saleamnt" id="priceT" class="form-control"   style="width:90px;" readonly="" / ></th>
+                  <th ><input type="text" name="saleamnt" readonly="" id="nettot" class="form-control"  style="width:90px;"/ ></th>
                   <th><img src="<?=base_url();?>assets/images/plus.png" onclick="adda();" /></th>
                 </tr>
               </tbody>
@@ -285,7 +285,7 @@
                 <td style="width:3%;">
                   <div align="center"><u>Total Crtn Qty</u></div>
                 </td>
-                <td style="width:3%;">
+                <td style="width:3%;display: none;">
                   <div align="center"><u>Additional % Qty</u></div>
                 </td>
                 <td style="width:3%;display: none;">
@@ -306,13 +306,13 @@
                 <td style="width:3%;display: none;">
                   <div align="center"><u>GST TOTAL</u></div>
                 </td>
-                <td style="width:3%;">
+                <td style="width:3%;display: none;">
                   <div align="center"><u>Production Qty</u></div>
                 </td>
-                <td style="width:3%;display: none1;">
+                <td style="width:3%;">
                   <div align="center"><u> Price</u></div>
                 </td>
-                <td style="width:3%;display: none1;">
+                <td style="width:3%;">
                   <div align="center"><u>Total Price</u></div>
                 </td>
                 <td style="width:3%;">
@@ -429,7 +429,14 @@
       
       document.getElementById("ord_qty").value = Math.round(totalPackingCrt);
       
-      document.getElementById("priceT").focus();
+      //price calculation===================
+      var total_qty=document.getElementById("qn").value;
+      var priceT=document.getElementById("priceT").value;
+      
+      var total=Number(total_qty)*Number(priceT);
+      document.getElementById("nettot").value=total.toFixed(3);
+
+      document.getElementById("nettot").focus();
 
     }
     
@@ -744,7 +751,7 @@
     	var cell=cell+indexcell;
             cell = row.insertCell(indexcell);
     				cell.style.width="3%";
-    				//cell.style.display="none";
+    				cell.style.display="none";
     				cell.align="center"
     				var salepr = document.createElement("input");
     							salepr.type="text";
@@ -907,6 +914,7 @@
     		var cell=cell+indexcell;		
     	    cell = row.insertCell(indexcell);
     				cell.style.width="3%";
+            cell.style.display="none";
     				cell.align="center"	
     				var vatamt = document.createElement("input");
     							vatamt.type="text";
@@ -989,7 +997,7 @@
     						delt.style.border="hidden"; 
     						delt.onclick= function() { deleteselectrow(delt.id,delt); };
     					    cell.appendChild(delt);
-    	var edt = document.createElement("img");
+    	          var edt = document.createElement("img");
     						edt.src ="<?=base_url();?>/assets/images/edit.png";
     						edt.class ="icon";
     						//edt.style.width="60%";
