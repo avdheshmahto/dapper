@@ -199,7 +199,7 @@
                 <input name="qty[]" id="qty<?=$i;?>" onkeyup="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> style="width:75px;" readonly="readonly" <?php } ?> />
                 <input type="text" style="display:none" name="process_ends[]" value="1" />
               </td>
-              <td class="tdcenter"> <input class="form-control" onkeyup="totalWeightCal(this.id)" onchange="totalWeightCal(this.id)"  style="margin-bottom:10px;width:100px;" value="" type="text"  name="total_weight[]" id="total_weight<?=$i;?>" <?php if($reci_qty==0){?> readonly="readonly" <?php }?>  /></td>
+              <td class="tdcenter"> <input class="form-control" onchange="totalWeightCal(this.id)"  style="margin-bottom:10px;width:100px;" value="" type="text"  name="total_weight[]" id="total_weight<?=$i;?>" <?php if($reci_qty==0){?> readonly="readonly" <?php }?>  /></td>
               <td class="tdcenter"> <input class="form-control"   style="margin-bottom:10px;width:105px;" value="<?=$getProductPart->qty;?>" readonly="readonly" name="ideal_total_weight[]" id="ideal_total_weight<?=$i;?>"  /></td>
               <td class="tdcenter"> <input class="form-control"   style="margin-bottom:10px;width:95px;" readonly="readonly" value="" name="weight[]" id="weight<?=$i;?>"  /></td>
               <input type="hidden" id="net_weight_cal<?=$i;?>" value="<?=$getProductStock->net_weight;?>" />

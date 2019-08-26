@@ -1422,8 +1422,8 @@ $data_dtl_avl=array(
 
 
 
-if($grn_type=='Job Order')
-{
+	if($grn_type=='Job Order')
+	{
 	     $rm_q=$qty[$i]+$rm_qty[$i];
 		 if($ord_qty[$i]==$rm_q)
 		 {
@@ -1434,7 +1434,7 @@ if($grn_type=='Job Order')
 			  $this->db->query("update tbl_job_work set status='3' where job_order_no='$order_no'");
 		 }
 
-	 }
+	}
 
 	if($grn_type=='rm_receive')
 	{

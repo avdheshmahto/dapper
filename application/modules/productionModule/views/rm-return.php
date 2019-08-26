@@ -71,7 +71,7 @@
             	foreach($productQuery->result() as $getProduct){
 
               ####issue Qty #############
-              $rmHdr=$this->db->query("select * from tbl_receive_matrial_hdr where po_no='$getOrder->id' ");
+             /* $rmHdr=$this->db->query("select * from tbl_receive_matrial_hdr where po_no='$getOrder->id' ");
               foreach ($rmHdr->result() as $rmDtl) 
               {
                 $hdrPo[]=$rmDtl->inboundid;
@@ -89,7 +89,7 @@
               }
               
               $rmQtyDtl=$this->db->query("select SUM(order_qty) as cIssueQty, SUM(receive_qty) as cIssueWeight from tbl_receivematrial_dtl where inboundrhdr in ($getHdrIdd) ");
-              $getChallan=$rmQtyDtl->row();
+              $getChallan=$rmQtyDtl->row();*/
 
 
             	####### get product #######
@@ -115,19 +115,19 @@
                 $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty, SUM(total_weight) as rec_wgt from tbl_production_order_log where job_order_id = '$getOrder->id' and order_no='$getOrder->job_order_no'");
                 $getInboundGRNLog=$inbountLogGRNLogQuery->row();
                 
-                $rmReturn=$this->db->query("select SUM(order_qty) as rt_qty, SUM(qty) as rt_wgt from tbl_job_rm_return where lot_no='$getOrder->lot_no' AND order_no='$getOrder->job_order_no' AND job_order_id='$getOrder->id' ");
+                $rmReturn=$this->db->query("select SUM(order_qty) as rt_qty, SUM(qty) as rt_wgt from tbl_job_rm_return where lot_no='$getOrder->lot_no' AND order_no='$getOrder->job_order_no' AND job_order_id='$getOrder->id' AND productid='$getProduct->productid'");
                 $getRMreturn=$rmReturn->row();
                 ?>
-            <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$rmRR=$getChallan->cIssueQty-$getInboundGRNLog->rec_qty-$getRMreturn->rt_qty;?>" />
+            <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$rmRR=$getProduct->rem_order_qty-$getRMreturn->rt_qty;?>" />
             <td><?php 
-              //echo $rmRR=$getProduct->order_qty-$getProduct->rem_order_qty;
-              //echo $rmRR=$getChallan->cIssueQty-$getInboundGRNLog->rec_qty-$getRMreturn->rt_qty;
-             echo $rmRR=$getProduct->order_qty-$getInboundGRNLog->rec_qty;
+              echo $rmRR=$getProduct->rem_order_qty-$getRMreturn->rt_qty;
+             // echo $rmRR=$getChallan->cIssueQty-$getRMreturn->rt_qty;
+             //echo $rmRR=$getProduct->order_qty-$getInboundGRNLog->rec_qty;
               ?></td>
-              <input type="hidden" id="rem_wgt<?=$i;?>" value="<?=$rmRR=$getChallan->cIssueWeight-$getInboundGRNLog->rec_wgt-$getRMreturn->rt_wgt;?>" />
+              <input type="hidden" id="rem_wgt<?=$i;?>" value="<?=$rmRR=$getProduct->remaining_qty-$getRMreturn->rt_wgt;?>" />
             <td><?php 
-              //echo $rmR=$getProduct->receive_qty-$getProduct->remaining_qty;
-              echo $rmR=$getChallan->cIssueWeight-$getInboundGRNLog->rec_wgt-$getRMreturn->rt_wgt;
+              echo $rmR=$getProduct->remaining_qty-$getRMreturn->rt_wgt;
+              //echo $rmR=$getChallan->cIssueWeight-$getRMreturn->rt_wgt;
 
             ?></td>
             <td>
