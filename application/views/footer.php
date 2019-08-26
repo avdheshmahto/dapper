@@ -586,7 +586,7 @@
     //$('#size').val(editVal.pro_size);
     //$('#thickness').val(editVal.thickness);
     //$('#grade_code').val(editVal.grade_code);
-    //$('#unitprice_sale').val(editVal.unitprice_sale);
+    $('#unitprice_sale').val(editVal.unitprice_sale);
     //$('#unitprice_purchase').val(editVal.unitprice_purchase);   
     //$('#hsn_code').val(editVal.hsn_code);
     //$('#gst_tax').val(editVal.gst_tax);

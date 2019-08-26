@@ -57,6 +57,7 @@
             <div class="modal-body overflow">
               <div class="form-group">
                 <input type="hidden" name="type" value="<?=$_GET['p_type'];?>" />
+                <?php if($_GET['p_type']!='14'){?> 
                 <label class="col-sm-2 control-label"> *Category</label> 
                 <div class="col-sm-4">                  
                   <!-- <select name="type1" style="display:none"  class="form-control" id="type" onchange="getCat(this.value);">
@@ -78,11 +79,18 @@
                     <?php } ?>
                   </select>
                 </div>
+              <?php } ?>
                <label class="col-sm-2 control-label" > *<?php if($_GET['p_type']=='13'){?>RM Code<?php } elseif($_GET['p_type']=='32'){?>Part Code <?php } elseif($_GET['p_type']=='33'){ echo "Shape Code";} elseif($_GET['p_type']=='35'){ echo "Accessories Code";} elseif($_GET['p_type']=='34'){ echo "Packaging Material Code";} elseif($_GET['p_type']=='50'){ echo "Scrap Codde";} else{ echo "Item Code";}?> </label> 
                 <div class="col-sm-4">
                     <input type="hidden" class="hiddenField" id="Product_id" name="Product_id" value="" />
                     <input type="text" class="form-control" name="sku_no" value=""  id="sku_no"> 
                 </div>
+                <?php if($_GET['p_type']=='14') { ?> 
+                <label class="col-sm-2 control-label">Sale Price</label> 
+                <div class="col-sm-4">                   
+                  <input type="number" step="any" name="unitprice_sale" id="unitprice_sale" class="form-control" >
+                </div>
+                <?php } ?>
               </div>
 
               <div class="form-group">
@@ -139,13 +147,10 @@
               </div>
 
               <div class="form-group" style="display: none;">
-                <label class="col-sm-2 control-label">Sale Price</label> 
-                <div class="col-sm-4"> 
-                  <input type="text" name="grade_code" id="grade_code" class="form-control"/>
-                  <input type="number" step="any" name="unitprice_sale" value="" id="unitprice_sale" class="form-control" >
-                </div>
+                
                 <label class="col-sm-2 control-label">Purchase Price:</label> 
                 <div class="col-sm-4" id="regid"> 
+                  <input type="text" name="grade_code" id="grade_code" class="form-control"/>
                   <input type="number" step="any" name="unitprice_purchase" value="" id="unitprice_purchase" class="form-control" >
                 </div>
               </div>

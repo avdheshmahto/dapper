@@ -129,7 +129,7 @@ class Item extends my_controller
             //'pro_size' => $this->input->post('size'),
             //'thickness' => $this->input->post('thickness'),
             //'grade_code' => $this->input->post('grade_code'),
-            //'unitprice_sale' => $this->input->post('unitprice_sale'),
+            'unitprice_sale' => $this->input->post('unitprice_sale'),
             'circle_weight' => $this->input->post('circle_weight'),
             //'unitprice_purchase' => $this->input->post('unitprice_purchase'),
             //'hsn_code' => $this->input->post('hsn_code'),
