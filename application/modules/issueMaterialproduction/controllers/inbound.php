@@ -335,7 +335,7 @@ class inbound extends my_controller
                 //$this->stock_refill_qty($qty[$i],$main_id[$i]);
                 $this->Model_admin_login->insert_user($table_name_dtl, $data_dtl);
 
-                $this->db->query("update tbl_issuematrial_dtl set remaining_qty=remaining_qty+'$qty[$i]',rem_order_qty=rem_order_qty+'$order_qty[$i]' where inboundrhdr='$ismHdrid'");
+                $this->db->query("update tbl_issuematrial_dtl set remaining_qty=remaining_qty+'$qty[$i]',rem_order_qty=rem_order_qty+'$order_qty[$i]' where inboundrhdr='$ismHdrid' AND productid='$productid[$i]' ");
                 $this->po_stock_in_rem($qty[$i], $productid[$i], $order_qty[$i]);
                 //$this->Model_admin_login->insert_user($table_name_dtl,$data_dtl);        
             }
