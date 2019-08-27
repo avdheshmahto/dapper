@@ -29,7 +29,7 @@
                       <select name="vendor_id" style="width:80%" required id="contact_id_copy" class="form-control" onChange="document.getElementsByName('contactid')[0].value=this.value;"   <?php if(@$_GET['view']!=''){ ?> disabled="disabled" <?php }?>>
                         <option value="" selected disabled>Select</option>
                         <?php
-                          $contQuery=$this->db->query("select * from tbl_contact_m where status='A' and group_name='5'");
+                          $contQuery=$this->db->query("select * from tbl_contact_m where status='A' and group_name='5' and vendor_type='Raw Material' ");
                           foreach($contQuery->result() as $contRow)
                           {
                           ?>

@@ -909,7 +909,7 @@
                 <select class="form-control" name="vendor_id" required>
                   <option value="">--Select--</option>
                   <?php
-                    $queryProductShape=$this->db->query("select *from tbl_contact_m where group_name='5'");
+                    $queryProductShape=$this->db->query("select *from tbl_contact_m where group_name='5' and vendor_type='Production' ");
                     foreach($queryProductShape->result() as $getProductShape){
                     
                     ?>
@@ -917,7 +917,7 @@
                   <?php }?>
                 </select>
               </div>
-              <label class="col-sm-2 control-label">date:</label>
+              <label class="col-sm-2 control-label">Date:</label>
               <div class="col-sm-4">
                 <input name="date" type="date" value="" class="form-control" id="thickness">
               </div>

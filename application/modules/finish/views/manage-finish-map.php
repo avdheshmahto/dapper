@@ -654,7 +654,7 @@
                 <select class="form-control" name="vendor_id" required>
                   <option value="">--Select--</option>
                   <?php
-                    $queryProductShape=$this->db->query("select *from tbl_contact_m where group_name='5'");
+                    $queryProductShape=$this->db->query("select *from tbl_contact_m where group_name='5' and vendor_type='Finish' ");
                     foreach($queryProductShape->result() as $getProductShape){
                     
                     ?>
