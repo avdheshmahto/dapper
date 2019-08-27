@@ -51,6 +51,26 @@
                   <input type="text" name="contact_person" id="contact_person" value=""  class="form-control">
                 </div>                  
               </div>
+
+              <?php if($_GET['con_type'] == 5 ) { ?>
+                <div class="form-group">
+                <label class="col-sm-2 control-label">Vendor Type</label> 
+                <div class="col-sm-4">
+                  <select name="vendor_type" id="vendor_type" class="form-control">
+                    <option value="">-------select---------</option>
+                    <option value="Raw Material">Raw Material</option>
+                    <option value="Production">Production</option>
+                    <option value="Kora">Kora</option>
+                    <option value="Finish">Finish</option>
+                  </select>
+                </div>
+                <label class="col-sm-2 control-label">&nbsp;</label> 
+                <div class="col-sm-4"> 
+                  &nbsp;
+                </div>                  
+              </div>
+              <?php } ?>
+
               <div class="form-group">
                 <label class="col-sm-2 control-label">*Name:</label> 
                 <div class="col-sm-4">        
@@ -242,6 +262,9 @@
                     <th ><input name="check_all" type="checkbox" id="check_all" onClick="checkall(this.checked)" value="check_all" /></th>
                     <th>Name</th>
                     <th>Group Name</th>
+                    <?php if($_GET['con_type'] == 5) { ?>
+                    <th>Vendor Type</th>
+                    <?php } ?>
                     <th>Email Id</th>
                     <th>Mobile No.</th>
                     <th>Phone No.</th>
@@ -278,6 +301,9 @@
                     <th>
                       <?=$getContact->account_name;?>
                     </th>
+                    <?php if($_GET['con_type'] == 5) { ?>
+                    <th><?=$fetch_list->vendor_type;?></th>
+                    <?php } ?>
                     <th><?=$fetch_list->email;?></th>
                     <th><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:9716127292"><?=$fetch_list->mobile;?></a></th>
                     <th><?=$fetch_list->phone;?></th>

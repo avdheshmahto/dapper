@@ -439,10 +439,11 @@
     $('#finalDestination').val(editVal.finalDestination);   
     $('#countryDestination').val(editVal.countryDestination);   
     $('#portDischarge').val(editVal.portDischarge);
-    $('#norify').val(editVal.norify);
-    
+    $('#norify').val(editVal.norify);    
     $('#state').val(editVal.state_id).prop('selected', true);   
-    //$('#printname').val(editVal.printname);
+    
+    $('#vendor_type').val(editVal.vendor_type).prop('selected', true);
+    
     $('#pin_code').val(editVal.pincode);
     $('#code').val(editVal.code);   
     

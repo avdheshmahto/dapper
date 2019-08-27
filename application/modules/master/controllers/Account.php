@@ -107,7 +107,9 @@ public function insert_contact()
 					'countryDestination' => $this->input->post('countryDestination'),
 				    'portDischarge' => $this->input->post('portDischarge'),
 					'norify' => $this->input->post('norify'),
-	 				//'printname' => $printname,	
+
+	 				'vendor_type' => $this->input->post('vendor_type'),	
+	 				
 	 				'mappedConsignee'=> $entityComma,				
 					'code' => $this->input->post('code')						                 	
                 );
