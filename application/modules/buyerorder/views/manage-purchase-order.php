@@ -122,36 +122,41 @@
                   <th><?php 
                     $sqlgroup=$this->db->query("select * from tbl_contact_m where contact_id='$sales->contactid'");
                     $res1 = $sqlgroup->row();
-                    echo $res1->first_name;?></th>
-                 
+                    echo $res1->first_name;?>
+                  </th>                 
                   <th>
                     <?php
                       $purchaseOrderQuery = $this->db->query("select *from tbl_inbound_log where po_no='$sales->purchaseid'");
-                      $countPO            = $purchaseOrderQuery->num_rows();
+                      $countPO = $purchaseOrderQuery->num_rows();
                       if($countPO>0 && $countPO<0)
                       {
-                      ?>
-                    <button class="btn btn-default" onClick="openpopup('<?=base_url();?>buyerorder/edit_purchase_order_1',1400,600,'view',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="fa fa-eye"></i></button>
+                    ?>
+                    <!-- <button class="btn btn-default" onClick="openpopup('<?=base_url();?>buyerorder/edit_purchase_order_1',1400,600,'view',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="fa fa-eye"></i></button> -->
+                    <a class="btn btn-default" href="<?=base_url();?>buyerorder/edit_purchase_order_1?view=<?=$sales->purchaseid;?>"><i class="fa fa-eye" style="font-weight: 900;margin-left: 4px;margin-right: 4px;"></i></a>
+
                     <a style="display:none" href="<?=base_url();?>buyerorder/print_invoice?id=<?=$sales->purchaseid;?>" class="btn btn-default" target="blank"><i class="glyphicon glyphicon-print"></i></a>
+                    
                     <button class="btn btn-xs btn-black" data-toggle="modal" data-target="#modal-0" type="button"><i class="icon-pencil"></i></button>
                     <?php
                       }
                       else
                       {
-                      ?>
+                    ?>
                     <!-- <button class="btn btn-default" onClick="openpopup('<?=base_url();?>buyerorder/edit_purchase_order_1',1400,600,'view',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-eye"></i></button> -->
-                     <a class="btn btn-default" href="<?=base_url();?>buyerorder/edit_purchase_order_1?view=<?=$sales->purchaseid;?>" > <i class="icon-eye"></i></a>
+                     <a class="btn btn-default" href="<?=base_url();?>buyerorder/edit_purchase_order_1?view=<?=$sales->purchaseid;?>"><i class="icon-eye" style="font-weight: 900;margin-left: 4px;margin-right: 4px;"></i></a>
                     <!-- <button class="btn btn-default" onClick="openpopup('<?=base_url();?>buyerorder/edit_purchase_order_1',1400,600,'id',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-pencil"></i></button> -->
 
-                    <a class="btn btn-default" href="<?=base_url();?>buyerorder/edit_purchase_order_1?id=<?=$sales->purchaseid;?>" > <i class="icon-pencil"></i></a>
+                    <a class="btn btn-default" href="<?=base_url();?>buyerorder/edit_purchase_order_1?id=<?=$sales->purchaseid;?>"><i class="icon-pencil" style="font-weight: 900;margin-left: 4px;margin-right: 4px;"></i></a>
+
                     <?php
                       $pri_col    = 'purchaseid';
                       $table_name = 'tbl_quotation_purchase_order_hdr';
                       ?>
                     <button class="btn btn-default delbuttonPurchase" id="<?=$sales->purchaseid."^".$table_name."^".$pri_col ; ?>" type="button"><i class="icon-trash"></i></button>
-                    <a  href="<?=base_url();?>buyerorder/print_invoice?id=<?=$sales->purchaseid;?>" class="btn btn-default" target="blank"><i class="glyphicon glyphicon-print"></i></a>
+                    <a  href="<?=base_url();?>buyerorder/print_invoice?id=<?=$sales->purchaseid;?>" class="btn btn-default" target="blank"><i class="glyphicon glyphicon-print" style="font-weight: 900;margin-left: 4px;margin-right: 4px;"></i></a>
                     <button style="display:none" class="btn btn-xs btn-black" data-toggle="modal" data-target="#modal-0" onclick="getspharemap(<?=$sales->purchaseid;?>);" type="button"><i class="icon-eye"></i></button>
-                    <?php }?>
+                    <?php } ?>
+
                   </th>
                 </tr>
                 <?php } ?>
