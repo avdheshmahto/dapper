@@ -55,13 +55,13 @@
                     ?>
                   <tr class="gradeX odd" role="row">
                     <td class="size-60 text-center sorting_1"><?=$i;?></td>
-                    <td><?=$getProductStock->sku_no;?>&<?=$getProductStock->productname;?></td>
-                    <td><?=$getProductUOM->keyvalue;?></td>
+                    <td class="tdcenter"><?=$getProductStock->sku_no;?>&<?=$getProductStock->productname;?></td>
+                    <td class="tdcenter"><?=$getProductUOM->keyvalue;?></td>
                     <?php
                       $poLogQuery=$this->db->query("select SUM(qty) as po_qty from 		tbl_purchase_order_production_dtl where purchaseid='$getHdr->po_no' and productid='$getProduct->productid'");
                       $getPoQty=$poLogQuery->row();
                       ?>
-                    <td><?=$getProduct->qty;?></td>
+                    <td class="tdcenter"><?=$getProduct->qty;?></td>
                   </tr>
                   <?php 
                     $i++;
@@ -71,17 +71,12 @@
             </div>
           </div>
         </div>
-        <div class="table-responsive">
-          <table class="table table-striped table-bordered table-hover" >
-            <tbody>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class ="pull-right" id="saveDiv" >
-        &nbsp;<a  class="btn btn-sm"  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Cancel</a>
-      </div>
+      
     </div>
   </div>
+</div>
+
+<div class ="pull-right" id="saveDiv" >
+&nbsp;<a  class="btn btn-sm"  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Cancel</span></a>
+</div>
 </div>

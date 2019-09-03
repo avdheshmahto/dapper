@@ -95,24 +95,11 @@
               </table>
             </div>
           </div>
-        </div>
-     
-      </div>
-      <input type="hidden" name="rows" id="rows">
-      <!--//////////ADDING TEST/////////-->
-      <input type="hidden" name="spid" id="spid" value="d1"/>
-      <input type="hidden" name="ef" id="ef" value="0" />
-      <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover" >
-          <tbody>
-         
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class ="pull-right" id="saveDiv" >
-      &nbsp;<a  class="btn btn-sm btn-black btn-outline"  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Cancel</a>
-    </div>
+        </div>     
+      </div>  
   </div>
+</div>
+<div class ="pull-right" id="saveDiv" >
+&nbsp;<a  class="btn btn-sm btn-black btn-outline"  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Cancel</span></a>
+</div>
 </div>

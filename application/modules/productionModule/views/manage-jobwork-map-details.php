@@ -810,21 +810,18 @@
           <div class="tabs-container">
             <ul class="nav nav-tabs">
               <?php if($getsched->order_type=='Job Order') { ?>
-              <li style="display:none1;"  class="active"><a href="#receiveJobWork" data-toggle="tab">RM Request</a></li>
+              <li class="active"><a href="#receiveJobWork" data-toggle="tab">RM Request</a></li>
               <?php } ?>
               <li <?php if($getsched->order_type=='Purchase Oder') { ?> class="active" <?php } else { ?> class="" <?php } ?>  ><a href="#home" data-toggle="tab">GRN</a></li>
-              <li ><a href="#check" data-toggle="tab">Checking</a></li>
-              <li style="display:none1;"><a href="#returnOrder" data-toggle="tab">Order Repair</a></li>
-              <li style="display:none1;"><a href="#scrap" data-toggle="tab">Scrap</a></li>
+              <li><a href="#check" data-toggle="tab">Checking</a></li>
+              <li><a href="#returnOrder" data-toggle="tab">Order Repair</a></li>
+              <li><a href="#scrap" data-toggle="tab">Scrap</a></li>
               <?php if($getsched->order_type!='Job Order') { ?>
-              <li style="display:none1;"><a href="#purchaseReturn" data-toggle="tab">Purchase Return</a></li>
+              <li><a href="#purchaseReturn" data-toggle="tab">Purchase Return</a></li>
               <?php } ?>
               <?php if($getsched->order_type=='Job Order') { ?>
-              <li style="display:none1;"><a href="#RMReturn" data-toggle="tab">RM  Return</a></li>
+              <li><a href="#RMReturn" data-toggle="tab">RM  Return</a></li>
               <?php } ?>
-              <li style="display:none" class=""><a href="#four" data-toggle="tab">Request Raw Material</a></li>
-              <li style="display:none" class=""><a href="#receiveRaw" data-toggle="tab">Receive Raw Material</a></li>
-              <li style="display:none" class=""><a href="#work_order" data-toggle="tab">Transfer to Module</a></li>
             </ul>
             <div class="tab-content">
               
@@ -952,7 +949,7 @@
                           <td><?=$fetch_list->grn_no;?></td>
                           <td><?=$fetch_list->grn_date;?></td>
                           <td>
-                            <a href="#" title="GRN VIEW" data-toggle="modal" data-target="#model-view-production-log" onclick="view_production_log('<?=$fetch_list->grn_no;?>,<?=$fetch_list->order_no;?>');"><i class="fa fa-eye"></i></a>&nbsp;
+                            <button class="btn btn-default" href="#" title="GRN VIEW" data-toggle="modal" data-target="#model-view-production-log" onclick="view_production_log('<?=$fetch_list->grn_no;?>,<?=$fetch_list->order_no;?>');"><i class="fa fa-eye"></i></button>&nbsp;
                             
                          
                       <?php
