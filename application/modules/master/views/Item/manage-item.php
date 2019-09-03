@@ -86,7 +86,7 @@
                     <input type="text" class="form-control" name="sku_no" value=""  id="sku_no"> 
                 </div>
                 <?php if($_GET['p_type']=='14') { ?> 
-                <label class="col-sm-2 control-label">Sale Price</label> 
+                <label class="col-sm-2 control-label">Price</label> 
                 <div class="col-sm-4">                   
                   <input type="number" step="any" name="unitprice_sale" id="unitprice_sale" class="form-control" >
                 </div>
@@ -283,7 +283,7 @@
                   &nbsp;
                 </div>
                 </div>
-                <?php }?>                
+                <?php } ?>                
               
 
             </div>
