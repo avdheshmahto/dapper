@@ -103,7 +103,7 @@
             <td><?=$getProductUOM->keyvalue;?></td>
             
             <?php
-              $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_production_order_transfer_another_module where productid='$getProduct->productid' AND  order_no='$id' and module_name='Finish'");
+              $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_production_order_transfer_another_module where productid='$getProduct->productid' AND  order_no='$id' and module_name='Inspection'");
               $getInboundGRNLog=$inbountLogGRNLogQuery->row();
               
             ?>

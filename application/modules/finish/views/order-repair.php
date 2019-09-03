@@ -58,7 +58,7 @@
             </tr>
           </thead>
           <?php
-            //echo "select SUM(repair_qty) as qty,productid from tbl_production_order_check where order_no='$id' and repair_qty!='' group by productid";
+
             	$productQuery=$this->db->query("select SUM(repair_qty) as qty,productid from tbl_production_order_check where order_no='$id' and repair_qty!='' group by productid");
             	$i=1;
             	foreach($productQuery->result() as $getProduct){
@@ -81,10 +81,10 @@
             	?>
           <tr class="gradeX odd" role="row">
             <td class="size-60 text-center sorting_1"><?=$i;?></td>
-            <td><?=$getProductStock->sku_no;?>
+            <td class="tdcenter"><?=$getProductStock->sku_no;?>
               <input type="hidden"  name="productid[]" value="<?=$getProduct->productid;?>" class="form-control">
             </td>
-            <td><?=$getProductUOM->keyvalue;?></td>
+            <td class="tdcenter"><?=$getProductUOM->keyvalue;?></td>
             
             <?php
               $inbountLogGRNLogQuery=$this->db->query("select SUM(qty) as rec_qty from tbl_production_order_repair where productid='$getProduct->productid' AND job_order_id = '$lot_no' and order_no='$id'");
@@ -93,11 +93,11 @@
         		?>
             <input type="hidden" min="0" name="ord_qty[]" value="<?=$getProduct->qty;?>" class="form-control">
             <input type="hidden" min="0" name="rm_qty[]" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" class="form-control">
-            <td><?=$getProduct->qty;?></td>
+            <td class="tdcenter"><?=$getProduct->qty;?></td>
             <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->qty-$getInboundGRNLog->rec_qty;?>" />
-            <td><?php echo $reci_qty=$getProduct->qty-$getInboundGRNLog->rec_qty;?></td>
+            <td class="tdcenter"><?php echo $reci_qty=$getProduct->qty-$getInboundGRNLog->rec_qty;?></td>
             <td style="display:none"><?=$getProductSerialStock->quantity;?></td>
-            <td><input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
+            <td class="tdcenter"><input name="qty[]" id="qty<?=$i;?>" onchange="qtyVal(this.id)" type="text" class="form-control"<?php if($reci_qty==0){?> readonly="readonly" <?php }?> /></td>
           </tr>
           <?php 
             $i++;
