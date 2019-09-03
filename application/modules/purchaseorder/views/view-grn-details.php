@@ -11,8 +11,6 @@
           </ul>
         </div>
         <div class="panel-body">
-          <!-- <div class="table-responsive-">
-            </div> -->
           <div class="" id="style-3-y">
             <div class="force-overflow-y">
               <div class="table-responsive">
@@ -31,8 +29,6 @@
                     $i=1;
                     foreach($productQuery->result() as $getProduct){
                     	
-                    	
-                    				
                     $cntQtyQuery=$this->db->query("select SUM(receive_qty) as weightt,SUM(qn_pc) as qty_pc from tbl_inbound_log where productid='$getProduct->productid' and po_no='$getProduct->purchaseid'");
                     $getCntT=$cntQtyQuery->row();           
                     
@@ -52,14 +48,12 @@
                     ?>
                   <tr class="gradeX odd" role="row">
                     <td class="size-60 text-center sorting_1"><?=$i;?></td>
-                    <td><?=$getProductStock->sku_no;?>& <?=$getProductStock->productname;?>
+                    <td class="tdcenter"><?=$getProductStock->sku_no;?>& <?=$getProductStock->productname;?>
                       <input type="hidden"  name="productid[]" value="<?=$getProduct->productid;?>" class="form-control">
                     </td>
-                    <td><?=$getProductUOM->keyvalue;?></td>
-                    <td><?=$getProduct->qn_pc - $getCntT->qty_pc;?></td>
-                    <td>
-                      <?php echo $sumQty;?>
-                    </td>
+                    <td class="tdcenter"><?=$getProductUOM->keyvalue;?></td>
+                    <td class="tdcenter"><?=$getProduct->qn_pc - $getCntT->qty_pc;?></td>
+                    <td class="tdcenter"><?php echo $sumQty;?></td>
                   </tr>
                   <?php 
                     }?>
@@ -69,26 +63,11 @@
                 </table>
               </div>
             </div>
-          </div>
-          <!--scrollbar-y close-->		
-         
-        </div>
-        <input type="hidden" name="rows" id="rows">
-        <!--//////////ADDING TEST/////////-->
-        <input type="hidden" name="spid" id="spid" value="d1"/>
-        <input type="hidden" name="ef" id="ef" value="0" />
-        <div class="table-responsive">
-          <table class="table table-striped table-bordered table-hover" >
-            <tbody>
-             
-              </tr>
-            </tbody>
-          </table>
+          </div>         
         </div>
       </div>
-      <div class ="pull-right" id="saveDiv" >
-        &nbsp;<a  class="btn btn-sm"  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Cancel</a>
-      </div>
-    </div>
+    <div class ="pull-right" id="saveDiv" >
+  &nbsp;<a  class="btn btn-sm"  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Cancel</span></a>
   </div>
+ </div>
 </div>

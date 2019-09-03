@@ -209,17 +209,26 @@
                       $countPO=$purchaseOrderQuery->num_rows();
                       if($countPO>0)
                       {
-                      ?>
-                    <button class="btn btn-default" onClick="openpopup('<?=base_url();?>purchaseorder/purchaseorder/edit_purchase_order_1',1400,600,'view',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="fa fa-eye"></i></button>
-                    <a style="display:none1" href="<?=base_url();?>purchaseorder/purchaseorder/print_invoice?id=<?=$sales->purchaseid;?>" class="btn btn-default" target="blank">
+                    ?>
+                    
+                    <!-- <button class="btn btn-default" onClick="openpopup('<?=base_url();?>purchaseorder/purchaseorder/edit_purchase_order_1',1400,600,'view',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="fa fa-eye"></i></button> -->
+                    <a class="btn btn-default" href="<?=base_url();?>purchaseorder/edit_purchase_order_1?view=<?=$sales->purchaseid;?>"> <i class="fa fa-eye" style="font-weight: 900;margin-left: 4px;margin-right: 4px;"></i></a>
+                    <a href="<?=base_url();?>purchaseorder/purchaseorder/print_invoice?id=<?=$sales->purchaseid;?>" class="btn btn-default" target="blank">
                     <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-print"></i></button></a>
+
                     <?php
-                      }
-                      else
-                      {
-                      ?>
-                    <button class="btn btn-default" onClick="openpopup('<?=base_url();?>purchaseorder/purchaseorder/edit_purchase_order_1',1400,600,'view',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="fa fa-eye"></i></button>
-                    <button class="btn btn-default" onClick="openpopup('<?=base_url();?>purchaseorder/purchaseorder/edit_purchase_order_1',1400,600,'id',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-pencil"></i></button>
+                    }
+                    else
+                    {
+                    ?>
+
+                    <!-- <button class="btn btn-default" onClick="openpopup('<?=base_url();?>purchaseorder/purchaseorder/edit_purchase_order_1',1400,600,'view',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="fa fa-eye"></i></button> -->
+                    <a class="btn btn-default" href="<?=base_url();?>purchaseorder/edit_purchase_order_1?view=<?=$sales->purchaseid;?>"> <i class="fa fa-eye" style="font-weight: 900;margin-left: 4px;margin-right: 4px;"></i></a>
+
+                    <!-- <button class="btn btn-default" onClick="openpopup('<?=base_url();?>purchaseorder/purchaseorder/edit_purchase_order_1',1400,600,'id',<?=$sales->purchaseid;?>)" type="button" data-toggle="modal" data-target="#modal-<?php echo $i; ?>"> <i class="icon-pencil"></i></button> -->
+
+                    <a class="btn btn-default" href="<?=base_url();?>purchaseorder/edit_purchase_order_1?id=<?=$sales->purchaseid;?>"> <i class="fa fa-pencil" style="font-weight: 900;margin-left: 4px;margin-right: 4px;"></i></a>
+
                     <?php
                       $pri_col='purchaseid';
                       $table_name='tbl_purchase_order_hdr';
@@ -228,6 +237,7 @@
                     <a style="display:none1" href="<?=base_url();?>purchaseorder/purchaseorder/print_invoice?id=<?=$sales->purchaseid;?>" class="btn btn-default" target="blank">
                     <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-print"></i></button></a>
                     <?php }?>
+
                     <button type="button" class="btn btn-default" onclick="getId(<?php echo $sales->purchaseid;?>)" data-toggle="modal" data-target="#modal-2"><i class="icon-trash"></i></button> 
                   </th>
                 </tr>

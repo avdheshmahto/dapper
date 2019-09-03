@@ -15,12 +15,6 @@
   <!-- Main content -->
   <div class="main-content">
   <!-- Breadcrumb -->
-  <?php if(@$_GET['popup'] == 'True') {} else {?>
-  <ol class="breadcrumb breadcrumb-2">
-    <li><a class="btn btn-success" href="<?=base_url();?>master/dashboar"><i class="fa fa-home"></i>Dashboard</a></li>
-    <li><a class="btn btn-success" href="<?=base_url();?>SalesOrder/manageSalesOrder">Manage RM Planning </a></li>
-  </ol>
-  <?php }?>
   <div class="row">
     <div class="col-lg-12">
       <div class="panel panel-default">
@@ -377,7 +371,7 @@
                       {} else {?>
                     <input class="btn btn-sm" type="button" value="SAVE"   id="sv1" onclick="fsv(this)" >&nbsp;
                     <?php }?>
-                    <a onclick="popupclose(this.value)" class="btn btn-secondary btn-sm">Cancel</a>
+                    <a href="<?=base_url()?>purchaseorder/manage_purchase_order" class="btn btn-secondary btn-sm">Cancel</a>
                   </th>
                   </th>
                 </tr>
@@ -1355,11 +1349,12 @@
       document.getElementById("grand_total").value=totalGrossCal.toFixed(2);
 
     }
+
     // ##### ends ###########
-    
-          
+            
   </script>
 </form>
+
 <?php
   $this->load->view("footer.php");
-  ?>
+?>
