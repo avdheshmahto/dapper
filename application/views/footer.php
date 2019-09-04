@@ -604,6 +604,7 @@
     //$('#cast_weight').val(editVal.cast_weight);
     $('#tolerance_percentage').val(editVal.tolerance_percentage);
     $('#packing').val(editVal.packing);    
+    $('#qty_box').val(editVal.qty_box);
     
     getEntityRow(editVal.Product_id);
     
@@ -613,7 +614,7 @@
     
     showBox(editVal.usageunit);
     $('#circle_weight').val(editVal.circle_weight);
-    $('#qty_box').val(editVal.qty_box);
+    $('#qty_set').val(editVal.qty_set);
     // if(editVal.category != "")
     //   changing(editVal.category);
     

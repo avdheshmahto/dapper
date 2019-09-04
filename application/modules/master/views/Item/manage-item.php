@@ -98,7 +98,7 @@
                 <div class="col-sm-4"> 
                   <input name="productname"  type="text" value="" class="form-control" id="productname" > 
                 </div>
-                  <label class="col-sm-2 control-label"> *Usage Unit: </label> 
+                  <label class="col-sm-2 control-label"> *Unit: </label> 
                 <div class="col-sm-4">
                   <select name="unit"  class="form-control" id="unit" onchange="showBox(this.value);">
                     <option value="" >----Select Unit----</option>
@@ -113,27 +113,26 @@
                 </div>
               </div>
 
-              <div class="form-group" id="useSet" style="display: none;">
-                <label class="col-sm-2 control-label">Qty/Set</label> 
+              <?php if($_GET['p_type']=='14') { ?> 
+              <div class="form-group">                
+                <label class="col-sm-2 control-label">Qty/Box</label> 
                 <div class="col-sm-4"> 
                   <input type="text" name="qty_box" id="qty_box" class="form-control" />
                 </div>
-                <label class="col-sm-2 control-label"></label> 
-                <div class="col-sm-4"> 
-                  &nbsp;
+                <div id="useSet" style="display: none;">                
+                  <label class="col-sm-2 control-label">Qty/Set</label> 
+                  <div class="col-sm-4"> 
+                    <input type="text" name="qty_set" id="qty_set" class="form-control" />
+                  </div>
                 </div>
-              </div>
-
-              <div class="form-group" id="userCircle" style="display: none;">
-                <label class="col-sm-2 control-label">Circle Weight</label> 
-                <div class="col-sm-4" id="regid">  
-                  <input type="text" name="circle_weight" id="circle_weight" class="form-control"  />
+                <div id="userCircle" style="display: none;">
+                  <label class="col-sm-2 control-label">Circle Weight</label> 
+                  <div class="col-sm-4" id="regid">  
+                    <input type="text" name="circle_weight" id="circle_weight" class="form-control"  />
+                  </div>
                 </div>
-                <label class="col-sm-2 control-label"></label> 
-                <div class="col-sm-4"> 
-                  &nbsp;
-                </div>                
-              </div>
+              </div>            
+            <?php } ?>
 
               <div class="form-group" style="display: none;">
                 <label class="col-sm-2 control-label">Size:</label> 
@@ -1208,7 +1207,7 @@ function selectShapeList(ths){
     if(v==41){
       $("#userCircle").css("display", "none");      
       $("#useSet").css("display","block");
-      $("#qty_box").val('');
+      $("#qty_set").val('');
     }else if(v==42){
       $("#userCircle").css("display", "block");
       $("#useSet").css("display","none");

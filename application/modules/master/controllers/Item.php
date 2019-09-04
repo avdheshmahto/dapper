@@ -123,6 +123,7 @@ class Item extends my_controller
             'percentage' => $this->input->post('percentage'),
             'packing' => $this->input->post('packing'),
             'qty_box' => $this->input->post('qty_box'),
+            'qty_set' => $this->input->post('qty_set'),
             'productname' => $this->input->post('productname'),
             //'subcategory' => $this->input->post('subcategory'),
             'usageunit' => $this->input->post('unit'),
