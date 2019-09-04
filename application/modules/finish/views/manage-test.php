@@ -55,7 +55,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel-body">
-          <div class="table-responsive">
+          <div class="table-responsive__">
             <table class="table table-striped table-bordered table-hover dataTables-example1" id="tblData" >
               <thead>
                 <tr>

@@ -966,6 +966,11 @@ function ajax_getitemmapping(){
     $this->load->view('view_itemmapping',$data);
  }
 
+ function ajax_print_itemmapping()
+ {
+    $this->load->view('print-item-mapping');
+ }
+
 function insert_issue_row_material(){
 
 		@extract($_POST);

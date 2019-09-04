@@ -201,7 +201,19 @@ class finish extends my_controller
             redirect('index');
         }
     }
-    
+
+    public function view_assemble_order()
+    {
+        
+        if ($this->session->userdata('is_logged_in')) {
+            $data = array(
+                'id' => $_POST['id']
+            );
+            $this->load->view('view-assemble-order', $data);
+        } else {
+            redirect('index');
+        }
+    }    
     
     
     public function manage_finish_map()

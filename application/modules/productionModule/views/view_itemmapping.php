@@ -62,15 +62,10 @@
                    
                    $rowQuery=$this->db->query("select sum(qty) as Netqty,sum(EPrice) as Castqty,rowmatial from tbl_part_price_mapping where part_id in ($dataPartt) group by rowmatial");
                    
-                  			  foreach ($rowQuery->result() as  $rt) {
-                  				  
-                  				   $productNameQuery=$this->db->query("select *from tbl_product_stock where Product_id='$rt->rowmatial'");
+            			  foreach ($rowQuery->result() as  $rt) {
+            				  
+            				$productNameQuery=$this->db->query("select *from tbl_product_stock where Product_id='$rt->rowmatial'");
                     $getProduct=$productNameQuery->row();
-                    
-                    
-                    
-                    
-                    
                    
                     $usagesUnitQuery=$this->db->query("select *from tbl_master_data where serial_number='$getProduct->usageunit'");
                     $getUsagesUnit=$usagesUnitQuery->row();

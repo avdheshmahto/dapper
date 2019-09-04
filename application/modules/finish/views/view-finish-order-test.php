@@ -21,14 +21,14 @@
           <table class="table table-striped table-bordered table-hover " >
             <thead>
               <tr>
-                <th class="tdcenter"> Sl No.</th>
+                <th class="tdcenter">Sl No.</th>
                 <th class="tdcenter">Item Number & Description</th>
                 <th class="tdcenter">UOM</th>
                 <th class="tdcenter">Qty</th>
               </tr>
             </thead>
             <?php
-              $productQuery=$this->db->query("select *from tbl_production_order_check where lot_no='$id' and test_qty!='' group by productid");
+              $productQuery=$this->db->query("select * from tbl_production_order_check where lot_no='$id' and test_qty!='' group by productid");
               $i=1;
               	foreach($productQuery->result() as $getProduct){
               		####### get product #######
@@ -41,18 +41,18 @@
               		$getProductUOM=$productUOMQuery->row();
               		####### ends ########
               		
-              		?>
+              ?>
             <tr class="gradeX odd" role="row">
               <td class="size-60 text-center sorting_1"><?=$i;?></td>
               <td class="tdcenter"><?=$getProductStock->sku_no;?>
                 <input type="hidden"  name="productid[]" value="<?=$getProduct->productid;?>" class="form-control">
               </td>
-              <td><?=$getProductUOM->keyvalue;?></td>
+              <td class="tdcenter"><?=$getProductUOM->keyvalue;?></td>
               <?php
                 $poLogQuery=$this->db->query("select SUM(qty) as po_qty from tbl_purchase_order_production_dtl where purchaseid='$getHdr->po_no' and productid='$getProduct->productid'");
                 $getPoQty=$poLogQuery->row();
                 ?>
-              <td><?=$getProduct->test_qty;?></td>
+              <td class="tdcenter"><?=$getProduct->test_qty;?></td>
             </tr>
             <?php 
               $i++;

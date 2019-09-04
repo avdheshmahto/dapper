@@ -110,6 +110,7 @@
                   <th>
                     <button class="btn btn-xs btn-black" data-toggle="modal" data-target="#modal-0" onclick="getspharemap(<?=$sales->purchaseid;?>);"  type="button"><i class="icon-eye"></i></button>
                     <button class="btn btn-xs btn-black" data-toggle="modal" data-target="#modal-RM" onclick="viewRMFun(<?=$sales->purchaseid;?>);"  type="button"><i class="icon-eye"></i></button>
+                    <a  href="<?=base_url();?>productionModule/ajax_print_itemmapping?id=<?=$sales->purchaseid;?>" class="btn btn-default" target="blank"><i class="glyphicon glyphicon-print" style="font-weight: 900;margin-left: 4px;margin-right: 4px;"></i></a>
                   </th>
                 </tr>
                 <?php } ?>

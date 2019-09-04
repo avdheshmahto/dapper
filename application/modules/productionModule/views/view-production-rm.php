@@ -96,7 +96,7 @@
               <td>(<?php echo $productionQty=$sumQty;?>)(<?=$dt->RMSUM*$productionQty;?>)</td>
               <td style="display:none"><?php
                 //      	  echo "select *from tbl_product_serial where product_id='$rt->rowmatial'";
-                $productNameSerialQtyQuery=$this->db->query("select *from tbl_product_serial where product_id='$dt->rowmatial'");
+                $productNameSerialQtyQuery=$this->db->query("select * from tbl_product_serial where product_id='$dt->rowmatial'");
                 $getProductSerialQty=$productNameSerialQtyQuery->row();
                 
                 

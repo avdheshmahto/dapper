@@ -486,7 +486,7 @@
   var totWeight=Number(entQty)*Number(weightQty);
   document.getElementById("total_weight"+asx).value=totWeight.toFixed(3);
   
-  if(Number(remQty)<Number(entQty))
+  if(Number(remQty)<=Number(entQty))
   {
   alert("Enter Qty should be less then remaining Qty");
     document.getElementById("entQty"+asx).focus();
@@ -602,7 +602,7 @@
   
   minVal=Math.min(...remQ);
   
-  if(fillQty<minVal)
+  if(fillQty<=minVal)
   {
   
   for(i=1;i<=cntV;i++)

@@ -5,7 +5,8 @@
   {
     $entries = $this->input->get('entries');
   }
-  ?>
+?>
+
 <!-- Main content -->
 <div class="main-content">
   <div class="panel panel-default">
@@ -55,7 +56,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="panel-body">
-          <div class="table-responsive">
+          <div class="table-responsive__">
             <table class="table table-striped table-bordered table-hover dataTables-example1" id="tblData" >
               <thead>
                 <tr>
@@ -111,7 +112,7 @@
     <div class="modal-content" >
       <div class="modal-header">
         <button  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">View Finish Test Details: </h4>
+        <h4 class="modal-title">View Assemble Details: </h4>
         <div id="msgdata" class="text-center " style="font-size: 15px;color: red;"></div>
       </div>
       <div class="panel-body" id ="purchaseData"></div>
@@ -147,7 +148,7 @@
    
   function getspharemap(idVal){
   	//alert(idVal);
-  	var ur = "view_finish_order_test";
+  	var ur = "view_assemble_order";
   	$.ajax({
   	url:ur,
   	method:"POST",

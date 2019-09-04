@@ -4,9 +4,10 @@
   $hdrQuery=$this->db->query("select * from tbl_quotation_purchase_order_hdr where lot_no='$production_id'");
   $getHdr=$hdrQuery->row();
   
-  $queryProductShape=$this->db->query("select SUM(total_price) as qty from tbl_quotation_purchase_order_dtl where productid ='$getDtl->code' and purchaseid='$getHdr->purchaseid'  ");
+  $queryProductShape=$this->db->query("select SUM(total_price) as qty, SUM(qty) as ordQty from tbl_quotation_purchase_order_dtl where productid ='$getDtl->code' and purchaseid='$getHdr->purchaseid'  ");
   $shapeCnt=$queryProductShape->row();
   $qtySum=$qtySum+$shapeCnt->qty."<br>";
+  $OrdQtySum=$OrdQtySum+$shapeCnt->ordQty;
   }
   
  
@@ -56,19 +57,21 @@
         <input class="form-control" type="hidden" style="margin-bottom:10px;" value="<?=$getProduct->Product_id;?>" name="part_code[]"/>
         <input class="form-control" type="hidden" style="margin-bottom:10px;" value="<?=$getWght->rowmatial;?>" name="rm_code[]"/>
       </td>
-      <td> <input type="number" min="0" class="form-control" style="margin-bottom:10px;width:55px;" value="" name="qty[]" id="entQty<?=$i;?>" onkeyup="val(this.id)" onchange="val(this.id)" <?php if($shapeName=='Shape'){?> readonly="readonly"<?php } ?> /></td>
-      <td> <input class="form-control" readonly="" style="margin-bottom:10px;width:55px;" value="<?=$getWght->EPrice;?>" name="weight[]" id="weight<?=$i;?>"  /></td>
-      <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_weight[]" id="total_weight<?=$i;?>" readonly="readonly"  /></td>
-      <td> <input type="number" min="0" class="form-control" style="margin-bottom:10px;width:55px;" value="" name="rate[]" id="rate<?=$i;?>" onkeyup="RateCal(this.id)" onchange="RateCal(this.id)"  /></td>
-      <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_rm_rate[]" id="total_rm_rate<?=$i;?>"  readonly="readonly" /></td>
-      <td> <input type="number" min="0" class="form-control" style="margin-bottom:10px;width:55px;" value="" name="labour_rate[]" id="labour_rate<?=$i;?>" onkeyup="labourRateCal(this.id)" onchange="labourRateCal(this.id)"  /></td>
-      <td> <input class="form-control" style="margin-bottom:10px;width:55px;" value="" name="total_labour_rate[]" id="total_labour_rate<?=$i;?>" readonly="readonly"  /></td>
-      <td>  <input class="form-control" style="margin-bottom:10px; width:55px;" value="<?=$getJob->total_cost;?>" id="total_cost<?=$i;?>" name="total_cost[]" readonly="readonly"  /></td>
-      <td>  <input class="form-control" style="margin-bottom:10px; width:55px;" value="<?=$getJob->partQty;?>" id="orderQty<?=$i;?>" name="qtyy[]" readonly="readonly" /></td>
+      <td> <input type="number" min="0" class="form-control" style="margin-bottom:10px;width:70px;" value="" name="qty[]" id="entQty<?=$i;?>" onkeyup="val(this.id)" onchange="val(this.id)" <?php if($shapeName=='Shape'){?> readonly="readonly"<?php } ?> /></td>
+      <td> <input class="form-control" readonly="" style="margin-bottom:10px;width:70px;" value="<?=$getWght->EPrice;?>" name="weight[]" id="weight<?=$i;?>"  /></td>
+      <td> <input class="form-control" style="margin-bottom:10px;width:70px;" value="" name="total_weight[]" id="total_weight<?=$i;?>" readonly="readonly"  /></td>
+      <td> <input type="number" min="0" class="form-control" style="margin-bottom:10px;width:70px;" value="" name="rate[]" id="rate<?=$i;?>" onkeyup="RateCal(this.id)" onchange="RateCal(this.id)"  /></td>
+      <td> <input class="form-control" style="margin-bottom:10px;width:70px;" value="" name="total_rm_rate[]" id="total_rm_rate<?=$i;?>"  readonly="readonly" /></td>
+      <td> <input type="number" min="0" class="form-control" style="margin-bottom:10px;width:70px;" value="" name="labour_rate[]" id="labour_rate<?=$i;?>" onkeyup="labourRateCal(this.id)" onchange="labourRateCal(this.id)"  /></td>
+      <td> <input class="form-control" style="margin-bottom:10px;width:70px;" value="" name="total_labour_rate[]" id="total_labour_rate<?=$i;?>" readonly="readonly"  /></td>
+      <td>  <input class="form-control" style="margin-bottom:10px; width:70px;" value="<?=$getJob->total_cost;?>" id="total_cost<?=$i;?>" name="total_cost[]" readonly="readonly"  /></td>
+      <td>  <input class="form-control" style="margin-bottom:10px; width:70px;" value="<?=$getJob->partQty;?>" id="orderQty<?=$i;?>" name="qtyy[]" readonly="readonly" /></td>
       <td><?php
         $remQty=$qtySum-$getJob->partQty;
+        $ordRemQty=$OrdQtySum-$getJob->partQty;
         ?>
-        <input class="form-control" style="margin-bottom:10px;width:55px;" value="<?=$remQty;?>" name="qtyy[]" id="remQty<?=$i;?>" readonly="readonly" />
+        <input class="form-control" style="margin-bottom:10px;width:70px;" value="<?=$ordRemQty;?>" readonly="readonly" />
+        <input type="hidden" class="form-control" style="margin-bottom:10px;width:70px;" value="<?=$remQty;?>" name="qtyy[]" id="remQty<?=$i;?>">
       </td>
     </tr>
     <?php $i++;}?>
