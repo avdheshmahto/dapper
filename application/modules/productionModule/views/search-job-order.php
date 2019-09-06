@@ -34,18 +34,6 @@
                         </div>
                       </div>
                       <div class="col-xs-6 col-sm-6 col-md-6">
-                        <h4>Select</h4>
-                        <div class="form-group">
-                          <select class="form-control" name="type" id="select_id" >
-                            <option value="">--Select--</option>
-                            <option value="Shape" <?php if($_GET['type'] == 'Shape') { ?> selected <?php } ?> >Shape Complete</option>
-                            <option value="ShapePart" <?php if($_GET['type'] == 'ShapePart') { ?> selected <?php } ?> >Shape in Parts</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-xs-6 col-sm-6 col-md-6">
                         <h4>Shape</h4>
                         <div class="form-group">
                           <select name="shape_id" class="form-control">
@@ -59,6 +47,18 @@
                           </select>
                         </div>
                       </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-6 col-sm-6 col-md-6" style="display: none;">
+                        <h4>Select</h4>
+                        <div class="form-group">
+                          <select class="form-control" name="type" id="select_id" >
+                            <option value="">--Select--</option>
+                            <option value="Shape" <?php if($_GET['type'] == 'Shape') { ?> selected <?php } ?> >Shape Complete</option>
+                            <option value="ShapePart" <?php if($_GET['type'] == 'ShapePart') { ?> selected <?php } ?> >Shape in Parts</option>
+                          </select>
+                        </div>
+                      </div>                      
                       <div class="col-xs-6 col-sm-6 col-md-6" style="display: none;">
                         <div class="form-group">
                           <h4>Part Name</h4>
@@ -126,8 +126,10 @@
                           {
                           
                 					$qry = "select * from tbl_job_work where order_type='Job Order' ";
-                	         //$qry = "select *from tbl_job_work where order_type='Purchase Order'";				
-                					   if($vendor_id != "")                                   
+                	         
+                           //$qry = "select *from tbl_job_work where order_type='Purchase Order'";				
+                					 
+                             if($vendor_id != "")                                   
                                $qry .= " AND vendor_id = '$vendor_id'";
                 					
                              if($type!= "")
@@ -160,11 +162,10 @@
                             <?=$fetch_list->job_order_no;?>
                           </td>
                           <?php 
-                            $sqlQueryMachineIdview=$this->db->query("select * from tbl_contact_m where contact_id ='$fetch_list->vendor_id'  and status = 'A' ");
-                            
+                            $sqlQueryMachineIdview=$this->db->query("select * from tbl_contact_m where contact_id ='$fetch_list->vendor_id'  and status = 'A' ");                            
                             $getMachineIdview=$sqlQueryMachineIdview->row();
                             
-                            ?>
+                          ?>
                           <td>
                             <?=$getMachineIdview->first_name;?>
                           </td>
@@ -220,13 +221,14 @@
 
 <script type="text/javascript">
   
-  function viewWorkOrder(v){
+  function viewWorkOrder(v)
+  {
     
-  var pro=v;
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("GET", "productionModule/view_work_order?ID="+pro, false);
-  xhttp.send();
-   document.getElementById("viewWork").innerHTML = xhttp.responseText;
+    var pro=v;
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "productionModule/view_work_order?ID="+pro, false);
+    xhttp.send();
+     document.getElementById("viewWork").innerHTML = xhttp.responseText;
   }
 
   function resetPageUrl()
