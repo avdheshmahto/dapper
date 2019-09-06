@@ -57,6 +57,7 @@
   	{
   		document.getElementById("entQty"+i).value=v;
   	}
+
   }
   
   
@@ -68,6 +69,7 @@
   	{
   		document.getElementById("entQty"+i).value=v;
   	}
+
   }
   //starts order repair  query
   function submitorderTransferToModule() {
@@ -288,9 +290,6 @@
   }
   
   
-  
-  
-  
   function ajex_JobWorkListData(production_id){
   	ur = "<?=base_url('productionModule/getWorkOrder');?>";
   	$.ajax({
@@ -315,7 +314,7 @@
               <div class="panel panel-default____">
                 <div class="panel-heading" style="background-color: #F5F5F5; color:#fff; border-color:#DDDDDD;">
                   <h3 class="panel-title" style="float: initial;"><span style="color:#000;">Finish Details:-<?=$_GET['id'];?></span>
-                    <a href="<?=base_url();?>finish/manage_finish" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
+                    <a href="<?=base_url();?>finish/manage_test" class="btn  btn-sm pull-right" type="button"><i class="icon-left-bold"></i> back</a>
                   </h3>
                 </div>
                 <div class="panel-body" style="padding:15px 0px;">
@@ -589,98 +588,8 @@
 <!--main-content close-->
 <?php
   $this->load->view("footer.php");
-  ?>
-<SCRIPT language="javascript">
-  function addRow(tableID) {
-  
-  	var table = document.getElementById(tableID);
-  
-  	var rowCount = table.rows.length;
-  	var row = table.insertRow(rowCount);
-  
-  var cell1 = row.insertCell(0);
-  	var element1 = document.createElement("input");
-  	element1.type = "checkbox";
-  	element1.name="chkbox[]";
-  	cell1.appendChild(element1);
-  	
-  var cell2 = row.insertCell(1);
-  	var element2 = document.createElement("select");
-  	element2.name = "spare_id[]";
-  	element2.className="form-control";
-  	element2.style.width="250px";
-  	var option1 = document.createElement("option");
-  	option1.innerHTML = "--Select--";
-    option1.value = "";
-    element2.appendChild(option1, null);
-  <?php
-    $contactQuery=$this->db->query("select *from tbl_product_stock where status='A'");
-    foreach($contactQuery->result() as $getContact){
-    ?>
-  
-    var option2 = document.createElement("option");
-    option2.innerHTML = "<?=$getContact->productname;?>";
-    option2.value = "<?=$getContact->Product_id;?>";
-    element2.appendChild(option2, null);
-    
-  <?php }?>
-  	cell2.appendChild(element2);
-  }
-  
-  function deleteRow(tableID) {
-  	try {
-  	var table = document.getElementById(tableID);
-  	var rowCount = table.rows.length;
-  
-  	for(var i=0; i<rowCount; i++) {
-  		var row = table.rows[i];
-  		var chkbox = row.cells[0].childNodes[0];
-  		if(null != chkbox && true == chkbox.checked) {
-  			table.deleteRow(i);
-  			rowCount--;
-  			i--;
-  		}
-  
-  
-  	}
-  	}catch(e) {
-  		alert(e);
-  	}
-  }
-  
-    
-</SCRIPT>
-<style>
-  .c-error .c-validation{ 
-  background: #c51244 !important;
-  padding: 10px !important;
-  border-radius: 0 !important;
-  position: relative; 
-  display: inline-block !important;
-  box-shadow: 1px 1px 1px #aaaaaa;
-  margin-top: 10px;
-  }
-  .c-error  .c-validation:before{ 
-  content: ''; 
-  width: 0; 
-  height: 0; 
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #c51244;
-  position: absolute; 
-  top: -10px; 
-  }
-  .c-label:after{
-  color: #c51244 !important;
-  }
-  .c-error input, .c-error select, .c-error .c-choice-option{ 
-  background: #fff0f4; 
-  color: #c51244;
-  }
-  .c-error input, .c-error select{ 
-  border: 1px solid #c51244 !important; 
-  }
-</style>
+?>
+
 <!--Large Modal-->
 <div id="modal-2" class="modal fade" tabindex="-1" role="dialog">
   <form name="myForm" class="form-horizontal" id ="myform" action="#" 
