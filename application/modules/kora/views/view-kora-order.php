@@ -49,12 +49,12 @@
               <td class="tdcenter"><?=$getProductStock->sku_no;?>
                 <input type="hidden"  name="productid[]" value="<?=$getProduct->productid;?>" class="form-control">
               </td>
-              <td><?=$getProductUOM->keyvalue;?></td>
+              <td class="tdcenter"><?=$getProductUOM->keyvalue;?></td>
               <?php
                 $poLogQuery=$this->db->query("select SUM(qty) as po_qty from tbl_purchase_order_production_dtl where purchaseid='$getHdr->po_no' and productid='$getProduct->productid'");
                 $getPoQty=$poLogQuery->row();
                 ?>
-              <td><?=$getProduct->qty;?></td>
+              <td class="tdcenter"><?=$getProduct->qty;?></td>
             </tr>
             <?php 
               $i++;
