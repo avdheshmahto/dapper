@@ -44,16 +44,16 @@
                         $shapeQuery=$this->db->query("select *from tbl_product_stock where Product_id='$dt->shape_id'");
                         $getShape=$shapeQuery->row();
                                    
-                              ?>
+                  ?>
                   <tr>
                      <td>
                         <?php
                            $productQ=$this->db->query("select *from tbl_product_stock where Product_id in ($dt->part_id)");
-                           foreach($productQ->result() as $getPQ){
-                           ?>
-                        <?=$getPQ->productname."&nbsp;".$getPQ->sku_no."<br>";
+                           foreach($productQ->result() as $getPQ) { ?>
+                              
+                               <?=$getPQ->productname."&nbsp;".$getPQ->sku_no."<br>";
                            }
-                                  ?>
+                      ?>
                      </td>
                      <td>
                         <?php
@@ -66,8 +66,7 @@
                         <?php //$dt->qty;?>
                      </td>
                   </tr>
-                  <?php 
-                     } ?>
+                  <?php } ?>
                </tbody>
             </table>
          </div>
