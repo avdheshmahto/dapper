@@ -171,7 +171,7 @@ class finish extends my_controller
         $data = array(
             'id' => $shape,
             'production_id' => $production_id,
-            'shapeName'  => $shapePart
+            'fg'  => $fg
         );
         $this->load->view("getPartAssemble", $data);
     }
@@ -562,5 +562,25 @@ class finish extends my_controller
         );
         $this->load->view("print-transfer-challan", $data);
     }
-    
-}
+ 
+
+    public function get_fg_shape_name()
+    {
+        $id=$this->input->post('id');
+
+        $queryProductShape=$this->db->query("select distinct(machine_name) from tbl_machine where code in($id)");
+        echo "<option value=''>----Select----</option>";
+        foreach($queryProductShape->result() as $getProductShape) {
+            $queryProduct=$this->db->query("select *from tbl_product_stock where Product_id='$getProductShape->machine_name'");
+            $getProduct=$queryProduct->row();        
+
+            echo "<option value=".$getProduct->Product_id.">".$getProduct->sku_no."</option>";
+
+        }
+    }
+
+
+
+
+
+} ?>

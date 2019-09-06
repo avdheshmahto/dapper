@@ -16,11 +16,13 @@
 <script>
   function getPartAssm(v)
   {
+
+    var fg=$("#fg").val();
   	var ur = '<?=base_url();?>finish/getPartAssemble';
   	$.ajax({
   	type: "POST",
   	url: ur,
-  	data: {'shape':v,'production_id':'<?=$_GET['id'];?>'},
+  	data: {'shape':v,'fg':fg,'production_id':'<?=$_GET['id'];?>'},
   	success: function(data){
       // console.log(data);
       $("#getPartView").empty().append(data).fadeIn();
@@ -29,6 +31,7 @@
       });
   }
   
+
   function getPartPo(v)
   {
   	var ur = '<?=base_url();?>productionModule/getPartPo';
@@ -607,58 +610,29 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Order(Lot No.:-<?=$getsched->lot_no;?>)</h4>
+          <h4 class="modal-title">Assemble Order(Lot No.:-<?=$getsched->lot_no;?>)</h4>
           <div id="resultarea" class="text-center " style="font-size: 15px;color: red;"></div>
         </div>
         <div class="modal-body">
           <div class="row">
+
             <div class="form-group">             
               <input type="hidden" name="lot_number" value="<?=$getsched->lot_no;?>" />
               <label class="col-sm-2 control-label">Order No.:</label> 
               <div class="col-sm-4"> 
                 <input name="job_order_no" type="text" value="" class="form-control" >
               </div>
-              <label class="col-sm-2 control-label">Vendor:</label> 
-              <div class="col-sm-4">
-                <select class="form-control" name="vendor_id" required>
-                  <option value="">--Select--</option>
-                  <?php
-                    $queryProductShape=$this->db->query("select *from tbl_contact_m where group_name='5'");
-                    foreach($queryProductShape->result() as $getProductShape){
-                    
-                    ?>
-                  <option value="<?=$getProductShape->contact_id;?>"><?=$getProductShape->first_name;?></option>
-                  <?php }?>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
               <input type="hidden" name="production_id" id="production_id" value="<?=$_GET['id'];?>" />              
               <label class="col-sm-2 control-label">Date:</label> 
               <div class="col-sm-4"> 
                 <input name="date" type="date" value="" class="form-control" > 
               </div>
-              <label class="col-sm-2 control-label">Shape:</label> 
-              <div class="col-sm-4">
-                <select class="form-control" name="shape" id="shape" onchange="getPartAssm(this.value);">
-                  <option value="">--Select--</option>
-                  <?php
-                    $queryProductShape=$this->db->query("select distinct(machine_name) from tbl_machine where code in($getP)");
-                    foreach($queryProductShape->result() as $getProductShape){
-                    $queryProduct=$this->db->query("select *from tbl_product_stock where Product_id='$getProductShape->machine_name'");
-                    $getProduct=$queryProduct->row();
-                    
-                    ?>
-                  <option value="<?=$getProduct->Product_id;?>"><?=$getProduct->sku_no;?></option>
-                  <?php }?>
-                </select>
-              </div>
             </div>
- 
-            <div class="form-group">                            
-              <label class="col-sm-2 control-label">Finish Goods:</label> 
+
+            <div class="form-group"> 
+            <label class="col-sm-2 control-label">Finish Goods:</label> 
               <div class="col-sm-4">
-                <select name="fg[]" id="fg<?=$i;?>" class="form-control" onchange="getFinishGoods();">
+                <select name="fg" id="fg" class="form-control" onchange="get_fg_shape(this.value);">
                   <option value="">--Select--</option>
                   <?php
                     $fgHdrQuery=$this->db->query("select *from tbl_quotation_purchase_order_hdr where lot_no='".$_GET['id']."' ");
@@ -673,7 +647,25 @@
                   <option value="<?=$getProduct->Product_id?>"><?=$getProduct->sku_no;?></option>
                   <?php }?>
                 </select>
-              </div> 
+              </div>             
+              <label class="col-sm-2 control-label">Shape:</label> 
+              <div class="col-sm-4">
+                <select class="form-control" name="shape" id="shape" onchange="getPartAssm(this.value);">
+                  <option value="">--Select--</option>
+                  <!-- <?php
+                    $queryProductShape=$this->db->query("select distinct(machine_name) from tbl_machine where code in($getP)");
+                    foreach($queryProductShape->result() as $getProductShape){
+                    $queryProduct=$this->db->query("select *from tbl_product_stock where Product_id='$getProductShape->machine_name'");
+                    $getProduct=$queryProduct->row();
+                    
+                    ?>
+                  <option value="<?=$getProduct->Product_id;?>"><?=$getProduct->sku_no;?></option>
+                  <?php }?> -->
+                </select>
+              </div>              
+            </div>
+ 
+            <div class="form-group">                                          
               <label class="col-sm-2 control-label">Qty:</label> 
               <div class="col-sm-4"> 
                 <input name="shape_qty" type="text" value="" id="fillQty" onchange="qtyFill(this.value);" class="form-control" > 
@@ -1963,5 +1955,20 @@
 
   }
   
- 
+ function get_fg_shape(v)
+ {
+
+    $.ajax({
+      type : "POST",
+      url  : "get_fg_shape_name",
+      data : {'id':v},
+      success : function(data)
+      {
+        $("#shape").empty().append(data);
+      }
+    });
+
+ }
+
+
 </script>
