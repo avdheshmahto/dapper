@@ -669,6 +669,43 @@
             </div>
             
             <div class="form-group">
+              <label class="col-sm-2 control-label">Finish Goods:</label> 
+              <div class="col-sm-4">
+                <select name="fg" id="fg" class="form-control" onchange="get_fg_shape(this.value);">
+                  <option value="">--Select--</option>
+                  <?php
+                    $fgHdrQuery=$this->db->query("select *from tbl_quotation_purchase_order_hdr where lot_no='".$_GET['id']."' ");
+                    $getfgHdr=$fgHdrQuery->row();
+                    
+                    $fgQuery=$this->db->query("select *from tbl_quotation_purchase_order_dtl where purchaseid='$getfgHdr->purchaseid' ");
+                        
+                        foreach($fgQuery->result() as $getFg){
+                        $productQuery=$this->db->query("select *from tbl_product_stock where Product_id='$getFg->productid'");
+                          $getProduct=$productQuery->row();
+                        ?>
+                  <option value="<?=$getProduct->Product_id?>"><?=$getProduct->sku_no;?></option>
+                  <?php }?>
+                </select>
+              </div>
+              <label class="col-sm-2 control-label">Shape:</label> 
+              <div class="col-sm-4"> 
+                <select class="form-control" name="shape" id="shape" onchange="getPart(this.value);">
+                  <option value="">--Select--</option>
+                  <!-- <?php
+                    $queryProductShape=$this->db->query("select distinct(machine_name) from tbl_machine where code in($getP)");
+                    foreach($queryProductShape->result() as $getProductShape){
+                    $queryProduct=$this->db->query("select *from tbl_product_stock where Product_id='$getProductShape->machine_name'");
+                    $getProduct=$queryProduct->row();
+                    
+                    ?>
+                  <option value="<?=$getProduct->Product_id;?>"><?=$getProduct->sku_no;?></option>
+                  <?php }?> -->
+                </select>
+                
+              </div>
+            </div>
+
+            <div class="form-group">
               <input type="hidden" name="production_id" id="production_id" value="<?=$_GET['id'];?>" />
               <label class="col-sm-2 control-label">Select:</label> 
               <div class="col-sm-4">
@@ -677,45 +714,7 @@
                   <option value="Shape">Shape Complete</option>
                   <option value="ShapePart">Shape in Parts</option>
                 </select>
-              </div>
-              <label class="col-sm-2 control-label">Shape:</label> 
-              <div class="col-sm-4"> 
-                <select class="form-control" name="shape" id="shape" onchange="getPart(this.value);">
-                  <option value="">--Select--</option>
-                  <?php
-                    $queryProductShape=$this->db->query("select distinct(machine_name) from tbl_machine where code in($getP)");
-                    foreach($queryProductShape->result() as $getProductShape){
-                    $queryProduct=$this->db->query("select *from tbl_product_stock where Product_id='$getProductShape->machine_name'");
-                    $getProduct=$queryProduct->row();
-                    
-                    ?>
-                  <option value="<?=$getProduct->Product_id;?>"><?=$getProduct->sku_no;?></option>
-                  <?php }?>
-                </select>
-                
-              </div>
-            </div>
-
-            <div class="form-group">
-            <label class="col-sm-2 control-label">Finish Goods:</label> 
-              <div class="col-sm-4">
-                <select name="fg[]" id="fg<?=$i;?>" class="form-control" onchange="getFinishGoods();">
-                  <option value="">--Select--</option>
-                  <?php
-                    $fgHdrQuery=$this->db->query("select *from tbl_quotation_purchase_order_hdr where lot_no='".$_GET['id']."' ");
-                    $getfgHdr=$fgHdrQuery->row();
-                    
-                    $fgQuery=$this->db->query("select *from tbl_quotation_purchase_order_dtl where purchaseid='$getfgHdr->purchaseid' ");
-                    		
-                    		foreach($fgQuery->result() as $getFg){
-                    		$productQuery=$this->db->query("select *from tbl_product_stock where Product_id='$getFg->productid'");
-                    			$getProduct=$productQuery->row();
-                    		?>
-                  <option value="<?=$getProduct->Product_id?>"><?=$getProduct->sku_no;?></option>
-                  <?php }?>
-                </select>
-              </div>
-
+              </div>          
             <div id="qtyFg">
               <label class="col-sm-2 control-label">Qty:</label> 
               <div class="col-sm-4">
@@ -1969,5 +1968,20 @@
   }
   
 }
+
+ function get_fg_shape(v)
+ {
+
+    $.ajax({
+      type : "POST",
+      url  : "get_fg_shape_name",
+      data : {'id':v},
+      success : function(data)
+      {
+        $("#shape").empty().append(data);
+      }
+    });
+
+ }
 
 </script>

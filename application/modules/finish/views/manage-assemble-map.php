@@ -262,7 +262,8 @@
   		cache:false,  
   		data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},  
   		success: function(data)  
-  		{	  	
+  		{	  
+        //alert(data);	
   			$("#orderTransfer").empty().append(data).fadeIn();
   			//referesh table
   		}   
@@ -436,7 +437,6 @@
                           <td>&nbsp;</td>
                         </tr>
                       </tbody>
-                      <tfoot></tfoot>
                     </table>
                   </div>
                 </div>
@@ -536,50 +536,50 @@
                       </thead>
                       <tbody>
                         <?php
-                          $poquery=$this->db->query("select * from tbl_product_stock where status='A' and type in(32) ");
-                          foreach($poquery->result() as $getPo){
-                          	####### get product #######
-                          		$productStockQuery=$this->db->query("select * from tbl_product_stock where Product_id='$getPo->productid'");
-                          		$getProductStock=$productStockQuery->row();
-                          		####### ends ########
-                          		
-                          		
-                          		$productUOMQuery=$this->db->query("select *from tbl_master_data where serial_number='$getPo->usageunit'");
-                          		$getProductUOM=$productUOMQuery->row();
-                          		####### ends ########
-                          		
+                          $poquery=$this->db->query("select * from tbl_production_order_log where lot_no='".$_GET['id']."' AND order_type='Assemble Order' ");
+                          foreach($poquery->result() as $getPoLog){
+
+
+                            ####### get product #######
+
+                              $productStockQuery=$this->db->query("select * from tbl_product_stock where Product_id='$getPoLog->productid'");
+                              $getProductStock=$productStockQuery->row();
+                              ####### ends ########
+                              
+                              $productUOMQuery=$this->db->query("select *from tbl_master_data where serial_number='$getProductStock->usageunit'");
+                              $getProductUOM=$productUOMQuery->row();
+                              ####### ends ########
+                              
                           ?>
-                        <tr  class="gradeC record" data-row-id="<?php echo $fetch_list->Product_id; ?>">
+                        <tr  class="gradeC record">
                           <?php
-                            $queryType=$this->db->query("select *from tbl_master_data where serial_number='$getPo->type'");
+                            $queryType=$this->db->query("select * from tbl_master_data where serial_number='$getProductStock->type'");
                             $getType=$queryType->row();
                             ?>
-                          <th><?=$getPo->sku_no;?></th>
+                          <th><?=$getProductStock->sku_no;?></th>
                           <th><?=$getType->keyvalue;?></th>
                           <th>
                             <?php 
                               $compQuery = $this ->db
-                              	   -> select('*')
-                              	   -> where('id',$getPo->category)
-                              	   -> get('tbl_category');
-                              	  $compRow = $compQuery->row();
+                                   -> select('*')
+                                   -> where('id',$getProductStock->category)
+                                   -> get('tbl_category');
+                                  $compRow = $compQuery->row();
                               echo $compRow->name;
                               ?>
                           </th>
-                          <th><?=$getPo->productname;?></th>
+                          <th><?=$getProductStock->productname;?></th>
                           <th><?php
                             $compQuery1 = $this -> db
-                            		   -> select('*')
-                            		   -> where('serial_number',$getPo->usageunit)
-                            		   -> get('tbl_master_data');
-                            		  $keyvalue1 = $compQuery1->row();
-                            echo $keyvalue1->keyvalue;		  
-                            ?></th>                        
-                          <?php
-                            $queryQty=$this->db->query("select SUM(qty) as qty from tbl_production_order_transfer_another_module where module_name='Finish' and lot_no='".$_GET['id']."' and  productid='$getPo->Product_id'");
-                            $getQty=$queryQty->row();
-                            ?>
-                          <th><?php echo $getQty->qty;?></th>
+                                   -> select('*')
+                                   -> where('serial_number',$getProductStock->usageunit)
+                                   -> get('tbl_master_data');
+                                  $keyvalue1 = $compQuery1->row();
+                            echo $keyvalue1->keyvalue;      
+                            ?></th>
+
+                         
+                          <th><?php echo $getPoLog->qty;?></th>
                           
                         </tr>
                         <?php }?>
@@ -622,7 +622,9 @@
               <div class="col-sm-4"> 
                 <input name="job_order_no" type="text" value="" class="form-control" >
               </div>
-              <input type="hidden" name="production_id" id="production_id" value="<?=$_GET['id'];?>" />              
+              <input type="hidden" name="production_id" id="production_id" value="<?=$_GET['id'];?>" /> 
+              <input type="hidden" name="lot_no" id="lot_no" value="<?=$_GET['id'];?>" /> 
+              <input type="hidden" name="order_type" id="order_type" value="Assemble Order" />                           
               <label class="col-sm-2 control-label">Date:</label> 
               <div class="col-sm-4"> 
                 <input name="date" type="date" value="" class="form-control" > 
