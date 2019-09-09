@@ -209,7 +209,7 @@
             <td></td>
             <td>
               <p><?=$getProduct->productname;?><br>
-                <strong>Packing:</strong>&nbsp;<?=$getProduct->packing;?>/<?=$getDtl->ord_qty;?><span><strong>T.CBM:</strong><?php echo number_format($getProduct->cbm*$getDtl->ord_qty, 3, ".","");?></span>
+                <strong>Packing:</strong>&nbsp;<?=$getProduct->qty_box;?>/<?=$getProduct->packing;?><span><strong>T.CBM:</strong><?php echo number_format($getProduct->cbm*$getDtl->ord_qty, 3, ".","");?></span>
               </p>
             </td>
             <td class="right"><?=$getDtl->qty;?> <?=$getUnit->keyvalue;?></td>
