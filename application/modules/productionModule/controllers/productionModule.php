@@ -962,8 +962,9 @@ public function view_purchase_order()
 
 function ajax_getitemmapping(){
 
-    $data['result'] =  $this->model_production->modgetitemspharemap($this->input->post('id'));
-    $this->load->view('view_itemmapping',$data);
+   $data['result'] = $this->model_production->modgetitemspharemap($this->input->post('id'));
+   $this->load->view('view_itemmapping',$data);
+   
  }
 
  function ajax_print_itemmapping()

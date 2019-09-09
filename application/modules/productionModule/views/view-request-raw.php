@@ -15,7 +15,7 @@
                 <div class="panel-body">
                   <div class="form-group">
                     <div class="col-sm-6">
-                      <label for="po_order">Request no.:</label>
+                      <label for="po_order">Request No.:</label>
                       <input type="text" name="invoice_no"  class="form-control" value="<?=$getHdr->request_no;?>" readonly="readonly" required />
                     </div>
                     <div class="col-sm-6" id="invoiceId" >

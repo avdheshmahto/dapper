@@ -212,7 +212,7 @@
      $.ajax({
        url:ur,
        method:"POST",
-       data:{id:v},
+       data:{'id':v},
        success:function(data){
         //alert(data);
         console.log(data);
@@ -220,13 +220,15 @@
        }
      });
    }
+
+   
    function getspharemap(idVal){
      //alert(idVal);
      var ur = "ajax_getitemmapping";
      $.ajax({
        url:ur,
        method:"POST",
-       data:{id:idVal},
+       data:{'id':idVal},
        success:function(data){
         // alert(data);
         // console.log(data);

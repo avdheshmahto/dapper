@@ -27,7 +27,7 @@
                 <?php 	//if($dt['part'] != ""){
                   // echo "select *from tbl_machine where machine_name ='".$dt['itemid']."'";
                    
-                   $mQuery=$this->db->query("select *from tbl_machine where code ='".$dt['itemid']."'");
+                   $mQuery=$this->db->query("select * from tbl_machine where code ='".$dt['itemid']."'");
                    foreach($mQuery->result() as $getM){
                     $getMachine[]=$getM->machine_name;
                    }
@@ -84,7 +84,7 @@
                     
                     if($getProductSerialQty->quantity!='')
                     {
-                    echo $getProductSerialQty->quantity;
+                    echo round($getProductSerialQty->quantity,2);
                     }
                     else
                     {

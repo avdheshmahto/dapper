@@ -83,7 +83,7 @@
               $getProduct=$productNameQuery->row();
               
                     $prodId   = $getProduct->Product_id;
-              $sku   = $getProduct->sku_no;
+                    $sku   = $getProduct->sku_no;
                     $prodName = $getProduct->productname;
                     $uom      = $getProduct->usageunit;
               
@@ -100,19 +100,17 @@
               <td><?php echo $productionQty=$sumQty;?></td>
               <td>(<?php echo $productionQty=$sumQty;?>)(<?=$dt->RMSUM*$productionQty;?>)</td>
               <td style="display:none"><?php
-                //          echo "select *from tbl_product_serial where product_id='$rt->rowmatial'";
                 $productNameSerialQtyQuery=$this->db->query("select * from tbl_product_serial where product_id='$dt->rowmatial'");
                 $getProductSerialQty=$productNameSerialQtyQuery->row();
-                
-                
                 if($getProductSerialQty->quantity!='')
                 {
-                echo $getProductSerialQty->quantity;
+                  echo $getProductSerialQty->quantity;
                 }
                 else
                 {
-                echo "0";
-                }?></td>
+                  echo "0";
+                }?>    
+              </td>
             </tr>
             <?php }  ?>
         </table>
