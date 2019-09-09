@@ -8,7 +8,7 @@ class inspection extends my_controller
     {
         parent::__construct();
         $this->load->library('pagination');
-        $this->load->model('model_finish');
+        $this->load->model('model_inspection');
     }
     
     public function manage_stock()
@@ -148,7 +148,7 @@ class inspection extends my_controller
         $url            = site_url('/finish/manage_finish?');
         $sgmnt          = "4";
         $showEntries    = 10;
-        $totalData      = $this->model_finish->count_assemble($table_name, 'A', $this->input->get());
+        $totalData      = $this->model_inspection->count_assemble($table_name, 'A', $this->input->get());
         //$showEntries= $_GET['entries']?$_GET['entries']:'12';
         if ($_GET['entries'] != "") {
             $showEntries = $_GET['entries'];
@@ -168,9 +168,9 @@ class inspection extends my_controller
         $data['pagination'] = $this->pagination->create_links();
         
         if ($this->input->get('filter') == 'filter') ////filter start ////
-            $data['result'] = $this->model_finish->filterAssemble($pagination['per_page'], $pagination['page'], $this->input->get());
+            $data['result'] = $this->model_inspection->filterAssemble($pagination['per_page'], $pagination['page'], $this->input->get());
         else
-            $data['result'] = $this->model_finish->get_assemble($pagination['per_page'], $pagination['page']);
+            $data['result'] = $this->model_inspection->get_assemble($pagination['per_page'], $pagination['page']);
         
         return $data;
     }
