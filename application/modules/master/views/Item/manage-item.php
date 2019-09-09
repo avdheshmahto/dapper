@@ -252,7 +252,7 @@
               
                <?php if($_GET['p_type']=='14'){?>     
                <div class="form-group">            
-                <label class="col-sm-2 control-label">Case Pack Qty</label> 
+                <label class="col-sm-2 control-label">Qty/Crtn</label> 
                 <div class="col-sm-4" > 
                   <input type="number" name="packing" value="" id="packing" class="form-control" >
                 </div>
