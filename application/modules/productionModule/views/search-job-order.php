@@ -2,7 +2,6 @@
   $this->load->view("header.php");
 ?>
 
-
 <!-- Main content -->
 <div class="main-content">
   <div class="panel-body panel panel-default">
@@ -25,7 +24,7 @@
                           <select name="vendor_id" class="form-control">
                             <option value="">--Select--</option>
                             <?php
-                              $vendor_query=$this->db->query("select *from tbl_contact_m where group_name='5'");
+                              $vendor_query=$this->db->query("select *from tbl_contact_m where group_name='5' AND vendor_type='Production' ");
                               foreach($vendor_query->result() as $getVendor){
                               ?>
                             <option value="<?=$getVendor->contact_id;?>" <?php if($_GET['vendor_id'] == $getVendor->contact_id ) { ?> selected <?php } ?> ><?=$getVendor->first_name;?></option>
@@ -127,8 +126,6 @@
                           
                 					$qry = "select * from tbl_job_work where order_type='Job Order' ";
                 	         
-                           //$qry = "select *from tbl_job_work where order_type='Purchase Order'";				
-                					 
                              if($vendor_id != "")                                   
                                $qry .= " AND vendor_id = '$vendor_id'";
                 					
@@ -154,8 +151,10 @@
                           <td>
                             <p style="display:none" id="lot_no"><?=$_GET['id'];?></p>
                             <p style="display:none" id="order_type"><?=$fetch_list->order_type;?></p>
-                            <a href="<?=base_url();?>productionModule/manage_jobwork_map_details?id=<?=$fetch_list->id;?>&&p_id=<?=$fetch_list->production_id;?>"><?=$fetch_list->order_type;?></a>
-                            <button style="display:none" type="button" class="btn btn-default modalMapSpare" onclick="Order('<?=$fetch_list->job_order_no;?>');" data-toggle="modal" data-target="#modal-order"><?=$fetch_list->order_type;?></button>
+                            <a target="_blank" href="<?=base_url();?>productionModule/manage_jobwork_map_details?id=<?=$fetch_list->id;?>&&p_id=<?=$fetch_list->production_id;?>"><?=$fetch_list->order_type;?></a>
+                            
+                            <!-- <button style="display:none" type="button" class="btn btn-default modalMapSpare" onclick="Order('<?=$fetch_list->job_order_no;?>');" data-toggle="modal" data-target="#modal-order"><?=$fetch_list->order_type;?></button> -->
+
                           </td>
                           <td><?=$fetch_list->type;?></td>
                           <td>
