@@ -1,9 +1,8 @@
 <?php if($result != ""){
   $i = 0; 
-  ?>
+?>
 <div class="row">
   <div class="col-lg-12">
-    <!--  <h5 class="title"><?=$dt['item'];?></h5> -->
     <div class="accordion" id="accordion2">
       <?php  foreach ($result as $key => $dt) { ?>
       <div class="panel accordion-group">
@@ -24,11 +23,11 @@
                 </tr>
               </thead>
               <tbody>
-                <?php 	//if($dt['part'] != ""){
-                  // echo "select *from tbl_machine where machine_name ='".$dt['itemid']."'";
-                   
+                <?php 	
+
                    $mQuery=$this->db->query("select * from tbl_machine where code ='".$dt['itemid']."'");
-                   foreach($mQuery->result() as $getM){
+                   foreach($mQuery->result() as $getM)
+                   {
                     $getMachine[]=$getM->machine_name;
                    }
                    
@@ -42,10 +41,10 @@
                     $dataMacc='0';
                    }
                    
-                    $contQuery=$this->db->query("select distinct(part_id) from tbl_shape_part_mapping where product_id in ($dataMacc) ");
-                            foreach($contQuery->result() as $dt)
-                            {
-                    
+                  $contQuery=$this->db->query("select distinct(part_id) from tbl_shape_part_mapping where product_id in ($dataMacc) ");
+                  foreach($contQuery->result() as $dt)
+                  {
+                
                   $part_data_id[]=$dt->part_id;  
                     
                    }
@@ -69,30 +68,29 @@
                    
                     $usagesUnitQuery=$this->db->query("select *from tbl_master_data where serial_number='$getProduct->usageunit'");
                     $getUsagesUnit=$usagesUnitQuery->row();
-                                           ?>
+                ?>
                 <tr>
                   <td><?=$getProduct->sku_no;?></td>
                   <td><?php echo round($rt->Netqty, 3);?>  <?=$getUsagesUnit->keyvalue;?> </td>
                   <td><?php echo round($rt->Castqty,3);?> <?=$getUsagesUnit->keyvalue;?> </td>
                   <td><?=$productionQty;?> Pcs.</td>
                   <td>(<?=$rt->Netqty*$productionQty;?>)(<?=$rt->Castqty*$productionQty;?>) <?=$getUsagesUnit->keyvalue;?></td>
-                  <td><?php
-                    //      	  echo "select *from tbl_product_serial where product_id='$rt->rowmatial'";
-                    $productNameSerialQtyQuery=$this->db->query("select *from tbl_product_serial where product_id='$rt->rowmatial'");
-                    $getProductSerialQty=$productNameSerialQtyQuery->row();
+                  <td>
+                    <?php
+                      $productNameSerialQtyQuery=$this->db->query("select *from tbl_product_serial where product_id='$rt->rowmatial'");
+                      $getProductSerialQty=$productNameSerialQtyQuery->row();
                     
-                    
-                    if($getProductSerialQty->quantity!='')
-                    {
-                    echo round($getProductSerialQty->quantity,2);
-                    }
-                    else
-                    {
-                    echo "0";
-                    }?></td>
+                      if($getProductSerialQty->quantity!='')
+                      {
+                        echo round($getProductSerialQty->quantity,2);
+                      }
+                      else
+                      {
+                        echo "0";
+                      }?>                      
+                  </td>
                 </tr>
-                <?php } //}else{ ?>
-                <?php  //} ?>
+                <?php } ?>
               </tbody>
             </table>
           </div>
