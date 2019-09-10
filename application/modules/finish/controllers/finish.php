@@ -581,6 +581,121 @@ class finish extends my_controller
 
 
 
+public function AssembleProductionOrderInsert()
+{
 
+        extract($_POST);
+        $table_name ='tbl_production_order_log';
+        $table_name_available='tbl_production_available_order';
+
+            $this->load->model('Model_admin_login');
+            $rows=count($qty);
+
+            for($i=0; $i<$rows; $i++)
+            {
+
+                
+              if($qty[$i]!=''){
+                 $data_dtl=array(
+                 'lot_no'       => $lot_no,
+                 'order_no'     => $order_no,
+                 'order_type'       => $order_type,
+                 'grn_no' => $grn_no,
+                 'grn_date' => $grn_date,
+                 'grn_type' => $grn_type,
+                 'vendor_id' => $vendor_id,
+                 'job_order_id' => $job_order_id,
+                 'productid'        => $productid[$i],
+                 'qty'      => $qty[$i],
+
+                 //'rm_id'        => $rmOrdId[$i],
+
+                 // 'process_ends' => $p_ends,
+                 // 'weight' => $weight[$i],
+                 // 'total_weight' => $total_weight[$i],
+                 // 'rate' => $rate[$i],
+                 // 'total_rm_rate' => $total_rm_rate[$i],
+                 // 'total_labour_rate' => $total_labour_rate[$i],
+                 // 'total_cost' => $total_cost[$i],
+                 'maker_id'         => $this->session->userdata('user_id'),
+                 'maker_date'       => date('y-m-d'),
+                 'comp_id'          => $this->session->userdata('comp_id'),
+                 'zone_id'          => $this->session->userdata('zone_id'),
+                 'brnh_id'          => $this->session->userdata('brnh_id')
+                );
+
+                // print_r($data_dtl);die;
+
+    $data_dtl_avl=array(
+                    'lot_no'        => $lot_no,
+                    'order_no'      => $order_no,
+                    'vendor_id' => $vendor_id,
+                    'job_order_id' => $job_order_id,
+                    'productid'     => $productid[$i],
+                    'transfer_qty'      => $qty[$i],
+                    // 'weight' => $weight[$i],
+                    // 'total_weight' => $total_weight[$i],
+                    // 'rate' => $rate[$i],
+                    // 'total_rm_rate' => $total_rm_rate[$i],
+                    // 'total_labour_rate' => $total_labour_rate[$i],
+                    // 'total_cost' => $total_cost[$i],
+                    'maker_id'          => $this->session->userdata('user_id'),
+                    'maker_date'        => date('y-m-d'),
+                    'comp_id'           => $this->session->userdata('comp_id'),
+                    'zone_id'           => $this->session->userdata('zone_id'),
+                    'brnh_id'           => $this->session->userdata('brnh_id')
+                );
+
+
+                 $this->Model_admin_login->insert_user($table_name,$data_dtl);
+
+                 $this->Model_admin_login->insert_user($table_name_available,$data_dtl_avl);
+
+
+         }
+     }
+
+     //echo "1";
+}
+
+public function AssembleOrderTransfer()
+{
+
+        extract($_POST);
+        $table_name ='tbl_production_order_transfer_another_module';
+
+            $this->load->model('Model_admin_login');
+            $rows=count($qty);
+
+            for($i=0; $i<$rows; $i++)
+            {
+              if($qty[$i]!=''){
+                 $data_dtl=array(
+                 'lot_no'       => $lot_no,
+
+                 'jo_no'        => $jo_no,
+                 
+                 'order_no'     => $order_no,
+                 'transfer_no' => $transfer_no,
+                 'transfer_date' => $transfer_date,
+                 'module_name' => $module_name,
+                 'vendor_id' => $vendor_id,
+                 'job_order_id' => $job_order_id,
+                 'productid'        => $productid[$i],
+                 'qty'      => $qty[$i],
+
+                 'maker_id'         => $this->session->userdata('user_id'),
+                 'maker_date'       => date('y-m-d'),
+                 'comp_id'          => $this->session->userdata('comp_id'),
+                 'zone_id'          => $this->session->userdata('zone_id'),
+                 'brnh_id'          => $this->session->userdata('brnh_id')
+                );
+
+              $this->Model_admin_login->insert_user($table_name,$data_dtl);
+
+         }
+     }
+     echo "1";
+}
 
 } ?>

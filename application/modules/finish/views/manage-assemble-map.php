@@ -86,12 +86,12 @@
   		    var msg = "Data Successfully Add !";
               else
               var msg = "Data Successfully Updated !";
-  			$("#OrderTransferToModuleresultarea").text(msg);
-  			setTimeout(function() {   //calls click event after a certain time
+  			      $("#OrderTransferToModuleresultarea").text(msg);
+  			      setTimeout(function() {   //calls click event after a certain time
               $("#modal-order-repair").click();
               $("#OrderTransferToModuleresultarea").text(" "); 
               $('#myProduction_order_transfer_to_module')[0].reset(); 
-  		    }, 1000);
+  		        }, 1000);
               }else{
               $("#OrderTransferToModuleresultarea").text(data);
   		    }
@@ -178,7 +178,8 @@
   	var fg_d=fg_c;
   	var fg_t=fg_m;
   	var myString = JSON.stringify(myObject);    
-  	$('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="fg_id[]" value="'+fg_t+'">'+fg_t+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
+  	//$('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="fg_id[]" value="'+fg_t+'">'+fg_t+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
+    $('#quotationTable').append('<tr><td><input type ="hidden" name="shapeId[]" value="'+shapeid+'">'+shapeVal+'</td><td><input type ="hidden" name="part_c[]" value="'+pa_co+'"><input type ="hidden" name="partId[]" value="'+pa+'">'+pa+'</td><td><input type ="hidden" name="qtyy[]" value="'+qt+'">'+qt+'</td><td><i class="fa fa-trash  fa-2x" id="quotationdel" aria-hidden="true"></i></td></tr>');
       
   	$("#shape").val("");
   	$("#getPartView").text("");
@@ -189,7 +190,7 @@
   	var form_data = new FormData(document.getElementById("myform"));
   	form_data.append("label", "WEBUPLOAD");
   	$.ajax({
-  		url: "finish/insert_jobwork",
+  		url: "finish/AssembleProductionOrderInsert",
   		type: "POST",
   		data: form_data,
   		processData: false,  // tell jQuery not to process the data
@@ -197,21 +198,23 @@
   		}).done(function( data ) {
   		if(data == 1 || data == 2){
   			if(data == 1)
-  				var msg = "Data Successfully Add !";
-                  else
-                  var msg = "Data Successfully Updated !";
-  				$("#resultarea").text(msg);
-  				setTimeout(function() {   //calls click event after a certain time
-                  $("#modal-2 .close").click();
-                  $("#resultarea").text(" "); 
-                  $('#myform')[0].reset(); 
-  				$("#quotationTable").text(" "); 
-  				$("#id").val("");
-       		    }, 1000);
-                  }else{
-                  $("#resultarea").text(data);
-  			    }
-  				ajex_JobWorkListData(<?=$_GET['id'];?>);
+          var msg = "Data Successfully Add !";
+          else
+          var msg = "Data Successfully Updated !";
+        
+          $("#resultarea").text(msg);
+          setTimeout(function() {   //calls click event after a certain time
+          $("#modal-2 .close").click();
+          $("#resultarea").text(" "); 
+          $('#myform')[0].reset(); 
+          $("#quotationTable").text(" "); 
+          $("#id").val("");
+          }, 1000);
+          }else{
+          $("#resultarea").text(data);
+          }
+  				//ajex_JobWorkListData(<?=$_GET['id'];?>);
+
   				console.log(data);
   				});
   				return false;     
@@ -687,7 +690,7 @@
                       <tr class="gradeA">
                         <th>Shape Name</th>
                         <th>Part</th>
-                        <th>Finish Goods</th>
+                        <!-- <th>Finish Goods</th> -->
                         <th>Qty</th>
                         <th>Action</th>
                       </tr>
@@ -1245,7 +1248,7 @@
           <br>
           <tbody>
             <tr>
-              <th class="tdcenter"> Sl No.</th>
+              <th class="tdcenter">Sl No.</th>
               <th class="tdcenter">Item Number & Description</th>
               <th class="tdcenter">UOM</th>
               <th class="tdcenter">Ordered Qty</th>
@@ -1324,28 +1327,27 @@
   	
   	  if(data == 1 || data == 2){
   		
-                        if(data == 1)
-  					    
-                          var msg = "Data Successfully Add !";
-                        else
-                          var msg = "Data Successfully Updated !";
-  						$("#Poresultarea").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
-                         $("#modal-5 .close").click();
-                         $("#Poresultarea").text(" "); 
-                         //$('#myform')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
-  					   
-                         //$("#id").val("");
-       
-                      }, 1000);
-                    }else{
-                      $("#Poresultarea").text(data);
-  					
-                   }
-  				 ajex_PurchaseListData(<?=$_GET['id'];?>);
-   
-  	 
+        if(data == 1)
+
+        var msg = "Data Successfully Add !";
+        else
+        var msg = "Data Successfully Updated !";
+        $("#Poresultarea").text(msg);
+        setTimeout(function() {   //calls click event after a certain time
+        $("#modal-5 .close").click();
+        $("#Poresultarea").text(" "); 
+        //$('#myform')[0].reset(); 
+        //$("#quotationTable").text(" "); 
+
+        //$("#id").val("");
+
+        }, 1000);
+        }else{
+        $("#Poresultarea").text(data);
+
+        }
+        ajex_PurchaseListData(<?=$_GET['id'];?>);
+    	 
       console.log(data);
       //Perform ANy action after successfuly post data
          
@@ -1372,31 +1374,28 @@
   	
   	  if(data == 1 || data == 2){
   		
-                        if(data == 1)
-  					    
-                          var msg = "Data Successfully Add !";
-                        else
-                          var msg = "Data Successfully Updated !";
-  						$("#resultarea").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
-                         $("#modal-6 .close").click();
-  					   
-  					   
-  					   
-                         $("#resultareaRaw").text(" "); 
-                         $('#requestRawMat')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
-  					   
-                         //$("#id").val("");
-       
-                      }, 1000);
-                    }else{
-                      $("#resultareaRaw").text(data);
-  					
-                   }
-  				 ajex_RawMatData(<?=$_GET['id'];?>);
-   
-  	 
+        if(data == 1)
+
+        var msg = "Data Successfully Add !";
+        else
+        var msg = "Data Successfully Updated !";
+        $("#resultarea").text(msg);
+        setTimeout(function() {   //calls click event after a certain time
+        $("#modal-6 .close").click();
+
+        $("#resultareaRaw").text(" "); 
+        $('#requestRawMat')[0].reset(); 
+        //$("#quotationTable").text(" "); 
+
+        //$("#id").val("");
+
+        }, 1000);
+        }else{
+        $("#resultareaRaw").text(data);
+
+        }
+        ajex_RawMatData(<?=$_GET['id'];?>);
+       	 
       console.log(data);
       //Perform ANy action after successfuly post data
          
@@ -1424,28 +1423,27 @@
   	
   	  if(data == 1 || data == 2){
   		
-                        if(data == 1)
-  					    
-                          var msg = "Data Successfully Add !";
-                        else
-                          var msg = "Data Successfully Updated !";
-  						$("#PoGRNresultarea").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
-                         $("#modal-GRN").click();
-                         $("#PoGRNresultarea").text(" "); 
-                         $('#modal-GRN')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
-  					   
-                         //$("#id").val("");
-       
-                      }, 1000);
-                    }else{
-                      $("#PoGRNresultarea").text(data);
-  					
-                   }
-  				 ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
-   
-  	 
+        if(data == 1)
+
+        var msg = "Data Successfully Add !";
+        else
+        var msg = "Data Successfully Updated !";
+        $("#PoGRNresultarea").text(msg);
+        setTimeout(function() {   //calls click event after a certain time
+        $("#modal-GRN").click();
+        $("#PoGRNresultarea").text(" "); 
+        $('#modal-GRN')[0].reset(); 
+        //$("#quotationTable").text(" "); 
+
+        //$("#id").val("");
+
+        }, 1000);
+        }else{
+        $("#PoGRNresultarea").text(data);
+
+        }
+        ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
+
       console.log(data);
       //Perform ANy action after successfuly post data
          
@@ -1570,27 +1568,29 @@
   
   function val(d)
   {
-  var zz=document.getElementById(d).id;
-  var myarra = zz.split("entQty");
-  var asx= myarra[1];
-  //alert(asx);
-  var entQty=document.getElementById("entQty"+asx).value;	
-  var orderQty=document.getElementById("orderQty"+asx).value;	
-  var remQty=document.getElementById("remQty"+asx).value;	
-  	
-  if(Number(remQty)<Number(entQty))	
-  {
-  alert("Enter Qty should be less then remaining Qty");
-  	document.getElementById("entQty"+asx).focus();	
-  	document.getElementById("add").disabled = true;
-  	
-  	return false;
-  }
-  else
-  {
-  document.getElementById("add").disabled = false;
-  	
-  }
+   
+    var zz=document.getElementById(d).id;
+    var myarra = zz.split("entQty");
+    var asx= myarra[1];
+    //alert(asx);
+    var entQty=document.getElementById("entQty"+asx).value;	
+    var orderQty=document.getElementById("orderQty"+asx).value;	
+    var remQty=document.getElementById("remQty"+asx).value;	
+    	
+    if(Number(remQty)<Number(entQty))	
+    {
+      
+      alert("Enter Qty should be less then remaining Qty");
+    	document.getElementById("entQty"+asx).focus();	
+    	document.getElementById("add").disabled = true;
+    	
+    	return false;
+    }
+    else
+    {
+      document.getElementById("add").disabled = false;    	
+    }
+
   }
   
   
@@ -1684,42 +1684,43 @@
     }
   
   
-  function selectListdataPurchase(ths){
+  function selectListdataPurchase(ths)
+  {
   
     	 
-    	 $("#Umuom").attr('disabled',false);
-       $('#productListData').css('display','none');
-       res = ths.value.split("^");
-      
-       $('#purmproductname').val(res[1]);
-       $('#purmproductid').val(res[0]);
-       // $('').val();
-       $("#Umuom").val(res[2]);
-       $("#Umuom").attr('disabled',true);
+    $("#Umuom").attr('disabled',false);
+    $('#productListData').css('display','none');
+    res = ths.value.split("^");
+
+    $('#purmproductname').val(res[1]);
+    $('#purmproductid').val(res[0]);
+    // $('').val();
+    $("#Umuom").val(res[2]);
+    $("#Umuom").attr('disabled',true);
   
-    }
+  }
   
   
   function getPo(v)
   {
-  var pro=v;
-  
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("GET", "productionModule/getPo?ID="+pro, false);
-  xhttp.send();
-  document.getElementById("divPo").innerHTML = xhttp.responseText;
+
+    var pro=v;  
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "productionModule/getPo?ID="+pro, false);
+    xhttp.send();
+    document.getElementById("divPo").innerHTML = xhttp.responseText;
   
   }
   
   
   function getPodtl(v)
   {
-  var pro=v;
-  
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("GET", "productionModule/getPoDtl?ID="+pro, false);
-  xhttp.send();
-  document.getElementById("divPoDtl").innerHTML = xhttp.responseText;
+    
+    var pro=v;    
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "productionModule/getPoDtl?ID="+pro, false);
+    xhttp.send();
+    document.getElementById("divPoDtl").innerHTML = xhttp.responseText;
   	
   }
   
@@ -1738,36 +1739,34 @@
   	
   	document.getElementById("validationCheck").value=rec_qty;
   
-  if(rec_qty)
-  {
-  
-  	if(Number(rec_qty)==0)
-  	{
-  		
-  		alert("Qty must be grater than 0");
-  		document.getElementById("sv1").disabled = true;
-  		return false;
-  	}
-  	
-  }
+    if(rec_qty)
+    {
+    
+    	if(Number(rec_qty)==0)
+    	{
+    		
+    		alert("Qty must be grater than 0");
+    		document.getElementById("sv1").disabled = true;
+    		return false;
+    	}
+    	
+    }
   	if(Number(rem_qty)<Number(rec_qty))
   	{
   		alert("Enter Qty must be less then enter qty");
   		document.getElementById("sv1").disabled = true;
-  		
-  		
   	}
   	else
   	{
   		document.getElementById("sv1").disabled = false;
   	}
   	
-  	
-  	
   }
   
-  function viewrawReceiveFun(viewId){
-  var po_no=document.getElementById("p_n").value;
+  function viewrawReceiveFun(viewId)
+  {
+  
+    var po_no=document.getElementById("p_n").value;
   
    	$.ajax({   
   		    type: "POST",  
@@ -1782,7 +1781,7 @@
   			}   
   	});
   
-   }
+  }
   
   
   //starts receive raw Material query
@@ -1800,36 +1799,32 @@
         processData: false,  // tell jQuery not to process the data
         contentType: false   // tell jQuery not to set contentType
     }).done(function( data ) {
-  	
-  	
-  	
+  	  	  	
   	  if(data == 1 || data == 2){
   		
-                        if(data == 1)
-  					    
-                          var msg = "Data Successfully Add !";
-                        else
-                          var msg = "Data Successfully Updated !";
-  						$("#resultarea").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
-                         $("#modal-rawReceive .close").click();
-  					   
-  					   
-  					   
-                         $("#resultareaRaw").text(" "); 
-                         $('#requestRawMat')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
-  					   
-                         //$("#id").val("");
-       
-                      }, 1000);
-                    }else{
-                      $("#resultareaRaw").text(data);
-  					
-                   }
-  				 ajex_RawMatData(<?=$_GET['id'];?>);
-   
-  	 
+        if(data == 1)
+
+        var msg = "Data Successfully Add !";
+        else
+        var msg = "Data Successfully Updated !";
+        $("#resultarea").text(msg);
+        setTimeout(function() {   //calls click event after a certain time
+        $("#modal-rawReceive .close").click();
+
+        $("#resultareaRaw").text(" "); 
+        $('#requestRawMat')[0].reset(); 
+        //$("#quotationTable").text(" "); 
+
+        //$("#id").val("");
+
+        }, 1000);
+        }else{
+        $("#resultareaRaw").text(data);
+
+        }
+        ajex_RawMatData(<?=$_GET['id'];?>);
+
+
       console.log(data);
       //Perform ANy action after successfuly post data
          
@@ -1845,48 +1840,49 @@
   function qtyVal(d)
   {
   	
-  var zz=document.getElementById(d).id;
-  var myarra = zz.split("qty");
-  var asx= myarra[1];
-  //alert(asx);
-  var entQty=document.getElementById("qty"+asx).value;	
-  var remQty=document.getElementById("rem_qty"+asx).value;	
-  
-  if(Number(remQty)<Number(entQty))	
-  {
-  alert("Enter Qty should be less then remaining Qty");
-  	document.getElementById("qty"+asx).focus();	
-  	document.getElementById("add_req").disabled = true;
-  	
-  	return false;
-  }
-  else
-  {
-  document.getElementById("add_req").disabled = false;
-  	
-  }
+    var zz=document.getElementById(d).id;
+    var myarra = zz.split("qty");
+    var asx= myarra[1];
+    //alert(asx);
+    var entQty=document.getElementById("qty"+asx).value;	
+    var remQty=document.getElementById("rem_qty"+asx).value;	
+    
+    if(Number(remQty)<Number(entQty))	
+    {
+      alert("Enter Qty should be less then remaining Qty");
+    	document.getElementById("qty"+asx).focus();	
+    	document.getElementById("add_req").disabled = true;
+    	
+    	return false;
+    }
+    else
+    {
+      document.getElementById("add_req").disabled = false;  	
+    }
+
   }
 </script>
 <script>
-  function Order(viewId){
+  function Order(viewId)
+  {
+    
+    var order_type=document.getElementById("order_type").innerHTML;
+    var lot_no=document.getElementById("lot_no").innerHTML;
+    
+     	$.ajax({   
+    		    type: "POST",  
+    			url: "order_details",  
+    			cache:false,  
+    			data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},  
+    			success: function(data)  
+    			{  
+    			  
+    			 $("#orderDetails").empty().append(data).fadeIn();
+    			//referesh table
+    			}   
+    	});
   
-  var order_type=document.getElementById("order_type").innerHTML;
-  var lot_no=document.getElementById("lot_no").innerHTML;
-  
-   	$.ajax({   
-  		    type: "POST",  
-  			url: "order_details",  
-  			cache:false,  
-  			data: {'id':viewId,'order_type':order_type,'lot_no':lot_no},  
-  			success: function(data)  
-  			{  
-  			  
-  			 $("#orderDetails").empty().append(data).fadeIn();
-  			//referesh table
-  			}   
-  	});
-  
-   }
+  }
   
   
   //starts order receive  query
@@ -1906,30 +1902,31 @@
   	//alert(data);
   	
   	
-  	  if(data == 1 || data == 2){
+  	  if(data == 1 || data == 2)
+      {
   		
-                        if(data == 1)
-  					    
-                          var msg = "Data Successfully Add !";
-                        else
-                          var msg = "Data Successfully Updated !";
-  						$("#Orderresultarea").text(msg);
-  						setTimeout(function() {   //calls click event after a certain time
-                         $("#modal-order").click();
-                         $("#Orderresultarea").text(" "); 
-                         $('#myProduction_order_receive')[0].reset(); 
-  					   //$("#quotationTable").text(" "); 
-  					   
-                         //$("#id").val("");
-       
-                      }, 1000);
-                    }else{
-                      $("#Orderresultarea").text(data);
-  					
-                   }
-  				 //ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
-   
-  	 
+        if(data == 1)
+
+        var msg = "Data Successfully Add !";
+        else
+        var msg = "Data Successfully Updated !";
+        $("#Orderresultarea").text(msg);
+        setTimeout(function() {   //calls click event after a certain time
+        $("#modal-order").click();
+        $("#Orderresultarea").text(" "); 
+        $('#myProduction_order_receive')[0].reset(); 
+        //$("#quotationTable").text(" "); 
+
+        //$("#id").val("");
+
+        }, 1000);
+        }else{
+        $("#Orderresultarea").text(data);
+
+        }
+				
+        //ajex_PurchaseGRNListData(<?=$_GET['id'];?>);
+
       console.log(data);
       //Perform ANy action after successfuly post data
          
