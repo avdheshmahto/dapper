@@ -121,12 +121,20 @@
                 <div class="col-sm-4" id="regid">
                   <select name="state" id="state" class="form-control">
                     <option value="">--Select--</option>
-                    <?php 
-                      $stnm=$this->db->query("select * from tbl_state_m order by stateName asc");
+                    <?php
+                      if($_GET['con_type'] == 5 || $_GET['con_type'] == 6)
+                      {
+                        $stnm=$this->db->query("select * from tbl_state_i order by stateName asc");  
+                      } 
+                      else
+                      {
+                        $stnm=$this->db->query("select * from tbl_state_u order by stateName asc");
+                      }
+                      
                       foreach($stnm->result() as $stdata)
                       {
                       ?>
-                    <option value="<?=$stdata->code;?>"><?=$stdata->stateName;?></option>
+                    <option value="<?=$stdata->stateid;?>"><?=$stdata->stateName;?></option>
                     <?php } ?>
                   </select>
                 </div>
