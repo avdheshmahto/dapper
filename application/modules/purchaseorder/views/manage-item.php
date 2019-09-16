@@ -167,10 +167,12 @@
                     		  $keyvalue1 = $compQuery1->row();
                     echo $keyvalue1->keyvalue;		  
                     ?></th>
-                  <th><?=$getSerial->qn_pc;?>/<?=$fetch_list->quantity;?></th>
+                  <th><?=(int)$getSerial->qn_pc;?>/<?=(int)$fetch_list->quantity;?></th>
                   <th><?php
-                    echo $bQ=$getBlockQty->ordQty-$getBlockQty->rem_order_qtyy;?>/<?php echo $bQK=$getBlockQty->qty-$getBlockQty->remQty;?></th>
-                  <th><?=$getSerial->qn_pc-$bQ;?>/<?=$fetch_list->quantity-$bQK;?></th>
+                      $bQ=$getBlockQty->ordQty-$getBlockQty->rem_order_qtyy;
+                      $bQK=$getBlockQty->qty-$getBlockQty->remQty; ?>
+                      <?php echo (int)$bQ;?>/<?php echo (int)$bQK;?></th>
+                  <th><?=(int)$getSerial->qn_pc-$bQ;?>/<?=(int)$fetch_list->quantity-$bQK;?></th>
                   <th>&nbsp;</th>
                   
                 </tr>

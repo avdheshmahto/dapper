@@ -1,6 +1,6 @@
 <!-- Footer -->
 <footer class="footer-main"> 
-  Copyright &copy; <?php echo date(Y);?> <a target="_blank" href="http://www.techvyas.com/"> Tech Vyas Pvt Ltd </a> All Rights Reserved.
+  Copyright &copy; <?php echo date('Y');?> <a target="_blank" href="http://www.techvyas.com/"> Tech Vyas Pvt Ltd </a> All Rights Reserved.
 </footer>
 <!-- /footer -->
 </div>
