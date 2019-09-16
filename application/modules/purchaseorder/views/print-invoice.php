@@ -5,7 +5,7 @@
   $invice12=$this->db->query("select * from tbl_purchase_order_hdr where purchaseid='$id'");
   $inviceres=$invice12->row();
   
-  $baseStateNameQuery=$this->db->query("select * from tbl_state_m where code='$inviceres->state_id'");
+  $baseStateNameQuery=$this->db->query("select * from tbl_state_i where stateid='$inviceres->state_id'");
   $getBaseStateCode=$baseStateNameQuery->row();
   
   $fetchrecord=$this->db->query("select * from tbl_contact_m where contact_id='".$inviceres->vendor_id."'");
@@ -14,7 +14,7 @@
   $fetchcomp=$this->db->query("select * from tbl_contact_m where contact_id='".$inviceres->vendor_id."'");
   $fetchcompany=$fetchcomp->row(); 
     
-  $queryStateN=$this->db->query("select * from tbl_state_m where code='".$fetchcompany->state_id."'");
+  $queryStateN=$this->db->query("select * from tbl_state_i where stateid='".$fetchcompany->state_id."'");
   $fetchStateN=$queryStateN->row();
   
   function tax($tax_retail){
@@ -191,7 +191,7 @@
             <td colspan="9">&nbsp;</td>
           </tr>
           <?php
-            $stateQuery=$this->db->query("select *from tbl_state_m where stateid='$fetchrecords->state_id' ");
+            $stateQuery=$this->db->query("select *from tbl_state_i where stateid='$fetchrecords->state_id' ");
             $getState=$stateQuery->row();
             ?>
           <tr>

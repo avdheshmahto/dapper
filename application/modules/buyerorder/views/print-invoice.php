@@ -213,7 +213,7 @@
               </p>
             </td>
             <td class="right"><?=$getDtl->qty;?> <?=$getUnit->keyvalue;?></td>
-            <td class="right">$<?php echo number_format($getDtl->price, 2, ".","");?></td>
+            <td class="right">$<?php echo @number_format($getDtl->price, 2, ".","");?></td>
             <td class="right">$<?php echo number_format($getDtl->price*$getDtl->qty, 2, ".","");?></td>
           </tr>
           <?php
