@@ -45,7 +45,7 @@ class model_production extends CI_Model
     {
         $qry = "select count(*) as countval from tbl_quotation_purchase_order_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['p_id'] != "")
                 $qry .= " AND productionid = '" . $get['p_id'] . "' ";
@@ -286,7 +286,7 @@ class model_production extends CI_Model
         
         $qry   = "select * from tbl_quotation_purchase_order_dtl where purchaseid='$id' AND status='A'";
         $query = $this->db->query($qry)->result();
-        $arr   = "";
+        $arr   = array();
         if (sizeof($query) > 0) {
             $i = 0;
             foreach ($query as $pd) {

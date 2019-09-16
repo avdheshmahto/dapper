@@ -22,7 +22,7 @@ class model_purchase_order extends CI_Model
         
         $qry = "select * from tbl_purchase_order_hdr where status = 'A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['purchase_no'] != "")
                 $qry .= " AND purchase_no = '" . $get['purchase_no'] . "' ";
@@ -51,7 +51,7 @@ class model_purchase_order extends CI_Model
     {
         $qry = "select count(*) as countval from $tableName where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['purchase_no'] != "")
                 $qry .= " AND purchase_no = '" . $get['purchase_no'] . "' ";
@@ -84,7 +84,7 @@ class model_purchase_order extends CI_Model
         
         $qry = "select count(*) as countval from $tableName where status='A' and type='13'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['sku_no'] != "")
                 $qry .= " AND sku_no LIKE '%" . $get['sku_no'] . "%'";
@@ -138,7 +138,7 @@ class model_purchase_order extends CI_Model
         
         $qry = "select * from tbl_product_stock where status = 'A' and type='13'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['sku_no'] != "")
                 $qry .= " AND sku_no LIKE '%" . $get['sku_no'] . "%'";

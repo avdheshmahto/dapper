@@ -45,7 +45,7 @@ class model_kora extends CI_Model
     {
         $qry = "select count(*) as countval from tbl_production_order_transfer_another_module where module_name='Kora'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['p_id'] != "")
                 $qry .= " AND productionid = '" . $get['p_id'] . "' ";

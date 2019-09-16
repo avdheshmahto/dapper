@@ -16,7 +16,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_invoice_payment where status='PaymentReceived' ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['contactid'] != "")
                 $qry .= " AND contact_id = '" . $get['contactid'] . "'";
@@ -44,7 +44,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_invoice_payment where status='PaymentReceived' ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['contactid'] != "")
                 $qry .= " AND contact_id = '" . $get['contactid'] . "'";
@@ -81,7 +81,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_invoice_payment where status='payment' ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['contactid'] != "")
                 $qry .= " AND contact_id = '" . $get['contactid'] . "'";
@@ -109,7 +109,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_invoice_payment where status='payment' ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['contactid'] != "")
                 $qry .= " AND contact_id = '" . $get['contactid'] . "'";
@@ -146,7 +146,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_contact_m where group_name='5' ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['contactid'] != "")
                 $qry .= " AND contact_id = '" . $get['contactid'] . "'";
@@ -161,7 +161,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_contact_m where group_name='5' ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['contactid'] != "")
                 $qry .= " AND contact_id = '" . $get['contactid'] . "'";
@@ -184,7 +184,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_contact_m where group_name='4' ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['contactid'] != "")
                 $qry .= " AND contact_id = '" . $get['contactid'] . "'";
@@ -199,7 +199,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_contact_m where group_name='4' ";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['contactid'] != "")
                 $qry .= " AND contact_id = '" . $get['contactid'] . "'";
@@ -223,7 +223,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_product_stock where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['p_id'] != "")
                 $qry .= " AND sku_no = '" . $get['p_id'] . "'";
@@ -246,7 +246,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_product_stock where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['p_id'] != "")
                 $qry .= " AND Product_id = '" . $get['p_id'] . "'";
@@ -274,7 +274,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_invoice_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['inv_no'] != "")
                 $qry .= " AND invoiceid = '" . $get['inv_no'] . "'";
@@ -300,7 +300,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_invoice_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['inv_no'] != "")
                 $qry .= " AND invoiceid = '" . $get['inv_no'] . "'";
@@ -336,7 +336,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_proforma_invoice_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['inv_no'] != "")
                 $qry .= " AND invoiceid = '" . $get['inv_no'] . "'";
@@ -362,7 +362,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_proforma_invoice_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['inv_no'] != "")
                 $qry .= " AND invoiceid = '" . $get['inv_no'] . "'";
@@ -397,7 +397,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_quotation_purchase_order_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['lot_no'] != "")
                 $qry .= " AND lot_no = '" . $get['lot_no'] . "'";
@@ -427,7 +427,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_quotation_purchase_order_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['lot_no'] != "")
                 $qry .= " AND lot_no = '" . $get['lot_no'] . "'";
@@ -492,7 +492,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_purchase_order_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['p_no'] != "")
                 $qry .= " AND purchase_no = '" . $get['p_no'] . "'";
@@ -518,7 +518,7 @@ class model_report extends CI_Model
         
         $qry = "Select * from tbl_purchase_order_hdr where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['p_no'] != "")
                 $qry .= " AND purchaseid = '" . $get['p_no'] . "'";

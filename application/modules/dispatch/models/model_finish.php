@@ -15,7 +15,7 @@ class model_finish extends CI_Model
         
         $qry = "select * from tbl_production_order_log where status = 'A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['p_id'] != "")
                 $qry .= " AND productionid = '" . $get['p_id'] . "'";
@@ -45,7 +45,7 @@ class model_finish extends CI_Model
     {
         $qry = "select count(*) as countval from tbl_production_order_log where status='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['p_id'] != "")
                 $qry .= " AND productionid = '" . $get['p_id'] . "' ";

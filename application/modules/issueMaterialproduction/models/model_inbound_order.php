@@ -40,7 +40,7 @@ class model_inbound_order extends CI_Model
         
         $qry = "select count(*) as countval from $tableName where status!='A'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['po_no'] != "") {
                 $contactQuery = $this->db->query("select * from tbl_purchase_order_hdr where purchase_no like '%" . $get['po_no'] . "%' ");
@@ -119,9 +119,7 @@ class model_inbound_order extends CI_Model
        
         $query = $this->db->query("select * from tbl_quotation_purchase_order_dtl where purchaseid = $id ");
         return $result = $query->result();
-        
-        
-        
+
     }
     
     

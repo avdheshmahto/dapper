@@ -43,7 +43,7 @@ class model_packing extends CI_Model
     function filterPacking($perpage, $pages, $get)
     {
         $qry = "select * from tbl_product_inspection where status = 'A'";
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             if ($get['production_id'] != "") {
                 $unitQuery = $this->db->query("select * from tbl_overlock where production_id = '" . $get['production_id'] . "'");
                 $getUnit   = $unitQuery->row();
@@ -68,7 +68,7 @@ class model_packing extends CI_Model
     function count_packing($tableName, $status = 0, $get)
     {
         $qry = "select count(*) as countval from tbl_product_inspection where status='A'";
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             if ($get['production_id'] != "") {
                 $unitQuery = $this->db->query("select * from tbl_overlock where production_id = '" . $get['production_id'] . "'");
                 $getUnit   = $unitQuery->row();

@@ -16,7 +16,7 @@ class model_inspection extends CI_Model
         
         $qry = "select * from tbl_production_order_transfer_another_module where module_name = 'Assemble'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['p_id'] != "")
                 $qry .= " AND productionid = '" . $get['p_id'] . "'";
@@ -46,7 +46,7 @@ class model_inspection extends CI_Model
     {
         $qry = "select count(*) as countval from tbl_production_order_transfer_another_module where module_name='Assemble'";
         
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             
             if ($get['p_id'] != "")
                 $qry .= " AND productionid = '" . $get['p_id'] . "' ";

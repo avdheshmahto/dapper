@@ -243,6 +243,7 @@ class model_master extends CI_Model
         $data   = "";
         $result = $this->db->query("SELECT  id, name,name as text, inside_cat as parent_id ,create_on FROM tbl_category where status = 1 Order by id ASC")->result_array();
         foreach ($result as $row) {
+            $data = [];
             $data[] = $row;
         }
         return $data;

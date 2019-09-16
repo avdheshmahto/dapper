@@ -78,7 +78,7 @@ class model_finish extends CI_Model
     {
         
         $qry = "select * from tbl_production_order_check where status = 'A' and test_qty!=''";
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             if ($get['p_id'] != "")
                 $qry .= " AND lot_no = '" . $get['p_id'] . "' ";
             
@@ -94,7 +94,7 @@ class model_finish extends CI_Model
     function count_test($tableName, $status = 0, $get)
     {
         $qry = "select count(*) as countval from tbl_production_order_check where status='A' and test_qty!='' ";
-        if (sizeof($get) > 0) {
+        if (sizeof($_GET) > 0) {
             if ($get['p_id'] != "")
                 $qry .= " AND lot_no = '" . $get['p_id'] . "' ";
             $qry .= "group by lot_no order by lot_no desc ";
