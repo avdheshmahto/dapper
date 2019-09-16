@@ -97,9 +97,9 @@
                     <td><?=$getProduct->order_qty;?></td>
                     <td><?php echo round($getProduct->receive_qty,3);?></td>
                     
-                    <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->receive_qty-$getProduct->remaining_qty;?>" />
-                    <td><?php echo $rmRR=$getProduct->order_qty-$getProduct->rem_order_qty;?></td>
-                    <td><?php echo $rmR=round($getProduct->receive_qty-$getProduct->remaining_qty,3);?></td>
+                    <input type="hidden" id="rem_qty<?=$i;?>" value="<?=(int)$getProduct->receive_qty-(int)$getProduct->remaining_qty;?>" />
+                    <td><?php echo $rmRR=(int)$getProduct->order_qty-(int)$getProduct->rem_order_qty;?></td>
+                    <td><?php echo $rmR=round((int)$getProduct->receive_qty-(int)$getProduct->remaining_qty,3);?></td>
                     <td>
                       <p id="qtyInStcok<?=$i;?>"><?php echo round($getProductStock->quantity,3);?></p>
                     </td>
@@ -108,8 +108,8 @@
                     </td>
                   </tr>
                   <?php 
-                          $ordQtyTot=$ordQtyTot+$getProduct->receive_qty;
-                    			$remQtyTot=$remQtyTot+$getProduct->remaining_qty;
+                          $ordQtyTot=(int)$ordQtyTot+(int)$getProduct->receive_qty;
+                    			$remQtyTot=(int)$remQtyTot+(int)$getProduct->remaining_qty;
                       $i++;
                     }?>
                   <input type="hidden" name="qrd_qtyT" id="qrd_qtyT"  value="<?=$ordQtyTot;?>" />

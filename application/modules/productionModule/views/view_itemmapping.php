@@ -96,7 +96,7 @@
           </div>
         </div>
       </div>
-      <?php $i++;} ?>
+      <?php $i++; } ?>
     </div>
   </div>
 </div>
