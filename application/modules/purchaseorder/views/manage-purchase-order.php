@@ -296,7 +296,7 @@
 </div>
 <?php
   $this->load->view("footer.php");
-  ?>
+?>
 <script>
   function exportTableToExcel(tableID, filename = ''){
    
