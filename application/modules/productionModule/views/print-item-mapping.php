@@ -92,61 +92,43 @@
                 $getUsagesUnit=$usagesUnitQuery->row();
 
 
-                $contQuery=$this->db->query("select distinct(part_id) from tbl_part_price_mapping where rowmatial='$dt->rowmatial' ");
-                foreach($contQuery->result() as $dt)
-                {
-                  $partId[]=$dt->part_id;  
-                }
 
-                @$dataPart=implode(",",$partId);
-                  
-                if($dataPart!='')
-                {
-                  $dataPartt=$dataPart;
-                }
-                else
-                {
-                  $dataPartt='0';
-                }
-
-                $contQuery=$this->db->query("select distinct(product_id) from tbl_shape_part_mapping where part_id in ($dataPartt) ");
-                foreach($contQuery->result() as $dt)
-                {
-                  $shapeId[]=$dt->product_id;  
-                }
-
-                @$dataShape=implode(",",$shapeId);
-                  
-                if($dataShape!='')
-                {
-                  $dataShapess=$dataShape;
-                }
-                else
-                {
-                  $dataShapess='0';
-                }
-
-                $mQuery=$this->db->query("select * from tbl_machine where machine_name in($dataShapess)");
-                foreach($mQuery->result() as $getM)
-                {
-                  $getFG[]=$getM->code;
-                }
-                
-                @$dataMac=implode(",",$getFG);
-                if($dataMac!='')
-                {
-                  $dataMacc=$dataMac;
-                }
-                else
-                {
-                  $dataMacc='0';
-                }
-
-                $ordQuery=$this->db->query("select * from tbl_quotation_purchase_order_dtl where purchaseid='".$_GET['id']."' AND productid in ($dataMacc) ");
+                $ordQuery=$this->db->query("select * from tbl_quotation_purchase_order_dtl where purchaseid='".$_GET['id']."'");
                 $sumQty=0;
                 foreach($ordQuery->result() as $getMat)
                 {
-                  $sumQty=$sumQty+$getMat->total_price;
+                  
+                  $mQuery=$this->db->query("select * from tbl_machine where code='$getMat->productid'");
+                  $getShape=$mQuery->row();                  
+                  
+                  $contQuery=$this->db->query("select distinct(part_id) from tbl_shape_part_mapping where product_id='$getShape->machine_name' ");
+                  foreach($contQuery->result() as $dtsss)
+                  {
+                    $partId[]=$dtsss->part_id;  
+                  }
+
+                  @$dataPart=implode(",",array_unique($partId));
+                    
+                  if($dataPart!='')
+                  {
+                    $dataPartt=$dataPart;
+                  }
+                  else
+                  {
+                    $dataPartt='0';
+                  }
+
+                  $partMapp=$this->db->query("select distinct(rowmatial) from tbl_part_price_mapping where part_id IN ($dataPartt) ");
+                  foreach($partMapp->result() as $getRow)
+                  {
+
+                    if($dt->rowmatial == $getRow->rowmatial)
+                    {
+                      $sumQty=$sumQty+$getMat->total_price;
+                    }
+
+                  }                  
+                
                 }
 
               ?>

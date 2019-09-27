@@ -419,7 +419,7 @@ a.text-white:hover, a.text-white:focus {
 	position: relative;
 	display: table;
 	table-layout: fixed;
-	/*background-color: #2F224D;*/
+	background-color: #3c3c47;
 }
 .page-container.horizontal-menu {
 	padding-top: 60px;
@@ -453,15 +453,15 @@ a.text-white:hover, a.text-white:focus {
 	height: 100%;
 	width: 100%;
 	z-index: 100;
-    /*background-color: #ffffffd9;*/
-	background-color:#f2f2f2
+    background-color: #fff;
+    margin-left: 250px;
 }
 .loader {
 	width: 60px;
 	height: 60px;
 	position: absolute;
 	top: 50%;
-	left:55%;
+	left:40%;
 	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 }
@@ -3742,7 +3742,7 @@ ul.mail-attachment li {
  .scrollbar{
 	height:600px;
 	width:auto;
-	/*background: #F5F5F5;*/
+	background: ##3c3c47!important;
 	/*overflow-y:hidden;*/
 	overflow-x: hidden;
 	}

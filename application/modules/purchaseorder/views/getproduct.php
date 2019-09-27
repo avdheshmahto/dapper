@@ -272,7 +272,7 @@
       $id='d'; 
 
       $id.=$i; 
-      $countid+= count($id);
+      @$countid+= count($id);
       //echo $arr->size;
 
 

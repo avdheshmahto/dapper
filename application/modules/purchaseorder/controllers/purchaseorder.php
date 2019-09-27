@@ -86,6 +86,7 @@ class purchaseorder extends my_controller
                 
                 
                 $data_dtl_log = array(
+
                     'inboundrhdr' => $lastHdrId,
                     'po_no' => $po_no,
                     'productid' => $productid[$i],
@@ -99,6 +100,7 @@ class purchaseorder extends my_controller
                     'comp_id' => $this->session->userdata('comp_id'),
                     'zone_id' => $this->session->userdata('zone_id'),
                     'brnh_id' => $this->session->userdata('brnh_id')
+                    
                 );
                 
                 
@@ -365,18 +367,9 @@ class purchaseorder extends my_controller
         $getSales = $querySalesQuery->row();
         $cont     = $getSales->content;
         
-        
-        
-        
         $data = array(
             'id' => $id
         );
-        
-        
-        
-        
-        
-        
         
         $url = "assets/sales_order_pdf/invoice_order'" . $id . "'.pdf";
         
@@ -384,25 +377,17 @@ class purchaseorder extends my_controller
         
         $html = $this->load->view('email', $data, true);
         
-        
-        
         //this the the PDF filename that user will get to download
         
         $pdfFilePath = $url;
-        
-        
         
         //load mPDF library
         
         $this->load->library('m_pdf');
         
-        
-        
         //generate the PDF from the given html
         
         $this->m_pdf->pdf->WriteHTML($html);
-        
-        
         
         //download it.
         
@@ -645,24 +630,24 @@ class purchaseorder extends my_controller
         
         
         $termandcondition = "     
-<p>&nbsp;</p>
-<div style='font-family: 'Times New Roman'; font-size: medium; background: #fbfbfb;'>
-<div style='padding: 25.6094px; text-align: center; background: #4190f2;'>
-<div style='color: #ffffff; font-size: 20px;'>Invoice # $lastHdrId</div>
-</div>
-<div style='max-width: 560px; margin: auto; padding: 0px 25.6094px;'>
-<div style='padding: 30px 0px; color: #555555; line-height: 1.7;'>Dear $getContact->first_name,&nbsp;<br /><br />Your invoice $lastHdrId is attached.
+            <p>&nbsp;</p>
+            <div style='font-family: 'Times New Roman'; font-size: medium; background: #fbfbfb;'>
+            <div style='padding: 25.6094px; text-align: center; background: #4190f2;'>
+            <div style='color: #ffffff; font-size: 20px;'>Invoice # $lastHdrId</div>
+            </div>
+            <div style='max-width: 560px; margin: auto; padding: 0px 25.6094px;'>
+            <div style='padding: 30px 0px; color: #555555; line-height: 1.7;'>Dear $getContact->first_name,&nbsp;<br /><br />Your invoice $lastHdrId is attached.
 
-Thank you for your business.&nbsp;</div>
-<br />
-<div style='padding: 16.7969px 0px; line-height: 1.6;'>Thanks & Regards
-<div style='color: #8c8c8c;'>Gaurav Taneja</div>
-<div style='color: #b1b1b1;'>Tech Vyas Solutions Pvt Ltd.</div>
-<div style='color: #b1b1b1;'>9990455812</div>
-</div>
-</div>
-</div>
-<p>&nbsp;</p>";
+            Thank you for your business.&nbsp;</div>
+            <br />
+            <div style='padding: 16.7969px 0px; line-height: 1.6;'>Thanks & Regards
+            <div style='color: #8c8c8c;'>Gaurav Taneja</div>
+            <div style='color: #b1b1b1;'>Tech Vyas Solutions Pvt Ltd.</div>
+            <div style='color: #b1b1b1;'>9990455812</div>
+            </div>
+            </div>
+            </div>
+            <p>&nbsp;</p>";
         $this->db->query("update tbl_sales_order_hdr set termandcondition='" . addslashes($termandcondition) . "' where salesid='$lastHdrId'");
         
     }

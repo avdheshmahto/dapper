@@ -5,7 +5,7 @@
     <header class="site-header">
       <div class="site-logo"><a href="<?=base_url();?>master/Item/dashboar"><img src="<?=base_url();?>assets/images/logo.png" alt="Dapper" title="Dapper"></a></div>
       <div class="sidebar-collapse hidden-xs"><a class="sidebar-collapse-icon" href="#"><i class="icon-menu"></i></a></div>
-      <div class="sidebar-mobile-menu visible-xs"><a data-target="#side-nav" data-toggle="collapse" class="mobile-menu-icon" href="#"><i class="icon-menu"></i></a></div>
+    <div class="sidebar-mobile-menu visible-xs"><a data-target="#side-nav" data-toggle="collapse" class="mobile-menu-icon" href="#"><i class="icon-menu"></i></a></div>
     </header>
     <!-- /site header -->
     <!-- Main navigation -->

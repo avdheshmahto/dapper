@@ -513,11 +513,9 @@ class Item extends my_controller
         }
         //fclose($file);
         echo "<script>
-alert('Product Imported Successfully');
-window.location.href = 'manage_item';
-</script>";
-        
-        
+            alert('Product Imported Successfully');
+            window.location.href = 'manage_item';
+            </script>";       
         //redirect('/master/manage_item');
         
     }

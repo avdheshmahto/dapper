@@ -278,7 +278,7 @@
        $id='d'; 
       
        $id.=$i; 
-      $countid+= count($id);
+      @$countid+= count($id);
       //echo $arr->size;
       $sqlunit=$this->db->query("select * from tbl_master_data where serial_number='$arr->size'");
       $fetchsize=$sqlunit->row();						

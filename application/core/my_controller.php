@@ -292,85 +292,6 @@ function load_page($page)
  
  }
 
-//=============================enter price=======================
- 
- public function enterPriceCheck($compId){
- //echo $productId;die;
-   $this->db->where('comp_id', $compId);
-
-    $query = $this->db->get('tbl_region_mst');
-
-    $count_row = $query->num_rows();
-
-    if ($count_row > 0) {
-      //if count row return any row; that means you have already this email address in the database. so you must set false in this sense.
-	  return prodductActive;
-		
-
-       //redirect('/master/add_category');
-     } else {
-      // doesn't return any row means database doesn't have this email
-        return TRUE; // And here false to TRUE
-     }
-
- 
- }
- 
-//=================================Close enter price ===============================
-
-//=============================Start Region =======================
- 
- public function regionCheck($zoneid){
- //echo $productId;die;
-   $this->db->where('zone_id', $zoneid);
-
-    $query = $this->db->get('tbl_branch_mst');
-
-    $count_row = $query->num_rows();
-
-    if ($count_row > 0) {
-      //if count row return any row; that means you have already this email address in the database. so you must set false in this sense.
-	  return prodductActive;
-		
-
-       //redirect('/master/add_category');
-     } else {
-      // doesn't return any row means database doesn't have this email
-        return TRUE; // And here false to TRUE
-     }
-
- 
- }
- 
-//=================================Close Region===============================
- 
- 
-//=============================Start Branch =======================
- 
- public function branchCheck($brnhid){
- //echo $productId;die;
-   $this->db->where('brnh_id', $brnhid);
-
-    $query = $this->db->get('tbl_wing_mst');
-
-    $count_row = $query->num_rows();
-
-    if ($count_row > 0) {
-      //if count row return any row; that means you have already this email address in the database. so you must set false in this sense.
-	  return prodductActive;
-		
-
-       //redirect('/master/add_category');
-     } else {
-      // doesn't return any row means database doesn't have this email
-        return TRUE; // And here false to TRUE
-     }
-
- 
- }
- 
-//=================================Close Branch===============================
- 
  
 //=============================Start Department =======================
  
@@ -755,12 +676,9 @@ function delete_cutting_data()
 //================================*Start delete  order ============== 
  function delete_order_data() 
  {
-	
 			
-		$this->db->query("delete from tbl_job_work where job_order_no='".$_GET['id']."'");
-		$this->db->query("delete from tbl_job_work_log where job_order_no='".$_GET['id']."'");
-
-		
+	$this->db->query("delete from tbl_job_work where job_order_no='".$_GET['id']."'");
+	$this->db->query("delete from tbl_job_work_log where job_order_no='".$_GET['id']."'");
   
 }
 //================================Close delete  order ============== 
@@ -769,11 +687,8 @@ function delete_cutting_data()
 //================================*Start delete  order ============== 
  function delete_order_data_grn() 
  {
-	
 			
-		$this->db->query("delete from tbl_production_order_log where grn_no='".$_GET['id']."'");
-		
-		
+	$this->db->query("delete from tbl_production_order_log where grn_no='".$_GET['id']."'");
   
 }
 //================================Close delete  order ============== 
@@ -783,27 +698,18 @@ function delete_cutting_data()
 //================================*Start delete  check order ============== 
  function delete_order_data_check() 
  {
-	
 			
-		$this->db->query("delete from tbl_production_order_check where check_no='".$_GET['id']."'");
-		
-		
+	$this->db->query("delete from tbl_production_order_check where check_no='".$_GET['id']."'");
   
 }
 //================================Close delete  check order ============== 
 
 
 //================================*Start delete  repair order ============== 
- function delete_order_data_repair() 
- {
-	
-			
-		$this->db->query("delete from tbl_production_order_repair where repair_no='".$_GET['id']."'");
+function delete_order_data_repair() 
+{
 
-
-		
-		
-		
+	$this->db->query("delete from tbl_production_order_repair where repair_no='".$_GET['id']."'");
   
 }
 //================================Close delete  repair order ============== 
@@ -811,21 +717,14 @@ function delete_cutting_data()
 
 
 //================================*Start delete  repair order ============== 
- function delete_order_data_scrap() 
- {
-	
+function delete_order_data_scrap() 
+{
 			
-		$this->db->query("delete from tbl_production_order_check where check_no='".$_GET['id']."'");
-
-
-		
-		
-		
+	$this->db->query("delete from tbl_production_order_check where check_no='".$_GET['id']."'");
   
 }
+
 //================================Close delete  repair order ============== 
-
-
 
 
 public function forgotPassword()
@@ -861,6 +760,7 @@ public function forgotPassword()
 		redirect('index');
 
 	}
+
 }
 
 //starts
@@ -990,11 +890,12 @@ public function payment_due($contact_id)
 
 public function getManagePageData($table_name,$pri_id,$id,$field_name)
 {
-	//echo "select $field_name as field from $table_name where $pri_id='$id'";die;
+
 	$dataQuery=$this->db->query("select $field_name as field from $table_name where $pri_id='$id'");
 	$getData=$dataQuery->row();
 	$getField=$getData->field;	
 	return $getField;
+
 }
 
 // ends
@@ -1029,9 +930,10 @@ public function duplicate_po_check()
     if ($count_row > 0) {
 		echo "False";
         return FALSE; 
-     } else {
+    } else {
         return TRUE; 
-     }
+    }
+
 }
 
  public function ciPagination($url,$totalData,$sgmnt,$showEntries){
@@ -1086,6 +988,9 @@ public function explode_date($data)
 	return $todate1;
 	        	 
 } 
+
+
+
 
 }?>
 

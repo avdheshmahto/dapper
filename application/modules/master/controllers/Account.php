@@ -77,67 +77,69 @@ public function ContactListJoin($d)
 public function insert_contact()
 {
 	
-		@extract($_POST);
-		$table_name ='tbl_contact_m';
-		$pri_col ='contact_id';
-	 	$id= $this->input->post('contact_id');
-	 	// echo "<pre>";
-	 	//  print_r($_POST);
-	 	// echo "<pre>";
-		//  print_r($_POST);die;
+	@extract($_POST);
+	$table_name ='tbl_contact_m';
+	$pri_col ='contact_id';
+ 	$id= $this->input->post('contact_id');
 
-		$entityarr =$this->input->post('entity');
-        @$entityComma=implode(',',$entityarr);
-		
-		$data= array(
-                    'first_name' => $this->input->post('first_name'),
-					'group_name' => $this->input->post('maingroupname'),
-					'contact_person' => $this->input->post('contact_person'),
-					'email' => $this->input->post('email'),
-					'mobile' => $this->input->post('mobile'),					
-	                'phone' => $this->input->post('phone'),
-					'IT_Pan'	=> $pan_no,
-					'gst' => $this->input->post('gst_no'),	
-					'address1' => $address1,
-                 	'address3' => $address3,
-					'city' => $this->input->post('city'),
-				    'state_id' => $this->input->post('state'),
-					'pincode' => $this->input->post('pin_code'),
-					'finalDestination' => $this->input->post('finalDestination'),
-					'countryDestination' => $this->input->post('countryDestination'),
-				    'portDischarge' => $this->input->post('portDischarge'),
-					'norify' => $this->input->post('norify'),
+ 	//  echo "<pre>";
+ 	//  print_r($_POST);
+ 	//  echo "<pre>";
+	//  print_r($_POST);die;
 
-	 				'vendor_type' => $this->input->post('vendor_type'),	
-	 				
-	 				'mappedConsignee'=> $entityComma,				
-					'code' => $this->input->post('code')						                 	
-                );
+	$entityarr =$this->input->post('entity');
+    @$entityComma=implode(',',$entityarr);
+	
+	$data= array(
+                'first_name' => $this->input->post('first_name'),
+				'group_name' => $this->input->post('maingroupname'),
+				'contact_person' => $this->input->post('contact_person'),
+				'email' => $this->input->post('email'),
+				'mobile' => $this->input->post('mobile'),					
+                'phone' => $this->input->post('phone'),
+				'IT_Pan'	=> $pan_no,
+				'gst' => $this->input->post('gst_no'),	
+				'address1' => $address1,
+             	'address3' => $address3,
+				'city' => $this->input->post('city'),
+			    'state_id' => $this->input->post('state'),
+				'pincode' => $this->input->post('pin_code'),
+				'finalDestination' => $this->input->post('finalDestination'),
+				'countryDestination' => $this->input->post('countryDestination'),
+			    'portDischarge' => $this->input->post('portDischarge'),
+				'norify' => $this->input->post('norify'),
 
-	    $sesio = array(
-			'comp_id'     => $this->session->userdata('comp_id'),
-			'divn_id'     => $this->session->userdata('divn_id'),
-			'zone_id'     => $this->session->userdata('zone_id'),
-			'brnh_id'     => $this->session->userdata('brnh_id'),
-			'maker_id'    => $this->session->userdata('user_id'),
-			'author_id'   => $this->session->userdata('user_id'),
-			'maker_date'  => date('y-m-d'),
-			'author_date' => date('y-m-d')
-        );
-		
-		$data_entr = array_merge($data,$sesio);		
-    	$this->load->model('Model_admin_login');
+ 				'vendor_type' => $this->input->post('vendor_type'),	
+ 				
+ 				'mappedConsignee'=> $entityComma,				
+				'code' => $this->input->post('code')						                 	
+            );
 
-		if($id!='')
-		{
-		 $this->Model_admin_login->update_user($pri_col,$table_name,$id,$data);
-		 echo "2"."^".$maingroupname;
-		}
-		else
-		{ 
-		 $this->Model_admin_login->insert_user($table_name,$data_entr);
-		 echo "1"."^".$maingroupname;		          
-		}
+    $sesio = array(
+		'comp_id'     => $this->session->userdata('comp_id'),
+		'divn_id'     => $this->session->userdata('divn_id'),
+		'zone_id'     => $this->session->userdata('zone_id'),
+		'brnh_id'     => $this->session->userdata('brnh_id'),
+		'maker_id'    => $this->session->userdata('user_id'),
+		'author_id'   => $this->session->userdata('user_id'),
+		'maker_date'  => date('y-m-d'),
+		'author_date' => date('y-m-d')
+    );
+	
+	$data_entr = array_merge($data,$sesio);		
+	$this->load->model('Model_admin_login');
+
+	if($id!='')
+	{
+	 $this->Model_admin_login->update_user($pri_col,$table_name,$id,$data);
+	 echo "2"."^".$maingroupname;
+	}
+	else
+	{ 
+	 $this->Model_admin_login->insert_user($table_name,$data_entr);
+	 echo "1"."^".$maingroupname;		          
+	}
+
 }
 
 public function ajax_ContactListData()

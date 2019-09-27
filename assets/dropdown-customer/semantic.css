@@ -562,7 +562,7 @@ body {
   padding: 0px;
   overflow-x: hidden;
   min-width: 320px;
-  background: #FFFFFF;
+  background: transparent !important;
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-size: 12px!important;
   line-height: 1.4285em;
@@ -675,7 +675,7 @@ a:hover {
 }
 
 ::selection {
-  background-color: #CCE2FF;
+  background-color: transparent;
   color: rgba(0, 0, 0, 0.87);
 }
 

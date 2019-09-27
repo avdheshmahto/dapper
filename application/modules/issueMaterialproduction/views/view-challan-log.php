@@ -105,14 +105,14 @@
                     <td class="tdcenter"><?=$getProductUOM->keyvalue;?></td>
                     <td class="tdcenter"><?=$getProduct->order_qty;?></td>
                     <td class="tdcenter"><?php echo round($getProduct->receive_qty,3);?></td>
-                    <input type="hidden" id="rem_qty<?=$i;?>" value="<?=$getProduct->receive_qty-$getProduct->remaining_qty;?>" />
+                    <input type="hidden" id="rem_qty<?=$i;?>" value="<?=(int)$getProduct->receive_qty-(int)$getProduct->remaining_qty;?>" />
                     <td style="display:none"><?php echo $rmRR=$getProduct->order_qty-$getProduct->rem_order_qty;?></td>
                     <td style="display:none"><?php echo $rmR=round($getProduct->receive_qty-$getProduct->remaining_qty,3);?></td>
                   </tr>
                   <?php 
-                    $ordQtyTot=$ordQtyTot+$getProduct->receive_qty;
+                    $ordQtyTot=(int)$ordQtyTot+(int)$getProduct->receive_qty;
                     
-                    $remQtyTot=$remQtyTot+$getProduct->remaining_qty;
+                    $remQtyTot=(int)$remQtyTot+(int)$getProduct->remaining_qty;
                     $i++;
                     } ?>
                   <input type="hidden" name="qrd_qtyT" id="qrd_qtyT"  value="<?=$ordQtyTot;?>" />
